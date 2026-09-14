@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@keyframes modal-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-fade {
+  animation: modal-fade 200ms ease-out;
+}

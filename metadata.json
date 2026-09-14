@@ -1,0 +1,6 @@
+{
+  "name": "Aeline - Save Nature, Save Tomorrow",
+  "description": "Environmental conservation platform empowering communities to protect nature, clean oceans, restore forests, and build a sustainable future.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

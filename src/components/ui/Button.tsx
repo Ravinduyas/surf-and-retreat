@@ -1,0 +1,47 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+
+type Variant = 'primary' | 'lime' | 'outline';
+
+interface ButtonProps {
+  children: React.ReactNode;
+  variant?: Variant;
+  to?: string;
+  onClick?: () => void;
+  type?: 'button' | 'submit';
+  className?: string;
+  id?: string;
+}
+
+const VARIANT_CLASSES: Record<Variant, string> = {
+  primary:
+    'bg-[#2A4E38] hover:bg-[#1E3B29] text-white text-sm font-medium px-6 py-3 rounded-full inline-flex items-center gap-2 transition-all duration-200 cursor-pointer shadow-xs active:scale-98',
+  lime:
+    'bg-[#D8E95E] hover:bg-[#CFE24D] active:scale-98 transition-all duration-200 text-[#193B26] text-[14px] font-semibold px-6 py-2.5 rounded-full shadow-xs cursor-pointer inline-flex items-center gap-2',
+  outline:
+    'border border-[#D2DCD0] hover:border-[#1E3B29] hover:bg-[#F6F8F5] text-[#223528] text-sm font-medium px-6 py-3 rounded-full inline-flex items-center gap-2 transition-all duration-200 cursor-pointer',
+};
+
+export const Button: React.FC<ButtonProps> = ({
+  children,
+  variant = 'primary',
+  to,
+  onClick,
+  type = 'button',
+  className = '',
+  id,
+}) => {
+  const classes = `${VARIANT_CLASSES[variant]} ${className}`.trim();
+  if (to) {
+    return (
+      <Link id={id} to={to} onClick={onClick} className={classes}>
+        {children}
+      </Link>
+    );
+  }
+  return (
+    <button id={id} type={type} onClick={onClick} className={classes}>
+      {children}
+    </button>
+  );
+};
