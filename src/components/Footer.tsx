@@ -12,6 +12,8 @@ export const Footer: React.FC = () => {
     { name: 'Rooms & Stay', to: '/experience#rooms' },
     { name: 'Surf', to: '/experience#surf' },
     { name: 'Coworking', to: '/experience#coworking' },
+    { name: 'Services', to: '/services' },
+    { name: 'Gallery', to: '/gallery' },
     { name: 'About Us', to: '/about' },
   ];
 

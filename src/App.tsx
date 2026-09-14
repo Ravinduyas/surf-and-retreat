@@ -3,6 +3,8 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './components/layout/Layout';
 import HomePage from './pages/HomePage';
 import ExperiencePage from './pages/ExperiencePage';
+import ServicesPage from './pages/ServicesPage';
+import GalleryPage from './pages/GalleryPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 
@@ -15,6 +17,8 @@ export default function App() {
         <Route path="rooms" element={<Navigate to="/experience#rooms" replace />} />
         <Route path="surf" element={<Navigate to="/experience#surf" replace />} />
         <Route path="coworking" element={<Navigate to="/experience#coworking" replace />} />
+        <Route path="services" element={<ServicesPage />} />
+        <Route path="gallery" element={<GalleryPage />} />
         <Route path="about" element={<AboutPage />} />
         <Route path="contact" element={<ContactPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />

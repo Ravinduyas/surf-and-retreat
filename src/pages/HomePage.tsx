@@ -5,6 +5,8 @@ import { HighlightsSection } from '../components/home/HighlightsSection';
 import { TrustedBySection } from '../components/TrustedBySection';
 import { ReviewsSection } from '../components/home/ReviewsSection';
 import { ExploreSection } from '../components/home/ExploreSection';
+import { GallerySection } from '../components/home/GallerySection';
+import { ServicesGrid } from '../components/services/ServicesGrid';
 import { usePageMeta } from '../hooks/usePageMeta';
 
 export default function HomePage() {
@@ -21,6 +23,8 @@ export default function HomePage() {
       <HighlightsSection />
       <TrustedBySection />
       <ExploreSection />
+      <ServicesGrid showCta />
+      <GallerySection />
       <ReviewsSection />
     </>
   );

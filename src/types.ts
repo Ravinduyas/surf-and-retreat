@@ -95,6 +95,23 @@ export interface Review {
   avatar: string;
 }
 
+export interface ServiceItem {
+  id: string;
+  title: string;
+  description: string;
+  price: string;
+  iconType: 'pickup' | 'scooter' | 'laundry' | 'tours' | 'yoga' | 'storage';
+}
+
+export type GalleryCategory = 'rooms' | 'surf' | 'coworking' | 'social' | 'around';
+
+export interface GalleryImage {
+  id: string;
+  src: string;
+  alt: string;
+  category: GalleryCategory;
+}
+
 export interface FaqItem {
   id: string;
   question: string;

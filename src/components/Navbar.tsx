@@ -7,6 +7,8 @@ import { useModals } from '../context/ModalContext';
 const NAV_LINKS = [
   { name: 'Home', to: '/' },
   { name: 'Stay, Surf & Work', to: '/experience' },
+  { name: 'Services', to: '/services' },
+  { name: 'Gallery', to: '/gallery' },
   { name: 'About', to: '/about' },
   { name: 'Contact', to: '/contact' },
 ];

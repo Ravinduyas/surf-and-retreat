@@ -10,6 +10,8 @@ import {
   Amenity,
   Testimonial,
   Review,
+  ServiceItem,
+  GalleryImage,
   FaqItem,
   ValueItem,
 } from './types';
@@ -291,6 +293,66 @@ export const TESTIMONIALS: Testimonial[] = [
       'The female dorm was spotless and the staff treated us like family. Weligama Bay is five minutes barefoot — you can’t beat that.',
     avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=120&auto=format&fit=crop',
   },
+];
+
+export const SERVICES: ServiceItem[] = [
+  {
+    id: 'pickup',
+    title: 'Airport & Station Pickup',
+    description: 'Door-to-door transfer from Colombo airport or Weligama station — driver waits with your name.',
+    price: 'from $35',
+    iconType: 'pickup',
+  },
+  {
+    id: 'scooter',
+    title: 'Scooter Rental',
+    description: 'Well-serviced automatic scooters with helmets and surf racks. Fuel up and explore the south coast.',
+    price: '$10 / day',
+    iconType: 'scooter',
+  },
+  {
+    id: 'laundry',
+    title: 'Laundry Service',
+    description: 'Drop your bag before breakfast, get it back folded by sunset. Salt, sand and wax all gone.',
+    price: '$3 / kg',
+    iconType: 'laundry',
+  },
+  {
+    id: 'tours',
+    title: 'Day Trips & Tours',
+    description: 'Mirissa whale watching, Galle Fort sunsets, tea country and hidden waterfalls — small groups only.',
+    price: 'from $25',
+    iconType: 'tours',
+  },
+  {
+    id: 'yoga',
+    title: 'Sunrise Rooftop Yoga',
+    description: 'Stretch out surf-tight shoulders three mornings a week on the rooftop deck, mats provided.',
+    price: '$8 / class',
+    iconType: 'yoga',
+  },
+  {
+    id: 'storage',
+    title: 'Board & Luggage Storage',
+    description: 'Free racks for your board and lockers for your bags — before check-in, after check-out, or mid-trip.',
+    price: 'Free',
+    iconType: 'storage',
+  },
+];
+
+export const GALLERY_IMAGES: GalleryImage[] = [
+  { id: 'g1', src: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=800&auto=format&fit=crop', alt: 'Curtain-pod dorm beds', category: 'rooms' },
+  { id: 'g2', src: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=800&auto=format&fit=crop', alt: 'Private double room with AC', category: 'rooms' },
+  { id: 'g3', src: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop', alt: 'Garden and pool area', category: 'rooms' },
+  { id: 'g4', src: 'https://images.unsplash.com/photo-1502680390469-be75c86b636f?q=80&w=800&auto=format&fit=crop', alt: 'Morning surf lesson on Weligama Bay', category: 'surf' },
+  { id: 'g5', src: 'https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?q=80&w=800&auto=format&fit=crop', alt: 'Clean wave rolling in', category: 'surf' },
+  { id: 'g6', src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop', alt: 'Weligama beach at golden hour', category: 'surf' },
+  { id: 'g7', src: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=800&auto=format&fit=crop', alt: 'Guests working in the coworking space', category: 'coworking' },
+  { id: 'g8', src: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=800&auto=format&fit=crop', alt: 'Standing desks in the focus room', category: 'coworking' },
+  { id: 'g9', src: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=800&auto=format&fit=crop', alt: 'Family dinner night at the long table', category: 'social' },
+  { id: 'g10', src: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=800&auto=format&fit=crop', alt: 'Fresh Sri Lankan breakfast spread', category: 'social' },
+  { id: 'g11', src: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?q=80&w=800&auto=format&fit=crop', alt: 'Palm-lined beach near the hostel', category: 'around' },
+  { id: 'g12', src: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?q=80&w=800&auto=format&fit=crop', alt: 'South coast sunset walk', category: 'around' },
 ];
 
 export const REVIEWS: Review[] = [
