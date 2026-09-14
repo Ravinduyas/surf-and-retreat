@@ -46,7 +46,7 @@ export const HighlightsSection: React.FC = () => {
             </p>
 
             <div className="flex flex-wrap items-center gap-3 pt-2">
-              <Button id="highlights-rooms-btn" to="/rooms" variant="primary">
+              <Button id="highlights-rooms-btn" to="/experience#rooms" variant="primary">
                 <span>Explore Rooms</span>
                 <ArrowRight className="w-4 h-4" />
               </Button>

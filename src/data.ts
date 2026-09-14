@@ -27,21 +27,21 @@ export const HERO_CARDS: HeroLinkCard[] = [
     title: 'Surf Lessons',
     description: 'Daily 6:30 AM sessions, all levels welcome.',
     image: 'https://images.unsplash.com/photo-1502680390469-be75c86b636f?q=80&w=300&auto=format&fit=crop',
-    to: '/surf',
+    to: '/experience#surf',
   },
   {
     id: 'beds-privates',
     title: 'Beds & Privates',
     description: 'Dorms from $12, AC private rooms.',
     image: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=300&auto=format&fit=crop',
-    to: '/rooms',
+    to: '/experience#rooms',
   },
   {
     id: 'work-by-the-bay',
     title: 'Work by the Bay',
     description: 'Fiber wifi, call booths, cold brew.',
     image: 'https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?q=80&w=300&auto=format&fit=crop',
-    to: '/coworking',
+    to: '/experience#coworking',
   },
 ];
 
@@ -52,7 +52,7 @@ export const HIGHLIGHTS: HighlightItem[] = [
     description: 'Breezy dorms & private rooms steps from the bay.',
     image: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=900&auto=format&fit=crop',
     iconType: 'bed',
-    to: '/rooms',
+    to: '/experience#rooms',
   },
   {
     id: 'surf',
@@ -60,7 +60,7 @@ export const HIGHLIGHTS: HighlightItem[] = [
     description: 'Learn on Weligama’s gentle, sandy-bottom waves.',
     image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=900&auto=format&fit=crop',
     iconType: 'wave',
-    to: '/surf',
+    to: '/experience#surf',
   },
   {
     id: 'work',
@@ -68,7 +68,7 @@ export const HIGHLIGHTS: HighlightItem[] = [
     description: 'Fast wifi and focus space, ocean air included.',
     image: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=900&auto=format&fit=crop',
     iconType: 'laptop',
-    to: '/coworking',
+    to: '/experience#coworking',
   },
 ];
 
@@ -79,7 +79,7 @@ export const EXPLORE_CARDS: ExploreCard[] = [
     title: 'Sleep Well, Steps from the Surf',
     description: 'Curtain-pod dorms, AC privates and a garden bungalow.',
     image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop',
-    to: '/rooms',
+    to: '/experience#rooms',
   },
   {
     id: 'surf',
@@ -87,7 +87,7 @@ export const EXPLORE_CARDS: ExploreCard[] = [
     title: 'Your First Wave Starts Here',
     description: 'Lessons, coaching and board rental on Weligama Bay.',
     image: 'https://images.unsplash.com/photo-1468413253725-0d5181091126?q=80&w=800&auto=format&fit=crop',
-    to: '/surf',
+    to: '/experience#surf',
   },
   {
     id: 'coworking',
@@ -95,7 +95,7 @@ export const EXPLORE_CARDS: ExploreCard[] = [
     title: 'Deep Work, Then Sunset Sessions',
     description: 'Dedicated desks, call booths and 300 Mbps fiber.',
     image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=800&auto=format&fit=crop',
-    to: '/coworking',
+    to: '/experience#coworking',
   },
   {
     id: 'about',

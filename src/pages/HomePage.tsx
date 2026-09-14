@@ -20,8 +20,8 @@ export default function HomePage() {
       </PageHeader>
       <HighlightsSection />
       <TrustedBySection />
-      <ReviewsSection />
       <ExploreSection />
+      <ReviewsSection />
     </>
   );
 }

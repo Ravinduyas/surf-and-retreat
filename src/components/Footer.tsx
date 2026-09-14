@@ -9,9 +9,9 @@ export const Footer: React.FC = () => {
   const { openBooking } = useModals();
 
   const exploreLinks = [
-    { name: 'Rooms & Stay', to: '/rooms' },
-    { name: 'Surf', to: '/surf' },
-    { name: 'Coworking', to: '/coworking' },
+    { name: 'Rooms & Stay', to: '/experience#rooms' },
+    { name: 'Surf', to: '/experience#surf' },
+    { name: 'Coworking', to: '/experience#coworking' },
     { name: 'About Us', to: '/about' },
   ];
 
