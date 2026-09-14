@@ -84,6 +84,17 @@ export interface Testimonial {
   avatar: string;
 }
 
+export interface Review {
+  id: string;
+  name: string;
+  origin: string;
+  rating: number;
+  stayType: string;
+  date: string;
+  quote: string;
+  avatar: string;
+}
+
 export interface FaqItem {
   id: string;
   question: string;

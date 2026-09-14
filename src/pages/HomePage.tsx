@@ -3,6 +3,7 @@ import { PageHeader } from '../components/layout/PageHeader';
 import { HomeHero } from '../components/home/HomeHero';
 import { HighlightsSection } from '../components/home/HighlightsSection';
 import { TrustedBySection } from '../components/TrustedBySection';
+import { ReviewsSection } from '../components/home/ReviewsSection';
 import { ExploreSection } from '../components/home/ExploreSection';
 import { usePageMeta } from '../hooks/usePageMeta';
 
@@ -19,6 +20,7 @@ export default function HomePage() {
       </PageHeader>
       <HighlightsSection />
       <TrustedBySection />
+      <ReviewsSection />
       <ExploreSection />
     </>
   );
