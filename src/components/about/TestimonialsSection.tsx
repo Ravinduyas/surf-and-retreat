@@ -2,8 +2,10 @@ import React from 'react';
 import { Quote, Star } from 'lucide-react';
 import { TESTIMONIALS } from '../../data';
 import { Eyebrow } from '../ui/Eyebrow';
+import { useReveal } from '../ui/Reveal';
 
 export const TestimonialsSection: React.FC = () => {
+  const gridRef = useReveal<HTMLDivElement>();
   return (
     <section className="mt-8 sm:mt-12">
       <div className="bg-white border border-[#E3E8DE] rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 lg:p-12 shadow-xs">
@@ -20,7 +22,7 @@ export const TestimonialsSection: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
+        <div ref={gridRef} className="stagger grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
           {TESTIMONIALS.map((t) => (
             <div
               key={t.id}

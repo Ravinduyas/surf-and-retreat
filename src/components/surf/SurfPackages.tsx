@@ -3,9 +3,11 @@ import { ArrowRight, Check, Waves } from 'lucide-react';
 import { SURF_PACKAGES } from '../../data';
 import { Eyebrow } from '../ui/Eyebrow';
 import { useModals } from '../../context/ModalContext';
+import { useReveal } from '../ui/Reveal';
 
 export const SurfPackages: React.FC = () => {
   const { openDetail } = useModals();
+  const gridRef = useReveal<HTMLDivElement>();
 
   return (
     <section className="mt-6 sm:mt-10">
@@ -23,7 +25,7 @@ export const SurfPackages: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <div ref={gridRef} className="stagger grid grid-cols-1 sm:grid-cols-3 gap-5">
           {SURF_PACKAGES.map((pkg) => (
             <div key={pkg.id} id={`surf-package-${pkg.id}`} className="group flex flex-col">
               <button

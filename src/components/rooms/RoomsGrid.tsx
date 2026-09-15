@@ -3,9 +3,11 @@ import { ArrowRight, Users, Check, BedDouble } from 'lucide-react';
 import { ROOMS } from '../../data';
 import { Eyebrow } from '../ui/Eyebrow';
 import { useModals } from '../../context/ModalContext';
+import { useReveal } from '../ui/Reveal';
 
 export const RoomsGrid: React.FC = () => {
   const { openDetail } = useModals();
+  const gridRef = useReveal<HTMLDivElement>();
 
   return (
     <section className="mt-6 sm:mt-10">
@@ -23,7 +25,7 @@ export const RoomsGrid: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div ref={gridRef} className="stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {ROOMS.map((room) => (
             <div key={room.id} id={`room-card-${room.id}`} className="group flex flex-col">
               {/* Image */}

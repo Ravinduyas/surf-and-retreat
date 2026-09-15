@@ -3,9 +3,11 @@ import { MapPin, ArrowRight } from 'lucide-react';
 import { SURF_SPOTS } from '../../data';
 import { Eyebrow } from '../ui/Eyebrow';
 import { useModals } from '../../context/ModalContext';
+import { useReveal } from '../ui/Reveal';
 
 export const SurfSpots: React.FC = () => {
   const { openBooking } = useModals();
+  const gridRef = useReveal<HTMLDivElement>();
 
   return (
     <section className="mt-8 sm:mt-12">
@@ -33,7 +35,7 @@ export const SurfSpots: React.FC = () => {
 
           {/* Right: Spot list */}
           <div className="lg:col-span-8">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div ref={gridRef} className="stagger grid grid-cols-1 sm:grid-cols-2 gap-4">
               {SURF_SPOTS.map((spot) => (
                 <div
                   key={spot.id}

@@ -9,6 +9,7 @@ import { SurfSpots } from '../components/surf/SurfSpots';
 import { AmenitiesGrid } from '../components/coworking/AmenitiesGrid';
 import { PlansPricing } from '../components/coworking/PlansPricing';
 import { Button } from '../components/ui/Button';
+import { Reveal } from '../components/ui/Reveal';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { useModals } from '../context/ModalContext';
 import { ROOMS } from '../data';
@@ -56,11 +57,12 @@ export default function ExperiencePage() {
 
       {/* Section jump links */}
       <div className="mt-6 flex flex-wrap items-center gap-2">
-        {JUMP_LINKS.map(({ id, label, icon: Icon }) => (
+        {JUMP_LINKS.map(({ id, label, icon: Icon }, idx) => (
           <a
             key={id}
             href={`#${id}`}
-            className="inline-flex items-center gap-1.5 bg-white border border-[#E1E7DE] hover:border-[#B9C9B6] text-[#254A32] text-[12px] font-semibold px-4 py-2 rounded-full shadow-xs transition-colors cursor-pointer"
+            className="surface-in inline-flex items-center gap-1.5 bg-white border border-[#E1E7DE] hover:border-[#B9C9B6] text-[#254A32] text-[12px] font-semibold px-4 py-2 rounded-full shadow-xs transition-colors cursor-pointer"
+            style={{ '--d': `${650 + idx * 120}ms` } as React.CSSProperties}
           >
             <Icon className="w-3.5 h-3.5" />
             <span>{label}</span>
@@ -70,7 +72,9 @@ export default function ExperiencePage() {
 
       <div id="rooms" className="scroll-mt-6">
         <RoomsGrid />
-        <ColivingCard />
+        <Reveal>
+          <ColivingCard />
+        </Reveal>
       </div>
 
       <div id="surf" className="scroll-mt-6">

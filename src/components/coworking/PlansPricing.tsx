@@ -3,9 +3,11 @@ import { Check, ArrowRight, Ticket } from 'lucide-react';
 import { COWORKING_PLANS } from '../../data';
 import { Eyebrow } from '../ui/Eyebrow';
 import { useModals } from '../../context/ModalContext';
+import { useReveal } from '../ui/Reveal';
 
 export const PlansPricing: React.FC = () => {
   const { openBooking } = useModals();
+  const gridRef = useReveal<HTMLDivElement>();
 
   return (
     <section className="mt-8 sm:mt-12">
@@ -21,7 +23,7 @@ export const PlansPricing: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 max-w-4xl mx-auto">
+        <div ref={gridRef} className="stagger grid grid-cols-1 sm:grid-cols-3 gap-5 max-w-4xl mx-auto">
           {COWORKING_PLANS.map((plan) => (
             <div
               key={plan.id}

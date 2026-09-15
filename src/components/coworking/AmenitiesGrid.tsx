@@ -3,6 +3,7 @@ import { Wifi, Snowflake, Armchair, PhoneCall, Coffee, Printer, Sparkles, Lucide
 import { AMENITIES } from '../../data';
 import { Amenity } from '../../types';
 import { Eyebrow } from '../ui/Eyebrow';
+import { useReveal } from '../ui/Reveal';
 
 const ICONS: Record<Amenity['iconType'], LucideIcon> = {
   wifi: Wifi,
@@ -14,6 +15,7 @@ const ICONS: Record<Amenity['iconType'], LucideIcon> = {
 };
 
 export const AmenitiesGrid: React.FC = () => {
+  const gridRef = useReveal<HTMLDivElement>();
   return (
     <section className="mt-6 sm:mt-10">
       <div className="bg-white border border-[#E3E8DE] rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 lg:p-12 shadow-xs">
@@ -30,7 +32,7 @@ export const AmenitiesGrid: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div ref={gridRef} className="stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {AMENITIES.map((amenity) => {
             const Icon = ICONS[amenity.iconType] ?? Sparkles;
             return (

@@ -5,6 +5,7 @@ import { PageHero } from '../components/layout/PageHero';
 import { ContactForm } from '../components/contact/ContactForm';
 import { LocationCard } from '../components/contact/LocationCard';
 import { FaqAccordion } from '../components/contact/FaqAccordion';
+import { Reveal } from '../components/ui/Reveal';
 import { usePageMeta } from '../hooks/usePageMeta';
 
 export default function ContactPage() {
@@ -31,11 +32,17 @@ export default function ContactPage() {
       </PageHeader>
 
       <section className="mt-6 sm:mt-10 grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 items-start">
-        <ContactForm />
-        <LocationCard />
+        <Reveal delay={100}>
+          <ContactForm />
+        </Reveal>
+        <Reveal delay={250}>
+          <LocationCard />
+        </Reveal>
       </section>
 
-      <FaqAccordion />
+      <Reveal>
+        <FaqAccordion />
+      </Reveal>
     </>
   );
 }

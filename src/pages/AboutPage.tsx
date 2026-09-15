@@ -7,6 +7,7 @@ import { ValuesGrid } from '../components/about/ValuesGrid';
 import { TestimonialsSection } from '../components/about/TestimonialsSection';
 import { TrustedBySection } from '../components/TrustedBySection';
 import { Button } from '../components/ui/Button';
+import { Reveal } from '../components/ui/Reveal';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { ABOUT_IMAGES } from '../data';
 
@@ -40,10 +41,14 @@ export default function AboutPage() {
         </PageHero>
       </PageHeader>
 
-      <StorySection />
+      <Reveal>
+        <StorySection />
+      </Reveal>
       <ValuesGrid />
       <TestimonialsSection />
-      <TrustedBySection />
+      <Reveal>
+        <TrustedBySection />
+      </Reveal>
     </>
   );
 }

@@ -144,6 +144,16 @@
     transform: none;
     filter: none;
   }
+  /* Automatic wave index when children don't set --i themselves */
+  .stagger > *:nth-child(1) { --i: 0; }
+  .stagger > *:nth-child(2) { --i: 1; }
+  .stagger > *:nth-child(3) { --i: 2; }
+  .stagger > *:nth-child(4) { --i: 3; }
+  .stagger > *:nth-child(5) { --i: 4; }
+  .stagger > *:nth-child(6) { --i: 5; }
+  .stagger > *:nth-child(7) { --i: 6; }
+  .stagger > *:nth-child(8) { --i: 7; }
+  .stagger > *:nth-child(n + 9) { --i: 8; }
 
   /* Preloader: a wave line drawing itself while bobbing */
   .preloader-wave {

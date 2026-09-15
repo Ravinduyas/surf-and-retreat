@@ -3,6 +3,7 @@ import { Waves, Users2, Sprout, Sparkles, LucideIcon } from 'lucide-react';
 import { VALUES } from '../../data';
 import { ValueItem } from '../../types';
 import { Eyebrow } from '../ui/Eyebrow';
+import { useReveal } from '../ui/Reveal';
 
 const ICONS: Record<ValueItem['iconType'], LucideIcon> = {
   wave: Waves,
@@ -11,6 +12,7 @@ const ICONS: Record<ValueItem['iconType'], LucideIcon> = {
 };
 
 export const ValuesGrid: React.FC = () => {
+  const gridRef = useReveal<HTMLDivElement>();
   return (
     <section className="mt-8 sm:mt-12">
       <div className="bg-white border border-[#E3E8DE] rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 lg:p-12 shadow-xs">
@@ -21,7 +23,7 @@ export const ValuesGrid: React.FC = () => {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
+        <div ref={gridRef} className="stagger grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
           {VALUES.map((value) => {
             const Icon = ICONS[value.iconType] ?? Sparkles;
             return (
