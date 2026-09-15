@@ -28,8 +28,8 @@ export default function ServicesPage() {
             </>
           }
           subtitle="From the moment you land at Colombo airport to your last load of laundry — transfers, scooters, tours and storage are all one ask away at the front desk."
-          image="https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=1200&auto=format&fit=crop"
-          imageAlt="Scooter parked by the beach road"
+          image="https://images.unsplash.com/photo-1777278549567-f929aa7274dd?q=80&w=1200&auto=format&fit=crop"
+          imageAlt="Rental scooters parked on the sand under palm trees"
         >
           <Button variant="primary" onClick={() => openBooking()}>
             <span>Book Your Stay</span>

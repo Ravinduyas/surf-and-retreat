@@ -12,6 +12,16 @@ const FILTERS: { id: GalleryCategory | 'all'; label: string }[] = [
   { id: 'around', label: 'Around Weligama' },
 ];
 
+/* Repeating asymmetric pattern: feature, small, tall, small, small, wide */
+const TILE_SPANS = [
+  'col-span-2 row-span-2',
+  'col-span-1 row-span-1',
+  'col-span-1 row-span-2',
+  'col-span-1 row-span-1',
+  'col-span-1 row-span-1',
+  'col-span-2 row-span-1',
+];
+
 export const GalleryGrid: React.FC = () => {
   const [filter, setFilter] = useState<GalleryCategory | 'all'>('all');
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
@@ -50,14 +60,14 @@ export const GalleryGrid: React.FC = () => {
           ))}
         </div>
 
-        {/* Masonry Grid */}
-        <div className="columns-2 sm:columns-3 gap-4">
+        {/* Asymmetric Bento Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 auto-rows-[120px] sm:auto-rows-[150px] gap-4 grid-flow-dense">
           {images.map((img, idx) => (
             <button
               key={img.id}
               id={`gallery-img-${img.id}`}
               onClick={() => setLightboxIndex(idx)}
-              className="block w-full mb-4 rounded-2xl overflow-hidden break-inside-avoid group cursor-pointer bg-[#EAF0E7] focus:outline-hidden"
+              className={`relative rounded-2xl overflow-hidden group cursor-pointer bg-[#EAF0E7] focus:outline-hidden ${TILE_SPANS[idx % TILE_SPANS.length]}`}
               aria-label={`View larger: ${img.alt}`}
             >
               <img
@@ -65,7 +75,7 @@ export const GalleryGrid: React.FC = () => {
                 alt={img.alt}
                 referrerPolicy="no-referrer"
                 loading="lazy"
-                className="w-full group-hover:scale-105 transition-transform duration-500 ease-out"
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
               />
             </button>
           ))}

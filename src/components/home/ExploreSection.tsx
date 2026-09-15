@@ -120,11 +120,6 @@ export const ExploreSection: React.FC = () => {
                 <br />
                 Your Whole Trip, Sorted.
               </h2>
-              <p className="text-[#59695C] text-sm leading-relaxed mt-3">
-                Beds, boards, lessons and a desk with fast wifi — everything under one
-                palm-shaded roof, five minutes from the waves.
-              </p>
-
               <Link
                 id="explore-contact-link"
                 to="/contact"

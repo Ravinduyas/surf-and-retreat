@@ -38,13 +38,6 @@ export const HERO_CARDS: HeroLinkCard[] = [
     image: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=300&auto=format&fit=crop',
     to: '/experience#rooms',
   },
-  {
-    id: 'work-by-the-bay',
-    title: 'Work by the Bay',
-    description: 'Fiber wifi, call booths, cold brew.',
-    image: 'https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?q=80&w=300&auto=format&fit=crop',
-    to: '/experience#coworking',
-  },
 ];
 
 export const HIGHLIGHTS: HighlightItem[] = [
@@ -490,10 +483,8 @@ export const AVATARS = [
   'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=120&auto=format&fit=crop',
 ];
 
-export const HERO_IMAGES = {
-  left: 'https://images.unsplash.com/photo-1502680390469-be75c86b636f?q=80&w=1400&auto=format&fit=crop',
-  right: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1400&auto=format&fit=crop',
-};
+export const HERO_IMAGE =
+  'https://images.unsplash.com/photo-1502680390469-be75c86b636f?q=80&w=1400&auto=format&fit=crop';
 
 export const ABOUT_IMAGES = {
   story: 'https://images.unsplash.com/photo-1586500036706-41963de24d8b?q=80&w=1200&auto=format&fit=crop',

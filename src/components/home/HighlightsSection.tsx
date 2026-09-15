@@ -29,10 +29,7 @@ export const HighlightsSection: React.FC = () => {
             <Eyebrow>The Retreat Life</Eyebrow>
 
             <h2 className="text-4xl sm:text-5xl font-bold text-[#18261E] tracking-tight leading-[1.12]">
-              Stay.{' '}
-              <span className="font-serif italic font-normal text-[#2A593B]">
-                Surf,
-              </span>
+              Stay. <span className="text-[#2A593B]">Surf,</span>
               <br />
               Work &amp; Repeat —
               <br />

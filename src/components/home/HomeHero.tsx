@@ -1,29 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Play, Check } from 'lucide-react';
-import { STATS, HERO_CARDS, AVATARS, HERO_IMAGES } from '../../data';
+import { Play } from 'lucide-react';
+import { STATS, HERO_CARDS, HERO_IMAGE } from '../../data';
 import { useModals } from '../../context/ModalContext';
 
 export const HomeHero: React.FC = () => {
   const { openVideo } = useModals();
-  const [email, setEmail] = useState('');
-  const [joined, setJoined] = useState(false);
-
-  const handleJoin = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email || !email.includes('@')) return;
-    setJoined(true);
-    setTimeout(() => {
-      setEmail('');
-      setJoined(false);
-    }, 4000);
-  };
 
   return (
-    <div className="pt-6 sm:pt-10 pb-8 px-4 sm:px-8">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+    <div className="pt-6 sm:pt-10 pb-8 px-4 sm:px-8 lg:pt-6 lg:pb-6 lg:flex lg:flex-col lg:h-[clamp(620px,100vh-124px,900px)]">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center lg:flex-1">
         {/* Left Column: Typography, Form, Social Proof, Stats */}
-        <div className="lg:col-span-6 flex flex-col justify-between space-y-7 lg:space-y-9">
+        <div className="lg:col-span-4 lg:relative lg:z-20 flex flex-col justify-between space-y-7 lg:space-y-6">
           <div className="space-y-5">
             {/* Pill Eyebrow */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#D5DDD1] bg-[#F2F6F0] text-[#34593E] text-[11px] font-semibold tracking-wider uppercase">
@@ -32,7 +20,7 @@ export const HomeHero: React.FC = () => {
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-5xl sm:text-6xl xl:text-[70px] font-bold text-[#18261E] tracking-tight leading-[1.05]">
+            <h1 className="text-5xl sm:text-6xl xl:text-[70px] font-bold text-[#18261E] tracking-tight leading-[1.05] lg:whitespace-nowrap">
               Surf{' '}
               <span className="text-[#2C573A] underline-offset-8">
                 Sunrise,
@@ -48,142 +36,44 @@ export const HomeHero: React.FC = () => {
             </p>
           </div>
 
-          {/* Email Subscription Bar */}
-          <div className="max-w-md">
-            <form
-              onSubmit={handleJoin}
-              className="relative flex items-center bg-white border border-[#D5DDD2] rounded-full p-1.5 shadow-xs focus-within:ring-2 focus-within:ring-[#2C573A]/20 transition-all"
-            >
-              <input
-                id="hero-email-input"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                className="w-full bg-transparent pl-4 pr-3 py-2 text-sm text-[#1A2E21] placeholder-[#87968A] focus:outline-hidden"
-                disabled={joined}
-                required
-              />
-              <button
-                id="hero-join-btn"
-                type="submit"
-                disabled={joined}
-                className={`shrink-0 flex items-center gap-1.5 text-xs sm:text-sm font-medium px-5 py-2.5 rounded-full transition-all duration-200 cursor-pointer ${
-                  joined
-                    ? 'bg-[#2A573B] text-white'
-                    : 'bg-[#2A4E38] hover:bg-[#1E3B29] text-white'
-                }`}
-              >
-                {joined ? (
-                  <>
-                    <Check className="w-3.5 h-3.5" />
-                    <span>Welcome!</span>
-                  </>
-                ) : (
-                  <>
-                    <span>Get Updates</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </>
-                )}
-              </button>
-            </form>
-            {joined && (
-              <p className="text-xs text-[#2A573B] font-medium mt-2 pl-4">
-                Thanks! Surf reports and hostel news, coming your way.
-              </p>
-            )}
-          </div>
-
-          {/* Social Proof */}
-          <div className="flex items-center gap-3 pt-1">
-            <div className="flex -space-x-2.5 overflow-hidden">
-              {AVATARS.map((avatar, idx) => (
-                <img
-                  key={idx}
-                  src={avatar}
-                  alt={`Guest ${idx + 1}`}
-                  referrerPolicy="no-referrer"
-                  className="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover shadow-xs"
-                />
-              ))}
-            </div>
-            <div className="flex items-center gap-1.5 text-xs sm:text-sm text-[#46594B] font-medium">
-              <span className="text-[#325A3D]">🌊</span>
-              <span>Join 5,000+ surfers &amp; remote workers who stayed with us</span>
-            </div>
-          </div>
-
-          {/* Bottom 4 Metric Cards */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3">
-            {STATS.map((stat) => (
-              <div
-                key={stat.id}
-                id={`hero-stat-${stat.id}`}
-                className="bg-[#F4F6F2]/90 hover:bg-white border border-[#E1E7DE] rounded-2xl p-4 transition-all duration-200 shadow-xs hover:shadow-sm"
-              >
-                <div className="text-2xl sm:text-[26px] font-bold text-[#18271E] tracking-tight">
-                  {stat.value}
-                </div>
-                <div className="text-[12px] text-[#637265] font-medium mt-1 leading-tight">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
 
-        {/* Right Column: Split Image (Surf vs Work) & Floating Link Cards */}
-        <div className="lg:col-span-6 relative">
-          <div className="relative w-full h-[520px] sm:h-[580px] lg:h-[620px] rounded-[32px] overflow-hidden border border-[#DFE5DC] shadow-md bg-[#EBF0E8]">
-            {/* Split Imagery Container */}
-            <div className="absolute inset-0 flex">
-              {/* Left Side: Surfing */}
-              <div className="w-1/2 h-full relative overflow-hidden">
-                <img
-                  src={HERO_IMAGES.left}
-                  alt="Surfer riding a wave at Weligama Bay"
-                  referrerPolicy="no-referrer"
-                  className="absolute inset-0 w-full h-full object-cover object-center transform scale-110 filter brightness-[0.98] contrast-[1.08] saturate-[1.15]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-black/10 pointer-events-none" />
-              </div>
+        {/* Right Column: Split Image (Surf vs Work) & Floating Link Cards — bleeds to the card edge on desktop */}
+        <div className="lg:col-span-8 relative lg:-mr-8 lg:-mt-10 lg:self-stretch">
+          <div className="relative w-full h-[520px] sm:h-[580px] lg:h-[calc(100%+2.5rem)] rounded-[32px] lg:rounded-none overflow-hidden border border-[#DFE5DC] lg:border-0 shadow-md lg:shadow-none bg-[#EBF0E8]">
+            {/* Hero Image */}
+            <img
+              src={HERO_IMAGE}
+              alt="Surfer riding a wave at Weligama Bay"
+              referrerPolicy="no-referrer"
+              className="absolute inset-0 w-full h-full object-cover object-center filter brightness-[0.98] contrast-[1.06] saturate-[1.1]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/15 via-transparent to-black/10 pointer-events-none" />
 
-              {/* Seam Divider */}
-              <div className="relative w-0 z-10 flex items-center justify-center">
-                <div className="absolute top-0 bottom-0 w-[2px] bg-white/40 shadow-xs pointer-events-none" />
-              </div>
-
-              {/* Right Side: Coworking */}
-              <div className="w-1/2 h-full relative overflow-hidden">
-                <img
-                  src={HERO_IMAGES.right}
-                  alt="Remote workers with laptops at the coworking space"
-                  referrerPolicy="no-referrer"
-                  className="absolute inset-0 w-full h-full object-cover object-center transform scale-110 filter contrast-[1.05] brightness-[0.95]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-l from-black/15 via-transparent to-transparent pointer-events-none" />
-              </div>
-            </div>
+            {/* Fog fades blending the image into the white card on every inner edge (desktop) */}
+            <div className="hidden lg:block absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-white via-white/55 to-transparent pointer-events-none z-10" />
+            <div className="hidden lg:block absolute inset-y-0 left-0 w-80 bg-gradient-to-r from-white via-white/60 to-transparent pointer-events-none z-10" />
+            <div className="hidden lg:block absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-white via-white/40 to-transparent pointer-events-none z-10" />
 
             {/* "Watch the Surf" Play Pill — offset left so it clears the floating cards */}
-            <div className="absolute top-1/2 left-[32%] -translate-x-1/2 -translate-y-1/2 z-20">
+            <div className="absolute top-1/2 left-[32%] lg:left-[48%] -translate-x-1/2 -translate-y-1/2 z-20">
               <button
                 id="watch-surf-btn"
                 onClick={openVideo}
-                className="group flex items-center gap-2.5 bg-white/90 hover:bg-white backdrop-blur-md pl-1.5 pr-4 py-1.5 rounded-full shadow-lg border border-white/70 transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
+                className="group flex items-center gap-3 cursor-pointer"
                 title="Watch surfing at Weligama Bay"
               >
-                <span className="w-8 h-8 rounded-full bg-[#1C3624] group-hover:bg-[#254A32] flex items-center justify-center text-white transition-colors">
-                  <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
+                <span className="w-11 h-11 rounded-full bg-white shadow-lg flex items-center justify-center text-[#18271E] transition-transform duration-200 group-hover:scale-110 group-active:scale-95">
+                  <Play className="w-4 h-4 fill-current ml-0.5" />
                 </span>
-                <span className="text-[13px] font-semibold text-[#182B1F] tracking-tight whitespace-nowrap">
+                <span className="text-[13px] font-semibold text-white tracking-tight whitespace-nowrap drop-shadow-md">
                   Watch the Surf
                 </span>
               </button>
             </div>
 
             {/* Overlaid Floating Link Cards on the right */}
-            <div className="absolute right-4 sm:right-6 top-16 bottom-16 flex flex-col justify-between z-20 max-w-[220px] sm:max-w-[240px] pointer-events-auto">
+            <div className="absolute right-4 sm:right-6 top-16 bottom-16 lg:bottom-36 flex flex-col justify-between z-20 max-w-[220px] sm:max-w-[240px] pointer-events-auto">
               {HERO_CARDS.map((card, idx) => (
                 <Link
                   key={card.id}
@@ -214,6 +104,28 @@ export const HomeHero: React.FC = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Full-width Metric Tiles row overlapping the image bottom, last one highlighted */}
+      <div className="relative z-20 grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-8 lg:-mt-20 lg:shrink-0">
+        {STATS.map((stat, idx) => (
+          <div
+            key={stat.id}
+            id={`hero-stat-${stat.id}`}
+            className={`rounded-2xl p-4 sm:p-5 border transition-all duration-200 shadow-xs hover:shadow-sm ${
+              idx === STATS.length - 1
+                ? 'bg-[#E9EDD6] border-[#D7DFBC] hover:bg-[#E4E9CC]'
+                : 'bg-[#F7F8F4] hover:bg-white border-[#E1E7DE]'
+            }`}
+          >
+            <div className="text-2xl sm:text-[26px] font-bold text-[#18271E] tracking-tight">
+              {stat.value}
+            </div>
+            <div className="text-[12px] text-[#637265] font-medium mt-1 leading-tight">
+              {stat.label}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
