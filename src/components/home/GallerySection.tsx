@@ -4,10 +4,12 @@ import { Camera, ArrowRight } from 'lucide-react';
 import { GALLERY_IMAGES } from '../../data';
 import { Eyebrow } from '../ui/Eyebrow';
 import { Button } from '../ui/Button';
+import { useReveal } from '../ui/Reveal';
 
 const PREVIEW_IDS = ['g4', 'g1', 'g9', 'g11', 'g6'];
 
 export const GallerySection: React.FC = () => {
+  const gridRef = useReveal<HTMLDivElement>();
   const preview = GALLERY_IMAGES.filter((img) => PREVIEW_IDS.includes(img.id));
 
   return (
@@ -27,7 +29,10 @@ export const GallerySection: React.FC = () => {
         </div>
 
         {/* Asymmetric preview: one large feature + four small tiles */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 auto-rows-[130px] sm:auto-rows-[150px] gap-4">
+        <div
+          ref={gridRef}
+          className="stagger grid grid-cols-2 lg:grid-cols-4 auto-rows-[130px] sm:auto-rows-[150px] gap-4"
+        >
           {preview.map((img, idx) => (
             <Link
               key={img.id}
@@ -36,6 +41,7 @@ export const GallerySection: React.FC = () => {
               className={`relative rounded-2xl overflow-hidden group bg-[#EAF0E7] block ${
                 idx === 0 ? 'col-span-2 row-span-2' : 'col-span-1 row-span-1'
               }`}
+              style={{ '--i': idx } as React.CSSProperties}
               aria-label={`Open gallery: ${img.alt}`}
             >
               <img

@@ -5,6 +5,7 @@ import { HIGHLIGHTS } from '../../data';
 import { HighlightItem } from '../../types';
 import { Eyebrow } from '../ui/Eyebrow';
 import { Button } from '../ui/Button';
+import { useReveal } from '../ui/Reveal';
 
 const renderIcon = (type: HighlightItem['iconType']) => {
   switch (type) {
@@ -20,6 +21,7 @@ const renderIcon = (type: HighlightItem['iconType']) => {
 };
 
 export const HighlightsSection: React.FC = () => {
+  const gridRef = useReveal<HTMLDivElement>();
   return (
     <section className="mt-6 sm:mt-10">
       <div className="bg-white border border-[#E3E8DE] rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 lg:p-14 shadow-xs">
@@ -56,13 +58,14 @@ export const HighlightsSection: React.FC = () => {
 
           {/* Right Column: 3 Vertical Photographic Link Cards */}
           <div className="lg:col-span-7">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-5">
-              {HIGHLIGHTS.map((item) => (
+            <div ref={gridRef} className="stagger grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-5">
+              {HIGHLIGHTS.map((item, idx) => (
                 <Link
                   key={item.id}
                   id={`highlight-card-${item.id}`}
                   to={item.to}
                   className="group relative h-[380px] sm:h-[420px] rounded-[26px] overflow-hidden cursor-pointer shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 block"
+                  style={{ '--i': idx } as React.CSSProperties}
                 >
                   {/* Background Photo */}
                   <img

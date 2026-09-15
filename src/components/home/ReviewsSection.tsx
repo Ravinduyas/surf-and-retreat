@@ -2,6 +2,7 @@ import React from 'react';
 import { Star } from 'lucide-react';
 import { REVIEWS } from '../../data';
 import { Eyebrow } from '../ui/Eyebrow';
+import { useReveal } from '../ui/Reveal';
 
 const StarRow: React.FC<{ rating: number }> = ({ rating }) => (
   <div className="flex items-center gap-0.5" aria-label={`${rating} out of 5 stars`}>
@@ -17,6 +18,7 @@ const StarRow: React.FC<{ rating: number }> = ({ rating }) => (
 );
 
 export const ReviewsSection: React.FC = () => {
+  const gridRef = useReveal<HTMLDivElement>();
   return (
     <section className="mt-8 sm:mt-12">
       <div className="bg-white border border-[#E3E8DE] rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 lg:p-12 shadow-xs">
@@ -46,12 +48,13 @@ export const ReviewsSection: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-          {REVIEWS.map((r) => (
+        <div ref={gridRef} className="stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+          {REVIEWS.map((r, idx) => (
             <div
               key={r.id}
               id={`review-${r.id}`}
               className="bg-[#F4F6F2]/90 hover:bg-white border border-[#E1E7DE] rounded-3xl p-6 sm:p-7 transition-all duration-200 shadow-xs hover:shadow-sm flex flex-col gap-4"
+              style={{ '--i': idx } as React.CSSProperties}
             >
               <div className="flex items-center justify-between">
                 <StarRow rating={r.rating} />

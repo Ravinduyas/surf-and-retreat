@@ -12,3 +12,191 @@
 .modal-fade {
   animation: modal-fade 200ms ease-out;
 }
+
+/* ── Loading & reveal motion — themed "surface from the water" system.
+   Everything lives inside the no-preference block so reduced-motion
+   users get an instant, static page. ── */
+
+.fog-clear {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* One-shot entrance: rises out of a waterline (clip), sharpens from blur */
+  /* `backwards` fill: hidden during the delay, natural (unclipped) after */
+  .surface-in {
+    animation: surface 0.9s cubic-bezier(0.22, 0.9, 0.3, 1) var(--d, 0ms) backwards;
+  }
+  @keyframes surface {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+      clip-path: inset(0 0 65% 0);
+      filter: blur(6px);
+    }
+    30% {
+      opacity: 1;
+    }
+    60% {
+      clip-path: inset(0 0 0 0);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+      clip-path: inset(0 0 0 0);
+      filter: blur(0);
+    }
+  }
+
+  /* Hero image: morning fog burning off + slow settle */
+  .fog-clear {
+    opacity: 1;
+    animation: fogclear 1.4s ease-out 0.2s forwards;
+  }
+  @keyframes fogclear {
+    to {
+      opacity: 0;
+    }
+  }
+  .hero-img-in {
+    animation: heroimg 1.8s cubic-bezier(0.22, 0.9, 0.3, 1) forwards;
+  }
+  @keyframes heroimg {
+    from {
+      transform: scale(1.06);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
+  /* Floating hero cards: surface, then keep bobbing like buoys */
+  .hero-card-in {
+    animation:
+      surface 0.8s cubic-bezier(0.22, 0.9, 0.3, 1) var(--d, 0ms) backwards,
+      buoy 6s ease-in-out calc(var(--d, 0ms) + 1.4s) infinite;
+  }
+  @keyframes buoy {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-7px) rotate(-0.5deg);
+    }
+  }
+
+  /* Sonar rings radiating from the play button */
+  .ripple::before,
+  .ripple::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 9999px;
+    border: 1.5px solid rgba(255, 255, 255, 0.7);
+    animation: ripple 2.8s ease-out infinite;
+    pointer-events: none;
+  }
+  .ripple::after {
+    animation-delay: 1.4s;
+  }
+  @keyframes ripple {
+    0% {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+    70%,
+    100% {
+      transform: scale(2.2);
+      opacity: 0;
+    }
+  }
+
+  /* Scroll reveal for whole blocks */
+  .reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    filter: blur(5px);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 0.9, 0.3, 1) var(--d, 0ms),
+      transform 0.7s cubic-bezier(0.22, 0.9, 0.3, 1) var(--d, 0ms),
+      filter 0.7s ease var(--d, 0ms);
+  }
+  .reveal.in {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  /* Wave-staggered children: each child sets --i, the wave passes through */
+  .stagger > * {
+    opacity: 0;
+    transform: translateY(26px) scale(0.985);
+    filter: blur(4px);
+    transition:
+      opacity 0.6s cubic-bezier(0.22, 0.9, 0.3, 1),
+      transform 0.6s cubic-bezier(0.22, 0.9, 0.3, 1),
+      filter 0.6s ease;
+    transition-delay: calc(90ms * var(--i, 0));
+  }
+  .stagger.in > * {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  /* Preloader: a wave line drawing itself while bobbing */
+  .preloader-wave {
+    animation: preloader-bob 1.6s ease-in-out infinite;
+  }
+  .preloader-wave path {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: wavedraw 1.5s cubic-bezier(0.6, 0, 0.3, 1) infinite;
+  }
+  @keyframes wavedraw {
+    0% {
+      stroke-dashoffset: 100;
+    }
+    55% {
+      stroke-dashoffset: 0;
+    }
+    100% {
+      stroke-dashoffset: -100;
+    }
+  }
+  @keyframes preloader-bob {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+  .preloader-word {
+    animation: surface 0.9s cubic-bezier(0.22, 0.9, 0.3, 1) 0.15s both;
+  }
+}
+
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: #f6f7f4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  transition: opacity 0.5s ease;
+}
+.preloader-out {
+  opacity: 0;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .preloader {
+    display: none;
+  }
+}

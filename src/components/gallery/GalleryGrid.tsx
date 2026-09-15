@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, ArrowLeft, ArrowRight } from 'lucide-react';
 import { GALLERY_IMAGES } from '../../data';
 import { GalleryCategory } from '../../types';
+import { useReveal } from '../ui/Reveal';
 
 const FILTERS: { id: GalleryCategory | 'all'; label: string }[] = [
   { id: 'all', label: 'All' },
@@ -23,6 +24,7 @@ const TILE_SPANS = [
 ];
 
 export const GalleryGrid: React.FC = () => {
+  const gridRef = useReveal<HTMLDivElement>();
   const [filter, setFilter] = useState<GalleryCategory | 'all'>('all');
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
@@ -61,13 +63,17 @@ export const GalleryGrid: React.FC = () => {
         </div>
 
         {/* Asymmetric Bento Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 auto-rows-[120px] sm:auto-rows-[150px] gap-4 grid-flow-dense">
+        <div
+          ref={gridRef}
+          className="stagger grid grid-cols-2 sm:grid-cols-4 auto-rows-[120px] sm:auto-rows-[150px] gap-4 grid-flow-dense"
+        >
           {images.map((img, idx) => (
             <button
               key={img.id}
               id={`gallery-img-${img.id}`}
               onClick={() => setLightboxIndex(idx)}
               className={`relative rounded-2xl overflow-hidden group cursor-pointer bg-[#EAF0E7] focus:outline-hidden ${TILE_SPANS[idx % TILE_SPANS.length]}`}
+              style={{ '--i': idx % 6 } as React.CSSProperties}
               aria-label={`View larger: ${img.alt}`}
             >
               <img

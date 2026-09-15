@@ -7,6 +7,7 @@ import { ReviewsSection } from '../components/home/ReviewsSection';
 import { ExploreSection } from '../components/home/ExploreSection';
 import { GallerySection } from '../components/home/GallerySection';
 import { ServicesGrid } from '../components/services/ServicesGrid';
+import { Reveal } from '../components/ui/Reveal';
 import { usePageMeta } from '../hooks/usePageMeta';
 
 export default function HomePage() {
@@ -21,8 +22,12 @@ export default function HomePage() {
         <HomeHero />
       </PageHeader>
       <HighlightsSection />
-      <TrustedBySection />
-      <ExploreSection />
+      <Reveal>
+        <TrustedBySection />
+      </Reveal>
+      <Reveal>
+        <ExploreSection />
+      </Reveal>
       <ServicesGrid showCta />
       <GallerySection />
       <ReviewsSection />
