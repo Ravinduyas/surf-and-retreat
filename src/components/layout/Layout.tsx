@@ -26,13 +26,13 @@ export const Layout: React.FC = () => {
 
   return (
     <ModalContext.Provider value={modals}>
-      <div className="min-h-screen bg-[#F6F7F4] text-[#1E2721] antialiased">
+      <div className="min-h-screen flex flex-col bg-[#F6F7F4] text-[#1E2721] antialiased">
         <Preloader />
         <ScrollToTop />
-        <main className="max-w-[1280px] mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6">
+        <main className="w-full max-w-[1280px] mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 flex-1">
           <Outlet />
-          <Footer />
         </main>
+        <Footer />
 
         {isVideoOpen && <VideoModal onClose={() => setIsVideoOpen(false)} />}
 

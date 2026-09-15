@@ -35,14 +35,6 @@ export const HomeHero: React.FC = () => {
               Work by the Bay.
             </h1>
 
-            {/* Description Subtitle */}
-            <p
-              className="surface-in text-[#59695C] text-base sm:text-lg max-w-lg leading-relaxed"
-              style={{ '--d': '480ms' } as React.CSSProperties}
-            >
-              A surf hostel, coliving home and coworking space five minutes from
-              Weligama Bay — learn to surf, get real work done, and find your people.
-            </p>
           </div>
 
         </div>
