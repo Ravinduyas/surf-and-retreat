@@ -6,6 +6,7 @@ import { ServicesGrid } from '../components/services/ServicesGrid';
 import { Button } from '../components/ui/Button';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { useModals } from '../context/ModalContext';
+import { SERVICES_HERO_IMAGE } from '../data';
 
 export default function ServicesPage() {
   usePageMeta(
@@ -28,8 +29,8 @@ export default function ServicesPage() {
             </>
           }
           subtitle="From the moment you land at Colombo airport to your last load of laundry — transfers, scooters, tours and storage are all one ask away at the front desk."
-          image="https://images.unsplash.com/photo-1777278549567-f929aa7274dd?q=80&w=1200&auto=format&fit=crop"
-          imageAlt="Rental scooters parked on the sand under palm trees"
+          image={SERVICES_HERO_IMAGE}
+          imageAlt="Rental scooter with a surfboard rack outside the hostel at dusk"
         >
           <Button variant="primary" onClick={() => openBooking()}>
             <span>Book Your Stay</span>

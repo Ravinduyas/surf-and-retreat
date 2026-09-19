@@ -10,11 +10,18 @@ import {
   Amenity,
   Testimonial,
   Review,
+  CafeDish,
   ServiceItem,
   GalleryImage,
   FaqItem,
   ValueItem,
 } from './types';
+
+/**
+ * Real hostel photography lives in public/images and must be resolved
+ * against the deploy base path (the site is served from a subfolder).
+ */
+const img = (name: string) => `${import.meta.env.BASE_URL}images/${name}`;
 
 export const STATS: StatItem[] = [
   { id: '1', value: '5 min', label: 'Walk to Weligama Bay' },
@@ -35,7 +42,7 @@ export const HERO_CARDS: HeroLinkCard[] = [
     id: 'beds-privates',
     title: 'Beds & Privates',
     description: 'Dorms from $12, AC private rooms.',
-    image: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=300&auto=format&fit=crop',
+    image: img('dorm-bunk-close.webp'),
     to: '/experience#rooms',
   },
 ];
@@ -45,7 +52,7 @@ export const HIGHLIGHTS: HighlightItem[] = [
     id: 'stay',
     title: 'Stay',
     description: 'Breezy dorms & private rooms steps from the bay.',
-    image: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=900&auto=format&fit=crop',
+    image: img('dorm-bunks.webp'),
     iconType: 'bed',
     to: '/experience#rooms',
   },
@@ -61,7 +68,7 @@ export const HIGHLIGHTS: HighlightItem[] = [
     id: 'work',
     title: 'Work',
     description: 'Fast wifi and focus space, ocean air included.',
-    image: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=900&auto=format&fit=crop',
+    image: img('coworking.webp'),
     iconType: 'laptop',
     to: '/experience#coworking',
   },
@@ -73,7 +80,7 @@ export const EXPLORE_CARDS: ExploreCard[] = [
     tag: 'Rooms & Stay',
     title: 'Sleep Well, Steps from the Surf',
     description: 'Curtain-pod dorms, AC privates and a garden bungalow.',
-    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop',
+    image: img('dorm-bed-made.webp'),
     to: '/experience#rooms',
   },
   {
@@ -89,7 +96,7 @@ export const EXPLORE_CARDS: ExploreCard[] = [
     tag: 'Coworking',
     title: 'Deep Work, Then Sunset Sessions',
     description: 'Dedicated desks, call booths and 300 Mbps fiber.',
-    image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=800&auto=format&fit=crop',
+    image: img('coworking-2.webp'),
     to: '/experience#coworking',
   },
   {
@@ -97,7 +104,7 @@ export const EXPLORE_CARDS: ExploreCard[] = [
     tag: 'The Retreat',
     title: 'A Home for Surfers & Remote Workers',
     description: 'The story, the crew and the community behind the hostel.',
-    image: 'https://images.unsplash.com/photo-1540541338287-41700207dee6?q=80&w=800&auto=format&fit=crop',
+    image: img('hostel-sign.webp'),
     to: '/about',
   },
 ];
@@ -108,7 +115,7 @@ export const ROOMS: RoomItem[] = [
     tag: 'Dorm',
     title: '8-Bed Surfer Dorm',
     description: 'Our social hub — big fans, big lockers and the best surf chat in Weligama.',
-    image: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=800&auto=format&fit=crop',
+    image: img('dorm-8bed.webp'),
     category: 'Shared',
     pricePerNight: 'from $12/night',
     capacity: 'Sleeps 8 · Mixed',
@@ -121,7 +128,7 @@ export const ROOMS: RoomItem[] = [
     tag: 'Dorm',
     title: '4-Bed Female Dorm',
     description: 'A calmer, cosier dorm reserved for female travellers, with ensuite bathroom.',
-    image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=800&auto=format&fit=crop',
+    image: img('dorm-curtain-pod.webp'),
     category: 'Shared',
     pricePerNight: 'from $15/night',
     capacity: 'Sleeps 4 · Female only',
@@ -134,7 +141,7 @@ export const ROOMS: RoomItem[] = [
     tag: 'Private',
     title: 'Private Double AC',
     description: 'A bright double room with air-con, desk space and your own bathroom.',
-    image: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=800&auto=format&fit=crop',
+    image: img('private-double.webp'),
     category: 'Private',
     pricePerNight: 'from $38/night',
     capacity: 'Sleeps 2 · Queen bed',
@@ -147,7 +154,7 @@ export const ROOMS: RoomItem[] = [
     tag: 'Bungalow',
     title: 'Garden Bungalow',
     description: 'Standalone bungalow in the palm garden — veranda, hammock and total privacy.',
-    image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=800&auto=format&fit=crop',
+    image: img('private-fourposter.webp'),
     category: 'Private',
     pricePerNight: 'from $55/night',
     capacity: 'Sleeps 2–3 · King bed',
@@ -290,62 +297,109 @@ export const TESTIMONIALS: Testimonial[] = [
 
 export const SERVICES: ServiceItem[] = [
   {
-    id: 'pickup',
-    title: 'Airport & Station Pickup',
-    description: 'Door-to-door transfer from Colombo airport or Weligama station — driver waits with your name.',
-    price: 'from $35',
-    iconType: 'pickup',
+    id: 'rooms',
+    title: 'Rooms',
+    description:
+      'Curtain-pod dorms and private AC rooms, all a five-minute walk from Weligama Bay.',
+    price: 'from $12 / night',
+    iconType: 'rooms',
+    group: 'core',
+    to: '/experience#rooms',
   },
   {
-    id: 'scooter',
-    title: 'Scooter Rental',
-    description: 'Well-serviced automatic scooters with helmets and surf racks. Fuel up and explore the south coast.',
-    price: '$10 / day',
-    iconType: 'scooter',
+    id: 'coworking',
+    title: 'Co-working',
+    description:
+      'Dedicated desks, call booths and an AC focus room on 300 Mbps fiber with 4G backup.',
+    price: 'from $8 / day',
+    iconType: 'coworking',
+    group: 'core',
+    to: '/experience#coworking',
   },
   {
-    id: 'laundry',
-    title: 'Laundry Service',
-    description: 'Drop your bag before breakfast, get it back folded by sunset. Salt, sand and wax all gone.',
-    price: '$3 / kg',
-    iconType: 'laundry',
+    id: 'surfing',
+    title: 'Surfing',
+    description:
+      'Sunrise lessons with local instructors, video coaching and boards for every level.',
+    price: 'from $5 / rental',
+    iconType: 'surfing',
+    group: 'core',
+    to: '/experience#surf',
   },
   {
-    id: 'tours',
-    title: 'Day Trips & Tours',
-    description: 'Mirissa whale watching, Galle Fort sunsets, tea country and hidden waterfalls — small groups only.',
-    price: 'from $25',
-    iconType: 'tours',
+    id: 'skating',
+    title: 'Skating',
+    description:
+      'Surfskate and skate sessions — keep your balance dialled in on the flat days.',
+    price: 'Ask at the desk',
+    iconType: 'skating',
+    group: 'extra',
   },
   {
     id: 'yoga',
-    title: 'Sunrise Rooftop Yoga',
-    description: 'Stretch out surf-tight shoulders three mornings a week on the rooftop deck, mats provided.',
+    title: 'Yoga',
+    description:
+      'Sunrise rooftop classes that stretch out surf-tight shoulders. Mats provided.',
     price: '$8 / class',
     iconType: 'yoga',
+    group: 'extra',
   },
   {
-    id: 'storage',
-    title: 'Board & Luggage Storage',
-    description: 'Free racks for your board and lockers for your bags — before check-in, after check-out, or mid-trip.',
-    price: 'Free',
-    iconType: 'storage',
+    id: 'transfer',
+    title: 'Pick Up & Drop',
+    description:
+      'Door-to-door transfers from Colombo airport or Weligama station, day or night.',
+    price: 'from $35',
+    iconType: 'transfer',
+    group: 'extra',
+  },
+  {
+    id: 'laundry',
+    title: 'Laundry',
+    description:
+      'Drop your bag before breakfast, get it back folded by sunset — salt, sand and wax gone.',
+    price: '$3 / kg',
+    iconType: 'laundry',
+    group: 'extra',
   },
 ];
 
 export const GALLERY_IMAGES: GalleryImage[] = [
-  { id: 'g1', src: 'https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=800&auto=format&fit=crop', alt: 'Curtain-pod dorm beds', category: 'rooms' },
-  { id: 'g2', src: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?q=80&w=800&auto=format&fit=crop', alt: 'Private double room with AC', category: 'rooms' },
-  { id: 'g3', src: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800&auto=format&fit=crop', alt: 'Garden and pool area', category: 'rooms' },
-  { id: 'g4', src: 'https://images.unsplash.com/photo-1502680390469-be75c86b636f?q=80&w=800&auto=format&fit=crop', alt: 'Morning surf lesson on Weligama Bay', category: 'surf' },
-  { id: 'g5', src: 'https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?q=80&w=800&auto=format&fit=crop', alt: 'Clean wave rolling in', category: 'surf' },
-  { id: 'g6', src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop', alt: 'Weligama beach at golden hour', category: 'surf' },
-  { id: 'g7', src: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=800&auto=format&fit=crop', alt: 'Guests working in the coworking space', category: 'coworking' },
-  { id: 'g8', src: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=800&auto=format&fit=crop', alt: 'Standing desks in the focus room', category: 'coworking' },
-  { id: 'g9', src: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=800&auto=format&fit=crop', alt: 'Family dinner night at the long table', category: 'social' },
-  { id: 'g10', src: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=800&auto=format&fit=crop', alt: 'Fresh Sri Lankan breakfast spread', category: 'social' },
-  { id: 'g11', src: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?q=80&w=800&auto=format&fit=crop', alt: 'Palm-lined beach near the hostel', category: 'around' },
-  { id: 'g12', src: 'https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?q=80&w=800&auto=format&fit=crop', alt: 'South coast sunset walk', category: 'around' },
+  // Rooms
+  { id: 'g1', src: img('dorm-8bed.webp'), alt: 'The 8-bed surfer dorm', category: 'rooms' },
+  { id: 'g2', src: img('dorm-curtain-pod.webp'), alt: 'Bunk with privacy curtain', category: 'rooms' },
+  { id: 'g3', src: img('dorm-bunk-ladder.webp'), alt: 'Dorm bunk beds with ladder', category: 'rooms' },
+  { id: 'g4', src: img('dorm-bed-made.webp'), alt: 'Freshly made bed with towels', category: 'rooms' },
+  { id: 'g5', src: img('private-double.webp'), alt: 'Private double room', category: 'rooms' },
+  { id: 'g6', src: img('private-fourposter.webp'), alt: 'Four-poster bed with mosquito net', category: 'rooms' },
+  { id: 'g7', src: img('apartment-kitchen-2.webp'), alt: 'Apartment-style room with kitchenette', category: 'rooms' },
+  { id: 'g8', src: img('apartment-kitchen.webp'), alt: 'Shared kitchen for long stays', category: 'rooms' },
+  // Coworking
+  { id: 'g9', src: img('coworking.webp'), alt: 'Coworking room with desks and ergonomic chairs', category: 'coworking' },
+  { id: 'g10', src: img('coworking-2.webp'), alt: 'Bright workspace with sea-facing windows', category: 'coworking' },
+  // Food — the hostel kitchen
+  { id: 'g11', src: img('food-bagel-beach.webp'), alt: 'The Banging Bagel, served by the beach', category: 'food' },
+  { id: 'g12', src: img('food-hummus-beach.webp'), alt: 'Hummus with homemade chips on the sand', category: 'food' },
+  { id: 'g13', src: img('food-smoothie-bowl.webp'), alt: 'Banana blush smoothie bowl', category: 'food' },
+  { id: 'g14', src: img('food-tuna-poke.webp'), alt: 'Fresh tuna poke bowl', category: 'food' },
+  { id: 'g15', src: img('food-coconut-waffle.webp'), alt: 'Coconut waffles', category: 'food' },
+  { id: 'g16', src: img('food-poached-eggs.webp'), alt: 'Poached eggs on avocado toast', category: 'food' },
+  { id: 'g17', src: img('food-shakshuka.webp'), alt: 'Shakshuka with fresh bread', category: 'food' },
+  { id: 'g18', src: img('food-supergreen-pasta.webp'), alt: 'Supergreen pasta', category: 'food' },
+  { id: 'g19', src: img('food-prawn-pasta.webp'), alt: 'Pistachio prawn pasta', category: 'food' },
+  { id: 'g20', src: img('food-fish-curry.webp'), alt: 'Coastal fish curry', category: 'food' },
+  { id: 'g21', src: img('food-burger.webp'), alt: 'Beef burger with homemade chips', category: 'food' },
+  { id: 'g22', src: img('food-watermelon-feta.webp'), alt: 'Watermelon and feta bowl', category: 'food' },
+  // Around the hostel
+  { id: 'g23', src: img('hostel-sign.webp'), alt: 'Surf & Retreat Hostel entrance sign', category: 'around' },
+  { id: 'g24', src: img('garden.webp'), alt: 'Garden and hangout area', category: 'around' },
+  { id: 'g25', src: img('building-exterior.webp'), alt: 'The hostel building and balcony', category: 'around' },
+  { id: 'g26', src: img('scooter-surfboard.webp'), alt: 'Rental scooter with a board rack at dusk', category: 'around' },
+  { id: 'g27', src: img('hostel-dog-bike.webp'), alt: 'The hostel dog keeping watch', category: 'around' },
+  // Surf — placeholder stock until we have our own surf shots
+  { id: 'g28', src: 'https://images.unsplash.com/photo-1502680390469-be75c86b636f?q=80&w=800&auto=format&fit=crop', alt: 'Morning surf lesson on Weligama Bay', category: 'surf' },
+  { id: 'g29', src: 'https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?q=80&w=800&auto=format&fit=crop', alt: 'Clean wave rolling in', category: 'surf' },
+  { id: 'g30', src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop', alt: 'Weligama beach at golden hour', category: 'surf' },
 ];
 
 export const REVIEWS: Review[] = [
@@ -486,9 +540,50 @@ export const AVATARS = [
 export const HERO_IMAGE =
   'https://images.unsplash.com/photo-1502680390469-be75c86b636f?q=80&w=1400&auto=format&fit=crop';
 
+export const SERVICES_HERO_IMAGE = img('scooter-surfboard.webp');
+
+export const CAFE_DISHES: CafeDish[] = [
+  {
+    id: 'bagel',
+    name: 'The Banging Bagel',
+    note: 'Bacon, egg and avocado — the post-session favourite.',
+    image: img('food-bagel-beach.webp'),
+  },
+  {
+    id: 'smoothie-bowl',
+    name: 'Banana Blush Bowl',
+    note: 'Fruit, seeds and nuts, blended cold for hot mornings.',
+    image: img('food-smoothie-bowl.webp'),
+  },
+  {
+    id: 'poke',
+    name: 'Tuna Poke Bowl',
+    note: 'Line-caught tuna from the Weligama boats each morning.',
+    image: img('food-tuna-poke.webp'),
+  },
+  {
+    id: 'curry',
+    name: 'Coastal Fish Curry',
+    note: 'The Sri Lankan classic, cooked the way our chef’s mother does.',
+    image: img('food-fish-curry.webp'),
+  },
+  {
+    id: 'waffle',
+    name: 'Coconut Waffles',
+    note: 'Golden, crisp and drenched in island coconut treacle.',
+    image: img('food-coconut-waffle.webp'),
+  },
+  {
+    id: 'pasta',
+    name: 'Pistachio Prawn Pasta',
+    note: 'Fresh prawns, pistachio pesto — our most photographed plate.',
+    image: img('food-prawn-pasta.webp'),
+  },
+];
+
 export const ABOUT_IMAGES = {
-  story: 'https://images.unsplash.com/photo-1586500036706-41963de24d8b?q=80&w=1200&auto=format&fit=crop',
-  location: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?q=80&w=1200&auto=format&fit=crop',
+  story: img('garden.webp'),
+  location: img('building-exterior.webp'),
 };
 
 export const CONTACT_INFO = {

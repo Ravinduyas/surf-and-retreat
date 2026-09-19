@@ -6,7 +6,7 @@ import { Eyebrow } from '../ui/Eyebrow';
 import { Button } from '../ui/Button';
 import { useReveal } from '../ui/Reveal';
 
-const PREVIEW_IDS = ['g4', 'g1', 'g9', 'g11', 'g6'];
+const PREVIEW_IDS = ['g1', 'g11', 'g9', 'g23', 'g14'];
 
 export const GallerySection: React.FC = () => {
   const gridRef = useReveal<HTMLDivElement>();

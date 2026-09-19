@@ -95,15 +95,25 @@ export interface Review {
   avatar: string;
 }
 
+export interface CafeDish {
+  id: string;
+  name: string;
+  note: string;
+  image: string;
+}
+
 export interface ServiceItem {
   id: string;
   title: string;
   description: string;
   price: string;
-  iconType: 'pickup' | 'scooter' | 'laundry' | 'tours' | 'yoga' | 'storage';
+  iconType: 'rooms' | 'coworking' | 'surfing' | 'skating' | 'yoga' | 'transfer' | 'laundry';
+  /** 'core' services have their own page section; 'extra' are front-desk add-ons. */
+  group: 'core' | 'extra';
+  to?: string;
 }
 
-export type GalleryCategory = 'rooms' | 'surf' | 'coworking' | 'social' | 'around';
+export type GalleryCategory = 'rooms' | 'surf' | 'coworking' | 'food' | 'around';
 
 export interface GalleryImage {
   id: string;

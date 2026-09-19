@@ -6,3 +6,11 @@ coverage/
 *.log
 .env*
 !.env.example
+
+# Original full-size photo library (not deployed)
+source-photos/
+tools/sheet.mjs
+tools/shots.mjs
+tools/section.mjs
+tools/zoom.mjs
+dev.log

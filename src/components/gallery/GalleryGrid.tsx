@@ -9,8 +9,8 @@ const FILTERS: { id: GalleryCategory | 'all'; label: string }[] = [
   { id: 'rooms', label: 'Rooms & Stay' },
   { id: 'surf', label: 'Surf' },
   { id: 'coworking', label: 'Coworking' },
-  { id: 'social', label: 'Social & Food' },
-  { id: 'around', label: 'Around Weligama' },
+  { id: 'food', label: 'Food & Café' },
+  { id: 'around', label: 'Around the Hostel' },
 ];
 
 /* Repeating asymmetric pattern: feature, small, tall, small, small, wide */
