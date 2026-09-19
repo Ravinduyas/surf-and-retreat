@@ -74,7 +74,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ initialTab, onClose 
             <button
               key={tab.id}
               onClick={() => setSelectedTab(tab.id)}
-              className={`flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              className={`flex items-center justify-center gap-1.5 py-3 sm:py-2 px-3 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                 selectedTab === tab.id
                   ? 'bg-white text-[#1D3E29] shadow-xs'
                   : 'text-[#5C6E61] hover:text-[#1D3E29]'
@@ -108,7 +108,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ initialTab, onClose 
                   type="button"
                   key={opt}
                   onClick={() => setFormData({ ...formData, pick: opt })}
-                  className={`py-2 px-1 rounded-xl text-[11px] font-bold border transition-all cursor-pointer ${
+                  className={`py-3 sm:py-2 px-1 rounded-xl text-[11px] font-bold border transition-all cursor-pointer ${
                     formData.pick === opt
                       ? 'bg-[#2A4E38] text-white border-[#2A4E38]'
                       : 'bg-[#F9FAF8] text-[#243F2D] border-[#DCE2D8] hover:bg-white'
@@ -130,7 +130,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ initialTab, onClose 
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               placeholder="Jane Doe"
-              className="w-full bg-[#F9FAF8] border border-[#DCE2D8] rounded-xl px-3.5 py-2 text-xs text-[#18271E] focus:outline-hidden focus:ring-2 focus:ring-[#2C573A]/20"
+              className="w-full bg-[#F9FAF8] border border-[#DCE2D8] rounded-xl px-3.5 py-3 sm:py-2 text-[13px] sm:text-xs text-[#18271E] focus:outline-hidden focus:ring-2 focus:ring-[#2C573A]/20"
             />
           </div>
 
@@ -144,7 +144,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ initialTab, onClose 
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               placeholder="jane@example.com"
-              className="w-full bg-[#F9FAF8] border border-[#DCE2D8] rounded-xl px-3.5 py-2 text-xs text-[#18271E] focus:outline-hidden focus:ring-2 focus:ring-[#2C573A]/20"
+              className="w-full bg-[#F9FAF8] border border-[#DCE2D8] rounded-xl px-3.5 py-3 sm:py-2 text-[13px] sm:text-xs text-[#18271E] focus:outline-hidden focus:ring-2 focus:ring-[#2C573A]/20"
             />
           </div>
 
@@ -158,7 +158,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ initialTab, onClose 
                 required
                 value={formData.checkIn}
                 onChange={(e) => setFormData({ ...formData, checkIn: e.target.value })}
-                className="w-full bg-[#F9FAF8] border border-[#DCE2D8] rounded-xl px-3.5 py-2 text-xs text-[#18271E] focus:outline-hidden focus:ring-2 focus:ring-[#2C573A]/20"
+                className="w-full bg-[#F9FAF8] border border-[#DCE2D8] rounded-xl px-3.5 py-3 sm:py-2 text-[13px] sm:text-xs text-[#18271E] focus:outline-hidden focus:ring-2 focus:ring-[#2C573A]/20"
               />
             </div>
             <div>
@@ -169,7 +169,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ initialTab, onClose 
                 type="date"
                 value={formData.checkOut}
                 onChange={(e) => setFormData({ ...formData, checkOut: e.target.value })}
-                className="w-full bg-[#F9FAF8] border border-[#DCE2D8] rounded-xl px-3.5 py-2 text-xs text-[#18271E] focus:outline-hidden focus:ring-2 focus:ring-[#2C573A]/20"
+                className="w-full bg-[#F9FAF8] border border-[#DCE2D8] rounded-xl px-3.5 py-3 sm:py-2 text-[13px] sm:text-xs text-[#18271E] focus:outline-hidden focus:ring-2 focus:ring-[#2C573A]/20"
               />
             </div>
           </div>
@@ -183,7 +183,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ initialTab, onClose 
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               placeholder="Group size, dietary needs, airport pickup..."
-              className="w-full bg-[#F9FAF8] border border-[#DCE2D8] rounded-xl px-3.5 py-2 text-xs text-[#18271E] focus:outline-hidden focus:ring-2 focus:ring-[#2C573A]/20 resize-none"
+              className="w-full bg-[#F9FAF8] border border-[#DCE2D8] rounded-xl px-3.5 py-3 sm:py-2 text-[13px] sm:text-xs text-[#18271E] focus:outline-hidden focus:ring-2 focus:ring-[#2C573A]/20 resize-none"
             />
           </div>
 

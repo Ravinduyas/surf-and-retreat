@@ -141,7 +141,7 @@ export const Footer: React.FC = () => {
                     <li key={link.name}>
                       <Link
                         to={link.to}
-                        className="text-[13px] text-[#C4D3C4] hover:text-white transition-colors cursor-pointer"
+                        className="inline-block py-1.5 text-[13px] text-[#C4D3C4] hover:text-white transition-colors cursor-pointer"
                       >
                         {link.name}
                       </Link>
@@ -159,7 +159,7 @@ export const Footer: React.FC = () => {
                     <li key={link.name}>
                       <button
                         onClick={() => openBooking(link.tab)}
-                        className="text-[13px] text-[#C4D3C4] hover:text-white transition-colors cursor-pointer"
+                        className="inline-block py-1.5 text-[13px] text-[#C4D3C4] hover:text-white transition-colors cursor-pointer"
                       >
                         {link.name}
                       </button>
@@ -177,7 +177,7 @@ export const Footer: React.FC = () => {
                     <li key={link.name}>
                       <Link
                         to={link.to}
-                        className="text-[13px] text-[#C4D3C4] hover:text-white transition-colors cursor-pointer"
+                        className="inline-block py-1.5 text-[13px] text-[#C4D3C4] hover:text-white transition-colors cursor-pointer"
                       >
                         {link.name}
                       </Link>
@@ -190,7 +190,7 @@ export const Footer: React.FC = () => {
                 <h4 className="text-[12px] font-bold text-[#D8E95E] tracking-[0.14em] uppercase">
                   Follow Us
                 </h4>
-                <div className="flex items-center gap-2 pt-0.5">
+                <div className="flex flex-wrap items-center gap-2 pt-0.5">
                   {socialLinks.map((social) => {
                     const Icon = social.icon;
                     return (
@@ -200,7 +200,7 @@ export const Footer: React.FC = () => {
                         target="_blank"
                         rel="noreferrer"
                         aria-label={social.name}
-                        className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-[#C4D3C4] hover:text-[#193B26] hover:bg-[#D8E95E] hover:border-[#D8E95E] transition-colors cursor-pointer"
+                        className="w-11 h-11 sm:w-9 sm:h-9 shrink-0 rounded-full border border-white/20 flex items-center justify-center text-[#C4D3C4] hover:text-[#193B26] hover:bg-[#D8E95E] hover:border-[#D8E95E] transition-colors cursor-pointer"
                       >
                         <Icon className="w-4 h-4" />
                       </a>
@@ -222,7 +222,7 @@ export const Footer: React.FC = () => {
                 <button
                   onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                   aria-label="Back to top"
-                  className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-[#C4D3C4] hover:text-[#193B26] hover:bg-[#D8E95E] hover:border-[#D8E95E] transition-colors cursor-pointer"
+                  className="w-11 h-11 sm:w-9 sm:h-9 shrink-0 rounded-full border border-white/20 flex items-center justify-center text-[#C4D3C4] hover:text-[#193B26] hover:bg-[#D8E95E] hover:border-[#D8E95E] transition-colors cursor-pointer"
                 >
                   <ArrowUp className="w-4 h-4" />
                 </button>

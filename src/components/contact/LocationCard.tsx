@@ -2,16 +2,17 @@ import React from 'react';
 import { MapPin, Phone, Mail, ExternalLink, Plane } from 'lucide-react';
 import { Eyebrow } from '../ui/Eyebrow';
 import { ABOUT_IMAGES, CONTACT_INFO } from '../../data';
+import { Photo } from '../ui/Photo';
 
 export const LocationCard: React.FC = () => {
   return (
     <div className="bg-white border border-[#E3E8DE] rounded-[32px] sm:rounded-[36px] overflow-hidden shadow-xs">
       {/* Photo */}
       <div className="relative h-[200px] sm:h-[240px] w-full overflow-hidden bg-[#EAF0E7]">
-        <img
+        <Photo
           src={ABOUT_IMAGES.location}
           alt="Palm trees on the beach at sunset in Weligama"
-          referrerPolicy="no-referrer"
+          sizes="(max-width: 1024px) 100vw, 45vw"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
@@ -60,7 +61,7 @@ export const LocationCard: React.FC = () => {
           href={CONTACT_INFO.mapsUrl}
           target="_blank"
           rel="noreferrer"
-          className="w-full bg-[#2A4E38] hover:bg-[#1E3A28] text-white font-semibold py-3 rounded-full text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs active:scale-98"
+          className="w-full bg-[#2A4E38] hover:bg-[#1E3A28] text-white font-semibold py-3.5 rounded-full text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs active:scale-98"
         >
           <span>Open in Google Maps</span>
           <ExternalLink className="w-4 h-4" />

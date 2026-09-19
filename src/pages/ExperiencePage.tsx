@@ -61,7 +61,7 @@ export default function ExperiencePage() {
           <a
             key={id}
             href={`#${id}`}
-            className="surface-in inline-flex items-center gap-1.5 bg-white border border-[#E1E7DE] hover:border-[#B9C9B6] text-[#254A32] text-[12px] font-semibold px-4 py-2 rounded-full shadow-xs transition-colors cursor-pointer"
+            className="surface-in inline-flex items-center gap-1.5 bg-white border border-[#E1E7DE] hover:border-[#B9C9B6] text-[#254A32] text-[12px] font-semibold px-4 py-2.5 sm:py-2 min-h-11 sm:min-h-0 rounded-full shadow-xs transition-colors cursor-pointer"
             style={{ '--d': `${650 + idx * 120}ms` } as React.CSSProperties}
           >
             <Icon className="w-3.5 h-3.5" />

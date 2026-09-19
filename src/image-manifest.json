@@ -1,0 +1,284 @@
+{
+ "dorm-8bed": {
+  "w": 960,
+  "h": 1280,
+  "variants": [
+   400,
+   800,
+   960
+  ]
+ },
+ "dorm-curtain-pod": {
+  "w": 960,
+  "h": 1280,
+  "variants": [
+   400,
+   800,
+   960
+  ]
+ },
+ "dorm-bunks": {
+  "w": 960,
+  "h": 1280,
+  "variants": [
+   400,
+   800,
+   960
+  ]
+ },
+ "dorm-bunk-close": {
+  "w": 960,
+  "h": 1280,
+  "variants": [
+   400,
+   800,
+   960
+  ]
+ },
+ "dorm-bunk-ladder": {
+  "w": 960,
+  "h": 1280,
+  "variants": [
+   400,
+   800,
+   960
+  ]
+ },
+ "dorm-bed-made": {
+  "w": 960,
+  "h": 1280,
+  "variants": [
+   400,
+   800,
+   960
+  ]
+ },
+ "private-double": {
+  "w": 1152,
+  "h": 2048,
+  "variants": [
+   400,
+   800,
+   1152
+  ]
+ },
+ "private-double-2": {
+  "w": 1200,
+  "h": 1600,
+  "variants": [
+   400,
+   800,
+   1200
+  ]
+ },
+ "private-fourposter": {
+  "w": 960,
+  "h": 1280,
+  "variants": [
+   400,
+   800,
+   960
+  ]
+ },
+ "private-fourposter-2": {
+  "w": 960,
+  "h": 1280,
+  "variants": [
+   400,
+   800,
+   960
+  ]
+ },
+ "apartment-kitchen": {
+  "w": 1200,
+  "h": 1600,
+  "variants": [
+   400,
+   800,
+   1200
+  ]
+ },
+ "apartment-kitchen-2": {
+  "w": 960,
+  "h": 1280,
+  "variants": [
+   400,
+   800,
+   960
+  ]
+ },
+ "coworking": {
+  "w": 960,
+  "h": 1280,
+  "variants": [
+   400,
+   800,
+   960
+  ]
+ },
+ "coworking-2": {
+  "w": 960,
+  "h": 1280,
+  "variants": [
+   400,
+   800,
+   960
+  ]
+ },
+ "hostel-sign": {
+  "w": 900,
+  "h": 1600,
+  "variants": [
+   400,
+   800,
+   900
+  ]
+ },
+ "garden": {
+  "w": 960,
+  "h": 1280,
+  "variants": [
+   400,
+   800,
+   960
+  ]
+ },
+ "building-exterior": {
+  "w": 960,
+  "h": 1280,
+  "variants": [
+   400,
+   800,
+   960
+  ]
+ },
+ "scooter-surfboard": {
+  "w": 1280,
+  "h": 960,
+  "variants": [
+   400,
+   800,
+   1200,
+   1280
+  ]
+ },
+ "hostel-dog-bike": {
+  "w": 960,
+  "h": 1280,
+  "variants": [
+   400,
+   800,
+   960
+  ]
+ },
+ "food-bagel-beach": {
+  "w": 1400,
+  "h": 2100,
+  "variants": [
+   400,
+   800,
+   1200,
+   1400
+  ]
+ },
+ "food-hummus-beach": {
+  "w": 1400,
+  "h": 918,
+  "variants": [
+   400,
+   800,
+   1200,
+   1400
+  ]
+ },
+ "food-smoothie-bowl": {
+  "w": 1200,
+  "h": 1693,
+  "variants": [
+   400,
+   800,
+   1200
+  ]
+ },
+ "food-tuna-poke": {
+  "w": 1200,
+  "h": 1800,
+  "variants": [
+   400,
+   800,
+   1200
+  ]
+ },
+ "food-coconut-waffle": {
+  "w": 1200,
+  "h": 1628,
+  "variants": [
+   400,
+   800,
+   1200
+  ]
+ },
+ "food-supergreen-pasta": {
+  "w": 1200,
+  "h": 1713,
+  "variants": [
+   400,
+   800,
+   1200
+  ]
+ },
+ "food-burger": {
+  "w": 1200,
+  "h": 1740,
+  "variants": [
+   400,
+   800,
+   1200
+  ]
+ },
+ "food-shakshuka": {
+  "w": 1200,
+  "h": 1620,
+  "variants": [
+   400,
+   800,
+   1200
+  ]
+ },
+ "food-poached-eggs": {
+  "w": 1200,
+  "h": 1719,
+  "variants": [
+   400,
+   800,
+   1200
+  ]
+ },
+ "food-fish-curry": {
+  "w": 1200,
+  "h": 1506,
+  "variants": [
+   400,
+   800,
+   1200
+  ]
+ },
+ "food-prawn-pasta": {
+  "w": 1200,
+  "h": 1723,
+  "variants": [
+   400,
+   800,
+   1200
+  ]
+ },
+ "food-watermelon-feta": {
+  "w": 1200,
+  "h": 775,
+  "variants": [
+   400,
+   800,
+   1200
+  ]
+ }
+}

@@ -23,17 +23,21 @@ export const Navbar: React.FC = () => {
         <Logo />
 
         {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-7 lg:gap-9" aria-label="Main Navigation">
+        {/* Solid pill keeps the links legible when the home hero photo runs underneath */}
+        <nav
+          className="hidden lg:flex items-center gap-0.5 bg-white rounded-full p-1.5 border border-[#E3E8DE] shadow-sm"
+          aria-label="Main Navigation"
+        >
           {NAV_LINKS.map((link) => (
             <NavLink
               key={link.name}
               to={link.to}
               end={link.to === '/'}
               className={({ isActive }) =>
-                `text-[14px] font-medium transition-colors cursor-pointer focus:outline-hidden ${
+                `text-[14px] font-medium px-3.5 xl:px-4 py-2 rounded-full whitespace-nowrap transition-colors cursor-pointer focus:outline-hidden ${
                   isActive
-                    ? 'text-[#192B1E] font-semibold'
-                    : 'text-[#4A594E] hover:text-[#192B1E]'
+                    ? 'bg-[#1B3223] text-white font-semibold'
+                    : 'text-[#3E4F43] hover:text-[#192B1E] hover:bg-[#F1F5EF]'
                 }`
               }
             >
@@ -43,7 +47,7 @@ export const Navbar: React.FC = () => {
         </nav>
 
         {/* Right CTA Button */}
-        <div className="hidden sm:flex items-center">
+        <div className="hidden lg:flex items-center shrink-0">
           <button
             id="nav-book-btn"
             onClick={() => openBooking()}
@@ -54,18 +58,18 @@ export const Navbar: React.FC = () => {
         </div>
 
         {/* Mobile Hamburger Toggle */}
-        <div className="flex md:hidden items-center gap-2">
+        <div className="flex lg:hidden items-center gap-2">
           <button
             id="nav-book-mobile-btn"
             onClick={() => openBooking()}
-            className="bg-[#D8E95E] text-[#193B26] text-[12px] font-semibold px-3.5 py-1.5 rounded-full"
+            className="bg-[#D8E95E] hover:bg-[#CFE24D] active:scale-98 transition-all text-[#193B26] text-[13px] font-semibold px-5 py-3 rounded-full shadow-xs cursor-pointer"
           >
             Book
           </button>
           <button
             id="mobile-menu-toggle-btn"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 text-[#24422E] hover:bg-[#EDF2EB] rounded-full transition-colors focus:outline-hidden"
+            className="w-11 h-11 flex items-center justify-center text-[#24422E] hover:bg-[#EDF2EB] rounded-full transition-colors focus:outline-hidden"
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -75,7 +79,7 @@ export const Navbar: React.FC = () => {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden mt-3 p-5 bg-white/95 backdrop-blur-md rounded-2xl border border-[#E1E7DE] shadow-lg flex flex-col gap-4 modal-fade">
+        <div className="lg:hidden mt-3 p-5 bg-white/95 backdrop-blur-md rounded-2xl border border-[#E1E7DE] shadow-lg flex flex-col gap-4 modal-fade">
           {NAV_LINKS.map((link) => (
             <NavLink
               key={link.name}

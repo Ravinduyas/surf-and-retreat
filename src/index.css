@@ -70,22 +70,6 @@
     }
   }
 
-  /* Floating hero cards: surface, then keep bobbing like buoys */
-  .hero-card-in {
-    animation:
-      surface 0.8s cubic-bezier(0.22, 0.9, 0.3, 1) var(--d, 0ms) backwards,
-      buoy 6s ease-in-out calc(var(--d, 0ms) + 1.4s) infinite;
-  }
-  @keyframes buoy {
-    0%,
-    100% {
-      transform: translateY(0) rotate(0deg);
-    }
-    50% {
-      transform: translateY(-7px) rotate(-0.5deg);
-    }
-  }
-
   /* Sonar rings radiating from the play button */
   .ripple::before,
   .ripple::after {
@@ -155,6 +139,23 @@
   .stagger > *:nth-child(8) { --i: 7; }
   .stagger > *:nth-child(n + 9) { --i: 8; }
 
+  /* Logo strip: drifts sideways on narrow screens, pauses on touch/hover */
+  .marquee-track {
+    animation: marquee 26s linear infinite;
+  }
+  .marquee:hover .marquee-track,
+  .marquee:active .marquee-track {
+    animation-play-state: paused;
+  }
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
   /* Preloader: a wave line drawing itself while bobbing */
   .preloader-wave {
     animation: preloader-bob 1.6s ease-in-out infinite;
@@ -189,6 +190,12 @@
   }
 }
 
+/* Fade the marquee's edges so logos drift in and out rather than clipping. */
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 40px, #000 calc(100% - 40px), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 40px, #000 calc(100% - 40px), transparent);
+}
+
 .preloader {
   position: fixed;
   inset: 0;
@@ -208,5 +215,9 @@
 @media (prefers-reduced-motion: reduce) {
   .preloader {
     display: none;
+  }
+  /* No drifting for these users — let them swipe the logo strip instead. */
+  .marquee {
+    overflow-x: auto;
   }
 }

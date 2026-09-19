@@ -6,6 +6,7 @@ import { HighlightItem } from '../../types';
 import { Eyebrow } from '../ui/Eyebrow';
 import { Button } from '../ui/Button';
 import { useReveal } from '../ui/Reveal';
+import { Photo } from '../ui/Photo';
 
 const renderIcon = (type: HighlightItem['iconType']) => {
   switch (type) {
@@ -68,10 +69,10 @@ export const HighlightsSection: React.FC = () => {
                   style={{ '--i': idx } as React.CSSProperties}
                 >
                   {/* Background Photo */}
-                  <img
+                  <Photo
                     src={item.image}
                     alt={item.title}
-                    referrerPolicy="no-referrer"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 30vw"
                     className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
 

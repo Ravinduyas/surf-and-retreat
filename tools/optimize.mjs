@@ -48,17 +48,35 @@ const JOBS = [
   [`${F}/watermelon feta bowl.jpg`, 'food-watermelon-feta', 1200],
 ];
 
+/** Widths emitted for every photo so browsers can pick per device. */
+const STEPS = [400, 800, 1200, 1600];
+
 fs.mkdirSync(OUT, { recursive: true });
+const manifest = {};
 let total = 0;
+
 for (const [src, name, width] of JOBS) {
   if (!fs.existsSync(src)) {
     console.error('MISSING:', src);
     continue;
   }
-  const dest = path.join(OUT, `${name}.webp`);
-  await sharp(src).rotate().resize({ width, withoutEnlargement: true }).webp({ quality: 82 }).toFile(dest);
-  const kb = Math.round(fs.statSync(dest).size / 1024);
-  total += kb;
-  console.log(`${name}.webp  ${kb}KB`);
+  const meta = await sharp(src).rotate().metadata();
+  const maxWidth = Math.min(width, meta.width);
+  const widths = [...new Set([...STEPS.filter((w) => w < maxWidth), maxWidth])];
+
+  for (const w of widths) {
+    const dest = path.join(OUT, w === maxWidth ? `${name}.webp` : `${name}-${w}.webp`);
+    await sharp(src).rotate().resize({ width: w, withoutEnlargement: true }).webp({ quality: 82 }).toFile(dest);
+    total += fs.statSync(dest).size / 1024;
+  }
+
+  manifest[name] = {
+    w: maxWidth,
+    h: Math.round((meta.height / meta.width) * maxWidth),
+    variants: widths,
+  };
+  console.log(`${name}  ${widths.join('/')}`);
 }
-console.log(`\n${JOBS.length} images, ${Math.round(total / 1024 * 10) / 10}MB total`);
+
+fs.writeFileSync('src/image-manifest.json', JSON.stringify(manifest, null, 1) + '\n');
+console.log(`\n${JOBS.length} photos, ${Object.values(manifest).reduce((n, m) => n + m.variants.length, 0)} files, ${Math.round(total / 1024 * 10) / 10}MB total`);

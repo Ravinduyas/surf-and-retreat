@@ -4,6 +4,7 @@ import { CAFE_DISHES } from '../../data';
 import { Eyebrow } from '../ui/Eyebrow';
 import { Button } from '../ui/Button';
 import { useReveal } from '../ui/Reveal';
+import { Photo } from '../ui/Photo';
 
 export const CafeSection: React.FC = () => {
   const gridRef = useReveal<HTMLDivElement>();
@@ -32,10 +33,11 @@ export const CafeSection: React.FC = () => {
           {CAFE_DISHES.map((dish) => (
             <div key={dish.id} id={`dish-${dish.id}`} className="group">
               <div className="relative h-[180px] sm:h-[230px] rounded-2xl overflow-hidden bg-[#EAF0E7] shadow-xs">
-                <img
+                <Photo
                   src={dish.image}
                   alt={dish.name}
                   loading="lazy"
+                  sizes="(max-width: 640px) 50vw, 33vw"
                   className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                 />
               </div>

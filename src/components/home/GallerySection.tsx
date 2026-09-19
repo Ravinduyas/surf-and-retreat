@@ -5,6 +5,7 @@ import { GALLERY_IMAGES } from '../../data';
 import { Eyebrow } from '../ui/Eyebrow';
 import { Button } from '../ui/Button';
 import { useReveal } from '../ui/Reveal';
+import { Photo } from '../ui/Photo';
 
 const PREVIEW_IDS = ['g1', 'g11', 'g9', 'g23', 'g14'];
 
@@ -44,11 +45,11 @@ export const GallerySection: React.FC = () => {
               style={{ '--i': idx } as React.CSSProperties}
               aria-label={`Open gallery: ${img.alt}`}
             >
-              <img
+              <Photo
                 src={img.src}
                 alt={img.alt}
-                referrerPolicy="no-referrer"
                 loading="lazy"
+                sizes="(max-width: 1024px) 50vw, 25vw"
                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
               />
             </Link>

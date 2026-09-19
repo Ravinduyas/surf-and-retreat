@@ -11,7 +11,7 @@ import { SERVICES_HERO_IMAGE } from '../data';
 export default function ServicesPage() {
   usePageMeta(
     'Guest Services | Surf & Retreat Hostel Weligama',
-    'Airport pickup, scooter rental, laundry, day trips, rooftop yoga and free board storage — every service bookable at the front desk.'
+    'Rooms, co-working, surfing, skating, yoga, airport pick-up and drop, and laundry — every service at Surf & Retreat Hostel Weligama, bookable at the front desk.'
   );
   const { openBooking } = useModals();
 
@@ -28,9 +28,9 @@ export default function ServicesPage() {
               You Catch the <span className="text-[#2C573A]">Waves.</span>
             </>
           }
-          subtitle="From the moment you land at Colombo airport to your last load of laundry — transfers, scooters, tours and storage are all one ask away at the front desk."
+          subtitle="From your airport pickup to your last load of laundry — beds, desks, boards, skate sessions and sunrise yoga are all one ask away at the front desk."
           image={SERVICES_HERO_IMAGE}
-          imageAlt="Rental scooter with a surfboard rack outside the hostel at dusk"
+          imageAlt="The hostel dog keeping watch out front"
         >
           <Button variant="primary" onClick={() => openBooking()}>
             <span>Book Your Stay</span>

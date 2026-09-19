@@ -70,7 +70,7 @@ export const SurfPackages: React.FC = () => {
 
                 <button
                   onClick={() => openDetail(pkg, 'surf')}
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#254A32] hover:text-[#183321] transition-all cursor-pointer group-hover:gap-2"
+                  className="inline-flex items-center gap-1.5 py-1.5 text-xs font-semibold text-[#254A32] hover:text-[#183321] transition-all cursor-pointer group-hover:gap-2"
                 >
                   <span>View Package</span>
                   <ArrowRight className="w-3.5 h-3.5" />

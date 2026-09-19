@@ -58,18 +58,44 @@ export const TrustedBySection: React.FC = () => {
     },
   ];
 
+  const LogoRow: React.FC<{ idPrefix?: string; hidden?: boolean }> = ({ idPrefix, hidden }) => (
+    <div className="flex items-center gap-10 pr-10" aria-hidden={hidden || undefined}>
+      {logos.map((logo, index) => (
+        <div
+          key={logo.id}
+          id={idPrefix ? `${idPrefix}-${index}` : undefined}
+          className="flex shrink-0 items-center gap-2 text-[#6D7D70] hover:text-[#234530] transition-colors"
+        >
+          {logo.icon}
+          <span className="text-[14px] font-semibold tracking-tight whitespace-nowrap">
+            Logoipsum
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+
   return (
     <div className="py-10 px-4 sm:px-8 border-y border-[#E4EAE0]/80 my-8">
-      <div className="flex flex-wrap items-center justify-between gap-6 lg:gap-8">
-        <span className="text-[11px] font-bold tracking-[0.2em] text-[#869588] uppercase shrink-0">
+      <div className="flex flex-col xl:flex-row xl:items-center gap-5 xl:gap-8">
+        <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.12em] sm:tracking-[0.2em] text-[#869588] uppercase xl:shrink-0">
           Loved by Surfers &amp; Remote Workers
         </span>
 
-        <div className="flex-1 flex flex-wrap items-center justify-between gap-6 sm:gap-8 opacity-70 hover:opacity-100 transition-opacity">
+        {/* Narrow screens: one line that drifts sideways instead of wrapping */}
+        <div className="xl:hidden marquee marquee-mask relative overflow-hidden -mx-4 sm:-mx-8">
+          <div className="marquee-track flex w-max opacity-70 pl-4 sm:pl-8">
+            <LogoRow idPrefix="trusted-logo" />
+            <LogoRow hidden />
+          </div>
+        </div>
+
+        {/* Wide screens: the logos spread across the full width */}
+        <div className="hidden xl:flex flex-1 items-center justify-between gap-8 opacity-70 hover:opacity-100 transition-opacity">
           {logos.map((logo, index) => (
             <div
               key={logo.id}
-              id={`trusted-logo-${index}`}
+              id={`trusted-logo-lg-${index}`}
               className="flex items-center gap-2 text-[#6D7D70] hover:text-[#234530] transition-colors"
             >
               {logo.icon}

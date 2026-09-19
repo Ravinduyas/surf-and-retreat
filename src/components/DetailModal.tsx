@@ -2,6 +2,7 @@ import React from 'react';
 import { X, ShieldCheck, MapPin, ArrowRight } from 'lucide-react';
 import { ModalShell } from './ui/ModalShell';
 import { DetailItem } from '../types';
+import { Photo } from './ui/Photo';
 
 interface DetailModalProps {
   item: DetailItem;
@@ -25,10 +26,10 @@ export const DetailModal: React.FC<DetailModalProps> = ({ item, onClose, onBook 
 
       {/* Hero Image */}
       <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-gray-100">
-        <img
+        <Photo
           src={item.image}
           alt={item.title}
-          referrerPolicy="no-referrer"
+          sizes="(max-width: 768px) 100vw, 640px"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />

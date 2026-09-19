@@ -44,7 +44,7 @@ export const ContactForm: React.FC = () => {
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               placeholder="Jane Doe"
-              className="w-full bg-[#F9FAF8] border border-[#DCE2D8] rounded-xl px-3.5 py-2.5 text-xs text-[#18271E] focus:outline-hidden focus:ring-2 focus:ring-[#2C573A]/20"
+              className="w-full bg-[#F9FAF8] border border-[#DCE2D8] rounded-xl px-3.5 py-3 sm:py-2.5 text-[13px] sm:text-xs text-[#18271E] focus:outline-hidden focus:ring-2 focus:ring-[#2C573A]/20"
             />
           </div>
 
@@ -56,7 +56,7 @@ export const ContactForm: React.FC = () => {
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               placeholder="jane@example.com"
-              className="w-full bg-[#F9FAF8] border border-[#DCE2D8] rounded-xl px-3.5 py-2.5 text-xs text-[#18271E] focus:outline-hidden focus:ring-2 focus:ring-[#2C573A]/20"
+              className="w-full bg-[#F9FAF8] border border-[#DCE2D8] rounded-xl px-3.5 py-3 sm:py-2.5 text-[13px] sm:text-xs text-[#18271E] focus:outline-hidden focus:ring-2 focus:ring-[#2C573A]/20"
             />
           </div>
 
@@ -68,7 +68,7 @@ export const ContactForm: React.FC = () => {
                   type="button"
                   key={topic}
                   onClick={() => setFormData({ ...formData, topic })}
-                  className={`py-2 px-2 rounded-xl text-[11px] font-bold border transition-all cursor-pointer ${
+                  className={`py-3 sm:py-2 px-2 rounded-xl text-[11px] font-bold border transition-all cursor-pointer ${
                     formData.topic === topic
                       ? 'bg-[#2A4E38] text-white border-[#2A4E38]'
                       : 'bg-[#F9FAF8] text-[#243F2D] border-[#DCE2D8] hover:bg-white'
@@ -88,13 +88,13 @@ export const ContactForm: React.FC = () => {
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               placeholder="Dates, group size, questions — anything at all."
-              className="w-full bg-[#F9FAF8] border border-[#DCE2D8] rounded-xl px-3.5 py-2.5 text-xs text-[#18271E] focus:outline-hidden focus:ring-2 focus:ring-[#2C573A]/20 resize-none"
+              className="w-full bg-[#F9FAF8] border border-[#DCE2D8] rounded-xl px-3.5 py-3 sm:py-2.5 text-[13px] sm:text-xs text-[#18271E] focus:outline-hidden focus:ring-2 focus:ring-[#2C573A]/20 resize-none"
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-[#2A4E38] hover:bg-[#1E3A28] text-white font-semibold py-3 rounded-full text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs active:scale-98"
+            className="w-full bg-[#2A4E38] hover:bg-[#1E3A28] text-white font-semibold py-3.5 rounded-full text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs active:scale-98"
           >
             <span>Send Message</span>
             <ArrowRight className="w-4 h-4" />

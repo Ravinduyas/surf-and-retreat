@@ -4,6 +4,7 @@ import { ROOMS } from '../../data';
 import { Eyebrow } from '../ui/Eyebrow';
 import { useModals } from '../../context/ModalContext';
 import { useReveal } from '../ui/Reveal';
+import { Photo } from '../ui/Photo';
 
 export const RoomsGrid: React.FC = () => {
   const { openDetail } = useModals();
@@ -33,10 +34,10 @@ export const RoomsGrid: React.FC = () => {
                 onClick={() => openDetail(room, 'stay')}
                 className="relative h-[220px] rounded-2xl overflow-hidden mb-4 shadow-xs bg-[#EAF0E7] block w-full cursor-pointer"
               >
-                <img
+                <Photo
                   src={room.image}
                   alt={room.title}
-                  referrerPolicy="no-referrer"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                 />
                 <div className="absolute bottom-3 left-3">
@@ -73,7 +74,7 @@ export const RoomsGrid: React.FC = () => {
 
                 <button
                   onClick={() => openDetail(room, 'stay')}
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#254A32] hover:text-[#183321] transition-all cursor-pointer group-hover:gap-2"
+                  className="inline-flex items-center gap-1.5 py-1.5 text-xs font-semibold text-[#254A32] hover:text-[#183321] transition-all cursor-pointer group-hover:gap-2"
                 >
                   <span>View Details</span>
                   <ArrowRight className="w-3.5 h-3.5" />

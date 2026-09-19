@@ -4,14 +4,6 @@ export interface StatItem {
   label: string;
 }
 
-export interface HeroLinkCard {
-  id: string;
-  title: string;
-  description: string;
-  image: string;
-  to: string;
-}
-
 export interface HighlightItem {
   id: string;
   title: string;

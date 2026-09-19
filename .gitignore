@@ -13,4 +13,11 @@ tools/sheet.mjs
 tools/shots.mjs
 tools/section.mjs
 tools/zoom.mjs
+tools/devices.mjs
+tools/slices.mjs
+tools/weigh.mjs
+tools/navcheck.mjs
+tools/taps.mjs
+tools/marquee.mjs
+tools/gap.mjs
 dev.log

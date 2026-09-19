@@ -1,6 +1,7 @@
 import React from 'react';
 import { LucideIcon } from 'lucide-react';
 import { Eyebrow } from '../ui/Eyebrow';
+import { Photo } from '../ui/Photo';
 
 const d = (ms: number) => ({ '--d': `${ms}ms` }) as React.CSSProperties;
 
@@ -53,10 +54,10 @@ export const PageHero: React.FC<PageHeroProps> = ({
       {image && (
         <div className="lg:col-span-6">
           <div className="relative w-full h-[260px] sm:h-[340px] rounded-[28px] overflow-hidden border border-[#DFE5DC] shadow-md bg-[#EBF0E8]">
-            <img
+            <Photo
               src={image}
               alt={imageAlt}
-              referrerPolicy="no-referrer"
+              sizes="(max-width: 1024px) 100vw, 50vw"
               className="hero-img-in absolute inset-0 w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent pointer-events-none" />

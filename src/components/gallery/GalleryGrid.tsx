@@ -3,6 +3,7 @@ import { X, ArrowLeft, ArrowRight } from 'lucide-react';
 import { GALLERY_IMAGES } from '../../data';
 import { GalleryCategory } from '../../types';
 import { useReveal } from '../ui/Reveal';
+import { Photo } from '../ui/Photo';
 
 const FILTERS: { id: GalleryCategory | 'all'; label: string }[] = [
   { id: 'all', label: 'All' },
@@ -51,7 +52,7 @@ export const GalleryGrid: React.FC = () => {
                 setFilter(f.id);
                 setLightboxIndex(null);
               }}
-              className={`text-[12px] font-semibold px-4 py-2 rounded-full border transition-colors cursor-pointer ${
+              className={`text-[12px] font-semibold px-4 py-2.5 sm:py-2 min-h-11 sm:min-h-0 rounded-full border transition-colors cursor-pointer ${
                 filter === f.id
                   ? 'bg-[#2A4E38] border-[#2A4E38] text-white'
                   : 'bg-white border-[#E1E7DE] text-[#3D4F42] hover:border-[#B9C9B6]'
@@ -76,11 +77,11 @@ export const GalleryGrid: React.FC = () => {
               style={{ '--i': idx % 6 } as React.CSSProperties}
               aria-label={`View larger: ${img.alt}`}
             >
-              <img
+              <Photo
                 src={img.src}
                 alt={img.alt}
-                referrerPolicy="no-referrer"
                 loading="lazy"
+                sizes="(max-width: 640px) 50vw, 25vw"
                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
               />
             </button>
@@ -100,7 +101,7 @@ export const GalleryGrid: React.FC = () => {
           <button
             onClick={() => setLightboxIndex(null)}
             aria-label="Close gallery"
-            className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors cursor-pointer"
+            className="absolute top-4 right-4 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -110,7 +111,7 @@ export const GalleryGrid: React.FC = () => {
               showPrev();
             }}
             aria-label="Previous image"
-            className="absolute left-3 sm:left-6 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors cursor-pointer"
+            className="absolute left-3 sm:left-6 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors cursor-pointer"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
@@ -118,10 +119,11 @@ export const GalleryGrid: React.FC = () => {
             className="max-w-4xl w-full flex flex-col items-center gap-3"
             onClick={(e) => e.stopPropagation()}
           >
-            <img
+            <Photo
               src={images[lightboxIndex].src}
               alt={images[lightboxIndex].alt}
-              referrerPolicy="no-referrer"
+              loading="eager"
+              sizes="(max-width: 768px) 92vw, 896px"
               className="max-h-[75vh] w-auto max-w-full rounded-2xl object-contain shadow-lg"
             />
             <p className="text-white/80 text-sm text-center">{images[lightboxIndex].alt}</p>
@@ -132,7 +134,7 @@ export const GalleryGrid: React.FC = () => {
               showNext();
             }}
             aria-label="Next image"
-            className="absolute right-3 sm:right-6 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors cursor-pointer"
+            className="absolute right-3 sm:right-6 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors cursor-pointer"
           >
             <ArrowRight className="w-5 h-5" />
           </button>

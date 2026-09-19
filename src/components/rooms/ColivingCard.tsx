@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowRight, Check } from 'lucide-react';
 import { AVATARS } from '../../data';
 import { useModals } from '../../context/ModalContext';
+import { Photo } from '../ui/Photo';
 
 const PERKS = [
   'Bed + dedicated desk bundle',
@@ -42,11 +43,11 @@ export const ColivingCard: React.FC = () => {
             <div className="flex items-center gap-2.5">
               <div className="flex -space-x-2">
                 {AVATARS.map((avatar, idx) => (
-                  <img
+                  <Photo
                     key={idx}
                     src={avatar}
                     alt="Coliving guest"
-                    referrerPolicy="no-referrer"
+                    sizes="(max-width: 1024px) 100vw, 40vw"
                     className="w-8 h-8 rounded-full ring-2 ring-[#D7E95C] object-cover"
                   />
                 ))}

@@ -1,6 +1,5 @@
 import {
   StatItem,
-  HeroLinkCard,
   HighlightItem,
   ExploreCard,
   RoomItem,
@@ -28,23 +27,6 @@ export const STATS: StatItem[] = [
   { id: '2', value: '28', label: 'Beds, Dorm & Private' },
   { id: '3', value: '300 Mbps', label: 'Fiber Wifi + Backup' },
   { id: '4', value: '4.9★', label: '600+ Guest Reviews' },
-];
-
-export const HERO_CARDS: HeroLinkCard[] = [
-  {
-    id: 'surf-lessons',
-    title: 'Surf Lessons',
-    description: 'Daily 6:30 AM sessions, all levels welcome.',
-    image: 'https://images.unsplash.com/photo-1502680390469-be75c86b636f?q=80&w=300&auto=format&fit=crop',
-    to: '/experience#surf',
-  },
-  {
-    id: 'beds-privates',
-    title: 'Beds & Privates',
-    description: 'Dorms from $12, AC private rooms.',
-    image: img('dorm-bunk-close.webp'),
-    to: '/experience#rooms',
-  },
 ];
 
 export const HIGHLIGHTS: HighlightItem[] = [
@@ -537,10 +519,9 @@ export const AVATARS = [
   'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=120&auto=format&fit=crop',
 ];
 
-export const HERO_IMAGE =
-  'https://images.unsplash.com/photo-1502680390469-be75c86b636f?q=80&w=1400&auto=format&fit=crop';
+export const HERO_IMAGE = img('scooter-surfboard.webp');
 
-export const SERVICES_HERO_IMAGE = img('scooter-surfboard.webp');
+export const SERVICES_HERO_IMAGE = img('hostel-dog-bike.webp');
 
 export const CAFE_DISHES: CafeDish[] = [
   {
