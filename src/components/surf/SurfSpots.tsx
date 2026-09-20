@@ -11,7 +11,7 @@ export const SurfSpots: React.FC = () => {
 
   return (
     <section className="mt-8 sm:mt-12">
-      <div className="bg-white border border-[#E3E8DE] rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 lg:p-12 shadow-xs">
+      <div className="bg-white rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 lg:p-12 shadow-xs">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Left: Narrative */}
           <div className="lg:col-span-4 space-y-5">

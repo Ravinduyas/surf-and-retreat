@@ -8,7 +8,7 @@ export const FaqAccordion: React.FC = () => {
 
   return (
     <section id="faq" className="mt-8 sm:mt-12">
-      <div className="bg-white border border-[#E3E8DE] rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 lg:p-12 shadow-xs">
+      <div className="bg-white rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 lg:p-12 shadow-xs">
         <div className="text-center max-w-xl mx-auto space-y-4 mb-10">
           <Eyebrow icon={HelpCircle}>FAQs</Eyebrow>
           <h2 className="text-3xl sm:text-4xl font-bold text-[#18261E] tracking-tight leading-tight">

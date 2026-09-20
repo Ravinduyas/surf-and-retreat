@@ -18,7 +18,7 @@ export const ContactForm: React.FC = () => {
   };
 
   return (
-    <div className="bg-white border border-[#E3E8DE] rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 shadow-xs">
+    <div className="bg-white rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 shadow-xs">
       <div className="space-y-4 mb-6">
         <Eyebrow icon={Send}>Send a Message</Eyebrow>
         <h2 className="text-2xl sm:text-3xl font-bold text-[#18261E] tracking-tight leading-tight">

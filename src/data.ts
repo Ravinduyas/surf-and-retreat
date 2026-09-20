@@ -42,7 +42,7 @@ export const HIGHLIGHTS: HighlightItem[] = [
     id: 'surf',
     title: 'Surf',
     description: 'Learn on Weligama’s gentle, sandy-bottom waves.',
-    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=900&auto=format&fit=crop',
+    image: img('surf-board-carry.webp'),
     iconType: 'wave',
     to: '/experience#surf',
   },
@@ -70,7 +70,7 @@ export const EXPLORE_CARDS: ExploreCard[] = [
     tag: 'Surf School',
     title: 'Your First Wave Starts Here',
     description: 'Lessons, coaching and board rental on Weligama Bay.',
-    image: 'https://images.unsplash.com/photo-1468413253725-0d5181091126?q=80&w=800&auto=format&fit=crop',
+    image: img('surf-beach-board.webp'),
     to: '/experience#surf',
   },
   {
@@ -152,7 +152,7 @@ export const SURF_PACKAGES: SurfPackage[] = [
     tag: 'Beginner',
     title: 'Beginner Surf Week',
     description: 'Five morning lessons on Weligama Bay’s forgiving sandy-bottom beach break.',
-    image: 'https://images.unsplash.com/photo-1502680390469-be75c86b636f?q=80&w=800&auto=format&fit=crop',
+    image: img('surf-walk-in.webp'),
     category: 'Surf Package',
     level: 'Beginner',
     includes: ['5 × 90-min group lessons', 'Board & rash vest all week', 'ISA-certified instructors', 'Video debrief on day 5'],
@@ -164,7 +164,7 @@ export const SURF_PACKAGES: SurfPackage[] = [
     tag: 'Intermediate',
     title: 'Intermediate Coaching',
     description: 'Video-analysis coaching to fix your pop-up, trim and turns on green waves.',
-    image: 'https://images.unsplash.com/photo-1468413253725-0d5181091126?q=80&w=800&auto=format&fit=crop',
+    image: img('weligama-bay-aerial.webp'),
     category: 'Surf Package',
     level: 'Intermediate',
     includes: ['4 × coached sessions', 'Daily video analysis', 'Guided trips to Lazy Left', 'Surf theory evening'],
@@ -176,7 +176,7 @@ export const SURF_PACKAGES: SurfPackage[] = [
     tag: 'Rental',
     title: 'Board Rental',
     description: 'Softtops, funboards and shortboards, waxed and ready under the board rack.',
-    image: 'https://images.unsplash.com/photo-1455729552865-3658a5d39692?q=80&w=800&auto=format&fit=crop',
+    image: img('surf-sunset-board.webp'),
     category: 'Surf Package',
     level: 'All levels',
     includes: ['Soft-tops to shortboards', 'Free wax & leash', 'Swap boards anytime', 'Free rack storage for guests'],
@@ -284,6 +284,7 @@ export const SERVICES: ServiceItem[] = [
     description:
       'Curtain-pod dorms and private AC rooms, all a five-minute walk from Weligama Bay.',
     price: 'from $12 / night',
+    image: img('dorm-8bed.webp'),
     iconType: 'rooms',
     group: 'core',
     to: '/experience#rooms',
@@ -294,6 +295,7 @@ export const SERVICES: ServiceItem[] = [
     description:
       'Dedicated desks, call booths and an AC focus room on 300 Mbps fiber with 4G backup.',
     price: 'from $8 / day',
+    image: img('coworking.webp'),
     iconType: 'coworking',
     group: 'core',
     to: '/experience#coworking',
@@ -304,6 +306,7 @@ export const SERVICES: ServiceItem[] = [
     description:
       'Sunrise lessons with local instructors, video coaching and boards for every level.',
     price: 'from $5 / rental',
+    image: img('surf-walk-in.webp'),
     iconType: 'surfing',
     group: 'core',
     to: '/experience#surf',
@@ -314,6 +317,7 @@ export const SERVICES: ServiceItem[] = [
     description:
       'Surfskate and skate sessions — keep your balance dialled in on the flat days.',
     price: 'Ask at the desk',
+    image: img('skate-park.webp'),
     iconType: 'skating',
     group: 'extra',
   },
@@ -323,6 +327,7 @@ export const SERVICES: ServiceItem[] = [
     description:
       'Sunrise rooftop classes that stretch out surf-tight shoulders. Mats provided.',
     price: '$8 / class',
+    image: img('guest-portrait.webp'),
     iconType: 'yoga',
     group: 'extra',
   },
@@ -332,6 +337,7 @@ export const SERVICES: ServiceItem[] = [
     description:
       'Door-to-door transfers from Colombo airport or Weligama station, day or night.',
     price: 'from $35',
+    image: img('building-exterior.webp'),
     iconType: 'transfer',
     group: 'extra',
   },
@@ -341,6 +347,7 @@ export const SERVICES: ServiceItem[] = [
     description:
       'Drop your bag before breakfast, get it back folded by sunset — salt, sand and wax gone.',
     price: '$3 / kg',
+    image: img('dorm-bed-made.webp'),
     iconType: 'laundry',
     group: 'extra',
   },
@@ -378,10 +385,21 @@ export const GALLERY_IMAGES: GalleryImage[] = [
   { id: 'g25', src: img('building-exterior.webp'), alt: 'The hostel building and balcony', category: 'around' },
   { id: 'g26', src: img('scooter-surfboard.webp'), alt: 'Rental scooter with a board rack at dusk', category: 'around' },
   { id: 'g27', src: img('hostel-dog-bike.webp'), alt: 'The hostel dog keeping watch', category: 'around' },
-  // Surf — placeholder stock until we have our own surf shots
-  { id: 'g28', src: 'https://images.unsplash.com/photo-1502680390469-be75c86b636f?q=80&w=800&auto=format&fit=crop', alt: 'Morning surf lesson on Weligama Bay', category: 'surf' },
-  { id: 'g29', src: 'https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?q=80&w=800&auto=format&fit=crop', alt: 'Clean wave rolling in', category: 'surf' },
-  { id: 'g30', src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop', alt: 'Weligama beach at golden hour', category: 'surf' },
+  // Surf & skate
+  { id: 'g28', src: img('surf-walk-in.webp'), alt: 'Heading out for a session on Weligama Bay', category: 'surf' },
+  { id: 'g29', src: img('surf-board-carry.webp'), alt: 'Board overhead, ready to paddle out', category: 'surf' },
+  { id: 'g30', src: img('surf-beach-board.webp'), alt: 'Checking the waves before a surf', category: 'surf' },
+  { id: 'g31', src: img('surf-sunset-board.webp'), alt: 'Surfboard at sunset', category: 'surf' },
+  { id: 'g32', src: img('weligama-bay-aerial.webp'), alt: 'Weligama Bay from above', category: 'surf' },
+  { id: 'g33', src: img('skate-park.webp'), alt: 'Carving the skate park', category: 'surf' },
+  { id: 'g34', src: img('skate-bowl.webp'), alt: 'Surfskate session in the bowl', category: 'surf' },
+  { id: 'g35', src: img('skate-covered-ramp.webp'), alt: 'Skating under the covered ramp', category: 'surf' },
+  { id: 'g36', src: img('skate-wave.webp'), alt: 'A wave from the skate ramp', category: 'surf' },
+  // Beach life
+  { id: 'g37', src: img('beach-sunset.webp'), alt: 'Sunset over the south coast', category: 'around' },
+  { id: 'g38', src: img('beach-coconut.webp'), alt: 'King coconut on the beach', category: 'around' },
+  { id: 'g39', src: img('beach-palm.webp'), alt: 'Palm tree over the waves', category: 'around' },
+  { id: 'g40', src: img('guest-portrait.webp'), alt: 'Golden hour in the garden', category: 'around' },
 ];
 
 export const REVIEWS: Review[] = [
@@ -511,12 +529,6 @@ export const VALUES: ValueItem[] = [
     description: 'Local instructors, local produce and fair wages for our Weligama team.',
     iconType: 'leaf',
   },
-];
-
-export const AVATARS = [
-  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=120&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=120&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=120&auto=format&fit=crop',
 ];
 
 export const HERO_IMAGE = img('scooter-surfboard.webp');

@@ -9,7 +9,7 @@ interface SectionCardProps {
 export const SectionCard: React.FC<SectionCardProps> = ({ children, className = '', id }) => (
   <div
     id={id}
-    className={`bg-white border border-[#E3E8DE] rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 shadow-xs ${className}`.trim()}
+    className={`bg-white rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 shadow-xs ${className}`.trim()}
   >
     {children}
   </div>

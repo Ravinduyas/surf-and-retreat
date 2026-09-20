@@ -11,7 +11,7 @@ export const PlansPricing: React.FC = () => {
 
   return (
     <section className="mt-8 sm:mt-12">
-      <div className="bg-white border border-[#E3E8DE] rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 lg:p-12 shadow-xs">
+      <div className="bg-white rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 lg:p-12 shadow-xs">
         <div className="text-center max-w-xl mx-auto space-y-4 mb-10">
           <Eyebrow icon={Ticket}>Desk Passes</Eyebrow>
           <h2 className="text-3xl sm:text-4xl font-bold text-[#18261E] tracking-tight leading-tight">
@@ -30,7 +30,7 @@ export const PlansPricing: React.FC = () => {
               id={`plan-${plan.id}`}
               className={`relative rounded-3xl p-6 sm:p-7 transition-all duration-200 hover:-translate-y-1 ${
                 plan.popular
-                  ? 'bg-[#D7E95C] shadow-sm'
+                  ? 'bg-[#F3F45C] shadow-sm'
                   : 'bg-[#F4F6F2]/90 border border-[#E1E7DE] shadow-xs hover:bg-white'
               }`}
             >

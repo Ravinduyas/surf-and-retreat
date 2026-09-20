@@ -21,3 +21,9 @@ tools/taps.mjs
 tools/marquee.mjs
 tools/gap.mjs
 dev.log
+tools/deckcheck.mjs
+tools/sizematch.mjs
+tools/statcheck.mjs
+tools/borders.mjs
+tools/wall.mjs
+tools/shuffle.mjs

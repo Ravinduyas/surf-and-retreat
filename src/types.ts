@@ -99,6 +99,7 @@ export interface ServiceItem {
   title: string;
   description: string;
   price: string;
+  image: string;
   iconType: 'rooms' | 'coworking' | 'surfing' | 'skating' | 'yoga' | 'transfer' | 'laundry';
   /** 'core' services have their own page section; 'extra' are front-desk add-ons. */
   group: 'core' | 'extra';

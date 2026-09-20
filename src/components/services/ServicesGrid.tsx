@@ -16,6 +16,7 @@ import { ServiceItem } from '../../types';
 import { Eyebrow } from '../ui/Eyebrow';
 import { Button } from '../ui/Button';
 import { useReveal } from '../ui/Reveal';
+import { Photo } from '../ui/Photo';
 
 /** Lucide has no skateboard, so this is drawn to match its stroke style. */
 const SkateIcon: React.FC<{ className?: string }> = ({ className }) => (
@@ -50,41 +51,50 @@ const ServiceCard: React.FC<{ service: ServiceItem; large?: boolean }> = ({ serv
   const Icon = SERVICE_ICONS[service.iconType];
   const body = (
     <>
-      <div className="flex items-center justify-between">
-        <div
-          className={`${large ? 'w-11 h-11' : 'w-10 h-10'} rounded-full bg-[#DEEBDB] flex items-center justify-center`}
-        >
-          <Icon className={large ? 'w-5 h-5 text-[#2E583A]' : 'w-[18px] h-[18px] text-[#2E583A]'} />
-        </div>
-        <span className="inline-block bg-white text-[#1D3624] text-[11px] font-semibold px-3 py-1 rounded-full border border-[#E1E7DE]">
+      <div className={`relative ${large ? 'h-44 sm:h-48' : 'h-36'} overflow-hidden bg-[#E9EEE5]`}>
+        <Photo
+          src={service.image}
+          alt={service.title}
+          sizes={large ? '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw' : '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw'}
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+        />
+        <span className="absolute top-3 right-3 inline-block bg-white/95 text-[#1D3624] text-[11px] font-semibold px-3 py-1 rounded-full shadow-xs">
           {service.price}
         </span>
       </div>
-      <div>
-        <h3
-          className={`${large ? 'text-[17px]' : 'text-[15px]'} font-bold text-[#18271E] tracking-tight ${
-            service.to ? 'group-hover:text-[#265337] transition-colors' : ''
-          }`}
+
+      <div className={`relative flex flex-col flex-1 gap-3 ${large ? 'px-6 sm:px-7 pb-6 sm:pb-7' : 'px-5 sm:px-6 pb-5 sm:pb-6'}`}>
+        {/* Icon sits on the seam between photo and text */}
+        <div
+          className={`${large ? 'w-11 h-11 -mt-[22px]' : 'w-10 h-10 -mt-5'} rounded-full bg-[#DEEBDB] ring-4 ring-[#F7F8F5] flex items-center justify-center`}
         >
-          {service.title}
-        </h3>
-        <p className="text-[13px] text-[#5A695D] leading-relaxed mt-1.5">{service.description}</p>
+          <Icon className={large ? 'w-5 h-5 text-[#2E583A]' : 'w-[18px] h-[18px] text-[#2E583A]'} />
+        </div>
+        <div>
+          <h3
+            className={`${large ? 'text-[17px]' : 'text-[15px]'} font-bold text-[#18271E] tracking-tight ${
+              service.to ? 'group-hover:text-[#265337] transition-colors' : ''
+            }`}
+          >
+            {service.title}
+          </h3>
+          <p className="text-[13px] text-[#5A695D] leading-relaxed mt-1.5">{service.description}</p>
+        </div>
+        {service.to && (
+          <span className="mt-auto inline-flex items-center gap-1.5 text-xs font-semibold text-[#254A32] transition-all group-hover:gap-2.5">
+            <span>See details</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </span>
+        )}
       </div>
-      {service.to && (
-        <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#254A32] transition-all group-hover:gap-2.5">
-          <span>See details</span>
-          <ArrowRight className="w-3.5 h-3.5" />
-        </span>
-      )}
     </>
   );
 
-  const shell = `bg-[#F4F6F2]/90 hover:bg-white border border-[#E1E7DE] rounded-3xl ${
-    large ? 'p-6 sm:p-7' : 'p-5 sm:p-6'
-  } transition-all duration-200 shadow-xs hover:shadow-sm flex flex-col gap-4`;
+  const shell =
+    'group bg-[#F7F8F5] hover:bg-white border border-[#E1E7DE] rounded-3xl overflow-hidden transition-all duration-200 shadow-xs hover:shadow-md flex flex-col';
 
   return service.to ? (
-    <Link to={service.to} id={`service-${service.id}`} className={`group ${shell} cursor-pointer`}>
+    <Link to={service.to} id={`service-${service.id}`} className={`${shell} cursor-pointer`}>
       {body}
     </Link>
   ) : (
@@ -107,7 +117,7 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ showCta = false }) =
 
   return (
     <section className="mt-6 sm:mt-10">
-      <div className="bg-white border border-[#E3E8DE] rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 lg:p-12 shadow-xs">
+      <div className="bg-white rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 lg:p-12 shadow-xs">
         <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
           <div className="space-y-4">
             <Eyebrow icon={ConciergeBell}>Guest Services</Eyebrow>

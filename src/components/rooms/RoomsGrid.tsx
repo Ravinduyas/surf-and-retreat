@@ -12,7 +12,7 @@ export const RoomsGrid: React.FC = () => {
 
   return (
     <section className="mt-6 sm:mt-10">
-      <div className="bg-white border border-[#E3E8DE] rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 lg:p-12 shadow-xs">
+      <div className="bg-white rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 lg:p-12 shadow-xs">
         <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
           <div className="space-y-4">
             <Eyebrow icon={BedDouble}>Pick Your Bed</Eyebrow>
@@ -46,7 +46,7 @@ export const RoomsGrid: React.FC = () => {
                   </span>
                 </div>
                 <div className="absolute top-3 right-3">
-                  <span className="inline-block bg-[#D7E95C] text-[#16301F] text-[11px] font-bold px-3 py-1 rounded-full shadow-xs">
+                  <span className="inline-block bg-[#F3F45C] text-[#16301F] text-[11px] font-bold px-3 py-1 rounded-full shadow-xs">
                     {room.pricePerNight}
                   </span>
                 </div>

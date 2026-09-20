@@ -1,8 +1,6 @@
 import React from 'react';
 import { ArrowRight, Check } from 'lucide-react';
-import { AVATARS } from '../../data';
 import { useModals } from '../../context/ModalContext';
-import { Photo } from '../ui/Photo';
 
 const PERKS = [
   'Bed + dedicated desk bundle',
@@ -16,7 +14,7 @@ export const ColivingCard: React.FC = () => {
 
   return (
     <section className="mt-8 sm:mt-12">
-      <div className="bg-[#D7E95C] rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 lg:p-12 shadow-xs">
+      <div className="bg-[#DADB54] rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 lg:p-12 shadow-xs">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-7 space-y-4">
             <span className="inline-block bg-white/80 text-[#16301F] text-[11px] font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">
@@ -41,17 +39,6 @@ export const ColivingCard: React.FC = () => {
 
           <div className="lg:col-span-5 flex flex-col items-start lg:items-end gap-4">
             <div className="flex items-center gap-2.5">
-              <div className="flex -space-x-2">
-                {AVATARS.map((avatar, idx) => (
-                  <Photo
-                    key={idx}
-                    src={avatar}
-                    alt="Coliving guest"
-                    sizes="(max-width: 1024px) 100vw, 40vw"
-                    className="w-8 h-8 rounded-full ring-2 ring-[#D7E95C] object-cover"
-                  />
-                ))}
-              </div>
               <span className="text-[12px] text-[#243E2C] font-medium">
                 40+ long-stayers hosted this season
               </span>

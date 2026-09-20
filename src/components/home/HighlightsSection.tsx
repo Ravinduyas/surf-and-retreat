@@ -25,7 +25,7 @@ export const HighlightsSection: React.FC = () => {
   const gridRef = useReveal<HTMLDivElement>();
   return (
     <section className="mt-6 sm:mt-10">
-      <div className="bg-white border border-[#E3E8DE] rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 lg:p-14 shadow-xs">
+      <div className="bg-white rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 lg:p-14 shadow-xs">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           {/* Left Column: Heading & Text */}
           <div className="lg:col-span-5 space-y-6">

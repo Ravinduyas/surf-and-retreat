@@ -12,6 +12,8 @@ interface PageHeroProps {
   subtitle: string;
   image?: string;
   imageAlt?: string;
+  /** Custom right-hand visual, used instead of a single image. */
+  media?: React.ReactNode;
   children?: React.ReactNode;
 }
 
@@ -25,11 +27,12 @@ export const PageHero: React.FC<PageHeroProps> = ({
   subtitle,
   image,
   imageAlt = '',
+  media,
   children,
 }) => (
   <div className="pt-4 sm:pt-6 pb-8 px-4 sm:px-8">
-    <div className={`grid grid-cols-1 ${image ? 'lg:grid-cols-12' : ''} gap-8 items-center`}>
-      <div className={`${image ? 'lg:col-span-6' : ''} space-y-5`}>
+    <div className={`grid grid-cols-1 ${image || media ? 'lg:grid-cols-12' : ''} gap-8 items-center`}>
+      <div className={`${image || media ? 'lg:col-span-6' : ''} space-y-5`}>
         <div className="surface-in" style={d(120)}>
           <Eyebrow icon={eyebrowIcon}>{eyebrow}</Eyebrow>
         </div>
@@ -51,6 +54,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
           </div>
         )}
       </div>
+      {media && !image && <div className="lg:col-span-6">{media}</div>}
       {image && (
         <div className="lg:col-span-6">
           <div className="relative w-full h-[260px] sm:h-[340px] rounded-[28px] overflow-hidden border border-[#DFE5DC] shadow-md bg-[#EBF0E8]">

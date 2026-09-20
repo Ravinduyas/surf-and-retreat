@@ -3,6 +3,7 @@ import { Camera, ArrowRight } from 'lucide-react';
 import { PageHeader } from '../components/layout/PageHeader';
 import { PageHero } from '../components/layout/PageHero';
 import { GalleryGrid } from '../components/gallery/GalleryGrid';
+import { CardShuffle } from '../components/gallery/CardShuffle';
 import { Button } from '../components/ui/Button';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { useModals } from '../context/ModalContext';
@@ -28,6 +29,7 @@ export default function GalleryPage() {
             </>
           }
           subtitle="The dorms, the bay, the desks and the dinner table — a look around the hostel and the corner of Sri Lanka we call home."
+          media={<CardShuffle />}
         >
           <Button variant="primary" onClick={() => openBooking()}>
             <span>Book Your Stay</span>

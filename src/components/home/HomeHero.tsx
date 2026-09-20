@@ -4,6 +4,27 @@ import { STATS, HERO_IMAGE } from '../../data';
 import { Photo } from '../ui/Photo';
 import { useModals } from '../../context/ModalContext';
 
+const StatTile: React.FC<{
+  stat: (typeof STATS)[number];
+  highlight: boolean;
+  className?: string;
+  style?: React.CSSProperties;
+}> = ({ stat, highlight, className = '', style }) => (
+  <div
+    className={`rounded-2xl p-4 sm:p-5 border transition-all duration-200 shadow-xs hover:shadow-sm ${
+      highlight
+        ? 'bg-[#E9EDD6] border-[#D7DFBC] hover:bg-[#E4E9CC]'
+        : 'bg-[#F7F8F4] hover:bg-white border-[#E1E7DE]'
+    } ${className}`}
+    style={style}
+  >
+    <div className="text-2xl sm:text-[26px] font-bold text-[#18271E] tracking-tight whitespace-nowrap">
+      {stat.value}
+    </div>
+    <div className="text-[12px] text-[#637265] font-medium mt-1 leading-tight">{stat.label}</div>
+  </div>
+);
+
 export const HomeHero: React.FC = () => {
   const { openVideo } = useModals();
 
@@ -81,26 +102,29 @@ export const HomeHero: React.FC = () => {
         </div>
       </div>
 
-      {/* Full-width Metric Tiles row overlapping the image bottom, last one highlighted */}
-      <div className="relative z-20 grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mt-8 lg:-mt-20 lg:shrink-0 lg:w-[88%] xl:w-[70%]">
+      {/* Narrow screens: the stat tiles glide sideways in a single row */}
+      <div className="lg:hidden marquee marquee-mask relative overflow-hidden -mx-4 sm:-mx-8 mt-8">
+        <div className="marquee-track flex w-max pl-4 sm:pl-8">
+          {[false, true].map((dup) => (
+            <div key={String(dup)} className="flex gap-3 pr-3" aria-hidden={dup || undefined}>
+              {STATS.map((stat, idx) => (
+                <StatTile key={stat.id} stat={stat} highlight={idx === STATS.length - 1} className="w-[172px] shrink-0" />
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Wide screens: tiles overlap the bottom of the photo, last one highlighted */}
+      <div className="hidden lg:grid relative z-20 grid-cols-4 gap-4 lg:-mt-20 lg:shrink-0 lg:w-[88%] xl:w-[70%]">
         {STATS.map((stat, idx) => (
-          <div
+          <StatTile
             key={stat.id}
-            id={`hero-stat-${stat.id}`}
-            className={`surface-in rounded-2xl p-4 sm:p-5 border transition-all duration-200 shadow-xs hover:shadow-sm ${
-              idx === STATS.length - 1
-                ? 'bg-[#E9EDD6] border-[#D7DFBC] hover:bg-[#E4E9CC]'
-                : 'bg-[#F7F8F4] hover:bg-white border-[#E1E7DE]'
-            }`}
+            stat={stat}
+            highlight={idx === STATS.length - 1}
+            className="surface-in"
             style={{ '--d': `${900 + idx * 130}ms` } as React.CSSProperties}
-          >
-            <div className="text-2xl sm:text-[26px] font-bold text-[#18271E] tracking-tight whitespace-nowrap">
-              {stat.value}
-            </div>
-            <div className="text-[12px] text-[#637265] font-medium mt-1 leading-tight">
-              {stat.label}
-            </div>
-          </div>
+          />
         ))}
       </div>
     </div>

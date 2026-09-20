@@ -15,7 +15,7 @@ export const GallerySection: React.FC = () => {
 
   return (
     <section className="mt-8 sm:mt-12">
-      <div className="bg-white border border-[#E3E8DE] rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 lg:p-12 shadow-xs">
+      <div className="bg-white rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 lg:p-12 shadow-xs">
         <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
           <div className="space-y-4">
             <Eyebrow icon={Camera}>Life at the Hostel</Eyebrow>

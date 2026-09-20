@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, Check, Compass } from 'lucide-react';
-import { EXPLORE_CARDS, AVATARS } from '../../data';
+import { EXPLORE_CARDS } from '../../data';
 import { Eyebrow } from '../ui/Eyebrow';
 import { Photo } from '../ui/Photo';
 
@@ -35,7 +35,7 @@ export const ExploreSection: React.FC = () => {
 
   return (
     <section className="mt-8 sm:mt-12">
-      <div className="bg-white border border-[#E3E8DE] rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 lg:p-12 shadow-xs">
+      <div className="bg-white rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 lg:p-12 shadow-xs">
         {/* Header Bar: Badge on left, Navigation Arrows on right */}
         <div className="flex items-center justify-between mb-8">
           <Eyebrow icon={Compass}>Explore the Hostel</Eyebrow>
@@ -179,19 +179,7 @@ export const ExploreSection: React.FC = () => {
                 </div>
               </form>
 
-              {/* Social Proof Avatars */}
               <div className="flex items-center gap-2.5 mt-4 pt-1">
-                <div className="flex -space-x-2">
-                  {AVATARS.map((avatar, idx) => (
-                    <Photo
-                      key={idx}
-                      src={avatar}
-                      alt="Subscriber avatar"
-                      sizes="(max-width: 640px) 100vw, 30vw"
-                      className="w-6 h-6 rounded-full ring-2 ring-[#D7E95C] object-cover"
-                    />
-                  ))}
-                </div>
                 <div className="flex items-center gap-1 text-[11px] text-[#243E2C] font-medium">
                   <span>🌊</span>
                   <span>Join thousands of wave chasers</span>

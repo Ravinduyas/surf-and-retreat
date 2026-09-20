@@ -8,7 +8,7 @@ import { Photo } from '../ui/Photo';
 const FILTERS: { id: GalleryCategory | 'all'; label: string }[] = [
   { id: 'all', label: 'All' },
   { id: 'rooms', label: 'Rooms & Stay' },
-  { id: 'surf', label: 'Surf' },
+  { id: 'surf', label: 'Surf & Skate' },
   { id: 'coworking', label: 'Coworking' },
   { id: 'food', label: 'Food & Café' },
   { id: 'around', label: 'Around the Hostel' },
@@ -41,7 +41,7 @@ export const GalleryGrid: React.FC = () => {
 
   return (
     <section className="mt-6 sm:mt-10">
-      <div className="bg-white border border-[#E3E8DE] rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 lg:p-12 shadow-xs">
+      <div className="bg-white rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 lg:p-12 shadow-xs">
         {/* Filter Tabs */}
         <div className="flex flex-wrap items-center gap-2 mb-8">
           {FILTERS.map((f) => (

@@ -280,5 +280,104 @@
    800,
    1200
   ]
+ },
+ "surf-walk-in": {
+  "w": 480,
+  "h": 320,
+  "variants": [
+   400,
+   480
+  ]
+ },
+ "surf-board-carry": {
+  "w": 206,
+  "h": 320,
+  "variants": [
+   206
+  ]
+ },
+ "surf-beach-board": {
+  "w": 240,
+  "h": 320,
+  "variants": [
+   240
+  ]
+ },
+ "surf-sunset-board": {
+  "w": 480,
+  "h": 320,
+  "variants": [
+   400,
+   480
+  ]
+ },
+ "weligama-bay-aerial": {
+  "w": 427,
+  "h": 320,
+  "variants": [
+   400,
+   427
+  ]
+ },
+ "skate-covered-ramp": {
+  "w": 427,
+  "h": 320,
+  "variants": [
+   400,
+   427
+  ]
+ },
+ "skate-bowl": {
+  "w": 427,
+  "h": 320,
+  "variants": [
+   400,
+   427
+  ]
+ },
+ "skate-wave": {
+  "w": 427,
+  "h": 320,
+  "variants": [
+   400,
+   427
+  ]
+ },
+ "skate-park": {
+  "w": 427,
+  "h": 320,
+  "variants": [
+   400,
+   427
+  ]
+ },
+ "beach-palm": {
+  "w": 256,
+  "h": 320,
+  "variants": [
+   256
+  ]
+ },
+ "guest-portrait": {
+  "w": 213,
+  "h": 320,
+  "variants": [
+   213
+  ]
+ },
+ "beach-coconut": {
+  "w": 480,
+  "h": 320,
+  "variants": [
+   400,
+   480
+  ]
+ },
+ "beach-sunset": {
+  "w": 213,
+  "h": 320,
+  "variants": [
+   213
+  ]
  }
 }

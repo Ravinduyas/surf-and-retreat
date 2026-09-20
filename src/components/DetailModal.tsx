@@ -34,7 +34,7 @@ export const DetailModal: React.FC<DetailModalProps> = ({ item, onClose, onBook 
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
         <div className="absolute bottom-4 left-6">
-          <span className="inline-block bg-[#D7E95C] text-[#16301F] text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-wider mb-2">
+          <span className="inline-block bg-[#F3F45C] text-[#16301F] text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-wider mb-2">
             {item.tag}
           </span>
           <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">

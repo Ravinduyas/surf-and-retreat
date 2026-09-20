@@ -7,6 +7,7 @@ const OUT = 'public/images';
 const H = `${SRC}/hostel surf and retreat`;
 const R = `${SRC}/privare rooms apartment syle`;
 const F = `${SRC}/foods`;
+const N = `${SRC}/new`;
 
 // [source file, output name, width]
 const JOBS = [
@@ -46,6 +47,20 @@ const JOBS = [
   [`${F}/Coastal fish curry.jpg`, 'food-fish-curry', 1200],
   [`${F}/Pistachio Prawn 2.jpg`, 'food-prawn-pasta', 1200],
   [`${F}/watermelon feta bowl.jpg`, 'food-watermelon-feta', 1200],
+  // Surf, skate & beach — delivered small (max 480px), so kept at source size
+  [`${N}/hem5rocixl6uli2pt4bu.webp`, 'surf-walk-in', 1200],
+  [`${N}/ohzm5kcp3lz4y27fflak.webp`, 'surf-board-carry', 1200],
+  [`${N}/ola0ni26tz9d2dzyj1el.webp`, 'surf-beach-board', 1200],
+  [`${N}/omduqbxhbalocmlgy6oe.webp`, 'surf-sunset-board', 1200],
+  [`${N}/qi7o0ynhslme9afcrihe.webp`, 'weligama-bay-aerial', 1200],
+  [`${N}/clk55zgbp01enuykitkn.webp`, 'skate-covered-ramp', 1200],
+  [`${N}/gze3yr1quznpe42htjov.webp`, 'skate-bowl', 1200],
+  [`${N}/tweemyzr5x4riotn3quf.webp`, 'skate-wave', 1200],
+  [`${N}/yojx0hhuxsy7wpvystgo.webp`, 'skate-park', 1200],
+  [`${N}/r3st81aewqkg7paybltc.webp`, 'beach-palm', 1200],
+  [`${N}/tc3gk7njlriyn3xtep3r.webp`, 'guest-portrait', 1200],
+  [`${N}/xlbd2ohc6mcqeeskyy1w.webp`, 'beach-coconut', 1200],
+  [`${N}/xrn1ga5gwjw4a3anjpmm.webp`, 'beach-sunset', 1200],
 ];
 
 /** Widths emitted for every photo so browsers can pick per device. */

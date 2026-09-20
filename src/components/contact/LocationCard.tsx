@@ -6,7 +6,7 @@ import { Photo } from '../ui/Photo';
 
 export const LocationCard: React.FC = () => {
   return (
-    <div className="bg-white border border-[#E3E8DE] rounded-[32px] sm:rounded-[36px] overflow-hidden shadow-xs">
+    <div className="bg-white rounded-[32px] sm:rounded-[36px] overflow-hidden shadow-xs">
       {/* Photo */}
       <div className="relative h-[200px] sm:h-[240px] w-full overflow-hidden bg-[#EAF0E7]">
         <Photo
@@ -17,7 +17,7 @@ export const LocationCard: React.FC = () => {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
         <div className="absolute bottom-4 left-6">
-          <span className="inline-block bg-[#D7E95C] text-[#16301F] text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-wider">
+          <span className="inline-block bg-[#F3F45C] text-[#16301F] text-xs font-bold px-3.5 py-1 rounded-full uppercase tracking-wider">
             Weligama, Sri Lanka
           </span>
         </div>
