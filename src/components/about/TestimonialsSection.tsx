@@ -3,6 +3,7 @@ import { Quote, Star } from 'lucide-react';
 import { TESTIMONIALS } from '../../data';
 import { Eyebrow } from '../ui/Eyebrow';
 import { useReveal } from '../ui/Reveal';
+import { InitialsBadge } from '../ui/InitialsBadge';
 
 export const TestimonialsSection: React.FC = () => {
   const gridRef = useReveal<HTMLDivElement>();
@@ -33,12 +34,7 @@ export const TestimonialsSection: React.FC = () => {
                 &ldquo;{t.quote}&rdquo;
               </p>
               <div className="flex items-center gap-3">
-                <img
-                  src={t.avatar}
-                  alt={t.name}
-                  referrerPolicy="no-referrer"
-                  className="w-9 h-9 rounded-full ring-2 ring-white object-cover shadow-xs"
-                />
+                <InitialsBadge name={t.name} />
                 <div>
                   <div className="text-[13px] font-bold text-[#18271E]">{t.name}</div>
                   <div className="text-[11px] text-[#637265] font-medium">{t.origin}</div>

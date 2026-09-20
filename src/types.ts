@@ -73,7 +73,6 @@ export interface Testimonial {
   name: string;
   origin: string;
   quote: string;
-  avatar: string;
 }
 
 export interface Review {
@@ -84,7 +83,6 @@ export interface Review {
   stayType: string;
   date: string;
   quote: string;
-  avatar: string;
 }
 
 export interface CafeDish {

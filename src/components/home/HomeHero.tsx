@@ -37,7 +37,7 @@ export const HomeHero: React.FC = () => {
             {/* Pill Eyebrow */}
             <div
               className="surface-in inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#D5DDD1] bg-[#F2F6F0] text-[#34593E] text-[11px] font-semibold tracking-wider uppercase"
-              style={{ '--d': '150ms' } as React.CSSProperties}
+              style={{ '--d': '80ms' } as React.CSSProperties}
             >
               <span aria-hidden>🏄</span>
               <span>Coliving &amp; Coworking · Weligama, Sri Lanka</span>
@@ -45,8 +45,8 @@ export const HomeHero: React.FC = () => {
 
             {/* Main Headline */}
             <h1
-              className="surface-in text-5xl sm:text-6xl xl:text-[70px] font-bold text-[#18261E] tracking-tight leading-[1.05] lg:whitespace-nowrap"
-              style={{ '--d': '300ms' } as React.CSSProperties}
+              className="surface-in-soft text-5xl sm:text-6xl xl:text-[70px] font-bold text-[#18261E] tracking-tight leading-[1.05] lg:whitespace-nowrap"
+              style={{ '--d': '180ms' } as React.CSSProperties}
             >
               Surf{' '}
               <span className="text-[#2C573A] underline-offset-8">
@@ -63,7 +63,8 @@ export const HomeHero: React.FC = () => {
         {/* Right Column: Split Image (Surf vs Work) & Floating Link Cards — bleeds to the card edge on desktop */}
         {/* Pulled up by the navbar height so the photo runs to the card's top edge */}
         <div className="lg:col-span-8 relative lg:-mr-8 lg:-mt-[108px] lg:self-stretch">
-          <div className="relative w-full h-[520px] sm:h-[580px] lg:h-[calc(100%+108px)] rounded-[32px] lg:rounded-none overflow-hidden border border-[#DFE5DC] lg:border-0 shadow-md lg:shadow-none bg-[#EBF0E8]">
+          {/* Rounds its own top-right corner: the card no longer clips it */}
+          <div className="relative w-full h-[520px] sm:h-[580px] lg:h-[calc(100%+108px)] rounded-[32px] lg:rounded-none lg:rounded-tr-[40px] overflow-hidden border border-[#DFE5DC] lg:border-0 shadow-md lg:shadow-none bg-[#EBF0E8]">
             {/* Hero Image */}
             <Photo
               src={HERO_IMAGE}
@@ -75,8 +76,6 @@ export const HomeHero: React.FC = () => {
             />
             <div className="absolute inset-0 bg-gradient-to-r from-black/15 via-transparent to-black/10 pointer-events-none" />
 
-            {/* Morning fog that burns off as the page loads */}
-            <div className="fog-clear absolute inset-0 bg-white pointer-events-none z-30" />
 
             {/* Fog fade blending the image into the white card behind the headline */}
             <div className="hidden lg:block absolute inset-y-0 left-0 w-80 bg-gradient-to-r from-white via-white/60 to-transparent pointer-events-none z-10" />
@@ -123,7 +122,7 @@ export const HomeHero: React.FC = () => {
             stat={stat}
             highlight={idx === STATS.length - 1}
             className="surface-in"
-            style={{ '--d': `${900 + idx * 130}ms` } as React.CSSProperties}
+            style={{ '--d': `${460 + idx * 90}ms` } as React.CSSProperties}
           />
         ))}
       </div>

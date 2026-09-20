@@ -257,7 +257,6 @@ export const TESTIMONIALS: Testimonial[] = [
     origin: 'Berlin, Germany',
     quote:
       'I came for a week and stayed two months. Morning surf, deep work till four, sunset with the crew — the routine I never wanted to leave.',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=120&auto=format&fit=crop',
   },
   {
     id: 't2',
@@ -265,7 +264,6 @@ export const TESTIMONIALS: Testimonial[] = [
     origin: 'Melbourne, Australia',
     quote:
       'The wifi is genuinely fast — I ran client calls from the booth every day. And I finally learned to surf at 34. Best month of my year.',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=120&auto=format&fit=crop',
   },
   {
     id: 't3',
@@ -273,7 +271,6 @@ export const TESTIMONIALS: Testimonial[] = [
     origin: 'London, UK',
     quote:
       'The female dorm was spotless and the staff treated us like family. Weligama Bay is five minutes barefoot — you can’t beat that.',
-    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=120&auto=format&fit=crop',
   },
 ];
 
@@ -412,7 +409,6 @@ export const REVIEWS: Review[] = [
     date: 'August 2026',
     quote:
       'Stood up on day two thanks to the instructors. Boards, lessons and beach transport all sorted by the hostel — zero hassle, all fun.',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=120&auto=format&fit=crop',
   },
   {
     id: 'r2',
@@ -423,7 +419,6 @@ export const REVIEWS: Review[] = [
     date: 'July 2026',
     quote:
       'Worked remotely here for six weeks. The focus room is genuinely quiet, calls from the booths were flawless, and I surfed every single morning.',
-    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=120&auto=format&fit=crop',
   },
   {
     id: 'r3',
@@ -434,7 +429,6 @@ export const REVIEWS: Review[] = [
     date: 'June 2026',
     quote:
       'Cleanest dorm I have stayed in across Asia. Big lockers, curtains on every bunk and the best rooftop sunsets in Weligama.',
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=120&auto=format&fit=crop',
   },
   {
     id: 'r4',
@@ -445,7 +439,6 @@ export const REVIEWS: Review[] = [
     date: 'August 2026',
     quote:
       'Booked three nights, stayed ten. The garden room was spotless and the family dinners made travelling solo feel anything but solo.',
-    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=120&auto=format&fit=crop',
   },
   {
     id: 'r5',
@@ -456,7 +449,6 @@ export const REVIEWS: Review[] = [
     date: 'May 2026',
     quote:
       'Great value surf package and honest coaching with video review. Wish I had booked longer — the intermediate spots trips are worth it alone.',
-    avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=120&auto=format&fit=crop',
   },
   {
     id: 'r6',
@@ -467,7 +459,6 @@ export const REVIEWS: Review[] = [
     date: 'April 2026',
     quote:
       'The 300 Mbps wifi is real — I uploaded video projects daily with no drama. Weligama Bay at sunrise before work never got old.',
-    avatar: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=120&auto=format&fit=crop',
   },
 ];
 

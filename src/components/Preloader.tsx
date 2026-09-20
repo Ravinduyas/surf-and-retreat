@@ -9,10 +9,36 @@ export const Preloader: React.FC = () => {
   const [leaving, setLeaving] = useState(false);
   const [gone, setGone] = useState(false);
 
+  /**
+   * Leave as soon as the page is actually ready — a fixed timer made the
+   * hero look slow to load. A short floor stops it flashing on fast loads,
+   * a ceiling stops a stalled asset holding the page hostage.
+   */
   useEffect(() => {
-    const fade = setTimeout(() => setLeaving(true), 1400);
-    const remove = setTimeout(() => setGone(true), 2000);
+    const MIN = 350;
+    const MAX = 1200;
+    const mountedAt = performance.now();
+    let fade: number;
+    let remove: number;
+
+    const dismiss = () => {
+      const waited = performance.now() - mountedAt;
+      fade = window.setTimeout(() => {
+        setLeaving(true);
+        remove = window.setTimeout(() => setGone(true), 320);
+      }, Math.max(0, MIN - waited));
+    };
+
+    if (document.readyState === 'complete') {
+      dismiss();
+    } else {
+      window.addEventListener('load', dismiss, { once: true });
+    }
+    const cap = window.setTimeout(dismiss, MAX);
+
     return () => {
+      window.removeEventListener('load', dismiss);
+      clearTimeout(cap);
       clearTimeout(fade);
       clearTimeout(remove);
     };

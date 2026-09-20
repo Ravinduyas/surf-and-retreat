@@ -3,6 +3,7 @@ import { Star } from 'lucide-react';
 import { REVIEWS } from '../../data';
 import { Eyebrow } from '../ui/Eyebrow';
 import { useReveal } from '../ui/Reveal';
+import { InitialsBadge } from '../ui/InitialsBadge';
 
 const StarRow: React.FC<{ rating: number }> = ({ rating }) => (
   <div className="flex items-center gap-0.5" aria-label={`${rating} out of 5 stars`}>
@@ -66,12 +67,7 @@ export const ReviewsSection: React.FC = () => {
                 &ldquo;{r.quote}&rdquo;
               </p>
               <div className="flex items-center gap-3">
-                <img
-                  src={r.avatar}
-                  alt={r.name}
-                  referrerPolicy="no-referrer"
-                  className="w-9 h-9 rounded-full ring-2 ring-white object-cover shadow-xs"
-                />
+                <InitialsBadge name={r.name} />
                 <div>
                   <div className="text-[13px] font-bold text-[#18271E]">{r.name}</div>
                   <div className="text-[11px] text-[#637265] font-medium">

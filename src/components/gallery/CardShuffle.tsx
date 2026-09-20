@@ -70,7 +70,7 @@ export const CardShuffle: React.FC = () => {
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
     >
-      {/* The stack */}
+      {/* The stack — cards fan out to the right, so inset them to stay in bounds */}
       <div
         className="relative h-[296px] sm:h-[376px] select-none cursor-pointer"
         aria-live="polite"
@@ -94,7 +94,7 @@ export const CardShuffle: React.FC = () => {
             return (
               <figure
                 key={img.id}
-                className="absolute left-0 bottom-0 m-0 w-full h-[260px] sm:h-[340px] rounded-[28px] overflow-hidden bg-[#E9EEE5] ring-1 ring-black/5 shadow-[0_1px_2px_rgba(16,24,20,0.06),0_22px_44px_-16px_rgba(16,24,20,0.38)]"
+                className="absolute left-0 bottom-0 m-0 w-[calc(100%-28px)] h-[260px] sm:h-[340px] rounded-[28px] overflow-hidden bg-[#E9EEE5] ring-1 ring-black/5 shadow-[0_1px_2px_rgba(16,24,20,0.06),0_22px_44px_-16px_rgba(16,24,20,0.38)]"
                 style={{
                   ...(isFront && flicking ? FLICKED : depthStyle(depth)),
                   transformOrigin: 'center bottom',

@@ -10,7 +10,9 @@ interface PageHeaderProps {
  * used at the top of every page.
  */
 export const PageHeader: React.FC<PageHeaderProps> = ({ children }) => (
-  <div className="bg-white rounded-[32px] sm:rounded-[40px] border border-[#DADB54] shadow-xs overflow-hidden">
+  // No overflow-hidden here: it would trap the sticky navbar inside the card.
+  // Anything that bleeds to the card edge rounds its own corners instead.
+  <div className="bg-white rounded-[32px] sm:rounded-[40px] border border-[#DADB54] shadow-xs">
     <Navbar />
     {children}
   </div>
