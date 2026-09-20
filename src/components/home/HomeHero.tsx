@@ -64,7 +64,7 @@ export const HomeHero: React.FC = () => {
         {/* Pulled up by the navbar height so the photo runs to the card's top edge */}
         <div className="lg:col-span-8 relative lg:-mr-8 lg:-mt-[108px] lg:self-stretch">
           {/* Rounds its own top-right corner: the card no longer clips it */}
-          <div className="relative w-full h-[520px] sm:h-[580px] lg:h-[calc(100%+108px)] rounded-[32px] lg:rounded-none lg:rounded-tr-[40px] overflow-hidden border border-[#DFE5DC] lg:border-0 shadow-md lg:shadow-none bg-[#EBF0E8]">
+          <div className="relative w-full h-[520px] sm:h-[580px] lg:h-full rounded-[32px] lg:rounded-none lg:rounded-tr-[40px] overflow-hidden border border-[#DFE5DC] lg:border-0 shadow-md lg:shadow-none bg-[#EBF0E8]">
             {/* Hero Image */}
             <Photo
               src={HERO_IMAGE}
