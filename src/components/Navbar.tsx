@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { Logo } from './ui/Logo';
-import { useModals } from '../context/ModalContext';
+import { BookLink } from './ui/BookLink';
 
 export const NAV_LINKS = [
   { name: 'Home', to: '/' },
@@ -18,7 +18,6 @@ export const Navbar: React.FC = () => {
   const [stuck, setStuck] = useState(false);
   const [navHeight, setNavHeight] = useState(0);
   const headerRef = useRef<HTMLElement>(null);
-  const { openBooking } = useModals();
 
   /*
    * It starts inside the hero card, then detaches and rides along the whole
@@ -98,24 +97,22 @@ export const Navbar: React.FC = () => {
 
         {/* Right CTA Button */}
         <div className="hidden lg:flex items-center shrink-0">
-          <button
+          <BookLink
             id="nav-book-btn"
-            onClick={() => openBooking()}
             className={`bg-[#D8E95E] hover:bg-[#CFE24D] active:scale-98 transition-all duration-200 text-[#193B26] font-semibold rounded-full shadow-xs cursor-pointer focus:outline-hidden ${stuck ? 'text-[13px] px-5 py-2' : 'text-[14px] px-6 py-2.5'}`}
           >
             Book Your Stay
-          </button>
+          </BookLink>
         </div>
 
         {/* Mobile Hamburger Toggle */}
         <div className="flex lg:hidden items-center gap-2">
-          <button
+          <BookLink
             id="nav-book-mobile-btn"
-            onClick={() => openBooking()}
             className={`bg-[#D8E95E] hover:bg-[#CFE24D] active:scale-98 transition-all text-[#193B26] text-[13px] font-semibold rounded-full shadow-xs cursor-pointer ${stuck ? 'px-5 py-2.5' : 'px-5 py-3'}`}
           >
             Book
-          </button>
+          </BookLink>
           <button
             id="mobile-menu-toggle-btn"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -145,15 +142,11 @@ export const Navbar: React.FC = () => {
               {link.name}
             </NavLink>
           ))}
-          <button
-            onClick={() => {
-              setMobileMenuOpen(false);
-              openBooking();
-            }}
-            className="w-full bg-[#D8E95E] text-[#193B26] text-center font-semibold py-2.5 rounded-full mt-2"
+          <BookLink
+            className="w-full bg-[#D8E95E] text-[#193B26] text-center font-semibold py-3 rounded-full mt-2"
           >
             Book Your Stay
-          </button>
+          </BookLink>
         </div>
       )}
         </div>

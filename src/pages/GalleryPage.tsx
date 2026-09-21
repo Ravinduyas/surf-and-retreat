@@ -5,15 +5,13 @@ import { PageHero } from '../components/layout/PageHero';
 import { GalleryGrid } from '../components/gallery/GalleryGrid';
 import { CardShuffle } from '../components/gallery/CardShuffle';
 import { Button } from '../components/ui/Button';
+import { QuickAnswer } from '../components/ui/QuickAnswer';
 import { usePageMeta } from '../hooks/usePageMeta';
-import { useModals } from '../context/ModalContext';
+import { GALLERY_IMAGES } from '../data';
 
 export default function GalleryPage() {
-  usePageMeta(
-    'Gallery | Surf & Retreat Hostel Weligama',
-    'Rooms, waves, workspaces and family dinners — see what a week at Surf & Retreat Hostel Weligama actually looks like.'
-  );
-  const { openBooking } = useModals();
+  usePageMeta();
+  const categories = [...new Set(GALLERY_IMAGES.map((image) => image.category))];
 
   return (
     <>
@@ -31,12 +29,19 @@ export default function GalleryPage() {
           subtitle="The dorms, the bay, the desks and the dinner table — a look around the hostel and the corner of Sri Lanka we call home."
           media={<CardShuffle />}
         >
-          <Button variant="primary" onClick={() => openBooking()}>
+          <Button variant="primary" book>
             <span>Book Your Stay</span>
             <ArrowRight className="w-4 h-4" />
           </Button>
         </PageHero>
       </PageHeader>
+
+      <QuickAnswer question="What does Surf & Retreat Hostel Weligama look like?">
+        <p>
+          The gallery has {GALLERY_IMAGES.length} photos across {categories.length} areas of the hostel: {categories.join(', ')}.
+          You will find, among others: {GALLERY_IMAGES.slice(0, 5).map((image) => image.alt.toLowerCase()).join('; ')}.
+        </p>
+      </QuickAnswer>
 
       <GalleryGrid />
     </>

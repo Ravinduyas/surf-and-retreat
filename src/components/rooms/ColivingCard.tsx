@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowRight, Check } from 'lucide-react';
-import { useModals } from '../../context/ModalContext';
+import { BookLink } from '../ui/BookLink';
 
 const PERKS = [
   'Bed + dedicated desk bundle',
@@ -10,8 +10,6 @@ const PERKS = [
 ];
 
 export const ColivingCard: React.FC = () => {
-  const { openBooking } = useModals();
-
   return (
     <section className="mt-8 sm:mt-12">
       <div className="bg-[#DADB54] rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 lg:p-12 shadow-xs">
@@ -43,14 +41,14 @@ export const ColivingCard: React.FC = () => {
                 40+ long-stayers hosted this season
               </span>
             </div>
-            <button
+            <BookLink
               id="coliving-book-btn"
-              onClick={() => openBooking('stay')}
+              tab="stay"
               className="bg-[#234530] hover:bg-[#183422] text-white text-sm font-semibold px-7 py-3.5 rounded-full flex items-center gap-2 transition-all duration-200 cursor-pointer shadow-xs active:scale-98"
             >
               <span>Request Coliving Rates</span>
               <ArrowRight className="w-4 h-4" />
-            </button>
+            </BookLink>
           </div>
         </div>
       </div>

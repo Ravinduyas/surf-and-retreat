@@ -36,6 +36,7 @@ export interface ExploreCard {
 export interface RoomItem extends DetailItem {
   pricePerNight: string;
   capacity: string;
+  maxGuests: number;
   features: string[];
 }
 
@@ -127,3 +128,29 @@ export interface ValueItem {
 }
 
 export type BookingTab = 'stay' | 'surf' | 'coworking';
+
+/** A room, surf package or coworking plan, normalized for the booking flow. */
+export interface BookingOption {
+  id: string;
+  title: string;
+  price: string;
+  meta: string;
+  description: string;
+  image?: string;
+  /** Only rooms are capacity-limited; undefined means any party size fits. */
+  maxGuests?: number;
+}
+
+export interface BookingFormState {
+  tab: BookingTab;
+  itemId: string;
+  /** Optional room added on top of a surf package or coworking pass. */
+  roomId: string;
+  checkIn: string;
+  checkOut: string;
+  guests: number;
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+}

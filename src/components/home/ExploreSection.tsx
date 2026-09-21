@@ -101,7 +101,7 @@ export const ExploreSection: React.FC = () => {
                     <div className="pt-3">
                       <Link
                         to={item.to}
-                        className="inline-flex items-center gap-1.5 py-1.5 text-xs font-semibold text-[#254A32] hover:text-[#183321] transition-all cursor-pointer group-hover:gap-2"
+                        className="inline-flex items-center gap-1.5 min-h-11 sm:min-h-0 py-1.5 text-xs font-semibold text-[#254A32] hover:text-[#183321] transition-all cursor-pointer group-hover:gap-2"
                       >
                         <span>Learn More</span>
                         <ArrowRight className="w-3.5 h-3.5" />

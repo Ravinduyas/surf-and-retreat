@@ -13,16 +13,16 @@ import {
 } from 'lucide-react';
 import { Logo } from './ui/Logo';
 import { Reveal } from './ui/Reveal';
-import { useModals } from '../context/ModalContext';
+import { BookLink } from './ui/BookLink';
+import { CONTACT_INFO } from '../data';
 import { BookingTab } from '../types';
 
 export const Footer: React.FC = () => {
-  const { openBooking } = useModals();
 
   const exploreLinks = [
-    { name: 'Rooms & Stay', to: '/experience#rooms' },
-    { name: 'Surf', to: '/experience#surf' },
-    { name: 'Coworking', to: '/experience#coworking' },
+    { name: 'Rooms & Stay', to: '/rooms' },
+    { name: 'Surf', to: '/surf-camp' },
+    { name: 'Coworking', to: '/coworking-coliving' },
     { name: 'Services', to: '/services' },
     { name: 'Gallery', to: '/gallery' },
     { name: 'About Us', to: '/about' },
@@ -91,14 +91,13 @@ export const Footer: React.FC = () => {
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-3">
-                <button
+                <BookLink
                   id="footer-book-btn"
-                  onClick={() => openBooking()}
                   className="bg-[#D8E95E] hover:bg-[#CFE24D] active:scale-98 transition-all duration-200 text-[#193B26] text-[14px] font-semibold px-7 py-3 rounded-full shadow-xs cursor-pointer inline-flex items-center gap-2"
                 >
                   <span>Book Your Stay</span>
                   <ArrowRight className="w-4 h-4" />
-                </button>
+                </BookLink>
                 <Link
                   to="/contact"
                   className="border border-white/25 hover:border-[#D8E95E]/70 hover:bg-white/5 text-[#E8EFE6] text-sm font-medium px-7 py-3 rounded-full inline-flex items-center gap-2 transition-all duration-200 cursor-pointer"
@@ -119,15 +118,19 @@ export const Footer: React.FC = () => {
                 <ul className="space-y-2 pt-1 text-[13px] text-[#C4D3C4]">
                   <li className="flex items-center gap-2.5">
                     <MapPin className="w-3.5 h-3.5 text-[#D8E95E] shrink-0" />
-                    <span>New Matara Rd, Weligama, Sri Lanka</span>
+                    <span>{CONTACT_INFO.address}</span>
                   </li>
                   <li className="flex items-center gap-2.5">
                     <Phone className="w-3.5 h-3.5 text-[#D8E95E] shrink-0" />
-                    <span>+94 76 123 4567</span>
+                    <a href={`tel:${CONTACT_INFO.phone.replace(/[^+\d]/g, '')}`} className="hover:text-white transition-colors">
+                      {CONTACT_INFO.phone}
+                    </a>
                   </li>
                   <li className="flex items-center gap-2.5">
                     <Mail className="w-3.5 h-3.5 text-[#D8E95E] shrink-0" />
-                    <span>hello@surfandretreat.lk</span>
+                    <a href={`mailto:${CONTACT_INFO.email}`} className="hover:text-white transition-colors">
+                      {CONTACT_INFO.email}
+                    </a>
                   </li>
                 </ul>
               </div>
@@ -141,7 +144,7 @@ export const Footer: React.FC = () => {
                     <li key={link.name}>
                       <Link
                         to={link.to}
-                        className="inline-block py-1.5 text-[13px] text-[#C4D3C4] hover:text-white transition-colors cursor-pointer"
+                        className="inline-block py-2.5 sm:py-1.5 text-[13px] text-[#C4D3C4] hover:text-white transition-colors cursor-pointer"
                       >
                         {link.name}
                       </Link>
@@ -157,12 +160,12 @@ export const Footer: React.FC = () => {
                 <ul className="space-y-2.5">
                   {bookLinks.map((link) => (
                     <li key={link.name}>
-                      <button
-                        onClick={() => openBooking(link.tab)}
-                        className="inline-block py-1.5 text-[13px] text-[#C4D3C4] hover:text-white transition-colors cursor-pointer"
+                      <BookLink
+                        tab={link.tab}
+                        className="inline-block py-2.5 sm:py-1.5 text-[13px] text-[#C4D3C4] hover:text-white transition-colors cursor-pointer"
                       >
                         {link.name}
-                      </button>
+                      </BookLink>
                     </li>
                   ))}
                 </ul>
@@ -177,7 +180,7 @@ export const Footer: React.FC = () => {
                     <li key={link.name}>
                       <Link
                         to={link.to}
-                        className="inline-block py-1.5 text-[13px] text-[#C4D3C4] hover:text-white transition-colors cursor-pointer"
+                        className="inline-block py-2.5 sm:py-1.5 text-[13px] text-[#C4D3C4] hover:text-white transition-colors cursor-pointer"
                       >
                         {link.name}
                       </Link>

@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { BookingTab } from '../../types';
+import { bookingHref } from '../../utils/booking';
 
 type Variant = 'primary' | 'lime' | 'outline';
 
@@ -7,6 +9,8 @@ interface ButtonProps {
   children: React.ReactNode;
   variant?: Variant;
   to?: string;
+  /** Renders a real link to the booking flow (new tab); pass the pre-selected category, or `true` for none. */
+  book?: BookingTab | true;
   onClick?: () => void;
   type?: 'button' | 'submit';
   className?: string;
@@ -26,12 +30,21 @@ export const Button: React.FC<ButtonProps> = ({
   children,
   variant = 'primary',
   to,
+  book,
   onClick,
   type = 'button',
   className = '',
   id,
 }) => {
   const classes = `${VARIANT_CLASSES[variant]} ${className}`.trim();
+  if (book) {
+    return (
+      <a id={id} href={bookingHref(book === true ? undefined : book)} target="_blank" rel="noopener" className={classes}>
+        {children}
+        <span className="sr-only"> (opens in a new tab)</span>
+      </a>
+    );
+  }
   if (to) {
     return (
       <Link id={id} to={to} onClick={onClick} className={classes}>

@@ -38,11 +38,18 @@ export const LocationCard: React.FC = () => {
           </li>
           <li className="flex items-start gap-3 text-sm text-[#3D4F42]">
             <Phone className="w-4 h-4 text-[#2C573A] shrink-0 mt-0.5" />
-            <span>{CONTACT_INFO.phone} (calls &amp; WhatsApp)</span>
+            <span>
+              <a href={`tel:${CONTACT_INFO.phone.replace(/[^+\d]/g, '')}`} className="hover:underline">
+                {CONTACT_INFO.phone}
+              </a>{' '}
+              (calls &amp; WhatsApp)
+            </span>
           </li>
           <li className="flex items-start gap-3 text-sm text-[#3D4F42]">
             <Mail className="w-4 h-4 text-[#2C573A] shrink-0 mt-0.5" />
-            <span>{CONTACT_INFO.email}</span>
+            <a href={`mailto:${CONTACT_INFO.email}`} className="hover:underline">
+              {CONTACT_INFO.email}
+            </a>
           </li>
         </ul>
 

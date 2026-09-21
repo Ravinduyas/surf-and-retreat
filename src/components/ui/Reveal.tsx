@@ -23,7 +23,7 @@ export const useReveal = <T extends HTMLElement>() => {
           }
         });
       },
-      { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }
+      { threshold: 0.01, rootMargin: '0px 0px -60px 0px' }
     );
     io.observe(el);
     return () => io.disconnect();

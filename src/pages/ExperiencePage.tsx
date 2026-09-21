@@ -1,31 +1,18 @@
 import React from 'react';
-import { Sparkles, Play, ArrowRight, BedDouble, Waves, Laptop } from 'lucide-react';
+import { Sparkles, Play, ArrowRight } from 'lucide-react';
 import { PageHeader } from '../components/layout/PageHeader';
 import { PageHero } from '../components/layout/PageHero';
-import { RoomsGrid } from '../components/rooms/RoomsGrid';
-import { ColivingCard } from '../components/rooms/ColivingCard';
-import { SurfPackages } from '../components/surf/SurfPackages';
-import { SurfSpots } from '../components/surf/SurfSpots';
-import { AmenitiesGrid } from '../components/coworking/AmenitiesGrid';
-import { PlansPricing } from '../components/coworking/PlansPricing';
+import { HighlightsSection } from '../components/home/HighlightsSection';
 import { Button } from '../components/ui/Button';
-import { Reveal } from '../components/ui/Reveal';
+import { QuickAnswer } from '../components/ui/QuickAnswer';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { useModals } from '../context/ModalContext';
-import { ROOMS } from '../data';
-
-const JUMP_LINKS = [
-  { id: 'rooms', label: 'Rooms & Stay', icon: BedDouble },
-  { id: 'surf', label: 'Surf School', icon: Waves },
-  { id: 'coworking', label: 'Coworking', icon: Laptop },
-];
+import { COWORKING_PLANS, ROOMS, SURF_PACKAGES } from '../data';
+import { Link } from 'react-router-dom';
 
 export default function ExperiencePage() {
-  usePageMeta(
-    'Stay, Surf & Work | Surf & Retreat Hostel Weligama',
-    'Dorms from $12, daily surf lessons on Weligama Bay and a coworking space with 300 Mbps fiber — everything under one roof, five minutes from the beach.'
-  );
-  const { openBooking, openVideo } = useModals();
+  usePageMeta();
+  const { openVideo } = useModals();
 
   return (
     <>
@@ -44,7 +31,7 @@ export default function ExperiencePage() {
           image={ROOMS[0].image}
           imageAlt="Hostel dorm room with bunk beds"
         >
-          <Button variant="primary" onClick={() => openBooking()}>
+          <Button variant="primary" book>
             <span>Check Availability</span>
             <ArrowRight className="w-4 h-4" />
           </Button>
@@ -55,37 +42,25 @@ export default function ExperiencePage() {
         </PageHero>
       </PageHeader>
 
-      {/* Section jump links */}
-      <div className="mt-6 flex flex-wrap items-center gap-2">
-        {JUMP_LINKS.map(({ id, label, icon: Icon }, idx) => (
-          <a
-            key={id}
-            href={`#${id}`}
-            className="surface-in inline-flex items-center gap-1.5 bg-white border border-[#E1E7DE] hover:border-[#B9C9B6] text-[#254A32] text-[12px] font-semibold px-4 py-2.5 sm:py-2 min-h-11 sm:min-h-0 rounded-full shadow-xs transition-colors cursor-pointer"
-            style={{ '--d': `${650 + idx * 120}ms` } as React.CSSProperties}
-          >
-            <Icon className="w-3.5 h-3.5" />
-            <span>{label}</span>
-          </a>
-        ))}
-      </div>
+      <HighlightsSection />
 
-      <div id="rooms" className="scroll-mt-6">
-        <RoomsGrid />
-        <Reveal>
-          <ColivingCard />
-        </Reveal>
-      </div>
-
-      <div id="surf" className="scroll-mt-6">
-        <SurfPackages />
-        <SurfSpots />
-      </div>
-
-      <div id="coworking" className="scroll-mt-6">
-        <AmenitiesGrid />
-        <PlansPricing />
-      </div>
+      <QuickAnswer question="What can I book at Surf & Retreat Hostel Weligama?">
+        <p>
+          <Link to="/rooms" className="font-semibold text-[#2A4E38] underline underline-offset-2">
+            Rooms
+          </Link>
+          : dorm beds and private rooms, {ROOMS[0].price} to {ROOMS[ROOMS.length - 1].price}.{' '}
+          <Link to="/surf-camp" className="font-semibold text-[#2A4E38] underline underline-offset-2">
+            Surf camp
+          </Link>
+          : lessons and coaching from {SURF_PACKAGES[0].price}, plus board rental.{' '}
+          <Link to="/coworking-coliving" className="font-semibold text-[#2A4E38] underline underline-offset-2">
+            Coworking &amp; coliving
+          </Link>
+          : desk passes from {COWORKING_PLANS[0].price} {COWORKING_PLANS[0].period}, and a bed-plus-desk coliving bundle for
+          longer stays. All three are a five-minute walk from Weligama Bay, and you can combine them in one booking.
+        </p>
+      </QuickAnswer>
     </>
   );
 }

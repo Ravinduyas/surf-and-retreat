@@ -36,7 +36,7 @@ export const HIGHLIGHTS: HighlightItem[] = [
     description: 'Breezy dorms & private rooms steps from the bay.',
     image: img('dorm-bunks.webp'),
     iconType: 'bed',
-    to: '/experience#rooms',
+    to: '/rooms',
   },
   {
     id: 'surf',
@@ -44,7 +44,7 @@ export const HIGHLIGHTS: HighlightItem[] = [
     description: 'Learn on Weligama’s gentle, sandy-bottom waves.',
     image: img('surf-board-carry.webp'),
     iconType: 'wave',
-    to: '/experience#surf',
+    to: '/surf-camp',
   },
   {
     id: 'work',
@@ -52,7 +52,7 @@ export const HIGHLIGHTS: HighlightItem[] = [
     description: 'Fast wifi and focus space, ocean air included.',
     image: img('coworking.webp'),
     iconType: 'laptop',
-    to: '/experience#coworking',
+    to: '/coworking-coliving',
   },
 ];
 
@@ -63,7 +63,7 @@ export const EXPLORE_CARDS: ExploreCard[] = [
     title: 'Sleep Well, Steps from the Surf',
     description: 'Curtain-pod dorms, AC privates and a garden bungalow.',
     image: img('dorm-bed-made.webp'),
-    to: '/experience#rooms',
+    to: '/rooms',
   },
   {
     id: 'surf',
@@ -71,7 +71,7 @@ export const EXPLORE_CARDS: ExploreCard[] = [
     title: 'Your First Wave Starts Here',
     description: 'Lessons, coaching and board rental on Weligama Bay.',
     image: img('surf-beach-board.webp'),
-    to: '/experience#surf',
+    to: '/surf-camp',
   },
   {
     id: 'coworking',
@@ -79,7 +79,7 @@ export const EXPLORE_CARDS: ExploreCard[] = [
     title: 'Deep Work, Then Sunset Sessions',
     description: 'Dedicated desks, call booths and 300 Mbps fiber.',
     image: img('coworking-2.webp'),
-    to: '/experience#coworking',
+    to: '/coworking-coliving',
   },
   {
     id: 'about',
@@ -101,6 +101,7 @@ export const ROOMS: RoomItem[] = [
     category: 'Shared',
     pricePerNight: 'from $12/night',
     capacity: 'Sleeps 8 · Mixed',
+    maxGuests: 8,
     features: ['Curtain pods & reading lights', 'Personal lockers', 'Board rack outside', 'Hot rain showers'],
     highlight: 'Most booked bed in the house — surfers love the 6 AM wake-up crew.',
     price: 'from $12/night',
@@ -114,6 +115,7 @@ export const ROOMS: RoomItem[] = [
     category: 'Shared',
     pricePerNight: 'from $15/night',
     capacity: 'Sleeps 4 · Female only',
+    maxGuests: 4,
     features: ['Ensuite bathroom', 'Curtain pods & mirrors', 'AC at night', 'Extra-large lockers'],
     highlight: 'Ensuite bathroom and night-time AC — the quiet corner of the hostel.',
     price: 'from $15/night',
@@ -127,6 +129,7 @@ export const ROOMS: RoomItem[] = [
     category: 'Private',
     pricePerNight: 'from $38/night',
     capacity: 'Sleeps 2 · Queen bed',
+    maxGuests: 2,
     features: ['Air conditioning', 'Private bathroom', 'Work desk & chair', 'Daily housekeeping'],
     highlight: 'Favourite of couples and remote workers who want their own space.',
     price: 'from $38/night',
@@ -140,6 +143,7 @@ export const ROOMS: RoomItem[] = [
     category: 'Private',
     pricePerNight: 'from $55/night',
     capacity: 'Sleeps 2–3 · King bed',
+    maxGuests: 3,
     features: ['Private veranda & hammock', 'King bed + day bed', 'Outdoor rain shower', 'Mini fridge & kettle'],
     highlight: 'Book early — there’s only one, and long-stayers rarely give it up.',
     price: 'from $55/night',
@@ -284,7 +288,7 @@ export const SERVICES: ServiceItem[] = [
     image: img('dorm-8bed.webp'),
     iconType: 'rooms',
     group: 'core',
-    to: '/experience#rooms',
+    to: '/rooms',
   },
   {
     id: 'coworking',
@@ -295,7 +299,7 @@ export const SERVICES: ServiceItem[] = [
     image: img('coworking.webp'),
     iconType: 'coworking',
     group: 'core',
-    to: '/experience#coworking',
+    to: '/coworking-coliving',
   },
   {
     id: 'surfing',
@@ -306,7 +310,7 @@ export const SERVICES: ServiceItem[] = [
     image: img('surf-walk-in.webp'),
     iconType: 'surfing',
     group: 'core',
-    to: '/experience#surf',
+    to: '/surf-camp',
   },
   {
     id: 'skating',

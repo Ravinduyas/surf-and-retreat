@@ -43,11 +43,10 @@ export const FaqAccordion: React.FC = () => {
                     }`}
                   />
                 </button>
-                {isOpen && (
-                  <div className="px-5 pb-5 -mt-1">
-                    <p className="text-[13px] text-[#5A695D] leading-relaxed">{faq.answer}</p>
-                  </div>
-                )}
+                {/* Always rendered so the answer is in the page's HTML; `hidden` only collapses it visually. */}
+                <div className={`px-5 pb-5 -mt-1 ${isOpen ? '' : 'hidden'}`}>
+                  <p className="text-[13px] text-[#5A695D] leading-relaxed">{faq.answer}</p>
+                </div>
               </div>
             );
           })}

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Play } from 'lucide-react';
+import { ArrowRight, Play } from 'lucide-react';
+import { Button } from '../ui/Button';
 import { STATS, HERO_IMAGE } from '../../data';
 import { Photo } from '../ui/Photo';
 import { useModals } from '../../context/ModalContext';
@@ -55,6 +56,16 @@ export const HomeHero: React.FC = () => {
               <br />
               Work by the Bay.
             </h1>
+
+            <div className="surface-in flex flex-wrap items-center gap-3 pt-1" style={{ '--d': '300ms' } as React.CSSProperties}>
+              <Button variant="primary" book>
+                <span>Book Your Stay</span>
+                <ArrowRight className="w-4 h-4" />
+              </Button>
+              <Button variant="outline" to="/rooms">
+                See Rooms
+              </Button>
+            </div>
 
           </div>
 

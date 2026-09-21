@@ -5,7 +5,7 @@ import { Waves } from 'lucide-react';
 export const Logo: React.FC<{ light?: boolean }> = ({ light = false }) => (
   <Link
     to="/"
-    className="flex items-center gap-2.5 font-bold text-xl tracking-tight group focus:outline-hidden"
+    className="flex items-center gap-2.5 min-h-11 font-bold text-xl tracking-tight group focus:outline-hidden"
   >
     <div className="w-6 h-6 flex items-center justify-center transition-transform group-hover:scale-105">
       <Waves

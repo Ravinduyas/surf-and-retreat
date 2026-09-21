@@ -4,19 +4,18 @@ import { ScrollToTop } from './ScrollToTop';
 import { Preloader } from '../Preloader';
 import { Footer } from '../Footer';
 import { VideoModal } from '../VideoModal';
-import { BookingModal } from '../BookingModal';
 import { DetailModal } from '../DetailModal';
 import { ModalContext, ModalContextValue } from '../../context/ModalContext';
 import { BookingTab, DetailItem } from '../../types';
+import { openBookingTab } from '../../utils/booking';
 
 export const Layout: React.FC = () => {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
-  const [bookingTab, setBookingTab] = useState<BookingTab | null>(null);
   const [detail, setDetail] = useState<{ item: DetailItem; bookingTab: BookingTab } | null>(null);
 
   const modals = useMemo<ModalContextValue>(
     () => ({
-      openBooking: (tab: BookingTab = 'stay') => setBookingTab(tab),
+      openBooking: openBookingTab,
       openVideo: () => setIsVideoOpen(true),
       openDetail: (item: DetailItem, tab: BookingTab = 'stay') =>
         setDetail({ item, bookingTab: tab }),
@@ -36,18 +35,14 @@ export const Layout: React.FC = () => {
 
         {isVideoOpen && <VideoModal onClose={() => setIsVideoOpen(false)} />}
 
-        {bookingTab !== null && (
-          <BookingModal initialTab={bookingTab} onClose={() => setBookingTab(null)} />
-        )}
-
         {detail !== null && (
           <DetailModal
             item={detail.item}
             onClose={() => setDetail(null)}
             onBook={() => {
-              const tab = detail.bookingTab;
+              const { bookingTab, item } = detail;
               setDetail(null);
-              setBookingTab(tab);
+              openBookingTab(bookingTab, item.id);
             }}
           />
         )}

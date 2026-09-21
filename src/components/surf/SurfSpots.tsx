@@ -2,11 +2,10 @@ import React from 'react';
 import { MapPin, ArrowRight } from 'lucide-react';
 import { SURF_SPOTS } from '../../data';
 import { Eyebrow } from '../ui/Eyebrow';
-import { useModals } from '../../context/ModalContext';
+import { BookLink } from '../ui/BookLink';
 import { useReveal } from '../ui/Reveal';
 
 export const SurfSpots: React.FC = () => {
-  const { openBooking } = useModals();
   const gridRef = useReveal<HTMLDivElement>();
 
   return (
@@ -24,13 +23,13 @@ export const SurfSpots: React.FC = () => {
               Progress from the bay to reef points as your surfing grows — our
               instructors will tell you when you&apos;re ready.
             </p>
-            <button
-              onClick={() => openBooking('surf')}
+            <BookLink
+              tab="surf"
               className="bg-[#2A4E38] hover:bg-[#1E3B29] text-white text-sm font-medium px-6 py-3 rounded-full inline-flex items-center gap-2 transition-all duration-200 cursor-pointer shadow-xs active:scale-98"
             >
               <span>Plan a Guided Trip</span>
               <ArrowRight className="w-4 h-4" />
-            </button>
+            </BookLink>
           </div>
 
           {/* Right: Spot list */}

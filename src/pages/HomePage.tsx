@@ -12,10 +12,7 @@ import { Reveal } from '../components/ui/Reveal';
 import { usePageMeta } from '../hooks/usePageMeta';
 
 export default function HomePage() {
-  usePageMeta(
-    'Surf & Retreat Hostel Weligama — Surf, Stay & Cowork in Sri Lanka',
-    'A coliving & coworking surf hostel five minutes from Weligama Bay, Sri Lanka. Dorms and private rooms, daily surf lessons and 300 Mbps fiber wifi.'
-  );
+  usePageMeta();
 
   return (
     <>

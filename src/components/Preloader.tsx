@@ -15,8 +15,8 @@ export const Preloader: React.FC = () => {
    * a ceiling stops a stalled asset holding the page hostage.
    */
   useEffect(() => {
-    const MIN = 350;
-    const MAX = 1200;
+    const MIN = 200;
+    const MAX = 900;
     const mountedAt = performance.now();
     let fade: number;
     let remove: number;
@@ -25,7 +25,7 @@ export const Preloader: React.FC = () => {
       const waited = performance.now() - mountedAt;
       fade = window.setTimeout(() => {
         setLeaving(true);
-        remove = window.setTimeout(() => setGone(true), 320);
+        remove = window.setTimeout(() => setGone(true), 250);
       }, Math.max(0, MIN - waited));
     };
 

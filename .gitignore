@@ -1,6 +1,7 @@
 node_modules/
 build/
 dist/
+dist-ssr/
 coverage/
 .DS_Store
 *.log
@@ -27,3 +28,6 @@ tools/statcheck.mjs
 tools/borders.mjs
 tools/wall.mjs
 tools/shuffle.mjs
+
+# SEO audit output (screenshots, raw data)
+ravinduyas.github.io-audit/

@@ -2,7 +2,7 @@ import { createContext, useContext } from 'react';
 import { BookingTab, DetailItem } from '../types';
 
 export interface ModalContextValue {
-  openBooking: (tab?: BookingTab) => void;
+  openBooking: (tab?: BookingTab, itemId?: string) => void;
   openVideo: () => void;
   openDetail: (item: DetailItem, bookingTab?: BookingTab) => void;
 }

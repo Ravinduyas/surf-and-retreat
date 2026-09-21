@@ -12,10 +12,7 @@ import { usePageMeta } from '../hooks/usePageMeta';
 import { ABOUT_IMAGES } from '../data';
 
 export default function AboutPage() {
-  usePageMeta(
-    'About Us | Surf & Retreat Hostel Weligama',
-    'The story, values and community behind Surf & Retreat — a family-run coliving and coworking surf hostel in Weligama, Sri Lanka.'
-  );
+  usePageMeta();
 
   return (
     <>

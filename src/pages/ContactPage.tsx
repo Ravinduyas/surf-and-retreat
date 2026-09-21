@@ -9,10 +9,7 @@ import { Reveal } from '../components/ui/Reveal';
 import { usePageMeta } from '../hooks/usePageMeta';
 
 export default function ContactPage() {
-  usePageMeta(
-    'Contact & FAQs | Surf & Retreat Hostel Weligama',
-    'Get in touch with Surf & Retreat Hostel Weligama — booking questions, directions from Colombo Airport and answers to common questions.'
-  );
+  usePageMeta();
 
   return (
     <>

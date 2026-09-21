@@ -2,11 +2,10 @@ import React from 'react';
 import { Check, ArrowRight, Ticket } from 'lucide-react';
 import { COWORKING_PLANS } from '../../data';
 import { Eyebrow } from '../ui/Eyebrow';
-import { useModals } from '../../context/ModalContext';
+import { BookLink } from '../ui/BookLink';
 import { useReveal } from '../ui/Reveal';
 
 export const PlansPricing: React.FC = () => {
-  const { openBooking } = useModals();
   const gridRef = useReveal<HTMLDivElement>();
 
   return (
@@ -63,8 +62,8 @@ export const PlansPricing: React.FC = () => {
                   </li>
                 ))}
               </ul>
-              <button
-                onClick={() => openBooking('coworking')}
+              <BookLink
+                tab="coworking"
                 className={`mt-6 w-full text-sm font-semibold py-3 rounded-full flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer shadow-xs active:scale-98 ${
                   plan.popular
                     ? 'bg-[#234530] hover:bg-[#183422] text-white'
@@ -73,7 +72,7 @@ export const PlansPricing: React.FC = () => {
               >
                 <span>Choose {plan.name}</span>
                 <ArrowRight className="w-4 h-4" />
-              </button>
+              </BookLink>
             </div>
           ))}
         </div>
