@@ -142,10 +142,12 @@ export interface BookingOption {
 }
 
 export interface BookingFormState {
-  tab: BookingTab;
-  itemId: string;
-  /** Optional room added on top of a surf package or coworking pass. */
+  /** The bed for the stay. NO_ROOM when the guest only wants lessons or a desk; '' until chosen. */
   roomId: string;
+  /** Optional surf package added to the stay. */
+  surfId: string;
+  /** Optional coworking pass added to the stay. */
+  coworkingId: string;
   checkIn: string;
   checkOut: string;
   guests: number;

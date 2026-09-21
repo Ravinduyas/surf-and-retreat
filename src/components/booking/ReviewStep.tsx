@@ -14,23 +14,11 @@ import {
 } from 'lucide-react';
 import { BookingFormState } from '../../types';
 import { getBookingOptions } from './options';
-import { StepDef } from './steps';
-
-const TAB_LABEL: Record<BookingFormState['tab'], string> = {
-  stay: 'Stay',
-  surf: 'Surf',
-  coworking: 'Coworking',
-};
-
-const TAB_ICON: Record<BookingFormState['tab'], LucideIcon> = {
-  stay: BedDouble,
-  surf: Waves,
-  coworking: Laptop,
-};
+import { STEPS, StepDef } from './steps';
+import { hasRoom } from './validation';
 
 interface ReviewStepProps {
   formData: BookingFormState;
-  steps: StepDef[];
   onEdit: (stepIndex: number) => void;
 }
 
@@ -68,26 +56,27 @@ const Row: React.FC<{ icon: LucideIcon; label: string; value: React.ReactNode; o
   </div>
 );
 
-export const ReviewStep: React.FC<ReviewStepProps> = ({ formData, steps, onEdit }) => {
-  const option = getBookingOptions(formData.tab).find((opt) => opt.id === formData.itemId);
-  const room = formData.roomId ? getBookingOptions('stay').find((r) => r.id === formData.roomId) : undefined;
+export const ReviewStep: React.FC<ReviewStepProps> = ({ formData, onEdit }) => {
+  const room = hasRoom(formData) ? getBookingOptions('stay').find((r) => r.id === formData.roomId) : undefined;
+  const surf = getBookingOptions('surf').find((o) => o.id === formData.surfId);
+  const coworking = getBookingOptions('coworking').find((o) => o.id === formData.coworkingId);
 
-  const indexOf = (kind: StepDef['kind']) => Math.max(0, steps.findIndex((s) => s.kind === kind));
+  const indexOf = (kind: StepDef['kind']) => Math.max(0, STEPS.findIndex((s) => s.kind === kind));
 
   return (
     <div className="rounded-2xl border border-[#DCE2D8] bg-[#F9FAF8] px-4">
-      <Row
-        icon={TAB_ICON[formData.tab]}
-        label={TAB_LABEL[formData.tab]}
-        value={option ? `${option.title} · ${option.price}` : '—'}
-        onEdit={() => onEdit(indexOf('option'))}
-      />
       {room && (
+        <Row icon={BedDouble} label="Room" value={`${room.title} · ${room.price}`} onEdit={() => onEdit(indexOf('room'))} />
+      )}
+      {surf && (
+        <Row icon={Waves} label="Surf" value={`${surf.title} · ${surf.price}`} onEdit={() => onEdit(indexOf('extras'))} />
+      )}
+      {coworking && (
         <Row
-          icon={BedDouble}
-          label="Room"
-          value={`${room.title} · ${room.price}`}
-          onEdit={() => onEdit(indexOf('room'))}
+          icon={Laptop}
+          label="Coworking"
+          value={`${coworking.title} · ${coworking.price}`}
+          onEdit={() => onEdit(indexOf('extras'))}
         />
       )}
       <Row

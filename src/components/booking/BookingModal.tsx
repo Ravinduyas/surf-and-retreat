@@ -1,20 +1,24 @@
 import React, { useState } from 'react';
 import { CheckCircle2, ArrowRight, Loader2 } from 'lucide-react';
 import { BookingFormState, BookingTab } from '../../types';
-import { buildSteps } from './steps';
+import { STEPS } from './steps';
 import { getBookingOptions } from './options';
-import { isDatesStepValid, isValidEmail, roomFitsGuests } from './validation';
+import { NO_ROOM, hasRoom, isDatesStepValid, isValidEmail, roomFitsGuests } from './validation';
 import { StepProgress } from './StepProgress';
 import { GuestsStep } from './GuestsStep';
 import { OptionStep } from './OptionStep';
-import { RoomAddOnStep } from './RoomAddOnStep';
+import { ExtrasStep } from './ExtrasStep';
 import { DatesStep } from './DatesStep';
 import { DetailsStep } from './DetailsStep';
 import { ReviewStep } from './ReviewStep';
 
 interface BookingModalProps {
-  initialTab: BookingTab;
-  /** Pre-selects a room/package/plan (e.g. opened from its detail view). */
+  /**
+   * Where the guest came from. 'stay' (or nothing) starts a normal room booking; 'surf' and 'coworking'
+   * start with no bed and that extra listed first, since they usually want the lessons or the desk.
+   */
+  initialTab?: BookingTab;
+  /** Pre-selects a room, surf package or coworking pass (matching `initialTab`). */
   initialItemId?: string;
   onClose: () => void;
 }
@@ -28,15 +32,12 @@ const Frame: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   </div>
 );
 
-export const BookingModal: React.FC<BookingModalProps> = ({
-  initialTab,
-  initialItemId,
-  onClose,
-}) => {
-  const [formData, setFormData] = useState<BookingFormState>({
-    tab: initialTab,
-    itemId: initialItemId ?? '',
-    roomId: '',
+const initialForm = (tab: BookingTab, itemId?: string): BookingFormState => {
+  const valid = itemId && getBookingOptions(tab).some((o) => o.id === itemId) ? itemId : '';
+  return {
+    roomId: tab === 'stay' ? valid : NO_ROOM,
+    surfId: tab === 'surf' ? valid : '',
+    coworkingId: tab === 'coworking' ? valid : '',
     checkIn: '',
     checkOut: '',
     guests: 1,
@@ -44,39 +45,40 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     email: '',
     phone: '',
     message: '',
-  });
+  };
+};
+
+export const BookingModal: React.FC<BookingModalProps> = ({ initialTab = 'stay', initialItemId, onClose }) => {
+  const [formData, setFormData] = useState<BookingFormState>(() => initialForm(initialTab, initialItemId));
 
   // Group size comes first: it decides which rooms are bookable.
   const [stepIndex, setStepIndex] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const steps = buildSteps(formData.tab);
-  const currentStep = steps[stepIndex] ?? steps[0];
+  const currentStep = STEPS[stepIndex] ?? STEPS[0];
+  const withRoom = hasRoom(formData);
+  const hasExtra = Boolean(formData.surfId || formData.coworkingId);
 
   const update = <K extends keyof BookingFormState>(field: K, value: BookingFormState[K]) =>
     setFormData((prev) => ({ ...prev, [field]: value }));
 
   const handleGuestsChange = (guests: number) =>
     setFormData((prev) => {
-      const stillFits = (id: string) => {
-        const room = getBookingOptions('stay').find((o) => o.id === id);
-        return !room || roomFitsGuests(room, guests);
-      };
-      return {
-        ...prev,
-        guests,
-        itemId: prev.tab === 'stay' && !stillFits(prev.itemId) ? '' : prev.itemId,
-        roomId: stillFits(prev.roomId) ? prev.roomId : '',
-      };
+      const room = getBookingOptions('stay').find((o) => o.id === prev.roomId);
+      const stillFits = !room || roomFitsGuests(room, guests);
+      return { ...prev, guests, roomId: stillFits ? prev.roomId : '' };
     });
 
   const canProceed = (() => {
     switch (currentStep.kind) {
-      case 'option':
-        return Boolean(formData.itemId);
+      case 'room':
+        return formData.roomId !== '';
+      case 'extras':
+        // Someone with no bed has to be booking lessons or a desk.
+        return withRoom || hasExtra;
       case 'dates':
-        return isDatesStepValid(formData.tab, Boolean(formData.roomId), formData.checkIn, formData.checkOut);
+        return isDatesStepValid(withRoom, formData.checkIn, formData.checkOut);
       case 'details':
         return formData.name.trim().length > 1 && isValidEmail(formData.email);
       default:
@@ -84,7 +86,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     }
   })();
 
-  const goNext = () => setStepIndex((i) => Math.min(i + 1, steps.length - 1));
+  const goNext = () => setStepIndex((i) => Math.min(i + 1, STEPS.length - 1));
   const goBack = () => setStepIndex((i) => Math.max(i - 1, 0));
 
   const handleSubmit = () => {
@@ -121,7 +123,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     <Frame>
       <StepProgress
         stepIndex={stepIndex}
-        totalSteps={steps.length}
+        totalSteps={STEPS.length}
         title={currentStep.title}
         subtitle={currentStep.subtitle}
         onBack={goBack}
@@ -129,27 +131,26 @@ export const BookingModal: React.FC<BookingModalProps> = ({
       />
 
       <div className="flex-1 overflow-y-auto px-4 sm:px-8 pb-4">
-        {currentStep.kind === 'guests' && (
-          <GuestsStep guests={formData.guests} onChange={handleGuestsChange} />
-        )}
-
-        {currentStep.kind === 'option' && (
-          <OptionStep
-            tab={formData.tab}
-            guests={formData.guests}
-            value={formData.itemId}
-            onSelect={(id) => update('itemId', id)}
-          />
-        )}
+        {currentStep.kind === 'guests' && <GuestsStep guests={formData.guests} onChange={handleGuestsChange} />}
 
         {currentStep.kind === 'room' && (
-          <RoomAddOnStep guests={formData.guests} value={formData.roomId} onSelect={(id) => update('roomId', id)} />
+          <OptionStep guests={formData.guests} value={formData.roomId} onSelect={(id) => update('roomId', id)} />
+        )}
+
+        {currentStep.kind === 'extras' && (
+          <ExtrasStep
+            surfId={formData.surfId}
+            coworkingId={formData.coworkingId}
+            required={!withRoom}
+            first={initialTab === 'coworking' ? 'coworking' : 'surf'}
+            onSurf={(id) => update('surfId', id)}
+            onCoworking={(id) => update('coworkingId', id)}
+          />
         )}
 
         {currentStep.kind === 'dates' && (
           <DatesStep
-            tab={formData.tab}
-            hasRoom={Boolean(formData.roomId)}
+            hasRoom={withRoom}
             checkIn={formData.checkIn}
             checkOut={formData.checkOut}
             onChange={(field, value) => update(field, value)}
@@ -160,20 +161,18 @@ export const BookingModal: React.FC<BookingModalProps> = ({
           <DetailsStep formData={formData} onChange={(field, value) => update(field, value)} />
         )}
 
-        {currentStep.kind === 'review' && (
-          <ReviewStep formData={formData} steps={steps} onEdit={setStepIndex} />
-        )}
+        {currentStep.kind === 'review' && <ReviewStep formData={formData} onEdit={setStepIndex} />}
       </div>
 
       <div className="shrink-0 px-4 sm:px-8 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))] sm:pb-6 bg-white border-t border-[#EEF2EB]">
-        {stepIndex < steps.length - 1 ? (
+        {stepIndex < STEPS.length - 1 ? (
           <button
             type="button"
             onClick={goNext}
             disabled={!canProceed}
             className="w-full bg-[#2A4E38] hover:bg-[#1E3A28] disabled:opacity-40 disabled:hover:bg-[#2A4E38] disabled:cursor-not-allowed text-white font-semibold py-3.5 rounded-full text-sm flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs active:scale-98"
           >
-            <span>Continue</span>
+            <span>{currentStep.kind === 'extras' && !hasExtra ? 'Skip extras' : 'Continue'}</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         ) : (

@@ -35,7 +35,7 @@ export const PickCard: React.FC<PickCardProps> = ({
     onClick={onClick}
     disabled={disabled}
     aria-pressed={active}
-    className={`relative w-full flex flex-row sm:flex-col items-stretch gap-3.5 sm:gap-0 p-2.5 sm:p-2 rounded-2xl border text-left transition-all ${
+    className={`relative w-full flex ${image ? 'flex-row sm:flex-col items-stretch gap-3.5 sm:gap-0 p-2.5 sm:p-2' : 'flex-row items-center gap-3.5 p-2.5'} rounded-2xl border text-left transition-all ${
       disabled
         ? 'bg-[#F9FAF8] border-[#E5ECE2] opacity-55 cursor-not-allowed'
         : active
@@ -54,7 +54,7 @@ export const PickCard: React.FC<PickCardProps> = ({
       </span>
     ) : (
       <span
-        className={`w-24 h-24 sm:w-full sm:h-auto sm:aspect-[16/6] rounded-xl shrink-0 flex items-center justify-center ${
+        className={`w-14 h-14 rounded-xl shrink-0 flex items-center justify-center ${
           active ? 'bg-[#2A4E38] text-white' : 'bg-white text-[#2A4E38] border border-[#DCE2D8]'
         }`}
       >
@@ -62,7 +62,7 @@ export const PickCard: React.FC<PickCardProps> = ({
       </span>
     )}
 
-    <span className="flex-1 min-w-0 flex flex-col justify-center sm:px-1.5 sm:pt-2.5 sm:pb-1">
+    <span className={`flex-1 min-w-0 flex flex-col justify-center ${image ? 'sm:px-1.5 sm:pt-2.5 sm:pb-1' : ''}`}>
       <span className="text-sm sm:text-[15px] font-bold text-[#18271E] leading-snug pr-6">{title}</span>
       {price && <span className="text-xs font-semibold text-[#2A4E38] mt-0.5">{price}</span>}
       <span
@@ -73,7 +73,7 @@ export const PickCard: React.FC<PickCardProps> = ({
     </span>
 
     {active && (
-      <span className="absolute top-2.5 right-2.5 sm:top-3.5 sm:right-3.5 w-6 h-6 rounded-full bg-[#2A4E38] text-white flex items-center justify-center shadow-xs">
+      <span className={`absolute top-2.5 right-2.5 ${image ? "sm:top-3.5 sm:right-3.5" : ""} w-6 h-6 rounded-full bg-[#2A4E38] text-white flex items-center justify-center shadow-xs`}>
         <Check className="w-3.5 h-3.5" />
       </span>
     )}

@@ -1,10 +1,8 @@
 import React from 'react';
-import { BookingTab } from '../../types';
 import { DateRangePicker } from './DateRangePicker';
-import { getDateError, needsCheckOut, todayString } from './validation';
+import { getDateError, todayString } from './validation';
 
 interface DatesStepProps {
-  tab: BookingTab;
   hasRoom: boolean;
   checkIn: string;
   checkOut: string;
@@ -35,10 +33,10 @@ const DateChip: React.FC<{ label: string; value: string; placeholder: string; ac
   </div>
 );
 
-export const DatesStep: React.FC<DatesStepProps> = ({ tab, hasRoom, checkIn, checkOut, onChange }) => {
+export const DatesStep: React.FC<DatesStepProps> = ({ hasRoom, checkIn, checkOut, onChange }) => {
   const today = todayString();
-  const error = getDateError(tab, hasRoom, checkIn, checkOut);
-  const lodging = needsCheckOut(tab, hasRoom);
+  const error = getDateError(hasRoom, checkIn, checkOut);
+  const lodging = hasRoom;
   const nights = checkIn && checkOut ? nightsBetween(checkIn, checkOut) : 0;
 
   const handleRange = (start: string, end: string) => {
