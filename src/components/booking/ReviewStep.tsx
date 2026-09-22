@@ -14,11 +14,13 @@ import {
 } from 'lucide-react';
 import { BookingFormState } from '../../types';
 import { getBookingOptions } from './options';
-import { STEPS, StepDef } from './steps';
+import { StepDef } from './steps';
 import { hasRoom } from './validation';
 
 interface ReviewStepProps {
   formData: BookingFormState;
+  /** The flow's steps in order, so each row can jump back to the right screen. */
+  steps: StepDef[];
   onEdit: (stepIndex: number) => void;
 }
 
@@ -56,12 +58,12 @@ const Row: React.FC<{ icon: LucideIcon; label: string; value: React.ReactNode; o
   </div>
 );
 
-export const ReviewStep: React.FC<ReviewStepProps> = ({ formData, onEdit }) => {
+export const ReviewStep: React.FC<ReviewStepProps> = ({ formData, steps, onEdit }) => {
   const room = hasRoom(formData) ? getBookingOptions('stay').find((r) => r.id === formData.roomId) : undefined;
   const surf = getBookingOptions('surf').find((o) => o.id === formData.surfId);
   const coworking = getBookingOptions('coworking').find((o) => o.id === formData.coworkingId);
 
-  const indexOf = (kind: StepDef['kind']) => Math.max(0, STEPS.findIndex((s) => s.kind === kind));
+  const indexOf = (kind: StepDef['kind']) => Math.max(0, steps.findIndex((s) => s.kind === kind));
 
   return (
     <div className="rounded-2xl border border-[#DCE2D8] bg-[#F9FAF8] px-4">
@@ -69,14 +71,14 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({ formData, onEdit }) => {
         <Row icon={BedDouble} label="Room" value={`${room.title} · ${room.price}`} onEdit={() => onEdit(indexOf('room'))} />
       )}
       {surf && (
-        <Row icon={Waves} label="Surf" value={`${surf.title} · ${surf.price}`} onEdit={() => onEdit(indexOf('extras'))} />
+        <Row icon={Waves} label="Surf" value={`${surf.title} · ${surf.price}`} onEdit={() => onEdit(indexOf('surf'))} />
       )}
       {coworking && (
         <Row
           icon={Laptop}
           label="Coworking"
           value={`${coworking.title} · ${coworking.price}`}
-          onEdit={() => onEdit(indexOf('extras'))}
+          onEdit={() => onEdit(indexOf('coworking'))}
         />
       )}
       <Row

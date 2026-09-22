@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { CheckCircle2, ArrowRight, Loader2 } from 'lucide-react';
 import { BookingFormState, BookingTab } from '../../types';
-import { STEPS } from './steps';
+import { buildSteps, isExtraStep } from './steps';
 import { getBookingOptions } from './options';
 import { NO_ROOM, hasRoom, isDatesStepValid, isValidEmail, roomFitsGuests } from './validation';
 import { StepProgress } from './StepProgress';
 import { GuestsStep } from './GuestsStep';
 import { OptionStep } from './OptionStep';
-import { ExtrasStep } from './ExtrasStep';
+import { SurfStep } from './SurfStep';
+import { CoworkingStep } from './CoworkingStep';
 import { DatesStep } from './DatesStep';
 import { DetailsStep } from './DetailsStep';
 import { ReviewStep } from './ReviewStep';
@@ -50,15 +51,23 @@ const initialForm = (tab: BookingTab, itemId?: string): BookingFormState => {
 
 export const BookingModal: React.FC<BookingModalProps> = ({ initialTab = 'stay', initialItemId, onClose }) => {
   const [formData, setFormData] = useState<BookingFormState>(() => initialForm(initialTab, initialItemId));
+  // The extra the guest came from gets its screen first.
+  const steps = useMemo(() => buildSteps(initialTab === 'coworking' ? 'coworking' : 'surf'), [initialTab]);
 
   // Group size comes first: it decides which rooms are bookable.
   const [stepIndex, setStepIndex] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  const currentStep = STEPS[stepIndex] ?? STEPS[0];
+  const currentStep = steps[stepIndex] ?? steps[0];
   const withRoom = hasRoom(formData);
   const hasExtra = Boolean(formData.surfId || formData.coworkingId);
+  // Someone with no bed has to be booking lessons or a desk. Each extra has its own screen, so the
+  // first one can still be skipped while another extra screen is still to come.
+  const laterExtraStep = steps.slice(stepIndex + 1).some((s) => isExtraStep(s.kind));
+  const extraRequired = !withRoom && !hasExtra && !laterExtraStep;
+  const selectedOnThisStep =
+    currentStep.kind === 'surf' ? formData.surfId : currentStep.kind === 'coworking' ? formData.coworkingId : '';
 
   const update = <K extends keyof BookingFormState>(field: K, value: BookingFormState[K]) =>
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -74,9 +83,9 @@ export const BookingModal: React.FC<BookingModalProps> = ({ initialTab = 'stay',
     switch (currentStep.kind) {
       case 'room':
         return formData.roomId !== '';
-      case 'extras':
-        // Someone with no bed has to be booking lessons or a desk.
-        return withRoom || hasExtra;
+      case 'surf':
+      case 'coworking':
+        return !extraRequired;
       case 'dates':
         return isDatesStepValid(withRoom, formData.checkIn, formData.checkOut);
       case 'details':
@@ -86,7 +95,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ initialTab = 'stay',
     }
   })();
 
-  const goNext = () => setStepIndex((i) => Math.min(i + 1, STEPS.length - 1));
+  const goNext = () => setStepIndex((i) => Math.min(i + 1, steps.length - 1));
   const goBack = () => setStepIndex((i) => Math.max(i - 1, 0));
 
   const handleSubmit = () => {
@@ -123,7 +132,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({ initialTab = 'stay',
     <Frame>
       <StepProgress
         stepIndex={stepIndex}
-        totalSteps={STEPS.length}
+        totalSteps={steps.length}
         title={currentStep.title}
         subtitle={currentStep.subtitle}
         onBack={goBack}
@@ -137,14 +146,15 @@ export const BookingModal: React.FC<BookingModalProps> = ({ initialTab = 'stay',
           <OptionStep guests={formData.guests} value={formData.roomId} onSelect={(id) => update('roomId', id)} />
         )}
 
-        {currentStep.kind === 'extras' && (
-          <ExtrasStep
-            surfId={formData.surfId}
-            coworkingId={formData.coworkingId}
-            required={!withRoom}
-            first={initialTab === 'coworking' ? 'coworking' : 'surf'}
-            onSurf={(id) => update('surfId', id)}
-            onCoworking={(id) => update('coworkingId', id)}
+        {currentStep.kind === 'surf' && (
+          <SurfStep value={formData.surfId} required={extraRequired} onChange={(id) => update('surfId', id)} />
+        )}
+
+        {currentStep.kind === 'coworking' && (
+          <CoworkingStep
+            value={formData.coworkingId}
+            required={extraRequired}
+            onChange={(id) => update('coworkingId', id)}
           />
         )}
 
@@ -161,18 +171,24 @@ export const BookingModal: React.FC<BookingModalProps> = ({ initialTab = 'stay',
           <DetailsStep formData={formData} onChange={(field, value) => update(field, value)} />
         )}
 
-        {currentStep.kind === 'review' && <ReviewStep formData={formData} onEdit={setStepIndex} />}
+        {currentStep.kind === 'review' && <ReviewStep formData={formData} steps={steps} onEdit={setStepIndex} />}
       </div>
 
       <div className="shrink-0 px-4 sm:px-8 pt-3 pb-[max(1rem,env(safe-area-inset-bottom))] sm:pb-6 bg-white border-t border-[#EEF2EB]">
-        {stepIndex < STEPS.length - 1 ? (
+        {stepIndex < steps.length - 1 ? (
           <button
             type="button"
             onClick={goNext}
             disabled={!canProceed}
             className="w-full bg-[#2A4E38] hover:bg-[#1E3A28] disabled:opacity-40 disabled:hover:bg-[#2A4E38] disabled:cursor-not-allowed text-white font-semibold py-3.5 rounded-full text-sm flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs active:scale-98"
           >
-            <span>{currentStep.kind === 'extras' && !hasExtra ? 'Skip extras' : 'Continue'}</span>
+            <span>
+              {isExtraStep(currentStep.kind) && !selectedOnThisStep && !extraRequired
+                ? currentStep.kind === 'surf'
+                  ? 'Skip surf lessons'
+                  : 'Skip desk pass'
+                : 'Continue'}
+            </span>
             <ArrowRight className="w-4 h-4" />
           </button>
         ) : (
