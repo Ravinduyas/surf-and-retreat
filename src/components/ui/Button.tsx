@@ -11,6 +11,8 @@ interface ButtonProps {
   to?: string;
   /** Renders a real link to the booking flow (new tab); pass the pre-selected category, or `true` for none. */
   book?: BookingTab | true;
+  /** With `book`: pre-selects this room, package or pass in the booking flow. */
+  bookItem?: string;
   onClick?: () => void;
   type?: 'button' | 'submit';
   className?: string;
@@ -31,6 +33,7 @@ export const Button: React.FC<ButtonProps> = ({
   variant = 'primary',
   to,
   book,
+  bookItem,
   onClick,
   type = 'button',
   className = '',
@@ -39,7 +42,7 @@ export const Button: React.FC<ButtonProps> = ({
   const classes = `${VARIANT_CLASSES[variant]} ${className}`.trim();
   if (book) {
     return (
-      <a id={id} href={bookingHref(book === true ? undefined : book)} target="_blank" rel="noopener" className={classes}>
+      <a id={id} href={bookingHref(book === true ? undefined : book, bookItem)} target="_blank" rel="noopener" className={classes}>
         {children}
         <span className="sr-only"> (opens in a new tab)</span>
       </a>

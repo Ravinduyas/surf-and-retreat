@@ -2,11 +2,10 @@ import React from 'react';
 import { ArrowRight, Check, Waves } from 'lucide-react';
 import { SURF_PACKAGES } from '../../data';
 import { Eyebrow } from '../ui/Eyebrow';
-import { useModals } from '../../context/ModalContext';
+import { Link } from 'react-router-dom';
 import { useReveal } from '../ui/Reveal';
 
 export const SurfPackages: React.FC = () => {
-  const { openDetail } = useModals();
   const gridRef = useReveal<HTMLDivElement>();
 
   return (
@@ -28,8 +27,9 @@ export const SurfPackages: React.FC = () => {
         <div ref={gridRef} className="stagger grid grid-cols-1 sm:grid-cols-3 gap-5">
           {SURF_PACKAGES.map((pkg) => (
             <div key={pkg.id} id={`surf-package-${pkg.id}`} className="group flex flex-col">
-              <button
-                onClick={() => openDetail(pkg, 'surf')}
+              <Link
+                to={`/surf-camp/${pkg.id}`}
+                aria-label={`${pkg.title} — view package`}
                 className="relative h-[220px] rounded-2xl overflow-hidden mb-4 shadow-xs bg-[#EAF0E7] block w-full cursor-pointer"
               >
                 <img
@@ -48,7 +48,7 @@ export const SurfPackages: React.FC = () => {
                     {pkg.price}
                   </span>
                 </div>
-              </button>
+              </Link>
 
               <div className="flex-1 flex flex-col justify-between space-y-3">
                 <div>
@@ -68,13 +68,13 @@ export const SurfPackages: React.FC = () => {
                   </ul>
                 </div>
 
-                <button
-                  onClick={() => openDetail(pkg, 'surf')}
+                <Link
+                  to={`/surf-camp/${pkg.id}`}
                   className="inline-flex items-center gap-1.5 min-h-11 sm:min-h-0 py-1.5 text-xs font-semibold text-[#254A32] hover:text-[#183321] transition-all cursor-pointer group-hover:gap-2"
                 >
                   <span>View Package</span>
                   <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+                </Link>
               </div>
             </div>
           ))}

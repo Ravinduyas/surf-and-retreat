@@ -7,6 +7,8 @@ export const DEFAULT_OG_IMAGE = `${SITE_URL}/images/scooter-surfboard.webp`;
 export interface RouteMeta {
   /** Breadcrumb label. */
   name: string;
+  /** Middle breadcrumb for pages that sit under a section (e.g. a single room). */
+  parent?: { name: string; path: string };
   title: string;
   description: string;
   noindex?: boolean;
@@ -94,6 +96,26 @@ export const ROUTE_META: Record<string, RouteMeta> = {
     indexable: false,
   },
 };
+
+// One page per room and surf package (their "View Details" pages).
+for (const room of ROOMS) {
+  ROUTE_META[`/rooms/${room.id}`] = {
+    name: room.title,
+    parent: { name: 'Rooms', path: '/rooms' },
+    title: `${room.title} in Weligama, ${room.price} | ${SUFFIX}`,
+    description: `${room.description} ${room.capacity}, ${room.price}, five minutes from Weligama Bay.`,
+    indexable: true,
+  };
+}
+for (const pkg of SURF_PACKAGES) {
+  ROUTE_META[`/surf-camp/${pkg.id}`] = {
+    name: pkg.title,
+    parent: { name: 'Surf Camp', path: '/surf-camp' },
+    title: `${pkg.title} in Weligama, ${pkg.price} | ${SUFFIX}`,
+    description: `${pkg.description} ${pkg.price} at Surf & Retreat Hostel Weligama.`,
+    indexable: true,
+  };
+}
 
 export const NOT_FOUND_META: RouteMeta = {
   name: 'Page not found',

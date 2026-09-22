@@ -16,6 +16,7 @@ const PAGES = {
   '/about': () => import('./pages/AboutPage'),
   '/contact': () => import('./pages/ContactPage'),
   '/book': () => import('./pages/BookingPage'),
+  '/detail': () => import('./pages/DetailPage'),
   '*': () => import('./pages/NotFoundPage'),
 };
 
@@ -23,7 +24,8 @@ const PAGES = {
 export const preloadRoute = (pathname: string) => {
   const path = normalizePath(pathname);
   if (path === '/') return Promise.resolve();
-  return (PAGES[path as keyof typeof PAGES] ?? PAGES['*'])();
+  const key = /^\/(rooms|surf-camp)\/[^/]+$/.test(path) ? '/detail' : path;
+  return (PAGES[key as keyof typeof PAGES] ?? PAGES['*'])();
 };
 
 const ExperiencePage = lazy(PAGES['/experience']);
@@ -36,6 +38,7 @@ const AboutPage = lazy(PAGES['/about']);
 const ContactPage = lazy(PAGES['/contact']);
 const NotFoundPage = lazy(PAGES['*']);
 const BookingPage = lazy(PAGES['/book']);
+const DetailPage = lazy(PAGES['/detail']);
 
 export default function App() {
   return (
@@ -46,7 +49,9 @@ export default function App() {
           <Route index element={<HomePage />} />
           <Route path="experience" element={<ExperiencePage />} />
           <Route path="rooms" element={<RoomsPage />} />
+          <Route path="rooms/:id" element={<DetailPage kind="room" />} />
           <Route path="surf-camp" element={<SurfCampPage />} />
+          <Route path="surf-camp/:id" element={<DetailPage kind="surf" />} />
           <Route path="coworking-coliving" element={<CoworkingPage />} />
           {/* Old anchor-era URLs */}
           <Route path="surf" element={<Navigate to="/surf-camp" replace />} />

@@ -8,8 +8,3 @@ export const bookingHref = (tab?: BookingTab, itemId?: string) => {
   const query = params.toString();
   return `${import.meta.env.BASE_URL}book${query ? `?${query}` : ''}`;
 };
-
-/** For callers that can't render a link (e.g. a button inside a modal). */
-export const openBookingTab = (tab?: BookingTab, itemId?: string) => {
-  window.open(bookingHref(tab, itemId), '_blank');
-};

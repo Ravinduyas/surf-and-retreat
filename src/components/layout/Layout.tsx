@@ -4,21 +4,14 @@ import { ScrollToTop } from './ScrollToTop';
 import { Preloader } from '../Preloader';
 import { Footer } from '../Footer';
 import { VideoModal } from '../VideoModal';
-import { DetailModal } from '../DetailModal';
 import { ModalContext, ModalContextValue } from '../../context/ModalContext';
-import { BookingTab, DetailItem } from '../../types';
-import { openBookingTab } from '../../utils/booking';
 
 export const Layout: React.FC = () => {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
-  const [detail, setDetail] = useState<{ item: DetailItem; bookingTab: BookingTab } | null>(null);
 
   const modals = useMemo<ModalContextValue>(
     () => ({
-      openBooking: openBookingTab,
       openVideo: () => setIsVideoOpen(true),
-      openDetail: (item: DetailItem, tab: BookingTab = 'stay') =>
-        setDetail({ item, bookingTab: tab }),
     }),
     []
   );
@@ -35,17 +28,6 @@ export const Layout: React.FC = () => {
 
         {isVideoOpen && <VideoModal onClose={() => setIsVideoOpen(false)} />}
 
-        {detail !== null && (
-          <DetailModal
-            item={detail.item}
-            onClose={() => setDetail(null)}
-            onBook={() => {
-              const { bookingTab, item } = detail;
-              setDetail(null);
-              openBookingTab(bookingTab, item.id);
-            }}
-          />
-        )}
       </div>
     </ModalContext.Provider>
   );

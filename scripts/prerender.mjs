@@ -41,6 +41,7 @@ const fileFor = (routePath) => (routePath === '/' ? 'index.html' : `${routePath.
 
 for (const routePath of PRERENDER_PATHS) {
   const html = await render(routePath);
+  await fs.mkdir(path.dirname(path.join(dist, fileFor(routePath))), {recursive: true});
   await fs.writeFile(path.join(dist, fileFor(routePath)), build(routePath, html));
   console.log(`prerendered ${routePath.padEnd(22)} -> ${fileFor(routePath)} (${html.length} bytes of markup)`);
 }
@@ -71,7 +72,7 @@ const lastCommit = (file) => {
 };
 const dataDate = lastCommit('src/data.ts');
 const lastmod = (routePath) =>
-  [lastCommit(SOURCES[routePath]), dataDate].filter(Boolean).sort().pop() ?? today;
+  [lastCommit(SOURCES[routePath] ?? 'src/pages/DetailPage.tsx'), dataDate].filter(Boolean).sort().pop() ?? today;
 
 const urls = INDEXABLE_PATHS.map((p) => {
   const loc = p === '/' ? `${SITE_URL}/` : `${SITE_URL}${p}`;

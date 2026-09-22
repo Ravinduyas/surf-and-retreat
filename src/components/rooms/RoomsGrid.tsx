@@ -2,12 +2,11 @@ import React from 'react';
 import { ArrowRight, Users, Check, BedDouble } from 'lucide-react';
 import { ROOMS } from '../../data';
 import { Eyebrow } from '../ui/Eyebrow';
-import { useModals } from '../../context/ModalContext';
+import { Link } from 'react-router-dom';
 import { useReveal } from '../ui/Reveal';
 import { Photo } from '../ui/Photo';
 
 export const RoomsGrid: React.FC = () => {
-  const { openDetail } = useModals();
   const gridRef = useReveal<HTMLDivElement>();
 
   return (
@@ -30,8 +29,9 @@ export const RoomsGrid: React.FC = () => {
           {ROOMS.map((room) => (
             <div key={room.id} id={`room-card-${room.id}`} className="group flex flex-col">
               {/* Image */}
-              <button
-                onClick={() => openDetail(room, 'stay')}
+              <Link
+                to={`/rooms/${room.id}`}
+                aria-label={`${room.title} — view details`}
                 className="relative h-[220px] rounded-2xl overflow-hidden mb-4 shadow-xs bg-[#EAF0E7] block w-full cursor-pointer"
               >
                 <Photo
@@ -50,7 +50,7 @@ export const RoomsGrid: React.FC = () => {
                     {room.pricePerNight}
                   </span>
                 </div>
-              </button>
+              </Link>
 
               {/* Body */}
               <div className="flex-1 flex flex-col justify-between space-y-3">
@@ -72,13 +72,13 @@ export const RoomsGrid: React.FC = () => {
                   </ul>
                 </div>
 
-                <button
-                  onClick={() => openDetail(room, 'stay')}
+                <Link
+                  to={`/rooms/${room.id}`}
                   className="inline-flex items-center gap-1.5 min-h-11 sm:min-h-0 py-1.5 text-xs font-semibold text-[#254A32] hover:text-[#183321] transition-all cursor-pointer group-hover:gap-2"
                 >
                   <span>View Details</span>
                   <ArrowRight className="w-3.5 h-3.5" />
-                </button>
+                </Link>
               </div>
             </div>
           ))}

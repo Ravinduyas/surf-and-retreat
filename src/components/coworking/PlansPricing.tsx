@@ -64,6 +64,7 @@ export const PlansPricing: React.FC = () => {
               </ul>
               <BookLink
                 tab="coworking"
+                itemId={plan.id}
                 className={`mt-6 w-full text-sm font-semibold py-3 rounded-full flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer shadow-xs active:scale-98 ${
                   plan.popular
                     ? 'bg-[#234530] hover:bg-[#183422] text-white'

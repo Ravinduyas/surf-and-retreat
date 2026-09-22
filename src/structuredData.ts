@@ -94,7 +94,10 @@ export const buildJsonLd = (pathname: string) => {
       '@type': 'BreadcrumbList',
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
-        { '@type': 'ListItem', position: 2, name: meta.name, item: url },
+        ...(meta.parent
+          ? [{ '@type': 'ListItem', position: 2, name: meta.parent.name, item: canonicalFor(meta.parent.path) }]
+          : []),
+        { '@type': 'ListItem', position: meta.parent ? 3 : 2, name: meta.name, item: url },
       ],
     });
   }
