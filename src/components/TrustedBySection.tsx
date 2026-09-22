@@ -1,11 +1,23 @@
 import React from 'react';
-import { BedDouble } from 'lucide-react';
+import { BedDouble, Globe, LucideIcon } from 'lucide-react';
+import { BookLink } from './ui/BookLink';
+
+interface Platform {
+  name: string;
+  color: string;
+  /** simple-icons path, or null to use `icon`. */
+  path: string | null;
+  icon?: LucideIcon;
+}
+
+/** Our own booking flow, listed first: no platform commission, so it's the option we push. */
+const DIRECT: Platform = { name: 'Book Direct', color: '#2A4E38', path: null, icon: Globe };
 
 /**
  * Brand marks are from simple-icons (CC0 icon data; the logos themselves are
  * trademarks of their owners). Shown muted, in brand colour on hover.
  */
-const PLATFORMS: { name: string; color: string; path: string | null }[] = [
+const PLATFORMS: Platform[] = [
   // Hostelworld's mark isn't in the open simple-icons set, so it gets a neutral bed icon.
   { name: 'Hostelworld', color: '#F25621', path: null },
   { name: 'Booking.com', color: '#003A9A', path: 'M24 0H0v24h24ZM8.575 6.563h2.658c2.108 0 3.473 1.15 3.473 2.898 0 1.15-.575 1.82-.91 2.108l-.287.263.335.192c.815.479 1.318 1.389 1.318 2.395 0 1.988-1.51 3.257-3.857 3.257H7.449V7.713c0-.623.503-1.126 1.126-1.15zm1.7 1.868c-.479.024-.694.264-.694.79v1.893h1.676c.958 0 1.294-.743 1.294-1.365 0-.815-.503-1.318-1.318-1.318zm-.096 4.36c-.407.071-.598.31-.598.79v2.251h1.868c.934 0 1.509-.55 1.509-1.533 0-.934-.599-1.509-1.51-1.509zm7.737 2.394c.743 0 1.341.599 1.341 1.342a1.34 1.34 0 0 1-1.341 1.341 1.355 1.355 0 0 1-1.341-1.341c0-.743.598-1.342 1.34-1.342z' },
@@ -14,31 +26,44 @@ const PLATFORMS: { name: string; color: string; path: string | null }[] = [
   { name: 'Google', color: '#4285F4', path: 'M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z' },
 ];
 
-const PlatformMark: React.FC<{ platform: (typeof PLATFORMS)[number] }> = ({ platform }) => (
-  <span
-    className="group/brand flex shrink-0 items-center gap-2 text-[#6D7D70] transition-colors"
-    style={{ '--brand': platform.color } as React.CSSProperties}
-  >
-    {platform.path ? (
-      <svg
-        viewBox="0 0 24 24"
-        className="w-5 h-5 fill-current transition-colors group-hover/brand:text-[var(--brand)]"
-        aria-hidden="true"
+const PlatformMark: React.FC<{ platform: Platform; highlight?: boolean }> = ({ platform, highlight }) => {
+  const Icon = platform.icon ?? BedDouble;
+  return (
+    <span
+      className={`group/brand flex shrink-0 items-center gap-2 transition-colors ${highlight ? 'text-[#2A4E38]' : 'text-[#6D7D70]'}`}
+      style={{ '--brand': platform.color } as React.CSSProperties}
+    >
+      {platform.path ? (
+        <svg
+          viewBox="0 0 24 24"
+          className="w-5 h-5 fill-current transition-colors group-hover/brand:text-[var(--brand)]"
+          aria-hidden="true"
+        >
+          <path d={platform.path} />
+        </svg>
+      ) : (
+        <Icon className="w-5 h-5 transition-colors group-hover/brand:text-[var(--brand)]" aria-hidden="true" />
+      )}
+      <span
+        className={`text-[14px] font-semibold tracking-tight whitespace-nowrap group-hover/brand:text-[#18271E] ${highlight ? 'underline decoration-[#D8E95E] decoration-2 underline-offset-4' : ''}`}
       >
-        <path d={platform.path} />
-      </svg>
-    ) : (
-      <BedDouble className="w-5 h-5 transition-colors group-hover/brand:text-[var(--brand)]" aria-hidden="true" />
-    )}
-    <span className="text-[14px] font-semibold tracking-tight whitespace-nowrap group-hover/brand:text-[#18271E]">
-      {platform.name}
+        {platform.name}
+      </span>
     </span>
-  </span>
+  );
+};
+
+/** The direct-booking mark is the one entry that's a real link: it opens the site's own booking flow. */
+const DirectMark: React.FC = () => (
+  <BookLink className="shrink-0">
+    <PlatformMark platform={DIRECT} highlight />
+  </BookLink>
 );
 
 export const TrustedBySection: React.FC = () => {
   const Row: React.FC<{ hidden?: boolean }> = ({ hidden }) => (
     <div className="flex items-center gap-10 pr-10" aria-hidden={hidden || undefined}>
+      {hidden ? <PlatformMark platform={DIRECT} highlight /> : <DirectMark />}
       {PLATFORMS.map((p) => (
         <PlatformMark key={p.name} platform={p} />
       ))}
@@ -62,6 +87,7 @@ export const TrustedBySection: React.FC = () => {
 
         {/* Wide screens: the platforms spread across the full width */}
         <div className="hidden xl:flex flex-1 items-center justify-between gap-8">
+          <DirectMark />
           {PLATFORMS.map((p) => (
             <PlatformMark key={p.name} platform={p} />
           ))}
