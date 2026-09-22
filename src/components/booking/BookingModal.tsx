@@ -1,8 +1,9 @@
 import React, { useMemo, useState } from 'react';
-import { CheckCircle2, ArrowRight, Loader2 } from 'lucide-react';
+import { CheckCircle2, ArrowRight, Mail, MessageCircle } from 'lucide-react';
 import { BookingFormState, BookingTab } from '../../types';
 import { buildSteps, isExtraStep } from './steps';
 import { getBookingOptions } from './options';
+import { buildBookingRequest } from './request';
 import { NO_ROOM, hasRoom, isDatesStepValid, isValidEmail, roomFitsGuests } from './validation';
 import { StepProgress } from './StepProgress';
 import { GuestsStep } from './GuestsStep';
@@ -56,8 +57,8 @@ export const BookingModal: React.FC<BookingModalProps> = ({ initialTab = 'stay',
 
   // Group size comes first: it decides which rooms are bookable.
   const [stepIndex, setStepIndex] = useState(0);
-  const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  // Which channel the guest handed the request to; null until they tap one of the send links.
+  const [sentVia, setSentVia] = useState<'whatsapp' | 'email' | null>(null);
 
   const currentStep = steps[stepIndex] ?? steps[0];
   const withRoom = hasRoom(formData);
@@ -98,23 +99,33 @@ export const BookingModal: React.FC<BookingModalProps> = ({ initialTab = 'stay',
   const goNext = () => setStepIndex((i) => Math.min(i + 1, steps.length - 1));
   const goBack = () => setStepIndex((i) => Math.max(i - 1, 0));
 
-  const handleSubmit = () => {
-    setSubmitting(true);
-    setTimeout(() => {
-      setSubmitting(false);
-      setSubmitted(true);
-      setTimeout(onClose, 3200);
-    }, 1400);
-  };
+  // The site has no server, so the request goes out through the guest's own WhatsApp or email app.
+  const request = currentStep.kind === 'review' ? buildBookingRequest(formData) : null;
 
-  if (submitted) {
+  if (sentVia) {
+    const other = sentVia === 'whatsapp' ? 'email' : 'whatsapp';
+    const fallback = buildBookingRequest(formData);
     return (
       <Frame>
         <div className="flex-1 flex flex-col justify-center px-6 py-16 sm:p-12 text-center space-y-3">
           <CheckCircle2 className="w-12 h-12 text-[#2C573A] mx-auto animate-bounce" />
-          <h4 className="text-lg font-bold text-[#18271E]">Request Sent!</h4>
+          <h4 className="text-lg font-bold text-[#18271E]">Almost there!</h4>
           <p className="text-xs text-[#5D6D5F] max-w-xs mx-auto">
-            We&apos;ll get back to you within 24 hours to confirm your booking. See you in Weligama!
+            Your request is written out in {sentVia === 'whatsapp' ? 'WhatsApp' : 'your mail app'} — just hit send
+            there. We&apos;ll reply within 24 hours to confirm. See you in Weligama!
+          </p>
+          <p className="text-xs text-[#5D6D5F] max-w-xs mx-auto">
+            Nothing opened?{' '}
+            <a
+              href={other === 'whatsapp' ? fallback.whatsappHref : fallback.mailtoHref}
+              target={other === 'whatsapp' ? '_blank' : undefined}
+              rel="noopener noreferrer"
+              onClick={() => setSentVia(other)}
+              className="font-semibold text-[#2A4E38] hover:underline"
+            >
+              Send it by {other === 'whatsapp' ? 'WhatsApp' : 'email'} instead
+            </a>
+            .
           </p>
           <button
             type="button"
@@ -192,24 +203,28 @@ export const BookingModal: React.FC<BookingModalProps> = ({ initialTab = 'stay',
             <ArrowRight className="w-4 h-4" />
           </button>
         ) : (
-          <button
-            type="button"
-            onClick={handleSubmit}
-            disabled={submitting}
-            className="w-full bg-[#2A4E38] hover:bg-[#1E3A28] disabled:opacity-70 text-white font-semibold py-3.5 rounded-full text-sm flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs active:scale-98"
-          >
-            {submitting ? (
-              <>
-                <Loader2 className="w-4 h-4 animate-spin" />
-                <span>Sending...</span>
-              </>
-            ) : (
-              <>
-                <span>Confirm &amp; Send Request</span>
-                <ArrowRight className="w-4 h-4" />
-              </>
-            )}
-          </button>
+          request && (
+            <div className="space-y-2">
+              <a
+                href={request.whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setSentVia('whatsapp')}
+                className="w-full bg-[#2A4E38] hover:bg-[#1E3A28] text-white font-semibold py-3.5 rounded-full text-sm flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs active:scale-98"
+              >
+                <MessageCircle className="w-4 h-4" />
+                <span>Send Request on WhatsApp</span>
+              </a>
+              <a
+                href={request.mailtoHref}
+                onClick={() => setSentVia('email')}
+                className="w-full text-[#2A4E38] hover:bg-[#F2F6F0] font-semibold py-2.5 rounded-full text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+              >
+                <Mail className="w-3.5 h-3.5" />
+                <span>Send by email instead</span>
+              </a>
+            </div>
+          )
         )}
       </div>
     </Frame>

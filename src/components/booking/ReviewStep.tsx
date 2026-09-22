@@ -16,6 +16,7 @@ import { BookingFormState } from '../../types';
 import { getBookingOptions } from './options';
 import { StepDef } from './steps';
 import { hasRoom } from './validation';
+import { formatDate } from './request';
 
 interface ReviewStepProps {
   formData: BookingFormState;
@@ -23,15 +24,6 @@ interface ReviewStepProps {
   steps: StepDef[];
   onEdit: (stepIndex: number) => void;
 }
-
-const formatDate = (value: string) =>
-  value
-    ? new Date(`${value}T00:00:00`).toLocaleDateString('en-US', {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
-      })
-    : '—';
 
 const Row: React.FC<{ icon: LucideIcon; label: string; value: React.ReactNode; onEdit: () => void }> = ({
   icon: Icon,
