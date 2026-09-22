@@ -30,7 +30,7 @@ export const HomeHero: React.FC = () => {
   const { openVideo } = useModals();
 
   return (
-    <div className="pt-6 sm:pt-10 pb-8 px-4 sm:px-8 lg:pt-6 lg:pb-6 lg:flex lg:flex-col lg:h-[clamp(490px,100vh-124px,900px)]">
+    <div className="pt-6 sm:pt-10 pb-8 px-4 sm:px-8 lg:pt-6 lg:pb-6 lg:relative lg:flex lg:flex-col lg:h-[clamp(490px,100vh-124px,900px)]">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center lg:flex-1">
         {/* Left Column: Typography, Form, Social Proof, Stats */}
         <div className="lg:col-span-4 lg:relative lg:z-20 lg:pb-16 flex flex-col justify-between space-y-7 lg:space-y-6">
@@ -72,10 +72,10 @@ export const HomeHero: React.FC = () => {
         </div>
 
         {/* Right Column: Split Image (Surf vs Work) & Floating Link Cards — bleeds to the card edge on desktop */}
-        {/* Pulled up by the navbar height so the photo runs to the card's top edge */}
-        <div className="lg:col-span-8 relative lg:-mr-8 lg:-mt-[108px] lg:self-stretch">
-          {/* Rounds its own top-right corner: the card no longer clips it */}
-          <div className="relative w-full h-[520px] sm:h-[580px] lg:h-full rounded-[32px] lg:rounded-none lg:rounded-tr-[40px] overflow-hidden border border-[#DFE5DC] lg:border-0 shadow-md lg:shadow-none bg-[#EBF0E8]">
+        {/* Pulled up by the navbar height and down by the card's bottom padding, so the photo runs edge to edge */}
+        <div className="lg:col-span-8 relative lg:-mr-8 lg:-mt-[108px] lg:-mb-6 lg:self-stretch">
+          {/* Rounds its own right-hand corners: the card no longer clips it */}
+          <div className="relative w-full h-[520px] sm:h-[580px] lg:h-full rounded-[32px] lg:rounded-none lg:rounded-r-[40px] overflow-hidden border border-[#DFE5DC] lg:border-0 shadow-md lg:shadow-none bg-[#EBF0E8]">
             {/* Hero Image */}
             <Photo
               src={HERO_IMAGE}
@@ -125,8 +125,8 @@ export const HomeHero: React.FC = () => {
         </div>
       </div>
 
-      {/* Wide screens: tiles overlap the bottom of the photo, last one highlighted */}
-      <div className="hidden lg:grid relative z-20 grid-cols-4 gap-4 lg:-mt-20 lg:shrink-0 lg:w-[88%] xl:w-[70%]">
+      {/* Wide screens: tiles sit over the bottom of the photo, last one highlighted */}
+      <div className="hidden lg:grid lg:absolute lg:bottom-6 lg:left-8 z-20 grid-cols-4 gap-4 lg:w-[calc(88%-3.5rem)] xl:w-[calc(70%-2.75rem)]">
         {STATS.map((stat, idx) => (
           <StatTile
             key={stat.id}
