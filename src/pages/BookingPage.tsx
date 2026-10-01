@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
-import { BookingModal } from '../components/booking/BookingModal';
+import { BookingFlow } from '../components/booking/BookingFlow';
 import { Logo } from '../components/ui/Logo';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { BookingTab } from '../types';
@@ -43,7 +43,7 @@ export default function BookingPage() {
       </header>
 
       {mounted && (
-        <BookingModal initialTab={tab ?? 'stay'} initialItemId={itemId} onClose={handleClose} />
+        <BookingFlow initialTab={tab ?? 'stay'} initialItemId={itemId} onClose={handleClose} />
       )}
     </div>
   );

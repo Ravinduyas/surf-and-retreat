@@ -30,7 +30,10 @@ export const buildBookingRequest = (form: BookingFormState): BookingRequest => {
   const surf = getBookingOptions('surf').find((o) => o.id === form.surfId);
   const coworking = getBookingOptions('coworking').find((o) => o.id === form.coworkingId);
 
-  const dates = form.checkOut ? `${formatDate(form.checkIn)} to ${formatDate(form.checkOut)}` : formatDate(form.checkIn);
+  const dates =
+    form.checkOut && form.checkOut !== form.checkIn
+      ? `${formatDate(form.checkIn)} to ${formatDate(form.checkOut)}`
+      : formatDate(form.checkIn);
   const guests = `${form.guests} ${form.guests === 1 ? 'guest' : 'guests'}`;
 
   const lines = [

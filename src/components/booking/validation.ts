@@ -21,19 +21,19 @@ export const todayString = () => {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 };
 
+/** Whole nights between two YYYY-MM-DD days (0 for a single-day visit). */
+export const nightsBetween = (from: string, to: string) =>
+  from && to ? Math.round((new Date(`${to}T00:00:00`).getTime() - new Date(`${from}T00:00:00`).getTime()) / 86_400_000) : 0;
+
 /**
- * With a bed the stay needs a check-out day after check-in. Without one (just lessons or a desk) it is
- * a day-based booking: an end date is optional and it can be a single day.
+ * Dates come before the room is chosen, so a single day (check-out = check-in) is allowed here: it suits a
+ * desk day pass or a lesson. Picking a bed later needs at least one night, which the room step enforces.
  */
-export const getDateError = (withRoom: boolean, checkIn: string, checkOut: string): string | null => {
+export const getDateError = (checkIn: string, checkOut: string): string | null => {
   if (checkIn && checkIn < todayString()) return "Check-in can't be in the past.";
-  if (checkIn && checkOut) {
-    if (withRoom ? checkOut <= checkIn : checkOut < checkIn) {
-      return withRoom ? 'Check-out must be after check-in.' : "End date can't be before the start date.";
-    }
-  }
+  if (checkIn && checkOut && checkOut < checkIn) return "Check-out can't be before check-in.";
   return null;
 };
 
-export const isDatesStepValid = (withRoom: boolean, checkIn: string, checkOut: string) =>
-  Boolean(checkIn) && (!withRoom || Boolean(checkOut)) && getDateError(withRoom, checkIn, checkOut) === null;
+export const isDatesStepValid = (checkIn: string, checkOut: string) =>
+  Boolean(checkIn) && Boolean(checkOut) && getDateError(checkIn, checkOut) === null;

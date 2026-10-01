@@ -77,7 +77,7 @@ export const ReviewStep: React.FC<ReviewStepProps> = ({ formData, steps, onEdit 
         icon={Calendar}
         label="Dates"
         value={
-          !formData.checkOut
+          !formData.checkOut || formData.checkOut === formData.checkIn
             ? formatDate(formData.checkIn)
             : `${formatDate(formData.checkIn)} → ${formatDate(formData.checkOut)}`
         }
