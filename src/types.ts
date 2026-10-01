@@ -86,13 +86,6 @@ export interface Review {
   quote: string;
 }
 
-export interface CafeDish {
-  id: string;
-  name: string;
-  note: string;
-  image: string;
-}
-
 export interface ServiceItem {
   id: string;
   title: string;

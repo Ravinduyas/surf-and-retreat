@@ -9,7 +9,6 @@ import {
   Amenity,
   Testimonial,
   Review,
-  CafeDish,
   ServiceItem,
   GalleryImage,
   FaqItem,
@@ -529,45 +528,6 @@ export const VALUES: ValueItem[] = [
 export const HERO_IMAGE = img('scooter-surfboard.webp');
 
 export const SERVICES_HERO_IMAGE = img('hostel-dog-bike.webp');
-
-export const CAFE_DISHES: CafeDish[] = [
-  {
-    id: 'bagel',
-    name: 'The Banging Bagel',
-    note: 'Bacon, egg and avocado — the post-session favourite.',
-    image: img('food-bagel-beach.webp'),
-  },
-  {
-    id: 'smoothie-bowl',
-    name: 'Banana Blush Bowl',
-    note: 'Fruit, seeds and nuts, blended cold for hot mornings.',
-    image: img('food-smoothie-bowl.webp'),
-  },
-  {
-    id: 'poke',
-    name: 'Tuna Poke Bowl',
-    note: 'Line-caught tuna from the Weligama boats each morning.',
-    image: img('food-tuna-poke.webp'),
-  },
-  {
-    id: 'curry',
-    name: 'Coastal Fish Curry',
-    note: 'The Sri Lankan classic, cooked the way our chef’s mother does.',
-    image: img('food-fish-curry.webp'),
-  },
-  {
-    id: 'waffle',
-    name: 'Coconut Waffles',
-    note: 'Golden, crisp and drenched in island coconut treacle.',
-    image: img('food-coconut-waffle.webp'),
-  },
-  {
-    id: 'pasta',
-    name: 'Pistachio Prawn Pasta',
-    note: 'Fresh prawns, pistachio pesto — our most photographed plate.',
-    image: img('food-prawn-pasta.webp'),
-  },
-];
 
 export const ABOUT_IMAGES = {
   story: img('garden.webp'),
