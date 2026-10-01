@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { BookingFlow } from '../components/booking/BookingFlow';
-import { Logo } from '../components/ui/Logo';
+import { BookingTopBar } from '../components/booking/BookingTopBar';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { BookingTab } from '../types';
 
@@ -31,19 +30,11 @@ export default function BookingPage() {
 
   return (
     <div className="h-dvh flex flex-col bg-[#F6F7F4]">
-      <header className="shrink-0 h-14 px-4 sm:px-8 flex items-center justify-between gap-4">
-        <Logo />
-        <Link
-          to="/"
-          className="inline-flex items-center gap-1.5 text-xs sm:text-[13px] font-semibold text-[#2A4E38] hover:underline py-2"
-        >
-          <ArrowLeft className="w-3.5 h-3.5" />
-          <span>Back to website</span>
-        </Link>
-      </header>
-
-      {mounted && (
+      {/* The flow brings its own top bar with the step title; this one only shows until it mounts. */}
+      {mounted ? (
         <BookingFlow initialTab={tab ?? 'stay'} initialItemId={itemId} onClose={handleClose} />
+      ) : (
+        <BookingTopBar />
       )}
     </div>
   );

@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
-  ArrowLeft,
   ArrowRight,
   BedDouble,
   CheckCircle2,
@@ -19,6 +18,7 @@ import { getBookingOptions } from './options';
 import { buildBookingRequest } from './request';
 import { NO_ROOM, hasRoom, isDatesStepValid, isValidEmail, nightsBetween, roomFitsGuests } from './validation';
 import { StepNav } from './StepNav';
+import { BookingTopBar } from './BookingTopBar';
 import { Panel } from './Panel';
 import { BookingSidebar } from './BookingSidebar';
 import { GuestsStep } from './GuestsStep';
@@ -137,7 +137,9 @@ export const BookingFlow: React.FC<BookingFlowProps> = ({ initialTab = 'stay', i
     const other = sentVia === 'whatsapp' ? 'email' : 'whatsapp';
     const fallback = buildBookingRequest(formData);
     return (
-      <div className="flex-1 flex items-center justify-center px-4 pb-10">
+      <div className="flex-1 min-h-0 flex flex-col">
+        <BookingTopBar eyebrow="Booking" title="Request Ready" />
+        <div className="flex-1 flex items-center justify-center px-4 py-10">
         <div className="w-full max-w-md bg-white rounded-[28px] border border-[#E4EAE0] shadow-xl px-6 py-12 sm:p-12 text-center space-y-3">
           <CheckCircle2 className="w-12 h-12 text-[#2C573A] mx-auto animate-bounce" />
           <h2 className="text-xl font-bold text-[#18271E]">Almost there!</h2>
@@ -165,6 +167,7 @@ export const BookingFlow: React.FC<BookingFlowProps> = ({ initialTab = 'stay', i
           >
             Close
           </button>
+        </div>
         </div>
       </div>
     );
@@ -205,33 +208,15 @@ export const BookingFlow: React.FC<BookingFlowProps> = ({ initialTab = 'stay', i
 
   return (
     <div className="flex-1 min-h-0 flex flex-col">
+      <BookingTopBar
+        eyebrow={`Step ${stepIndex + 1} of ${steps.length}`}
+        title={currentStep.title}
+        onBack={stepIndex > 0 ? goBack : undefined}
+        backLabel={stepIndex > 0 ? `Back to ${steps[stepIndex - 1].label}` : undefined}
+      />
       <div ref={scrollRef} className="flex-1 min-h-0 overflow-y-auto">
-        <div className="max-w-6xl mx-auto px-4 sm:px-8 pt-2 pb-8">
-          {/* Step header */}
-          <div className="relative text-center">
-            {stepIndex > 0 && (
-              <button
-                type="button"
-                onClick={goBack}
-                className="lg:absolute lg:left-0 lg:top-1 mb-3 lg:mb-0 inline-flex items-center gap-1.5 text-xs font-semibold text-[#2A4E38] hover:underline cursor-pointer"
-              >
-                <ArrowLeft className="w-3.5 h-3.5" />
-                Back to {steps[stepIndex - 1].label}
-              </button>
-            )}
-            <p className="flex items-center justify-center gap-2.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.22em] text-[#7FA35B]">
-              <span className="w-5 h-px bg-current" aria-hidden="true" />
-              Booking · Step {stepIndex + 1}
-              <span className="w-5 h-px bg-current" aria-hidden="true" />
-            </p>
-            <h2 className="text-[26px] sm:text-[34px] font-bold text-[#18261E] tracking-tight mt-1.5 leading-tight">
-              {currentStep.title}
-            </h2>
-            <span className="block w-10 h-1 rounded-full bg-[#D8E95E] mx-auto mt-2.5" aria-hidden="true" />
-            <p className="text-xs sm:text-sm text-[#637265] mt-2.5 max-w-md mx-auto">{currentStep.subtitle}</p>
-          </div>
-
-          <div className="mt-5 sm:mt-6 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 items-start">
+        <div className="max-w-6xl mx-auto px-4 sm:px-8 pt-4 sm:pt-6 pb-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 items-start">
             <div className="lg:col-span-7 min-w-0">
 
               {currentStep.kind === 'dates' && (
