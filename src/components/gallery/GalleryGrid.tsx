@@ -10,7 +10,6 @@ const FILTERS: { id: GalleryCategory | 'all'; label: string }[] = [
   { id: 'rooms', label: 'Rooms & Stay' },
   { id: 'surf', label: 'Surf & Skate' },
   { id: 'coworking', label: 'Coworking' },
-  { id: 'food', label: 'Food & Café' },
   { id: 'around', label: 'Around the Hostel' },
 ];
 

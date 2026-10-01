@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { GALLERY_IMAGES } from '../../data';
 import { Photo } from '../ui/Photo';
 
-/** Real hostel photos, alternating surf / rooms / food / place so the deck feels varied. */
-const DECK_IDS = ['g28', 'g1', 'g11', 'g33', 'g23', 'g5', 'g32', 'g14', 'g9', 'g29', 'g26', 'g13', 'g6', 'g34', 'g19', 'g16'];
+/** Real hostel photos, alternating surf / rooms / coworking / place so the deck feels varied. */
+const DECK_IDS = ['g28', 'g1', 'g9', 'g33', 'g23', 'g5', 'g32', 'g37', 'g10', 'g29', 'g26', 'g2', 'g6', 'g34', 'g24', 'g30'];
 const DECK = DECK_IDS.map((id) => GALLERY_IMAGES.find((g) => g.id === id)).filter(
   (g): g is (typeof GALLERY_IMAGES)[number] => Boolean(g)
 );

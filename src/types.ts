@@ -98,7 +98,7 @@ export interface ServiceItem {
   to?: string;
 }
 
-export type GalleryCategory = 'rooms' | 'surf' | 'coworking' | 'food' | 'around';
+export type GalleryCategory = 'rooms' | 'surf' | 'coworking' | 'around';
 
 export interface GalleryImage {
   id: string;

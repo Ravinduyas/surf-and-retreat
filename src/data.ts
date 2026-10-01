@@ -366,19 +366,6 @@ export const GALLERY_IMAGES: GalleryImage[] = [
   // Coworking
   { id: 'g9', src: img('coworking.webp'), alt: 'Coworking room with desks and ergonomic chairs', category: 'coworking' },
   { id: 'g10', src: img('coworking-2.webp'), alt: 'Bright workspace with sea-facing windows', category: 'coworking' },
-  // Food — the hostel kitchen
-  { id: 'g11', src: img('food-bagel-beach.webp'), alt: 'The Banging Bagel, served by the beach', category: 'food' },
-  { id: 'g12', src: img('food-hummus-beach.webp'), alt: 'Hummus with homemade chips on the sand', category: 'food' },
-  { id: 'g13', src: img('food-smoothie-bowl.webp'), alt: 'Banana blush smoothie bowl', category: 'food' },
-  { id: 'g14', src: img('food-tuna-poke.webp'), alt: 'Fresh tuna poke bowl', category: 'food' },
-  { id: 'g15', src: img('food-coconut-waffle.webp'), alt: 'Coconut waffles', category: 'food' },
-  { id: 'g16', src: img('food-poached-eggs.webp'), alt: 'Poached eggs on avocado toast', category: 'food' },
-  { id: 'g17', src: img('food-shakshuka.webp'), alt: 'Shakshuka with fresh bread', category: 'food' },
-  { id: 'g18', src: img('food-supergreen-pasta.webp'), alt: 'Supergreen pasta', category: 'food' },
-  { id: 'g19', src: img('food-prawn-pasta.webp'), alt: 'Pistachio prawn pasta', category: 'food' },
-  { id: 'g20', src: img('food-fish-curry.webp'), alt: 'Coastal fish curry', category: 'food' },
-  { id: 'g21', src: img('food-burger.webp'), alt: 'Beef burger with homemade chips', category: 'food' },
-  { id: 'g22', src: img('food-watermelon-feta.webp'), alt: 'Watermelon and feta bowl', category: 'food' },
   // Around the hostel
   { id: 'g23', src: img('hostel-sign.webp'), alt: 'Surf & Retreat Hostel entrance sign', category: 'around' },
   { id: 'g24', src: img('garden.webp'), alt: 'Garden and hangout area', category: 'around' },
