@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
+  ArrowLeft,
   ArrowRight,
   BedDouble,
   CheckCircle2,
@@ -182,7 +183,7 @@ export const BookingFlow: React.FC<BookingFlowProps> = ({ initialTab = 'stay', i
         ? 'Continue to Room'
         : 'Continue';
 
-  const action = request ? (
+  const mainAction = request ? (
     <div className="space-y-2">
       <a href={request.whatsappHref} target="_blank" rel="noopener noreferrer" onClick={() => setSentVia('whatsapp')} className={primaryBtn}>
         <MessageCircle className="w-4 h-4" />
@@ -204,21 +205,34 @@ export const BookingFlow: React.FC<BookingFlowProps> = ({ initialTab = 'stay', i
     </button>
   );
 
+  // Back sits beside the main button, so both ways through the flow are in one place.
+  const action = (
+    <div className="flex items-start gap-2.5">
+      {stepIndex > 0 && (
+        <button
+          type="button"
+          onClick={goBack}
+          aria-label={`Back to ${steps[stepIndex - 1].label}`}
+          title={`Back to ${steps[stepIndex - 1].label}`}
+          className="shrink-0 h-[50px] px-4 sm:px-5 rounded-full border border-[#CBD6C8] bg-white text-[#2A4E38] font-semibold text-sm flex items-center justify-center gap-1.5 hover:bg-[#F2F6F0] transition-colors cursor-pointer active:scale-[0.98]"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span className="hidden sm:inline">Back</span>
+        </button>
+      )}
+      <div className="flex-1 min-w-0">{mainAction}</div>
+    </div>
+  );
+
   const panel = currentStep.kind === 'dates' ? null : PANELS[currentStep.kind];
 
   return (
     <div className="flex-1 min-h-0 flex flex-col">
-      <BookingTopBar
-        eyebrow={`Step ${stepIndex + 1} of ${steps.length}`}
-        title={currentStep.title}
-        onBack={stepIndex > 0 ? goBack : undefined}
-        backLabel={stepIndex > 0 ? `Back to ${steps[stepIndex - 1].label}` : undefined}
-      />
+      <BookingTopBar eyebrow={`Step ${stepIndex + 1} of ${steps.length}`} title={currentStep.title} />
       <div ref={scrollRef} className="flex-1 min-h-0 overflow-y-auto">
         <div className="max-w-6xl mx-auto px-4 sm:px-8 pt-4 sm:pt-6 pb-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-6 items-start">
             <div className="lg:col-span-7 min-w-0">
-
               {currentStep.kind === 'dates' && (
                 <DatesStep checkIn={formData.checkIn} checkOut={formData.checkOut} onChange={handleDatesChange} />
               )}
