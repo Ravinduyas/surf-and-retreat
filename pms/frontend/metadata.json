@@ -1,0 +1,6 @@
+{
+  "name": "Daily Ops Dashboard",
+  "description": "A high-fidelity task management dashboard inspired by Salesforce Daily Operations UI, featuring a bento-style grid and pastel aesthetics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}

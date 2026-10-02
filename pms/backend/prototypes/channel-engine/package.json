@@ -1,0 +1,20 @@
+{
+  "name": "helio-channel-engine",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "DEPRECATED prototype — not wired into the app. See DEPRECATED.md.",
+  "engines": {
+    "node": ">=22.6.0"
+  },
+  "scripts": {
+    "demo": "node --experimental-strip-types src/demo.ts",
+    "demo:cm": "node --experimental-strip-types src/demo-cm.ts",
+    "start": "node --experimental-strip-types src/server.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0",
+    "@types/node": "^22.0.0"
+  }
+}

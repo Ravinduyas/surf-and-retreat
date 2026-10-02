@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Helio PMS — Direct-OTA Channel Manager Blueprint</title>
+<style>
+  :root{
+    --bg:#0f1115; --panel:#171a21; --panel2:#1e222b; --ink:#e8eaed; --muted:#9aa3b2;
+    --line:#2a2f3a; --accent:#7c9cff; --mint:#4ade80; --amber:#fbbf24; --rose:#fb7185;
+    --purple:#c084fc; --chip:#232834;
+  }
+  @media (prefers-color-scheme: light){
+    :root{ --bg:#f6f7f9; --panel:#ffffff; --panel2:#f0f2f5; --ink:#1a1d24; --muted:#5b6472;
+      --line:#e2e6ec; --accent:#3b5bdb; --chip:#eef1f6; }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px}
+  header.hero{padding:56px 0 40px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+  h1{font-size:34px;line-height:1.15;margin:12px 0 8px;letter-spacing:-.02em}
+  h2{font-size:24px;margin:48px 0 4px;letter-spacing:-.01em;scroll-margin-top:20px}
+  h3{font-size:17px;margin:28px 0 6px}
+  .sub{color:var(--muted);font-size:16px;max-width:70ch}
+  p{margin:10px 0}
+  a{color:var(--accent);text-decoration:none}
+  code{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:.86em;
+    background:var(--chip);padding:1px 6px;border-radius:5px}
+  .lead{font-size:17px}
+  section{padding:4px 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin:18px 0}
+  .card.tight{padding:16px 18px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:720px){.grid2,.grid3{grid-template-columns:1fr}}
+  .kpi{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+  .kpi .n{font-size:26px;font-weight:800;letter-spacing:-.02em}
+  .kpi .l{font-size:12px;color:var(--muted);margin-top:2px}
+  .callout{border-left:3px solid var(--amber);background:linear-gradient(90deg,color-mix(in srgb,var(--amber) 10%,transparent),transparent);
+    padding:14px 18px;border-radius:0 12px 12px 0;margin:18px 0}
+  .callout.good{border-color:var(--mint);background:linear-gradient(90deg,color-mix(in srgb,var(--mint) 12%,transparent),transparent)}
+  .callout.bad{border-color:var(--rose);background:linear-gradient(90deg,color-mix(in srgb,var(--rose) 12%,transparent),transparent)}
+  .tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;
+    background:var(--chip);color:var(--muted);margin:0 4px 4px 0}
+  .tag.mint{background:color-mix(in srgb,var(--mint) 22%,transparent);color:var(--mint)}
+  .tag.amber{background:color-mix(in srgb,var(--amber) 22%,transparent);color:var(--amber)}
+  .tag.rose{background:color-mix(in srgb,var(--rose) 22%,transparent);color:var(--rose)}
+  .tag.purple{background:color-mix(in srgb,var(--purple) 22%,transparent);color:var(--purple)}
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13.5px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700}
+  tr:last-child td{border-bottom:none}
+  .mono{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12.5px}
+  ol,ul{margin:10px 0;padding-left:22px}
+  li{margin:6px 0}
+  .toc{columns:2;column-gap:28px;font-size:14px}
+  @media(max-width:720px){.toc{columns:1}}
+  .toc a{display:block;padding:3px 0;color:var(--ink)}
+  .step{display:flex;gap:14px;margin:14px 0}
+  .step .num{flex:0 0 30px;height:30px;border-radius:9px;background:var(--accent);color:#fff;
+    font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px}
+  .step .num.ph2{background:var(--purple)} .step .num.ph3{background:var(--mint);color:#08260f}
+  .flow{width:100%;height:auto;margin:8px 0}
+  .foot{color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);margin-top:48px;padding:24px 0 60px}
+  .src{font-size:12.5px;color:var(--muted);word-break:break-word}
+  .src li{margin:3px 0}
+  .pill-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  hr{border:none;border-top:1px solid var(--line);margin:22px 0}
+  .num-big{font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+  <div class="eyebrow">Helio PMS · Distribution Architecture</div>
+  <h1>Going Direct: a High-Power Channel Manager<br>without Beds24 in the middle</h1>
+  <p class="sub">How to turn the Helio PMS into the single source of truth for price, availability and restrictions across Booking.com, Expedia/Vrbo, Agoda, Airbnb and Hostelworld — connecting to each OTA directly through a pluggable connector layer instead of routing everything through Beds24.</p>
+  <div class="pill-row">
+    <span class="tag mint">Prepared 30 Jul 2026</span>
+    <span class="tag">Source of truth = PMS</span>
+    <span class="tag">Adapter-per-OTA</span>
+    <span class="tag purple">Working engine included</span>
+  </div>
+</div></header>
+
+<div class="wrap">
+
+<section class="card tight">
+  <strong>Contents</strong>
+  <nav class="toc" style="margin-top:8px">
+    <a href="#reality">1 · The honest reality of "direct"</a>
+    <a href="#audit">2 · What your prototype is today</a>
+    <a href="#target">3 · Target architecture</a>
+    <a href="#matrix">4 · Per-OTA connectivity matrix</a>
+    <a href="#built">5 · What's already built &amp; running</a>
+    <a href="#roadmap">6 · Phased roadmap</a>
+    <a href="#reco">7 · Recommendation &amp; risks</a>
+    <a href="#sources">8 · Sources</a>
+  </nav>
+</section>
+
+<!-- ─────────────────────────── 1 -->
+<section id="reality">
+<h2>1 · The honest reality of going "direct"</h2>
+<p class="lead">You asked to replace Beds24 entirely and control every channel directly. That is the right long-term ambition — it maximises control, removes a dependency, and unlocks each OTA's full feature set — but it's important to be clear-eyed about what it costs, because that cost shapes the whole build.</p>
+
+<p><strong>Beds24 exists precisely because direct connectivity is hard.</strong> Every major OTA gates direct access behind a partner contract and a certification process. Nobody hands you a public "push my rooms" API you can sign up for on a Tuesday.</p>
+
+<div class="grid2">
+  <div class="callout bad">
+    <strong>What "direct" really requires, per OTA</strong>
+    <ul style="margin-bottom:0">
+      <li><strong>A signed connectivity-partner contract</strong> with each OTA.</li>
+      <li><strong>Certification</strong> — passing their test suite for message accuracy, before you can push live inventory (weeks to months each).</li>
+      <li><strong>Ongoing maintenance</strong> — OTAs deprecate API versions and change schemas continually; a live connection is a permanent engineering commitment.</li>
+      <li><strong>Airbnb has no public API at all.</strong> It is invite-only; Airbnb chooses its software partners and routinely turns down smaller vendors. A direct Airbnb connection may simply not be grantable in the near term.</li>
+    </ul>
+  </div>
+  <div class="callout good">
+    <strong>The pragmatic engineering answer: adapter-per-OTA</strong>
+    <p style="margin-bottom:0">Build the system <em>direct-first and Beds24-free by design</em>, but make every channel a <strong>pluggable connector</strong> behind one interface. Then you can certify and switch on Booking.com, Expedia and Agoda directly as each certification lands — and for anything you can't self-certify yet (Airbnb above all), drop in a <strong>white-label connectivity API such as Channex.io</strong> as one more connector, with no change to the core. Beds24 is gone; the architecture that replaces it is strictly more capable.</p>
+  </div>
+</div>
+
+<p>Leading channel managers maintain <strong>450+ certified OTA connections</strong> (SiteMinder, Cloudbeds) — a number no single property or small vendor can replicate. The realistic target isn't 450; it's <strong>direct on the handful that drive your volume</strong>, with a fallback connector for the long tail. The connector architecture below makes both true at once.</p>
+</section>
+
+<!-- ─────────────────────────── 2 -->
+<section id="audit">
+<h2>2 · What your prototype is today</h2>
+<p>Helio (the <code>PMS-UI-Testing</code> app) is a genuinely impressive high-fidelity <strong>front-end prototype</strong> — React 19 + Vite, Dexie/IndexedDB for local state, TanStack Query with a mock fetcher, i18n, PWA. The Channel Manager screen alone is ~2,000 lines across <strong>18 tabs</strong> (Distribution, Auto-feed, Connection, Mappings, Inventory map, Sync schedule, Channels, Content, Policies, Push &amp; Pull, Inbox, Conflicts, Drift, Sync log, Errors, Parity, Audit, Reports). The domain modelling is excellent.</p>
+<p><strong>But the entire distribution model is built around Beds24 as the hub.</strong> This is baked into the types and data, not just the labels:</p>
+
+<table>
+<thead><tr><th>Where</th><th>Beds24 is hard-wired as</th></tr></thead>
+<tbody>
+<tr><td class="mono">types.ts · Channel</td><td><code>beds24RoomMappings</code> — a channel's health is measured by how many Beds24 mappings it has</td></tr>
+<tr><td class="mono">types.ts · Bed / DormRoom</td><td><code>beds24BedId</code>, <code>beds24DormId</code> — inventory identity is a Beds24 id</td></tr>
+<tr><td class="mono">types.ts · DiscoveredUnit</td><td>"Auto-feed (discovery <em>from Beds24</em>)" — inventory is discovered by scanning Beds24</td></tr>
+<tr><td class="mono">types.ts · DriftItem</td><td>drift is defined as <code>pmsValue</code> vs <code>beds24Value</code> — Beds24 is the counter-party of record</td></tr>
+<tr><td class="mono">ConnectionPanel</td><td>a single "Beds24 API connection" (account id, token, <code>api.beds24.com/v2</code>, one webhook)</td></tr>
+<tr><td class="mono">stores.ts</td><td><code>beds24Online</code> connectivity flag; queue op kind <code>beds24-push</code></td></tr>
+<tr><td class="mono">Section header / KPIs</td><td>"Section 10 · Channel manager (Beds24)", "Beds24 connected", "fed to Beds24"</td></tr>
+</tbody>
+</table>
+
+<div class="callout"><strong>Implication.</strong> Every OTA (Booking.com, Expedia, Agoda…) is currently a <em>label on a Beds24 mapping</em>, not a connection you own. To go direct, the data model has to stop treating "a channel" as "a Beds24 room-mapping" and start treating it as a <strong>first-class connector with its own protocol, credentials and certification state</strong>. That is exactly the model in §3.</p></div>
+</section>
+
+<!-- ─────────────────────────── 3 -->
+<section id="target">
+<h2>3 · Target architecture</h2>
+<p class="lead">One master calendar in the PMS. One engine that fans changes out to many direct connectors. One inbound loop that pulls every booking back and re-balances inventory everywhere. No aggregator in the path.</p>
+
+<svg class="flow" viewBox="0 0 900 430" role="img" aria-label="Direct-OTA architecture diagram">
+  <defs>
+    <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#7c9cff"/></marker>
+    <marker id="arg" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#4ade80"/></marker>
+  </defs>
+  <style>
+    .box{fill:#1e222b;stroke:#2a2f3a;rx:12}
+    .lbl{fill:#e8eaed;font:600 13px -apple-system,sans-serif}
+    .sub{fill:#9aa3b2;font:11px -apple-system,sans-serif}
+    .edge{stroke:#7c9cff;stroke-width:2;fill:none;marker-end:url(#ar)}
+    .edgeg{stroke:#4ade80;stroke-width:2;fill:none;marker-end:url(#arg)}
+    .ota{fill:#171a21;stroke:#2a2f3a}
+    @media (prefers-color-scheme: light){
+      .box,.ota{fill:#fff;stroke:#e2e6ec}.lbl{fill:#1a1d24}.sub{fill:#5b6472}}
+  </style>
+  <!-- SoT -->
+  <rect class="box" x="40" y="150" width="190" height="120" rx="12"/>
+  <text class="lbl" x="60" y="182">PMS · Source of Truth</text>
+  <text class="sub" x="60" y="202">Room types · rate plans</text>
+  <text class="sub" x="60" y="218">Derived rates (BAR→child)</text>
+  <text class="sub" x="60" y="234">Pooled ARI calendar</text>
+  <text class="sub" x="60" y="250">Restrictions engine</text>
+  <!-- Engine -->
+  <rect class="box" x="330" y="90" width="200" height="90" rx="12"/>
+  <text class="lbl" x="350" y="120">Push Engine</text>
+  <text class="sub" x="350" y="140">fan-out · retry/backoff</text>
+  <text class="sub" x="350" y="156">certified-only gating</text>
+  <text class="sub" x="350" y="172">sync log · parity monitor</text>
+  <rect class="box" x="330" y="240" width="200" height="90" rx="12"/>
+  <text class="lbl" x="350" y="270">Reservation Delivery</text>
+  <text class="sub" x="350" y="290">normalize inbound</text>
+  <text class="sub" x="350" y="306">decrement pooled inv.</text>
+  <text class="sub" x="350" y="322">re-push to other channels</text>
+  <!-- connector bus -->
+  <rect class="box" x="600" y="150" width="70" height="120" rx="10"/>
+  <text class="lbl" x="616" y="200" transform="rotate(90 635 210)">Connectors</text>
+  <!-- OTAs -->
+  <rect class="ota" x="730" y="30"  width="140" height="40" rx="9"/><text class="lbl" x="748" y="55">Booking.com</text>
+  <rect class="ota" x="730" y="85" width="140" height="40" rx="9"/><text class="lbl" x="748" y="110">Expedia / Vrbo</text>
+  <rect class="ota" x="730" y="140" width="140" height="40" rx="9"/><text class="lbl" x="748" y="165">Agoda</text>
+  <rect class="ota" x="730" y="195" width="140" height="40" rx="9"/><text class="lbl" x="748" y="220">Hostelworld (beds)</text>
+  <rect class="ota" x="730" y="250" width="140" height="40" rx="9"/><text class="lbl" x="748" y="275">Airbnb / Channex*</text>
+  <rect class="ota" x="730" y="305" width="140" height="40" rx="9"/><text class="lbl" x="748" y="330">Direct booking engine</text>
+  <!-- edges out -->
+  <path class="edge" d="M230,190 C280,180 290,150 330,135"/>
+  <path class="edge" d="M530,135 C560,150 575,180 600,195"/>
+  <path class="edge" d="M670,200 C700,150 705,70 730,55"/>
+  <path class="edge" d="M670,205 C700,170 705,120 730,105"/>
+  <path class="edge" d="M670,210 L730,175"/>
+  <path class="edge" d="M670,225 C700,235 705,235 730,225"/>
+  <path class="edge" d="M670,240 C700,270 705,285 730,285"/>
+  <path class="edge" d="M670,250 C700,300 705,330 730,330"/>
+  <!-- inbound loop -->
+  <path class="edgeg" d="M730,320 C610,360 560,320 530,300"/>
+  <path class="edgeg" d="M330,300 C280,320 270,300 230,270"/>
+  <text class="sub" x="250" y="345" fill="#4ade80">booking pulled back → inventory re-balanced everywhere</text>
+</svg>
+<p class="sub" style="font-size:12.5px">*Airbnb and any un-certifiable long-tail channel ride a white-label connector (e.g. Channex.io) — the same interface, so the core never knows the difference.</p>
+
+<h3>The five load-bearing ideas</h3>
+<div class="grid2">
+  <div class="card tight"><strong>1. PMS is the single source of truth</strong><p style="margin-bottom:0">Rates, availability and restrictions live in one master calendar. Connectors are pure distributors of what it says — they never hold their own truth. This is the property every serious system shares (SiteMinder, Cloudbeds, D-EDGE).</p></div>
+  <div class="card tight"><strong>2. Pooled inventory, not per-channel allotments</strong><p style="margin-bottom:0">Every channel draws from the <em>same</em> availability count. Sell a room anywhere and it decrements everywhere in real time — maximum exposure, overbooking-safe. (The old "give Booking 2, give Expedia 2" model strands inventory.)</p></div>
+  <div class="card tight"><strong>3. Derived / linked rates off one BAR parent</strong><p style="margin-bottom:0">Non-refundable = BAR −10%; B&amp;B = BAR +$15; single-occ = BAR −20%. Children recalculate automatically when BAR changes, so one edit stays parity-clean across every channel. No manual per-channel repricing.</p></div>
+  <div class="card tight"><strong>4. Connector = adapter-per-OTA</strong><p style="margin-bottom:0">A single <code>Connector</code> interface: <code>pushAri()</code>, <code>testConnection()</code>, <code>normalizeBooking()</code>, plus capabilities + certification state. Each OTA's protocol (OTA-XML / REST / GraphQL) lives inside its adapter; the engine only speaks the interface.</p></div>
+</div>
+<div class="card tight"><strong>5. Reservation-delivery loop = the overbooking guard</strong><p style="margin-bottom:0">When any OTA delivers a booking, its adapter normalizes it, the source of truth decrements the shared pool for the stay window, and the engine <em>re-pushes the affected dates to every other live channel</em>. That closing loop — not the outbound push — is what actually prevents cross-channel overbooking once Beds24's own guard is gone.</p></div>
+
+<h3>Bed-level (hostel) inventory is a first-class case</h3>
+<p>Your system already models dorms and beds — good, because hostels are where generic tools fall over. Hostelworld sells <strong>per bed</strong>: occupancy = beds, so a 3-bed dorm at $15 pushes three $15 bed listings, and a private double is sent per-person. The Hostelworld connector carries a <code>bedLevel: true</code> capability and expands pooled dorm inventory into bed units on push. Only a handful of engines do this (Cloudbeds, Beds24, Sirvoy) — keeping it native is a real differentiator.</p>
+</section>
+
+<!-- ─────────────────────────── 4 -->
+<section id="matrix">
+<h2>4 · Per-OTA connectivity matrix</h2>
+<p>What each of your priority channels actually requires to connect directly. "Effort" is rough engineering + certification calendar time, not just coding.</p>
+<table>
+<thead><tr><th>OTA</th><th>Program</th><th>Protocol</th><th>Push ARI</th><th>Gate</th><th>Effort</th></tr></thead>
+<tbody>
+<tr>
+  <td><strong>Booking.com</strong></td>
+  <td>Connectivity Partner Programme (Content · Rates&amp;Availability · Reservations · Promotions APIs)</td>
+  <td>OTA-XML + B.XML → JSON</td><td><span class="tag mint">yes</span></td>
+  <td>Contract; entry "Certified" tier near-automatic, higher tiers by volume/quality</td>
+  <td><span class="tag amber">Medium</span></td>
+</tr>
+<tr>
+  <td><strong>Expedia / Vrbo</strong></td>
+  <td>EG Connectivity (ex-EQC) — supply side. <em>Not</em> Rapid (that resells Expedia inventory)</td>
+  <td>OTA-XML (ARI) + GraphQL (res/promo)</td><td><span class="tag mint">yes</span></td>
+  <td>Contract + AOC (PCI attestation) + certification. Vrbo rides the same stack, own tiers</td>
+  <td><span class="tag amber">Medium-high</span></td>
+</tr>
+<tr>
+  <td><strong>Agoda</strong></td>
+  <td>YCS (Yield Control System), YCS 5 API</td>
+  <td>OTA-XML (ARI/res) + REST (content/promo)</td><td><span class="tag mint">yes</span></td>
+  <td>Onboarding API + certification. Strong in Asia-Pacific</td>
+  <td><span class="tag amber">Medium</span></td>
+</tr>
+<tr>
+  <td><strong>Hostelworld</strong></td>
+  <td>HostelworldPMS partner API (bed-level)</td>
+  <td>REST (Swagger) + legacy XML</td><td><span class="tag mint">yes</span></td>
+  <td>Partner approval + special HW API password from account manager</td>
+  <td><span class="tag amber">Medium</span></td>
+</tr>
+<tr>
+  <td><strong>Airbnb</strong></td>
+  <td>Software Partner (PMS/Channel Manager) — invite-only</td>
+  <td>REST/JSON (private)</td><td><span class="tag mint">yes</span></td>
+  <td><span class="tag rose">No public API. Airbnb selects partners; small vendors declined</span></td>
+  <td><span class="tag rose">Blocked / via partner</span></td>
+</tr>
+<tr>
+  <td>Google Hotel Ads</td>
+  <td>Connectivity Partner (metasearch, not an OTA)</td>
+  <td>ARI push / Pull API</td><td><span class="tag mint">yes</span></td>
+  <td>Certification requiring an "Excellent" price-accuracy score</td>
+  <td><span class="tag">Optional</span></td>
+</tr>
+</tbody>
+</table>
+<div class="callout"><strong>The Airbnb problem, stated plainly.</strong> Because Airbnb has no open API and won't necessarily approve a direct connection, "replace Beds24 entirely and go direct on <em>all</em> channels including Airbnb" cannot be guaranteed by engineering alone. The connector layer resolves this cleanly: keep Airbnb behind a <strong>white-label connector (Channex.io — 60+ OTAs incl. Airbnb, REST/JSON, ~2-4 week integration, sold B2B to vendors like you, no per-channel fee)</strong> until/unless Airbnb grants you a direct partnership. From the PMS's point of view it's just another connector.</div>
+</section>
+
+<!-- ─────────────────────────── 5 -->
+<section id="built">
+<h2>5 · What's already built &amp; running</h2>
+<p class="lead">The heart of "going direct" isn't the UI — it's the connectivity engine. That engine is built, typed, and <strong>running</strong> in the accompanying <code>helio-channel-engine/</code> package. It has <strong>zero dependencies</strong> (Node 22 TypeScript type-stripping), so it stands entirely on its own.</p>
+<div class="grid3">
+  <div class="kpi"><div class="n num-big">0</div><div class="l">runtime dependencies</div></div>
+  <div class="kpi"><div class="n num-big">7</div><div class="l">connectors (3 live-mock + 4 real stubs)</div></div>
+  <div class="kpi"><div class="n num-big">✓</div><div class="l">end-to-end demo passes</div></div>
+</div>
+<table>
+<thead><tr><th>Module</th><th>Role</th></tr></thead>
+<tbody>
+<tr><td class="mono">sourceOfTruth.ts</td><td>Master calendar; derived-rate resolution; pooled-inventory decrement</td></tr>
+<tr><td class="mono">connector.ts</td><td>The one interface every OTA adapter implements; <code>canPushLive()</code> gating</td></tr>
+<tr><td class="mono">pushEngine.ts</td><td>Fan-out to all live connectors; retry w/ exponential backoff; structured sync log</td></tr>
+<tr><td class="mono">reservationDelivery.ts</td><td>Inbound normalize → decrement → re-push to other channels (overbooking guard)</td></tr>
+<tr><td class="mono">parity.ts</td><td>Rate-parity monitor across channels (drift detection)</td></tr>
+<tr><td class="mono">adapters/mock.ts</td><td>Working demo connector (simulates a certified OTA incl. transient 503s)</td></tr>
+<tr><td class="mono">adapters/bookingcom · expedia · agoda · hostelworld .ts</td><td>Real-shaped stubs wired to the correct endpoints/protocols, inert until certified, with <code>TODO(cert)</code> markers</td></tr>
+<tr><td class="mono">server.ts</td><td>Stdlib REST API the PMS calls instead of Beds24: <code>/ari</code>, <code>/webhooks/:channel</code>, <code>/calendar</code>, <code>/connectors</code>, <code>/sync-log</code>, <code>/parity</code></td></tr>
+</tbody>
+</table>
+<p>Run <code>npm run demo</code> and it proves the whole loop with no Beds24 in the path: derived rates cascade from one BAR edit, ARI publishes to Booking.com/Expedia/Agoda directly, an inbound Booking.com reservation decrements pooled inventory 12→11 and re-pushes to Expedia + Agoda, retries fire on a simulated 503, and the parity monitor flags a deliberately drifted channel at 5.63%.</p>
+</section>
+
+<!-- ─────────────────────────── 6 -->
+<section id="roadmap">
+<h2>6 · Phased roadmap</h2>
+<p>Sequenced so value lands early and nothing depends on a certification you don't yet hold. Beds24 is decommissioned by design, but the connector abstraction means you're never blocked waiting on one OTA.</p>
+
+<div class="step"><div class="num">1</div><div>
+  <strong>Re-model the domain (done in the engine; mirror into the PMS UI)</strong><br>
+  Replace <code>beds24RoomMappings</code> / <code>beds24BedId</code> / "PMS vs Beds24 drift" with the channel-agnostic <code>Connector</code> model. Each OTA becomes a first-class connection with protocol, credentials, capabilities and certification state. The Channel Manager screen's "Connection" tab goes from one Beds24 card to a grid of direct connections; "Auto-feed from Beds24" becomes "map your PMS inventory to each OTA."</div></div>
+<div class="step"><div class="num">2</div><div>
+  <strong>Stand up the engine as the PMS's distribution service</strong><br>
+  Point the PMS at <code>helio-channel-engine</code>'s REST API (already running). Wire Rates &amp; Inventory screens to <code>POST /ari</code>; wire the OTA inbox to <code>/webhooks/:channel</code>. At this stage everything works against mock connectors — full product, no live OTA yet.</div></div>
+<div class="step"><div class="num ph2">3</div><div>
+  <strong>Certify Booking.com first</strong> (highest volume, most accessible tier)<br>
+  Sign the Connectivity Partner contract, get machine-account credentials, fill in <code>adapters/bookingcom.ts</code>'s transport, pass certification, flip <code>certification: 'certified'</code>. The engine starts pushing live to Booking.com the moment the flag flips — nothing else changes.</div></div>
+<div class="step"><div class="num ph2">4</div><div>
+  <strong>Certify Expedia (+ Vrbo) and Agoda</strong> in parallel<br>
+  Same pattern per adapter. Add the <code>DIRECT</code> booking-engine connector (0% commission, always in-parity) so your own website is a peer channel.</div></div>
+<div class="step"><div class="num ph3">5</div><div>
+  <strong>Cover the gaps with a white-label connector</strong><br>
+  Add a <code>ChannexConnector</code> for Airbnb (no direct API) and the long-tail regional OTAs. Certify Hostelworld directly for bed-level control. Turn on the parity monitor, drift alerts, and (later) yield rules / AI repricing.</div></div>
+
+<div class="callout good"><strong>Result:</strong> Beds24 fully removed; Booking.com, Expedia/Vrbo, Agoda and Hostelworld running as owned direct connections; Airbnb + long tail served through one white-label connector — all behind a single engine you control, with the PMS as source of truth.</div>
+</section>
+
+<!-- ─────────────────────────── 7 -->
+<section id="reco">
+<h2>7 · Recommendation &amp; risks</h2>
+<p>You chose "replace Beds24 entirely." The architecture here honours that — Beds24 is gone from the design — while protecting you from its one real hazard: being unable to reach a channel you don't control. Two honest caveats:</p>
+<ul>
+  <li><strong>Don't double-connect a property to the same OTA through two paths.</strong> If any channel is ever served both directly and through a fallback connector, you get rate/availability conflicts and overbookings. The clean rule: exactly one connector owns each channel.</li>
+  <li><strong>Certification is calendar time you can't compress with code.</strong> Budget months, not weeks, before <em>all</em> priority channels are live-direct. The mock connectors let you ship and demo the complete product in the meantime.</li>
+</ul>
+<p><strong>Bottom line:</strong> the connector-per-OTA engine is the correct foundation whether you end up 100% direct or direct-plus-fallback. It's built and running. The next concrete build step is mirroring its data model into the front-end and wiring the Channel Manager screens to it — turning the Beds24 hub into the direct-connections control surface.</p>
+</section>
+
+<!-- ─────────────────────────── 8 -->
+<section id="sources">
+<h2>8 · Sources</h2>
+<ul class="src">
+<li>Booking.com Connectivity Partner Programme — partner.booking.com/en-us/help/channel-manager/partner-program/understanding-connectivity-partner-program · developers.booking.com/connectivity/docs</li>
+<li>Expedia EG Connectivity (supply / EQC) vs Rapid — developers.expediagroup.com/supply/lodging · partner.expediagroup.com/en-us/join-us/rapid-api</li>
+<li>Agoda YCS / YCS 5 — developer.agoda.com/supply/reference/where-to-start · agodaconnectivity.com</li>
+<li>Airbnb Software Partners (invite-only, no public API) — news.airbnb.com/announcing-our-2025-preferred-software-partners · myfrontdesk.cloudbeds.com (Airbnb API Minimum Requirements)</li>
+<li>Hostelworld partner API — partner-api.hostelworld.com · myfrontdesk.cloudbeds.com (Connect Hostelworld)</li>
+<li>Vrbo Connectivity — partner.expediagroup.com/en-us/industries/vacation-rentals/vrbo-connectivity-solutions</li>
+<li>Google Hotel Ads connectivity — travel.google/partners/hotels/for-connectivity-partners · support.google.com/hotelprices/answer/11947461</li>
+<li>Channel counts &amp; architecture — siteminder.com/channel-manager · cloudbeds.com/channel-manager · d-edge.com/product/channel-manager</li>
+<li>Pooled inventory &amp; derived/linked rates — cloudbeds.com/articles/channel-manager-software-guide · partnerhelp.booking.com (derived rates) · rezcontrol.com/should-you-use-derived-rates-for-your-hotel</li>
+<li>Bed-level Hostelworld distribution — myfrontdesk.cloudbeds.com/hc/en-us/articles/5908743117595-Hostelworld-FAQ</li>
+<li>Beds24 as connectivity backend &amp; API v2 — beds24.com/channel-manager.html · wiki.beds24.com (API V2)</li>
+<li>White-label connectivity API — channex.io · channex.io/pricing · docs.channex.io (Open Channel API); NextPax — nextpax.com/channel-manager/supply-api</li>
+<li>Rate parity / EU DMA (Booking.com parity clauses prohibited in EEA, Nov 2024) — concurrences.com · hospitality.today/article/europe-killed-the-parity-clause-parity-didnt-die</li>
+</ul>
+</section>
+
+<div class="foot">
+  Helio PMS · Direct-OTA Channel Manager Blueprint · generated 30 Jul 2026. Connectivity facts reflect public program documentation current at time of writing; OTA programs and tiers change — reconfirm terms with each OTA before committing to a certification timeline. Nothing here is legal advice regarding parity or partner contracts.
+</div>
+</div>
+</body>
+</html>

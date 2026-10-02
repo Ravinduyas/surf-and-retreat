@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-dash-bg: #F8F8F6;
+  --color-dash-pink: #FDE4EC;
+  --color-dash-purple: #E3E1FC;
+  --color-dash-yellow: #FCDD06;
+  --color-dash-grey: #EBEBE9;
+  --color-dash-text: #1A1A18;
+  --color-dash-muted: #9A9A98;
+
+  /* Semantic extensions, kept tonal */
+  --color-dash-mint: #D5F0DC;
+  --color-dash-sky: #D8ECFB;
+  --color-dash-peach: #FDE2CC;
+  --color-dash-lilac: #ECE0F4;
+  --color-dash-cream: #FAF3D7;
+
+  --color-status-ok: #2F8F4E;
+  --color-status-warn: #C97A12;
+  --color-status-bad: #C5392F;
+  --color-status-info: #2C6FB1;
+}
+
+@layer base {
+  body {
+    @apply bg-dash-bg text-dash-text font-sans antialiased;
+  }
+
+  /*
+   * A pointer over anything that can be clicked.
+   *
+   * Browsers give `<a href>` a pointer and `<button>` an arrow — a default from
+   * the era when buttons were beveled and obviously pressable, and wrong for an
+   * interface where a tab, a toolbar icon and a table row are all buttons that
+   * look flat. This app has 447 click handlers and had nine `cursor-pointer`
+   * declarations, so almost nothing said "click me" as the mouse crossed it.
+   * People hovered the tabs and could not tell they were tabs.
+   *
+   * A rule here rather than a class on every element: the ones that get
+   * forgotten are exactly the ones nobody notices are wrong.
+   */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  label:has(> input[type="checkbox"]),
+  label:has(> input[type="radio"]),
+  summary,
+  select:not(:disabled) {
+    cursor: pointer;
+  }
+
+  /* And say so when it cannot be clicked, rather than lying with a pointer. */
+  button:disabled,
+  select:disabled,
+  input:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+
+  /*
+   * Where the keyboard is.
+   *
+   * `outline-none` was applied to every input with nothing put back, so tabbing
+   * through a booking form moved an invisible cursor: the only way to know
+   * which field had focus was to type and see where the letters appeared. That
+   * fails WCAG 2.4.7, and it fails the receptionist who works this screen at
+   * speed without touching the mouse.
+   *
+   * `:focus-visible` rather than `:focus` so the ring appears for the keyboard
+   * and not on every mouse click — which is why it was turned off in the first
+   * place.
+   */
+  input, select, textarea {
+    @apply outline-none;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-dash-text);
+    outline-offset: 2px;
+  }
+
+  /* On a dark surface an almost-black ring is no ring at all. */
+  .panel-dark :focus-visible,
+  .bg-black :focus-visible,
+  button.bg-black:focus-visible {
+    outline-color: #FFFFFF;
+  }
+}
+
+/*
+ * Movement is not free for everyone.
+ *
+ * Vestibular disorders make sliding panels and pulsing dots genuinely
+ * unpleasant, and the setting to say so is one the operating system already
+ * collects. This honours it without removing meaning: the pulse that marks a
+ * live alert becomes a steady dot rather than vanishing, and transitions become
+ * instant rather than absent.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .pulse-dot { opacity: 1 !important; }
+}
+
+.rounded-task { border-radius: 2rem; }
+.rounded-sidebar { border-radius: 1.5rem; }
+
+.glass-pill {
+  @apply bg-white/60 backdrop-blur-md border border-white/40 shadow-sm;
+}
+
+.panel {
+  @apply bg-white rounded-[2rem] border border-black/5 shadow-sm;
+}
+
+/*
+ * `.panel` sets its own background, which beats a `bg-*` utility placed next to
+ * it. Panels that are meant to be dark use this instead of fighting that.
+ */
+.panel-dark {
+  @apply bg-black text-white rounded-[2rem] border border-white/10 shadow-sm;
+}
+
+.subtle-divider { border-color: rgba(0, 0, 0, 0.06); }
+
+/*
+ * A dialog must not grow taller than what the phone is actually showing.
+ * `vh` on a mobile browser measures the viewport with the address bar hidden,
+ * so a 90vh dialog has its footer — the Confirm button — under the chrome until
+ * you scroll. `dvh` measures what is on screen now. The two declarations are a
+ * cascade fallback: a browser without `dvh` drops the second and keeps `vh`.
+ */
+.dialog-max-h {
+  max-height: 90vh;
+  max-height: 90dvh;
+}
+
+.scroll-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+.scroll-thin::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 999px; }
+.scroll-thin::-webkit-scrollbar-track { background: transparent; }
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+.pulse-dot { animation: pulseDot 1.6s ease-in-out infinite; }

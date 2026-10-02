@@ -1,12 +1,15 @@
 name: Deploy to GitHub Pages
 
-# Builds the site, prerenders every route to its own HTML file (so each URL returns 200 with real
-# content) and publishes dist/ to the gh-pages branch. The repo's Pages source is
+# Builds the website in web/, prerenders every route to its own HTML file (so each URL returns 200 with
+# real content) and publishes web/dist/ to the gh-pages branch. The repo's Pages source is
 # Settings -> Pages -> "Deploy from a branch" (gh-pages, /), so GitHub publishes the branch as soon
-# as it is pushed.
+# as it is pushed. Changes that only touch pms/ don't redeploy the site.
 on:
   push:
     branches: [main]
+    paths:
+      - 'web/**'
+      - '.github/workflows/deploy.yml'
   workflow_dispatch:
 
 permissions:
@@ -15,6 +18,10 @@ permissions:
 concurrency:
   group: pages
   cancel-in-progress: false
+
+defaults:
+  run:
+    working-directory: web
 
 jobs:
   build-and-deploy:
@@ -28,13 +35,14 @@ jobs:
         with:
           node-version: 22
           cache: npm
+          cache-dependency-path: web/package-lock.json
       - run: npm ci
       - run: npm run lint
       - run: npm run build
-      - name: Publish dist/ to gh-pages
+      - name: Publish web/dist/ to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./web/dist
           # Keep only the latest build in the branch history.
           force_orphan: true

@@ -1,0 +1,68 @@
+name: CI/CD for FunBunk Backend on Lightsail
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Start Deployment
+        run: echo "🚀 Starting deployment to Lightsail..."
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.LIGHTSAIL_HOST }}
+          username: ${{ secrets.LIGHTSAIL_USER }}
+          key: ${{ secrets.LIGHTSAIL_SSH_PRIVATE_KEY }}
+          script: |
+            set -e  # Exit immediately if a command fails
+            echo "🔑 Connected to Lightsail instance"
+
+            # Change to project directory
+            echo "📂 Switching to project directory..."
+            cd /home/ec2-user/Funbunk-PMS/backend || { echo "❌ Directory not found!"; exit 1; }
+
+            # Pull latest code
+            echo "📥 Fetching latest changes..."
+            git fetch --all || { echo "❌ Git fetch failed!"; exit 1; }
+            git reset --hard origin/main || { echo "❌ Git reset failed!"; exit 1; }
+
+            # Install ALL dependencies (including dev for TypeScript)
+            echo "📦 Installing dependencies..."
+            npm ci || { echo "❌ npm install failed!"; exit 1; }
+
+            # Build TypeScript (if needed) - Optional but recommended
+            # echo "🔨 Building TypeScript..."
+            # npm run build || { echo "❌ Build failed!"; exit 1; }
+
+            # Restart app with PM2 using the npm script
+            echo "🔄 Restarting application with PM2..."
+            if pm2 describe funbunk-backend > /dev/null 2>&1; then
+              pm2 reload funbunk-backend || { echo "❌ PM2 reload failed!"; exit 1; }
+              echo "✅ PM2 app reloaded"
+            else
+              # Start with the same command as `npm start` (from package.json)
+              pm2 start npm --name "funbunk-backend" -- start || { 
+                echo "❌ PM2 start failed!"; 
+                exit 1; 
+              }
+              echo "✅ PM2 app started"
+            fi
+
+            # Save PM2 process list
+            pm2 save || { echo "⚠️ PM2 save failed, continuing anyway"; }
+
+            echo "🎉 Deployment completed successfully!"
+
+      - name: Deployment Finished
+        if: success()
+        run: echo "✅ CI/CD job finished successfully."
+
+      - name: Deployment Failed
+        if: failure()
+        run: echo "❌ Deployment failed. Check logs above."

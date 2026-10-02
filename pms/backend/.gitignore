@@ -1,0 +1,19 @@
+# Secrets.
+#
+# The root .gitignore covers `.env` already, but this file was empty and a
+# backend is exactly where a real credential ends up. Stating the rules next to
+# the files they protect means moving or vendoring this directory cannot
+# silently drop them.
+#
+# `.env.example` is the one that is meant to be committed — it is generated
+# from src/config.ts and holds no values.
+
+
+# Runtime state. The database is the system of record and belongs on a disk,
+# not in version control; the backups are copies of it.
+backups/
+backups-surfretreat/
+
+
+node_modules/
+*.log

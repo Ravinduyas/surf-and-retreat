@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#FCDD06" />
+    <meta name="description" content="helio.pms — Property Management Suite for hotels and hostels. Reservations, front office, cashier, housekeeping, night audit, and Beds24 channel manager." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/pwa-192.svg" />
+    <!-- The manifest link is deliberately absent. VitePWA writes the manifest
+         and injects the link itself at build time, so a hand-written one was
+         emitted twice in every built page — and in dev, where the plugin is
+         switched off, it pointed at a file that does not exist: the SPA
+         fallback answered with index.html and the browser reported the
+         manifest as a syntax error on line 1. It is defined in vite.config.ts. -->
+    <title>helio.pms — Property Management Suite</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

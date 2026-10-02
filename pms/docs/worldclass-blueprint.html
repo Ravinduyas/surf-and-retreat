@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Helio PMS — World-Class Blueprint &amp; Gap Analysis</title>
+<style>
+  :root{--bg:#0f1115;--panel:#171a21;--panel2:#1e222b;--ink:#e8eaed;--muted:#9aa3b2;
+    --line:#2a2f3a;--accent:#7c9cff;--mint:#4ade80;--amber:#fbbf24;--rose:#fb7185;--purple:#c084fc;--chip:#232834;}
+  @media (prefers-color-scheme: light){:root{--bg:#f6f7f9;--panel:#fff;--panel2:#f0f2f5;--ink:#1a1d24;
+    --muted:#5b6472;--line:#e2e6ec;--accent:#3b5bdb;--chip:#eef1f6;}}
+  *{box-sizing:border-box}html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 24px}
+  header.hero{padding:56px 0 38px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+  h1{font-size:33px;line-height:1.15;margin:12px 0 8px;letter-spacing:-.02em}
+  h2{font-size:23px;margin:46px 0 4px;letter-spacing:-.01em;scroll-margin-top:20px}
+  h3{font-size:16px;margin:26px 0 4px}
+  .sub{color:var(--muted);font-size:16px;max-width:74ch}
+  p{margin:10px 0}a{color:var(--accent);text-decoration:none}
+  code{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:.85em;background:var(--chip);padding:1px 6px;border-radius:5px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin:16px 0}
+  .card.tight{padding:14px 16px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:760px){.grid2,.grid4{grid-template-columns:1fr}}
+  .kpi{background:var(--panel2);border:1px solid var(--line);border-radius:13px;padding:12px 14px}
+  .kpi .n{font-size:23px;font-weight:800;letter-spacing:-.02em}.kpi .l{font-size:11.5px;color:var(--muted);margin-top:2px}
+  .callout{border-left:3px solid var(--amber);background:linear-gradient(90deg,color-mix(in srgb,var(--amber) 10%,transparent),transparent);padding:13px 16px;border-radius:0 12px 12px 0;margin:16px 0}
+  .callout.good{border-color:var(--mint);background:linear-gradient(90deg,color-mix(in srgb,var(--mint) 12%,transparent),transparent)}
+  .callout.bad{border-color:var(--rose);background:linear-gradient(90deg,color-mix(in srgb,var(--rose) 12%,transparent),transparent)}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
+  th,td{text-align:left;padding:8px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700}
+  tr:last-child td{border-bottom:none}
+  .st{font-weight:800;font-size:11px;white-space:nowrap}
+  .have{color:var(--mint)}.part{color:var(--amber)}.miss{color:var(--rose)}
+  .tag{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--chip);color:var(--muted);margin:0 3px 3px 0}
+  .tag.mint{background:color-mix(in srgb,var(--mint) 22%,transparent);color:var(--mint)}
+  .tag.amber{background:color-mix(in srgb,var(--amber) 22%,transparent);color:var(--amber)}
+  .tag.rose{background:color-mix(in srgb,var(--rose) 22%,transparent);color:var(--rose)}
+  .tag.purple{background:color-mix(in srgb,var(--purple) 22%,transparent);color:var(--purple)}
+  ol,ul{margin:8px 0;padding-left:20px}li{margin:5px 0}
+  .toc{columns:2;column-gap:26px;font-size:14px}@media(max-width:760px){.toc{columns:1}}
+  .toc a{display:block;padding:3px 0;color:var(--ink)}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;margin:6px 0 2px}
+  .step{display:flex;gap:13px;margin:12px 0}
+  .step .num{flex:0 0 30px;height:30px;border-radius:9px;background:var(--accent);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:14px}
+  .step .num.p2{background:var(--purple)}.step .num.p3{background:var(--mint);color:#08260f}.step .num.p4{background:var(--amber);color:#3a2c00}
+  .foot{color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);margin-top:44px;padding:22px 0 60px}
+  .src{font-size:12px;color:var(--muted);word-break:break-word}.src li{margin:2px 0}
+  .pill-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+  <div class="eyebrow">Helio PMS · World-Class Build</div>
+  <h1>Benchmarking Helio against the best PMS &amp;<br>Channel Managers in the world — and closing every gap</h1>
+  <p class="sub">Beds24 stays as the channel-manager backbone for the OTAs. The mission: make the PMS itself world-class and give the (Beds24-powered) channel manager <em>every option the leading channel managers have</em>. This maps your current app against the full 2025-2026 feature set across revenue &amp; rates, channel-manager completeness, guest experience &amp; booking, and operations/payments/BI — with the exact Beds24 ceiling and a phased build plan.</p>
+  <div class="pill-row">
+    <span class="tag">Prepared 30 Jul 2026</span>
+    <span class="tag mint">Beds24 = distribution backbone</span>
+    <span class="tag purple">CM brain built &amp; running</span>
+  </div>
+</div></header>
+
+<div class="wrap">
+
+<section class="card tight">
+  <strong>Contents</strong>
+  <nav class="toc" style="margin-top:8px">
+    <a href="#summary">1 · Where Helio stands</a>
+    <a href="#current">2 · Your current system</a>
+    <a href="#a1">3 · Area 1 — Revenue &amp; Rates</a>
+    <a href="#a2">4 · Area 2 — Channel Manager completeness</a>
+    <a href="#a3">5 · Area 3 — Guest Experience &amp; Booking</a>
+    <a href="#a4">6 · Area 4 — Operations, Payments &amp; BI</a>
+    <a href="#diff">7 · 2026 differentiators</a>
+    <a href="#built">8 · Built this pass (running)</a>
+    <a href="#roadmap">9 · Phased roadmap</a>
+    <a href="#sources">10 · Sources</a>
+  </nav>
+</section>
+
+<section id="summary">
+<h2>1 · Where Helio stands</h2>
+<p class="lead">Helio is already <strong>ahead of most independent-hotel PMSs on core operations</strong> — it has a proper front-desk flow, cashiering, night audit, housekeeping, profiles, rates &amp; inventory, and an unusually deep 18-tab channel manager. The world-class gap is not the basics; it's the <strong>modern differentiators</strong>: an automated pricing/restrictions <em>engine</em> behind the screens, a real guest-experience layer (messaging, online check-in, upsell, reviews), embedded payments with OTA virtual-card handling, and 2026-grade AI/BI.</p>
+<div class="grid4">
+  <div class="kpi"><div class="n">20</div><div class="l">screens already in the app</div></div>
+  <div class="kpi"><div class="n">Strong</div><div class="l">core ops &amp; CM UI coverage</div></div>
+  <div class="kpi"><div class="n">Gap</div><div class="l">guest tech · payments · AI/BI</div></div>
+  <div class="kpi"><div class="n">~80+</div><div class="l">OTAs reachable via Beds24</div></div>
+</div>
+<div class="callout"><strong>The Beds24 reality that shapes everything.</strong> Beds24 is deep on <em>distribution primitives</em> — pooled/allocated/virtual/bed-level inventory, occupancy/LOS/linked pricing, the full restriction set (channel-gated), 2-way sync, ~80+ channels, a built-in yield optimizer, and a complete API v2. But it is <strong>not</strong> a market-intelligence engine: competitor rate-shopping, rate-parity monitoring, RMS-grade demand pricing, content scoring, a polished unified inbox, and drift/health dashboards are <strong>not native</strong> — those you build on top. Two hard rules to design around: <strong>(1)</strong> OTA "discounts" must be sent as real prices or mapped native promos, never as discount rules; <strong>(2)</strong> API rate limit ≈100 credits / 5 min — batch calendar writes, prefer webhooks.</div>
+<p>Legend used in every matrix below:</p>
+<div class="legend">
+  <span><span class="st have">● HAVE</span> — already in your app</span>
+  <span><span class="st part">● PARTIAL</span> — modelled in the UI, needs the engine / Beds24 wiring</span>
+  <span><span class="st miss">● MISSING</span> — to build</span>
+</div>
+</section>
+
+<section id="current">
+<h2>2 · Your current system, briefly</h2>
+<p>React 19 + Vite front-end prototype (Dexie/IndexedDB, TanStack Query with a mock fetcher, i18n, PWA). Screens present: login, property-select, dashboard, calendar, reservations, new-reservation, arrivals, check-in, in-house, guest-dashboard, departures, check-out, cashier, housekeeping, night-audit, profiles, profile-detail, reports, rates-inventory, and a channel-manager with 18 tabs (Distribution, Auto-feed, Connection, Mappings, Inventory map, Sync schedule, Channels, Content, Policies, Push &amp; Pull, Inbox, Conflicts, Drift, Sync log, Errors, Parity, Audit, Reports). The data model already defines rate plans, restrictions, yield rules, promotions, channel content and policies — so much of the CM is <em>drawn</em> but not yet powered by a live rules engine. That engine is what §8 delivers.</p>
+</section>
+
+<!-- AREA 1 -->
+<section id="a1">
+<h2>3 · Area 1 — Revenue &amp; Rates</h2>
+<table>
+<thead><tr><th>Capability</th><th>Helio</th><th>Beds24 native?</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Rate plans, BAR, seasonal, day-of-week</td><td class="st part">PARTIAL</td><td>Yes</td><td>Rate plans modelled; wire to the RateBook engine (built)</td></tr>
+<tr><td>Derived / linked rates (parent ± %, ± fixed)</td><td class="st part">PARTIAL</td><td>Yes (multipliers)</td><td>Engine done: one BAR edit cascades to NREF/BB children</td></tr>
+<tr><td>Occupancy-based &amp; per-person pricing, extra adult/child</td><td class="st miss">MISSING</td><td>Yes</td><td>Built in engine; add per-occupancy grid to Rates screen</td></tr>
+<tr><td>Length-of-stay (LOS) pricing</td><td class="st miss">MISSING</td><td>Yes</td><td>Built (LOS tiers → multiplier)</td></tr>
+<tr><td>Per-channel price multiplier (commission/fx uplift)</td><td class="st miss">MISSING</td><td>Yes</td><td>Built; e.g. +18% to net Booking.com commission</td></tr>
+<tr><td>Restrictions: min/max stay, stay-through, CTA, CTD, stop-sell, release, min/max-advance</td><td class="st part">PARTIAL</td><td>Yes (channel-gated)</td><td>Full engine + stay validator + per-channel capability matrix built</td></tr>
+<tr><td>Yield rules (occupancy + lead-time auto-pricing)</td><td class="st part">PARTIAL</td><td>Yes (Yield Optimizer)</td><td>YIELD_RULES in UI; engine built to execute them</td></tr>
+<tr><td>Rate calendar bulk edits</td><td class="st part">PARTIAL</td><td>Yes</td><td>Rates screen exists; wire bulk range writes to Beds24 calendar</td></tr>
+<tr><td>Competitor rate shopping / market intelligence</td><td class="st miss">MISSING</td><td class="miss">No</td><td>Integrate Lighthouse (OTA Insight) / RateGain feed</td></tr>
+<tr><td>RMS-grade demand dynamic pricing</td><td class="st miss">MISSING</td><td class="miss">No</td><td>Integrate PriceLabs / RoomPriceGenie; write prices back via API</td></tr>
+<tr><td>Budget / forecast / pace</td><td class="st miss">MISSING</td><td>Partial</td><td>Build from booking data; add forecast dashboard</td></tr>
+</tbody>
+</table>
+<div class="callout good"><strong>Most of this area is now built as a running engine</strong> (see §8). The remaining work is (a) surfacing occupancy/LOS/multiplier controls in the Rates screen and (b) two third-party integrations (rate-shopper + RMS) that fill Beds24's non-native gaps.</div>
+</section>
+
+<!-- AREA 2 -->
+<section id="a2">
+<h2>4 · Area 2 — Channel Manager completeness (every option)</h2>
+<p>The full option set leading channel managers expose, with what Beds24 supports and where Helio is. This is your "have all the options all channel managers have" checklist.</p>
+<table>
+<thead><tr><th>Option</th><th>Helio</th><th>Beds24</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Pooled / shared inventory</td><td class="st part">PARTIAL</td><td>Yes</td><td>Engine models pooled decrement</td></tr>
+<tr><td>Allocated caps per channel (contracted allotment)</td><td class="st miss">MISSING</td><td>Yes</td><td>Built: <code>caps</code> per channel</td></tr>
+<tr><td>Virtual / derived rooms (one stock, many listings)</td><td class="st miss">MISSING</td><td>Yes (linking)</td><td>Built: <code>virtualOf</code> shares stock</td></tr>
+<tr><td>Dependent units (combine/split rooms &amp; suites)</td><td class="st miss">MISSING</td><td>Yes (dependencies)</td><td>Built: <code>componentsOf</code></td></tr>
+<tr><td>Bed-level / dorm inventory (hostels)</td><td class="st part">PARTIAL</td><td>Yes</td><td>App models beds; engine sells per-bed (occupancy=beds)</td></tr>
+<tr><td>Overbooking limits &amp; protection</td><td class="st part">PARTIAL</td><td>Yes (rule-based)</td><td>Guard via pooled decrement + caps</td></tr>
+<tr><td>Real-time 2-way sync + iCal fallback</td><td class="st part">PARTIAL</td><td>Yes</td><td>Beds24 handles; wire webhooks in</td></tr>
+<tr><td>Reservation import (new/modify/cancel), VCC, commission</td><td class="st part">PARTIAL</td><td>Yes</td><td>Inbox tab exists; wire Beds24 booking webhook → normalize</td></tr>
+<tr><td>Promotions (early-bird/last-minute/long-stay) + correct delivery</td><td class="st part">PARTIAL</td><td>Yes (mapped)</td><td>Built: native-promo vs must-send-as-price per channel</td></tr>
+<tr><td>Per-channel content distribution</td><td class="st part">PARTIAL</td><td>Yes</td><td>Content tab exists; content-<em>scoring</em> is a build-on-top</td></tr>
+<tr><td>Room &amp; rate mapping (+ initial sync)</td><td class="st part">PARTIAL</td><td>Yes</td><td>Mappings tab exists; AI auto-mapping is a differentiator to add</td></tr>
+<tr><td>Rate-parity monitoring &amp; disparity alerts</td><td class="st miss">MISSING</td><td class="miss">No</td><td>Build on top / third-party. Note EU DMA: Booking.com parity clauses dropped in EEA (2024) — architect for intentional <em>direct-channel advantage</em></td></tr>
+<tr><td>Unified inbox (WhatsApp/SMS/OTA/email + AI replies)</td><td class="st part">PARTIAL</td><td>Partial</td><td>Beds24 has messaging API; polished inbox is yours to build</td></tr>
+<tr><td>Drift detection / connection-health dashboard</td><td class="st part">PARTIAL</td><td class="miss">No</td><td>Drift &amp; Sync-log tabs exist; power them from Beds24 data</td></tr>
+<tr><td>Channel production / commission / pace reporting</td><td class="st part">PARTIAL</td><td>Partial</td><td>Reports tab; build pace/conversion from <code>/bookings</code></td></tr>
+</tbody>
+</table>
+<div class="callout"><strong>Verdict:</strong> Helio already <em>shows</em> almost every channel-manager option — the completeness work is powering them with the engine (§8) and the Beds24 API, plus building the four genuinely non-native items (parity monitoring, polished unified inbox, content scoring, AI auto-mapping) on top.</div>
+</section>
+
+<!-- AREA 3 -->
+<section id="a3">
+<h2>5 · Area 3 — Guest Experience &amp; Booking</h2>
+<table>
+<thead><tr><th>Capability</th><th>Helio</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Guest profiles / CRM, history, preferences, dedup</td><td class="st part">PARTIAL</td><td>Profiles + ProfileDetail exist; add dedup/merge, LTV, GDPR consent, segmentation</td></tr>
+<tr><td>Online / contactless check-in &amp; check-out</td><td class="st miss">MISSING</td><td>Pre-arrival web flow: ID capture, payment auth, registration + e-sign</td></tr>
+<tr><td>Mobile key in Apple/Google Wallet</td><td class="st miss">MISSING</td><td>Integrate Goki / OpenKey / ASSA ABLOY; auto-issue on check-in</td></tr>
+<tr><td>Unified guest messaging (WhatsApp/SMS/email/OTA)</td><td class="st miss">MISSING</td><td>Templated + triggered (pre-arrival/welcome/post-stay); AI drafting</td></tr>
+<tr><td>AI concierge / chatbot</td><td class="st miss">MISSING</td><td>24/7 RAG chatbot on property knowledge base (HiJiffy/Quicktext class)</td></tr>
+<tr><td>Pre-arrival &amp; in-stay upsell engine</td><td class="st miss">MISSING</td><td>Early check-in, late checkout, upgrades, add-ons (Oaky/Canary class)</td></tr>
+<tr><td>Guest portal / digital compendium / tipping</td><td class="st part">PARTIAL</td><td>GuestDashboard exists; extend to self-service portal</td></tr>
+<tr><td>Reviews &amp; reputation (aggregate + AI response + sentiment)</td><td class="st miss">MISSING</td><td>Aggregate 30+ sites; auto-respond; alert on low scores</td></tr>
+<tr><td>Loyalty / membership</td><td class="st part">PARTIAL</td><td>Loyalty tier on profile; build points/recognition</td></tr>
+<tr><td>Commission-free direct booking engine</td><td class="st miss">MISSING</td><td>Own engine as a peer channel — 0% commission, always in-parity</td></tr>
+</tbody>
+</table>
+<p>This is Helio's biggest world-class gap and its biggest upside: the guest-experience layer is what modern guests actually feel, and it drives direct revenue. Most items integrate best-of-breed vendors rather than building from scratch.</p>
+</section>
+
+<!-- AREA 4 -->
+<section id="a4">
+<h2>6 · Area 4 — Operations, Payments &amp; BI</h2>
+<table>
+<thead><tr><th>Capability</th><th>Helio</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Housekeeping (status, mobile tasks, inspection)</td><td class="st have">HAVE</td><td>Housekeeping screen present; add mobile task app + attendant assignment</td></tr>
+<tr><td>Maintenance / engineering work orders, OOO/OOS, lost &amp; found</td><td class="st part">PARTIAL</td><td>Room states exist; add work-order workflow</td></tr>
+<tr><td>Night audit</td><td class="st have">HAVE</td><td>NightAudit screen present; ensure auto-post + rollover + reports</td></tr>
+<tr><td>Cashiering / folios / split / routing / city-ledger AR</td><td class="st part">PARTIAL</td><td>Cashier screen present; add split folios, routing, AR/direct-bill</td></tr>
+<tr><td>Integrated payments (tokenized, PCI DSS 4.0.1)</td><td class="st miss">MISSING</td><td>Stripe/Adyen; tokenize; SAQ-A path; script monitoring</td></tr>
+<tr><td>OTA virtual-card (VCC) automation</td><td class="st miss">MISSING</td><td>Auto-process Booking/Expedia VCCs; pre-auth holds; pay-by-link</td></tr>
+<tr><td>Groups, events, MICE, function space, BEOs</td><td class="st miss">MISSING</td><td>Blocks/rooming lists partly implied; build event/space module</td></tr>
+<tr><td>POS / F&amp;B / ancillary charge posting</td><td class="st miss">MISSING</td><td>Post spa/restaurant/minibar to folio</td></tr>
+<tr><td>Reporting KPIs (occ/ADR/RevPAR/pace)</td><td class="st part">PARTIAL</td><td>Reports screen present; add pace, production-by-source, BI dashboards</td></tr>
+<tr><td>Business intelligence / conversational analytics</td><td class="st miss">MISSING</td><td>Role dashboards + natural-language "why did RevPAR move?"</td></tr>
+<tr><td>Multi-property / central reservations (CRS)</td><td class="st part">PARTIAL</td><td>Property-select exists; add cross-property profiles + consolidated reporting</td></tr>
+<tr><td>Platform: RBAC, audit, 2FA/SSO, open API, offline PWA, i18n</td><td class="st part">PARTIAL</td><td>i18n + PWA + audit present; add RBAC depth, 2FA/SSO, public API</td></tr>
+</tbody>
+</table>
+</section>
+
+<!-- DIFFERENTIATORS -->
+<section id="diff">
+<h2>7 · The 2026 differentiators (what makes it feel state-of-the-art)</h2>
+<div class="grid2">
+  <div class="card tight"><strong>Agentic AI on a unified data model</strong><p style="margin:4px 0 0">Not chat suggestions — agents that complete tasks within guardrails: auto rate moves, lead follow-up, guest-message drafting, auto room assignment, anomaly alerts.</p></div>
+  <div class="card tight"><strong>Embedded payments + VCC automation</strong><p style="margin:4px 0 0">Payments as native infrastructure: tokenization, auto pre-auth/deposit charging, OTA virtual-card processing, pay-by-link, wallets, PCI DSS 4.0.1.</p></div>
+  <div class="card tight"><strong>Unified omni-channel guest inbox</strong><p style="margin:4px 0 0">WhatsApp/RCS/SMS/OTA/email in one thread with full reservation context and AI-drafted replies. Highest-ROI guest feature to add.</p></div>
+  <div class="card tight"><strong>Wallet-native mobile keys &amp; online check-in</strong><p style="margin:4px 0 0">Apple/Google Wallet keys auto-issued when online check-in completes; contactless arrival with ID + payment.</p></div>
+  <div class="card tight"><strong>AI revenue management (explainable)</strong><p style="margin:4px 0 0">Autonomous pricing within limits, with the demand signals shown. Pair Beds24's yield engine with PriceLabs/RoomPriceGenie + a rate-shopper.</p></div>
+  <div class="card tight"><strong>Power-user UX</strong><p style="margin:4px 0 0">Command palette (Cmd-K), role-adaptive views, dark mode, offline-first PWA (you already have PWA + i18n), bento dashboards.</p></div>
+</div>
+</section>
+
+<!-- BUILT -->
+<section id="built">
+<h2>8 · Built this pass — the channel-manager brain (running)</h2>
+<p class="lead">The rates + channel-manager logic for Areas 1 &amp; 2 is implemented as a <strong>running, zero-dependency engine</strong> (Node 22 type-stripping) in <code>helio-channel-engine/</code>. <code>npm run demo:cm</code> proves every option. This is the "engine behind the screens" your app is currently missing — portable into your app or a real backend.</p>
+<table>
+<thead><tr><th>Module</th><th>Options implemented &amp; verified</th></tr></thead>
+<tbody>
+<tr><td class="st"><code>cm/rates.ts</code></td><td>occupancy-based pricing, extra-adult, LOS tiers, derived/linked (± % and ± fixed), per-channel multiplier</td></tr>
+<tr><td class="st"><code>cm/restrictions.ts</code></td><td>min/max stay, stay-through, CTA, CTD, stop-sell, release, min/max-advance + a stay <em>validator</em> + per-channel capability matrix</td></tr>
+<tr><td class="st"><code>cm/yield.ts</code></td><td>Beds24-style occupancy + lead-time auto-pricing, stackable rules</td></tr>
+<tr><td class="st"><code>cm/promotions.ts</code></td><td>early-bird / last-minute / long-stay, with correct delivery mode (native OTA promo vs must-send-as-price)</td></tr>
+<tr><td class="st"><code>cm/inventory.ts</code></td><td>pooled, allocated caps, virtual/derived, dependent (combine/split), bed-level dorms</td></tr>
+<tr><td class="st"><code>adapters/beds24.ts</code></td><td>Beds24 API v2 connector: batched calendar writes under the ~100-credit/5-min budget, booking-webhook normalization across OTAs</td></tr>
+</tbody>
+</table>
+<p><strong>Verified demo output:</strong> BAR $285 at 2 guests → $240 at 1 guest → $310 at 3 (extra adult) → $256.50 at 5-night LOS → NREF $256.50 / B&amp;B $300 (derived) → $336.30 to Booking.com (+18%); a 2-night stay correctly rejected against a 3-night min-stay; yield lifting +10% at 90% occupancy and cutting −12% last-minute; an Airbnb early-bird sent as a native promo while an Agoda long-stay is correctly sent as a lowered price; virtual/dependent/bed-level inventory all decrementing the right shared pool.</p>
+<p class="sub" style="font-size:13px"><strong>Honest note on the front-end:</strong> this session's sandbox blocks the npm registry (even <code>react</code>/<code>vite</code>), so your Vite app cannot be built or run here. The engine is dependency-free by design, which is exactly why it runs. Front-end feature work (the screens in Areas 3-4) ships as reviewed source that you build locally, or as the next phase once a buildable environment is available.</p>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+<h2>9 · Phased roadmap</h2>
+<div class="step"><div class="num">1</div><div><strong>Wire the CM brain into the app + Beds24</strong> — surface occupancy/LOS/multiplier controls on the Rates screen; power the Restrictions, Yield, Promotions and Inventory tabs with the engine; push resolved ARI to Beds24 via API v2; consume Beds24 booking webhooks into the Inbox. Turns "drawn" CM options into working ones. <em>(Areas 1-2)</em></div></div>
+<div class="step"><div class="num p2">2</div><div><strong>Close the non-native CM gaps</strong> — add rate-parity monitoring (or a Lighthouse/RateGain feed), a polished unified inbox (Beds24 messaging + WhatsApp/SMS), content-completeness scoring, and drift/health dashboards from Beds24 data. <em>(Area 2)</em></div></div>
+<div class="step"><div class="num p3">3</div><div><strong>Guest-experience layer</strong> — online/contactless check-in, unified guest messaging + AI concierge, pre-arrival upsell engine, reviews/reputation, commission-free direct booking engine, loyalty. Mostly best-of-breed integrations. <em>(Area 3)</em></div></div>
+<div class="step"><div class="num p4">4</div><div><strong>Payments, ops depth &amp; BI</strong> — integrated tokenized payments + OTA VCC automation (PCI DSS 4.0.1), split folios/AR, groups/events + BEOs, POS charge posting, pace/production/BI dashboards + conversational analytics, multi-property CRS, RBAC/2FA/SSO + public API. <em>(Area 4)</em></div></div>
+<div class="step"><div class="num" style="background:var(--ink);color:var(--bg)">5</div><div><strong>2026 differentiators</strong> — agentic AI on the unified model, wallet mobile keys, command-palette UX, explainable AI revenue management, sustainability dashboard.</div></div>
+</section>
+
+<section id="sources">
+<h2>10 · Sources</h2>
+<ul class="src">
+<li>PMS feature benchmarks — cloudbeds.com/property-management-system · mews.com/en/property-management-system · oracle.com/hospitality/opera-property-services · roomraccoon.com/platform · stayntouch.com/cloud-pms · apaleo.com · altexsoft.com/blog/hotel-property-management-systems-products-and-features · hoteltechreport.com/news/what-is-hotel-pms</li>
+<li>Channel-manager options — siteminder.com/channel-manager · cloudbeds.com/channel-manager · blog.staah.com (restrictions API v2) · hoteltechreport.com (RateGain, D-EDGE) · hostaway.com/features/channel-manager</li>
+<li>Beds24 ceiling — wiki.beds24.com (Channel Manager, Setting Prices, Min/Max Stay, Room Linking &amp; Dependencies, Overbooking, Discounts, API V2, Connected Channels) · beds24.com/features.html · blog.beds24.com (yield management)</li>
+<li>Rate parity / EU DMA — hostizoo.com/hub/end-of-ota-price-parity-2025 · concurrences.com · covcompetition.com (ECJ ruling)</li>
+<li>2026 differentiators — hoteltechreport.com/news/q2-2026-hotel-ai-trends-report · mews.com/en/press/mews-operating-system-unfold-2026 · apaleo.com/open-apis · mylighthouse.com (rate shopping) · chargeautomation.com (payments 2026) · prostay.com/blog/pci-dss-4-compliance-for-hotels · hoteltechreport.com/guest-experience/mobile-key-hotel · hoteltechinsight.com (guest journey) · cloudbeds.com (reputation) · saasui.design (UX 2026)</li>
+</ul>
+</section>
+
+<div class="foot">Helio PMS · World-Class Blueprint &amp; Gap Analysis · 30 Jul 2026. Feature classifications reflect the uploaded prototype; vendor claims are directional (from vendor/aggregator marketing). Confirm Beds24 per-channel capabilities against its live tables before promising a specific option to a property.</div>
+</div>
+</body>
+</html>

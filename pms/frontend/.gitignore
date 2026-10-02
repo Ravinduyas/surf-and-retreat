@@ -1,0 +1,13 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+# Environment files.
+#
+# The `.local` ones are per-machine and never committed. The rest are shared
+# build configuration with no secrets in them — nothing in a browser bundle can
+# be secret — and they have to be committed, or a clean checkout builds against
+# nothing and a deploy has no API address.
+
