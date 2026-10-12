@@ -82,7 +82,8 @@ export const HighlightsSection: React.FC = () => {
               <Photo
                 src={item.image}
                 alt={item.title}
-                sizes="(max-width: 640px) 62vw, (max-width: 1024px) 36vw, 20vw"
+                // Tall cards crop landscape photos to their height, so they need more pixels than their width suggests.
+                sizes="(max-width: 640px) 90vw, (max-width: 1024px) 60vw, 40vw"
                 className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
               />
 
