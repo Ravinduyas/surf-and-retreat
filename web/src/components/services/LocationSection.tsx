@@ -3,11 +3,9 @@ import { MapPin, Plane, ExternalLink, Navigation } from 'lucide-react';
 import { Eyebrow } from '../ui/Eyebrow';
 import { CONTACT_INFO, SURF_SPOTS } from '../../data';
 
-/**
- * Google's keyless map embed, centred on Weligama town (searching "Weligama Bay" drops the pin in
- * the sea). Swap the query for the hostel's exact address or Google listing once it's confirmed.
- */
-const MAP_EMBED = `https://www.google.com/maps?q=${encodeURIComponent('Weligama, Sri Lanka')}&z=15&output=embed`;
+/** The hostel's own Google Maps listing, as embedded from Google Maps → Share → Embed a map. */
+const MAP_EMBED =
+  'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3270.600059591031!2d80.43565559999999!3d5.9780168!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae115248223e667%3A0x9e3b5514eef09b52!2sSurf%20%26%20Retreat%20Weligama%20Sri%20Lanka%20%7C%20Surf%20Hostel%20%2CCo%20Living%20%7CCowork%7C%20Yoga%20Retreat%20%C2%B7%20Skatepark%20%C2%B7%20Outdoor%20Gym!5e1!3m2!1sen!2slk!4v1791806745006!5m2!1sen!2slk';
 
 export const LocationSection: React.FC = () => (
   <section className="mt-6 sm:mt-10">
@@ -70,7 +68,7 @@ export const LocationSection: React.FC = () => (
               src={MAP_EMBED}
               className="absolute inset-0 w-full h-full border-0"
               loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
+              referrerPolicy="strict-origin-when-cross-origin"
               allowFullScreen
             />
           </div>
