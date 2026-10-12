@@ -61,7 +61,10 @@ const SOURCES = {
   '/gallery': 'src/pages/GalleryPage.tsx',
   '/about': 'src/pages/AboutPage.tsx',
   '/contact': 'src/pages/ContactPage.tsx',
+  '/blog': 'src/blog.ts',
 };
+const sourceFor = (routePath) =>
+  SOURCES[routePath] ?? (routePath.startsWith('/blog/') ? 'src/blog.ts' : 'src/pages/DetailPage.tsx');
 const today = new Date().toISOString().slice(0, 10);
 const lastCommit = (file) => {
   try {
@@ -72,7 +75,7 @@ const lastCommit = (file) => {
 };
 const dataDate = lastCommit('src/data.ts');
 const lastmod = (routePath) =>
-  [lastCommit(SOURCES[routePath] ?? 'src/pages/DetailPage.tsx'), dataDate].filter(Boolean).sort().pop() ?? today;
+  [lastCommit(sourceFor(routePath)), dataDate].filter(Boolean).sort().pop() ?? today;
 
 const urls = INDEXABLE_PATHS.map((p) => {
   const loc = p === '/' ? `${SITE_URL}/` : `${SITE_URL}${p}`;

@@ -9,7 +9,7 @@ export interface HighlightItem {
   title: string;
   description: string;
   image: string;
-  iconType: 'bed' | 'wave' | 'laptop';
+  iconType: 'bed' | 'wave' | 'laptop' | 'skate' | 'yoga';
   to: string;
 }
 
@@ -113,7 +113,7 @@ export interface ServiceItem {
   description: string;
   price: string;
   image: string;
-  iconType: 'rooms' | 'coworking' | 'surfing' | 'skating' | 'yoga' | 'transfer' | 'laundry';
+  iconType: 'rooms' | 'coworking' | 'surfing' | 'skating' | 'yoga' | 'transfer' | 'whale';
   /** 'core' services have their own page section; 'extra' are front-desk add-ons. */
   group: 'core' | 'extra';
   to?: string;

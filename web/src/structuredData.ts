@@ -1,4 +1,5 @@
 import { AMENITIES, COWORKING_PLANS, HERO_IMAGE, ROOMS, SURF_PACKAGES } from './data';
+import { postBySlug } from './blog';
 import { SITE_NAME, SITE_URL, canonicalFor, metaFor, normalizePath } from './seo';
 
 const HOSTEL_ID = `${SITE_URL}/#hostel`;
@@ -88,6 +89,23 @@ export const buildJsonLd = (pathname: string) => {
       primaryImageOfPage: { '@type': 'ImageObject', url: absolute(HERO_IMAGE) },
     },
   ];
+
+  const post = path.startsWith('/blog/') ? postBySlug(path.slice('/blog/'.length)) : undefined;
+  if (post) {
+    graph.push({
+      '@type': 'BlogPosting',
+      '@id': `${url}#article`,
+      headline: post.title,
+      description: post.excerpt,
+      image: absolute(post.image),
+      datePublished: post.date,
+      dateModified: post.date,
+      mainEntityOfPage: { '@id': `${url}#webpage` },
+      author: { '@id': HOSTEL_ID },
+      publisher: { '@id': HOSTEL_ID },
+      inLanguage: 'en',
+    });
+  }
 
   if (path !== '/') {
     graph.push({

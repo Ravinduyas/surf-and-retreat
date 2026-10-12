@@ -6,7 +6,7 @@ import {
   Waves,
   Flower2,
   Car,
-  Shirt,
+  Ship,
   ConciergeBell,
   ArrowRight,
   LucideIcon,
@@ -17,25 +17,7 @@ import { Eyebrow } from '../ui/Eyebrow';
 import { Button } from '../ui/Button';
 import { useReveal } from '../ui/Reveal';
 import { Photo } from '../ui/Photo';
-
-/** Lucide has no skateboard, so this is drawn to match its stroke style. */
-const SkateIcon: React.FC<{ className?: string }> = ({ className }) => (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth={2}
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className={className}
-    aria-hidden="true"
-  >
-    <path d="M2.8 10.9c1-2.1 2.6-1.4 4.2-1.4h10c1.6 0 3.2-.7 4.2 1.4" />
-    <path d="M7.8 12.4v1.4M16.2 12.4v1.4" />
-    <circle cx="7.8" cy="15.6" r="1.6" />
-    <circle cx="16.2" cy="15.6" r="1.6" />
-  </svg>
-);
+import { SkateIcon } from '../ui/SkateIcon';
 
 const SERVICE_ICONS: Record<ServiceItem['iconType'], LucideIcon | React.FC<{ className?: string }>> = {
   rooms: BedDouble,
@@ -44,7 +26,7 @@ const SERVICE_ICONS: Record<ServiceItem['iconType'], LucideIcon | React.FC<{ cla
   skating: SkateIcon,
   yoga: Flower2,
   transfer: Car,
-  laundry: Shirt,
+  whale: Ship,
 };
 
 const ServiceCard: React.FC<{ service: ServiceItem; large?: boolean }> = ({ service, large }) => {
@@ -58,9 +40,6 @@ const ServiceCard: React.FC<{ service: ServiceItem; large?: boolean }> = ({ serv
           sizes={large ? '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw' : '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw'}
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
         />
-        <span className="absolute top-3 right-3 inline-block bg-white/95 text-[#1D3624] text-[11px] font-semibold px-3 py-1 rounded-full shadow-xs">
-          {service.price}
-        </span>
       </div>
 
       <div className={`relative flex flex-col flex-1 gap-3 ${large ? 'px-6 sm:px-7 pb-6 sm:pb-7' : 'px-5 sm:px-6 pb-5 sm:pb-6'}`}>
@@ -115,6 +94,7 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ showCta = false }) =
   const core = SERVICES.filter((s) => s.group === 'core');
   const extras = SERVICES.filter((s) => s.group === 'extra');
 
+
   return (
     <section className="mt-6 sm:mt-10">
       <div className="bg-white rounded-[32px] sm:rounded-[36px] p-6 sm:p-10 lg:p-12 shadow-xs">
@@ -132,7 +112,11 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ showCta = false }) =
         </div>
 
         {/* The three you come for */}
-        <div ref={coreRef} className="stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+        {/* On the two-column tablet layout the third card spans the row instead of leaving a gap */}
+        <div
+          ref={coreRef}
+          className="stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 sm:[&>:last-child:nth-child(odd)]:col-span-2 lg:[&>:last-child:nth-child(odd)]:col-span-1"
+        >
           {core.map((s) => (
             <ServiceCard key={s.id} service={s} large />
           ))}
@@ -141,7 +125,9 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ showCta = false }) =
         {/* Everything else at the desk */}
         <div
           ref={extraRef}
-          className="stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mt-4 sm:mt-5"
+          className={`stagger grid grid-cols-1 sm:grid-cols-2 ${
+            extras.length % 4 === 0 ? 'lg:grid-cols-4' : 'lg:grid-cols-3 sm:[&>:last-child:nth-child(odd)]:col-span-2 lg:[&>:last-child:nth-child(odd)]:col-span-1'
+          } gap-4 sm:gap-5 mt-4 sm:mt-5`}
         >
           {extras.map((s) => (
             <ServiceCard key={s.id} service={s} />

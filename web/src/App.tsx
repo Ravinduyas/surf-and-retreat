@@ -15,6 +15,8 @@ const PAGES = {
   '/gallery': () => import('./pages/GalleryPage'),
   '/about': () => import('./pages/AboutPage'),
   '/contact': () => import('./pages/ContactPage'),
+  '/blog': () => import('./pages/BlogPage'),
+  '/blog-post': () => import('./pages/BlogPostPage'),
   '/book': () => import('./pages/BookingPage'),
   '/detail': () => import('./pages/DetailPage'),
   '*': () => import('./pages/NotFoundPage'),
@@ -24,7 +26,11 @@ const PAGES = {
 export const preloadRoute = (pathname: string) => {
   const path = normalizePath(pathname);
   if (path === '/') return Promise.resolve();
-  const key = /^\/(rooms|surf-camp)\/[^/]+$/.test(path) ? '/detail' : path;
+  const key = /^\/(rooms|surf-camp)\/[^/]+$/.test(path)
+    ? '/detail'
+    : /^\/blog\/[^/]+$/.test(path)
+      ? '/blog-post'
+      : path;
   return (PAGES[key as keyof typeof PAGES] ?? PAGES['*'])();
 };
 
@@ -36,6 +42,8 @@ const ServicesPage = lazy(PAGES['/services']);
 const GalleryPage = lazy(PAGES['/gallery']);
 const AboutPage = lazy(PAGES['/about']);
 const ContactPage = lazy(PAGES['/contact']);
+const BlogPage = lazy(PAGES['/blog']);
+const BlogPostPage = lazy(PAGES['/blog-post']);
 const NotFoundPage = lazy(PAGES['*']);
 const BookingPage = lazy(PAGES['/book']);
 const DetailPage = lazy(PAGES['/detail']);
@@ -60,6 +68,8 @@ export default function App() {
           <Route path="gallery" element={<GalleryPage />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="contact" element={<ContactPage />} />
+          <Route path="blog" element={<BlogPage />} />
+          <Route path="blog/:slug" element={<BlogPostPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>

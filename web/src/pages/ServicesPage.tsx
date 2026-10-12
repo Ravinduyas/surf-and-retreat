@@ -3,6 +3,7 @@ import { ConciergeBell, ArrowRight } from 'lucide-react';
 import { PageHeader } from '../components/layout/PageHeader';
 import { PageHero } from '../components/layout/PageHero';
 import { ServicesGrid } from '../components/services/ServicesGrid';
+import { LocationSection } from '../components/services/LocationSection';
 import { Button } from '../components/ui/Button';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { QuickAnswer } from '../components/ui/QuickAnswer';
@@ -24,7 +25,7 @@ export default function ServicesPage() {
               You Catch the <span className="text-[#2C573A]">Waves.</span>
             </>
           }
-          subtitle="From your airport pickup to your last load of laundry — beds, desks, boards, skate sessions and sunrise yoga are all one ask away at the front desk."
+          subtitle="Beds, desks, boards, skate sessions, sunrise yoga and whale-watching trips are all one ask away at the front desk."
           image={SERVICES_HERO_IMAGE}
           imageAlt="The hostel dog keeping watch out front"
         >
@@ -47,6 +48,7 @@ export default function ServicesPage() {
       </QuickAnswer>
 
       <ServicesGrid />
+      <LocationSection />
     </>
   );
 }

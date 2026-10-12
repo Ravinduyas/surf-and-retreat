@@ -41,7 +41,7 @@ export const HomeHero: React.FC = () => {
               style={{ '--d': '80ms' } as React.CSSProperties}
             >
               <span aria-hidden>🏄</span>
-              <span>Coliving &amp; Coworking · Weligama, Sri Lanka</span>
+              <span>Surf · Skate · Yoga · Co-working · Fitness</span>
             </div>
 
             {/* Main Headline */}

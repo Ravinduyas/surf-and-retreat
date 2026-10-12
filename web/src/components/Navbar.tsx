@@ -10,6 +10,7 @@ export const NAV_LINKS = [
   { name: 'Services', to: '/services' },
   { name: 'Gallery', to: '/gallery' },
   { name: 'About', to: '/about' },
+  { name: 'Blog', to: '/blog' },
   { name: 'Contact', to: '/contact' },
 ];
 

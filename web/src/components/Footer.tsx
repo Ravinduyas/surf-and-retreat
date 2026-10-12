@@ -26,6 +26,7 @@ export const Footer: React.FC = () => {
     { name: 'Services', to: '/services' },
     { name: 'Gallery', to: '/gallery' },
     { name: 'About Us', to: '/about' },
+    { name: 'Blog', to: '/blog' },
   ];
 
   const bookLinks: { name: string; tab: BookingTab }[] = [

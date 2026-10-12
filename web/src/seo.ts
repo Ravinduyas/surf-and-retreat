@@ -1,4 +1,5 @@
 import { COWORKING_PLANS, ROOMS, SURF_PACKAGES } from './data';
+import { BLOG_POSTS } from './blog';
 
 export const SITE_URL = 'https://ravinduyas.github.io/surf-and-retreat';
 export const SITE_NAME = 'Surf & Retreat Hostel Weligama';
@@ -64,7 +65,7 @@ export const ROUTE_META: Record<string, RouteMeta> = {
     name: 'Guest Services',
     title: 'Guest Services | Surf & Retreat Hostel Weligama',
     description:
-      'Rooms, co-working, surfing, skating, yoga, airport pick-up and drop, and laundry — every service at Surf & Retreat Hostel Weligama, bookable at the front desk.',
+      'Rooms, co-working, surfing, skating, yoga and whale watching — every service at Surf & Retreat Hostel Weligama, bookable at the front desk.',
     indexable: true,
   },
   '/gallery': {
@@ -86,6 +87,13 @@ export const ROUTE_META: Record<string, RouteMeta> = {
     title: 'Contact & FAQs | Surf & Retreat Hostel Weligama',
     description:
       'Get in touch with Surf & Retreat Hostel Weligama — booking questions, directions from Colombo Airport and answers to common questions.',
+    indexable: true,
+  },
+  '/blog': {
+    name: 'Blog',
+    title: 'Blog: Surf, Travel & Remote Work in Weligama | Surf & Retreat',
+    description:
+      'Surf seasons, getting to Weligama, remote-work tips and things to do on Sri Lanka’s south coast, from the team at Surf & Retreat Hostel Weligama.',
     indexable: true,
   },
   '/book': {
@@ -113,6 +121,16 @@ for (const pkg of SURF_PACKAGES) {
     parent: { name: 'Surf Camp', path: '/surf-camp' },
     title: `${pkg.title} in Weligama, ${pkg.price} | ${SUFFIX}`,
     description: `${pkg.description} ${pkg.price} at Surf & Retreat Hostel Weligama.`,
+    indexable: true,
+  };
+}
+
+for (const post of BLOG_POSTS) {
+  ROUTE_META[`/blog/${post.slug}`] = {
+    name: post.title,
+    parent: { name: 'Blog', path: '/blog' },
+    title: `${post.title} | ${SUFFIX}`,
+    description: post.excerpt,
     indexable: true,
   };
 }
