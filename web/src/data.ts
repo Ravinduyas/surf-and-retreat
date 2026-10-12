@@ -644,7 +644,7 @@ export const ABOUT_IMAGES = {
 
 export const CONTACT_INFO = {
   address: 'No. 24, Beach Road, Weligama 81700, Sri Lanka',
-  phone: '+94 77 123 4567',
+  phone: '+94 77 749 7887',
   email: 'hello@surfandretreat.lk',
   // The hostel's Google Maps listing (same place as the embedded map on /services).
   mapsUrl: 'https://maps.google.com/?cid=11401800430014995282',
