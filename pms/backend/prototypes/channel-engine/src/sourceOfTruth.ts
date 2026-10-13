@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-// Source of truth — the PMS master calendar.
+// Source of truth - the PMS master calendar.
 //
 // Holds room types, rate plans and the per-date ARI grid. This is the
 // ONE place rates/availability live; connectors are pure distributors
@@ -39,7 +39,7 @@ export class SourceOfTruth {
 
   // Resolve the effective price of a rate plan on a date, applying the
   // derived-rate chain (child = parent ± offset). One BAR edit cascades
-  // to every child automatically — the parity-clean way to price.
+  // to every child automatically - the parity-clean way to price.
   resolvePrice(ratePlan: string, roomType: string, date: string): number {
     const rp = this.ratePlans.get(ratePlan);
     if (!rp) return 0;

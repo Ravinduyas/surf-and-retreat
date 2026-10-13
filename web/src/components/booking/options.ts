@@ -4,7 +4,7 @@ import { formatMoney, priceFor } from '../../pms';
 
 export type OptionGroup = 'stay' | 'surf' | 'skate' | 'yoga' | 'coworking';
 
-/** "$149 / week", "from $5 / half-day" — the PMS price when it has sent one, else the bundled one. */
+/** "$149 / week", "from $5 / half-day" - the PMS price when it has sent one, else the bundled one. */
 const addonPrice = (id: string, tag: PriceTag) =>
   `${tag.from ? 'from ' : ''}${formatMoney(priceFor('addons', id, tag.amount))}${tag.unit}`;
 

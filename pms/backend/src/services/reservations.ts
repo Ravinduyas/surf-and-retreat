@@ -41,7 +41,7 @@ export interface ReservationRow {
   company_id: string | null; group_id: string | null; vip: number; eta: string | null; etd: string | null;
   special_requests: string | null; preferences: string | null; payment_method: string | null;
   deposit_required_minor: number; commission_minor: number; total_minor: number;
-  /** The channel's own figures for an OTA booking — see `hostelworld.ts`. */
+  /** The channel's own figures for an OTA booking - see `hostelworld.ts`. */
   ota_total_minor: number | null; ota_collected_minor: number | null;
   promotion_id: string | null; currency: string; origin: string;
   created_by: string | null; created_at: string; updated_at: string;
@@ -139,7 +139,7 @@ export interface CreateReservationInput {
    * The channel's own figures for an OTA booking.
    *
    * `otaTotalMinor` is what the OTA said the booking is worth, kept as a raw
-   * fact. `otaCollectedMinor` is what the OTA took at booking time and keeps —
+   * fact. `otaCollectedMinor` is what the OTA took at booking time and keeps -
    * set only when the Hostelworld split is on and the booking is one of
    * theirs. `totalOverrideMinor`, when given, becomes the stay total: the
    * nights are re-spread so they add up to it exactly, because the guest
@@ -151,7 +151,7 @@ export interface CreateReservationInput {
   /**
    * The channel's own per-night prices, one per night of the stay. Used
    * instead of an even spread when they add up to `totalOverrideMinor`
-   * exactly — the guest saw those prices, and the folio should show them.
+   * exactly - the guest saw those prices, and the folio should show them.
    */
   nightRatesMinor?: number[] | null;
   /** Hostelworld's full statement for the booking, kept beside the figures. */
@@ -160,13 +160,13 @@ export interface CreateReservationInput {
   /**
    * The reservation this one was booked alongside.
    *
-   * A dorm party is one bed per reservation — four guests sharing a booking are
+   * A dorm party is one bed per reservation - four guests sharing a booking are
    * four reservations, because a bed is what the PMS assigns, prices and cleans.
    * The first carries the party and the rest point at it, so the front desk can
    * confirm, move or cancel the group as one thing.
    */
   parentId?: string | null;
-  /** Skip availability/restriction gates — requires elevated permission. */
+  /** Skip availability/restriction gates - requires elevated permission. */
   force?: boolean;
 }
 
@@ -193,7 +193,7 @@ export function createReservation(propertyId: string, actor: Actor, input: Creat
         `${roomType.name} holds a maximum of ${roomType.max_occupancy} guest(s)`, 'over_occupancy');
     }
 
-    // Gate 1 — inventory.
+    // Gate 1 - inventory.
     if (!input.force) {
       const avail = checkAvailability(propertyId, input.roomTypeId, input.arrival, input.departure, 1);
       if (!avail.ok) {
@@ -201,7 +201,7 @@ export function createReservation(propertyId: string, actor: Actor, input: Creat
       }
     }
 
-    // Gate 2 — restrictions.
+    // Gate 2 - restrictions.
     const bookedOn = prop.business_date;
     if (!input.force) {
       const violations = validateStay(propertyId, {
@@ -242,7 +242,7 @@ export function createReservation(propertyId: string, actor: Actor, input: Creat
     // Room / bed assignment, when requested up-front.
     let roomId = input.roomId ?? null;
     let bedId = input.bedId ?? null;
-    // Whole-room exclusivity does not apply to dorms — those are held per bed.
+    // Whole-room exclusivity does not apply to dorms - those are held per bed.
     if (roomId && roomType.kind !== 'dorm'
         && !isRoomFree(propertyId, roomId, input.arrival, input.departure)) {
       conflict('That room is already occupied or blocked for part of the stay');
@@ -268,8 +268,8 @@ export function createReservation(propertyId: string, actor: Actor, input: Creat
     /*
      * How long this booking's bed is held for.
      *
-     * Only a booking awaiting confirmation has one. Everything else — a walk-in,
-     * a phone booking, an OTA booking — holds its room until somebody changes
+     * Only a booking awaiting confirmation has one. Everything else - a walk-in,
+     * a phone booking, an OTA booking - holds its room until somebody changes
      * or cancels it, which is what a NULL here means.
      *
      * The window is the property's, set in Configuration → Booking page. It is
@@ -347,7 +347,7 @@ export function createReservation(propertyId: string, actor: Actor, input: Creat
      * shut dates on the OTAs for a booking a person may yet decline. The
      * reasoning was backwards: a pending booking now holds its bed, so the
      * property's availability *has* changed, and not saying so is precisely
-     * how the same bed gets sold twice — once on the website and once on
+     * how the same bed gets sold twice - once on the website and once on
      * Booking.com, minutes apart, with nothing on any screen to show for it
      * until both guests arrive.
      *
@@ -385,7 +385,7 @@ export function createReservation(propertyId: string, actor: Actor, input: Creat
 
     // Check these dates and shut them on the OTAs if this booking took the last
     // room. Queued rather than run inline: it writes to the channels and must
-    // not hold the write lock — or fail — while a booking is being confirmed.
+    // not hold the write lock - or fail - while a booking is being confirmed.
     if (!pending) {
       guardAfter(propertyId, actor, input.roomTypeId, input.arrival, input.departure, prop.business_date);
     }
@@ -399,7 +399,7 @@ export function createReservation(propertyId: string, actor: Actor, input: Creat
  *
  * The import is dynamic because the guard reaches back into this module's
  * neighbours; loading it lazily keeps the module graph acyclic without moving
- * anything. Failures are logged and swallowed — a booking that succeeded must
+ * anything. Failures are logged and swallowed - a booking that succeeded must
  * not be reported as failed because a channel would not take a close.
  */
 function guardAfter(
@@ -497,7 +497,7 @@ export function listReservations(propertyId: string, f: ListFilters = {}) {
       ORDER BY r.arrival, r.guest_name LIMIT ${limit} OFFSET ${offset}`,
     ...params,
   );
-  // Balances for the whole page in one query rather than one per row — this was
+  // Balances for the whole page in one query rather than one per row - this was
   // the single slowest thing on the busiest screen.
   //
   // Note the explicit arrow: `rows.map(shapeReservation)` hands `map`'s index
@@ -509,8 +509,8 @@ export function listReservations(propertyId: string, f: ListFilters = {}) {
 
 export function countReservations(propertyId: string, f: ListFilters = {}): number {
   const { clause, params, needsRooms } = buildFilter(propertyId, f);
-  // Counting by fetching rows was both slow — every row shaped, every balance
-  // summed — and wrong: it stopped at 1000, so a property past its first
+  // Counting by fetching rows was both slow - every row shaped, every balance
+  // summed - and wrong: it stopped at 1000, so a property past its first
   // thousand bookings saw a total that never moved.
   //
   // The rooms join is carried only when the search predicate needs it; for the
@@ -738,7 +738,7 @@ export function updateReservation(
     if (nights < 1) throw new HttpError(400, 'Departure must be after arrival');
 
     if (before.status === 'Checked-in' && arrival !== before.arrival) {
-      throw new HttpError(409, 'Arrival cannot change after check-in — use a room move or early departure');
+      throw new HttpError(409, 'Arrival cannot change after check-in - use a room move or early departure');
     }
 
     let total = before.total_minor;
@@ -864,7 +864,7 @@ export function cancelReservation(
     const res = getReservation(propertyId, reservationId);
     if (res.status === 'Cancelled') throw new HttpError(409, 'Reservation is already cancelled');
     if (res.status === 'Checked-in') {
-      throw new HttpError(409, 'An in-house reservation cannot be cancelled — check the guest out instead');
+      throw new HttpError(409, 'An in-house reservation cannot be cancelled - check the guest out instead');
     }
     if (res.status === 'Checked-out') throw new HttpError(409, 'A departed reservation cannot be cancelled');
 
@@ -875,14 +875,14 @@ export function cancelReservation(
     );
     run('DELETE FROM reservation_nights WHERE reservation_id = ? AND posted = 0', reservationId);
     // Hostelworld keeps its deposit on a cancellation, and there are no room
-    // charges left for the credit to offset — so it comes off the folio too,
+    // charges left for the credit to offset - so it comes off the folio too,
     // or a cancelled booking would sit showing money owed to the guest.
     syncCollectedCredit(propertyId, actor, reservationId);
 
     if (opts.chargeMinor && opts.chargeMinor > 0) {
       const folio = ensureFolio(propertyId, reservationId, res.guest_name);
       postCharge(propertyId, actor, {
-        folioId: folio.id, code: 'CXL', description: `Cancellation fee — ${opts.reason}`,
+        folioId: folio.id, code: 'CXL', description: `Cancellation fee - ${opts.reason}`,
         unitMinor: opts.chargeMinor, businessDate: property(propertyId).business_date,
         applyTax: false, reservationId,
       });
@@ -965,7 +965,7 @@ export function assignRoom(
     const room = get<any>('SELECT * FROM rooms WHERE id = ? AND property_id = ?', roomId, propertyId);
     if (!room) notFound('Room');
     if (room.room_type_id !== res.room_type_id) {
-      throw new HttpError(400, 'Room is a different room type — change the reservation type first');
+      throw new HttpError(400, 'Room is a different room type - change the reservation type first');
     }
     // A dorm is shared: many guests occupy the same room at once, so
     // exclusivity is enforced per bed (freeBeds, above) rather than per room.
@@ -1078,7 +1078,7 @@ export function moveRoom(
 // The public site can take a booking at three in the morning; agreeing to it is
 // a person's decision, made later, and it is the moment the property actually
 // commits a bed. Until then the booking holds nothing (`pendingbookings.ts`),
-// so confirming has to do the inventory check for real — the bed may have gone
+// so confirming has to do the inventory check for real - the bed may have gone
 // to somebody else in the meantime, and that has to fail loudly rather than
 // double-book the room.
 
@@ -1116,7 +1116,7 @@ export function bookingGroup(propertyId: string, reservationId: string): any[] {
  * taken. Confirming first makes each assignment visible to the next.
  *
  * The whole party is one transaction. If the last bed cannot be found, nothing
- * is confirmed and nothing is assigned — a half-confirmed party would leave the
+ * is confirmed and nothing is assigned - a half-confirmed party would leave the
  * front desk with beds allocated to a booking they had not agreed to.
  */
 export function confirmBooking(
@@ -1159,8 +1159,8 @@ export function confirmBooking(
       claimed.add(unit);
     }
 
-    // A party can span room types — the website lets three guests take a double
-    // and a dorm bed — so what each member needs is read from that member's own
+    // A party can span room types - the website lets three guests take a double
+    // and a dorm bed - so what each member needs is read from that member's own
     // room type. Deciding it once from the lead is how a dorm bed came to be
     // confirmed by choosing a deluxe double.
     const roomTypeOf = (roomTypeId: string) =>
@@ -1184,7 +1184,7 @@ export function confirmBooking(
     for (const member of pendingMembers) {
       // `hold_expires_at` goes with the pending state. Leaving it set on a
       // confirmed booking would arm the release sweep against a booking the
-      // property has already accepted and given a bed to — the sweep filters
+      // property has already accepted and given a bed to - the sweep filters
       // on the pending status as well, so it would not actually fire, but a
       // confirmed reservation carrying an expiry is a trap for the next person
       // to write a query over this column.
@@ -1225,7 +1225,7 @@ export function confirmBooking(
     });
 
     // Only now has the property actually sold anything, so this is where the
-    // OTAs are told and the overbooking guard runs — the two side effects
+    // OTAs are told and the overbooking guard runs - the two side effects
     // `createReservation` deliberately skipped while the booking was pending.
     // Every room type the party took, not only the lead's: a booking that held
     // a double and a dorm bed sold inventory in two of them.
@@ -1290,7 +1290,7 @@ export function checkIn(
 
     const assigned = getReservation(propertyId, reservationId);
     const room = get<any>('SELECT * FROM rooms WHERE id = ?', assigned.room_id);
-    if (!room) throw new HttpError(409, 'No room assigned — assign a room before checking in');
+    if (!room) throw new HttpError(409, 'No room assigned - assign a room before checking in');
     if (['Out of Order', 'Out of Service'].includes(room.status)) {
       throw new HttpError(409, `Room ${room.number} is ${room.status}`);
     }
@@ -1371,7 +1371,7 @@ export function checkOut(
         { balanceMinor: outstanding, folios: folios.map((f) => ({ id: f.id, number: f.number, balanceMinor: f.balanceMinor })) });
     }
 
-    // Early departure — drop the nights the guest is not staying.
+    // Early departure - drop the nights the guest is not staying.
     if (prop.business_date < res.departure) {
       run('DELETE FROM reservation_nights WHERE reservation_id = ? AND date >= ? AND posted = 0',
         reservationId, prop.business_date);
@@ -1456,7 +1456,7 @@ export function postOutstandingNights(
     postCharge(propertyId, actor, {
       folioId: folio.id,
       code: 'ROOM',
-      description: `Room charge — ${n.room_type_name} — ${n.date}`,
+      description: `Room charge - ${n.room_type_name} - ${n.date}`,
       unitMinor: n.rate_minor,
       businessDate: n.date,
       reservationId,
@@ -1531,7 +1531,7 @@ export function queueChannelPush(
   const channels = all<{ id: string }>(
     // Queue for channels in error too. A channel is marked `error` by one
     // failed call, and a price or availability change made in that window would
-    // otherwise never be recorded at all — not delayed, *lost*. Queueing is
+    // otherwise never be recorded at all - not delayed, *lost*. Queueing is
     // free; the drain retries until it lands.
     `SELECT id FROM channels WHERE property_id = ? AND active = 1
        AND status IN ('connected', 'error')`,

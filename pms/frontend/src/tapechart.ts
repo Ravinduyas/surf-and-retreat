@@ -2,7 +2,7 @@
 // Tape chart: chunking time, and stitching it back together.
 //
 // The chart scrolls sideways without end, but the server will not hand out an
-// unbounded range — `/api/calendar/tape` refuses anything over 400 days, and it
+// unbounded range - `/api/calendar/tape` refuses anything over 400 days, and it
 // is right to. One query returning five years of nights would hold the write
 // lock while the front desk waited.
 //
@@ -24,7 +24,7 @@
 //     was arrived at.
 //
 // Everything here is pure and free of React and the DOM, so it can be tested
-// directly — see `scripts/tapechart-check.ts`.
+// directly - see `scripts/tapechart-check.ts`.
 // ─────────────────────────────────────────────────────────────
 // Imported with its extension so this module loads unchanged under plain Node,
 // which is what lets `scripts/tapechart-check.ts` test the stitching directly
@@ -69,7 +69,7 @@ export function chunksCovering(from: string, to: string): string[] {
 export interface TapeSpan {
   reservationId: string; roomId: string; bedId: string | null;
   confirmation: string; guest: string; status: string;
-  /** Clipped to the queried window — merge before drawing. */
+  /** Clipped to the queried window - merge before drawing. */
   from: string; to: string;
   arrival: string; departure: string; vip: boolean;
   source: string; channel: string | null; otaChannel?: string | null;
@@ -126,7 +126,7 @@ export function laneKeyOf(span: { roomId: string; bedId: string | null }): strin
 /**
  * Stitch chunks into one chart.
  *
- * Order does not matter — chunks arrive as their requests resolve, not in date
+ * Order does not matter - chunks arrive as their requests resolve, not in date
  * order, and a merge that depended on arrival order would draw differently
  * depending on the network.
  */
@@ -164,7 +164,7 @@ export function mergeChunks(chunks: (TapeChunk | undefined | null)[]): MergedTap
   for (const c of present) for (const u of c.unassigned) unassigned.set(u.reservationId, u);
 
   // Availability is already per date and per room type, so a key of the two is
-  // exact. Later chunks win, which matters only where chunks overlap — and then
+  // exact. Later chunks win, which matters only where chunks overlap - and then
   // both values are the same.
   const availability = new Map<string, TapeAvailability>();
   for (const c of present) {

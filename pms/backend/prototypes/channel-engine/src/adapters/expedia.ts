@@ -1,9 +1,9 @@
 // ─────────────────────────────────────────────────────────────
-// Expedia Group DIRECT connector — EG Connectivity (formerly EQC).
+// Expedia Group DIRECT connector - EG Connectivity (formerly EQC).
 //
 // IMPORTANT: this is the SUPPLY side (push a hotel's ARI INTO Expedia,
 // Hotels.com, Vrbo). It is NOT the Rapid API (that pulls Expedia's
-// inventory OUT to resell — the opposite direction, wrong tool here).
+// inventory OUT to resell - the opposite direction, wrong tool here).
 //
 // Protocol: OTA XML for ARI (Availability & Rates API, up to ~5,000
 // updates/message) + GraphQL for reservation lifecycle / promotions.

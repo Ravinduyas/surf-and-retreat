@@ -2,7 +2,7 @@
 //
 // Two pieces live here: the action bar that appears when dates are selected on
 // the rate calendar, and the close-out list that shows what is currently shut.
-// The calendar itself stays in RatesInventory — this file owns the verbs.
+// The calendar itself stays in RatesInventory - this file owns the verbs.
 import { useState } from 'react';
 import { Lock, LockOpen, CalendarX, Trash2, CircleAlert } from 'lucide-react';
 import {
@@ -22,7 +22,7 @@ export interface DateSelection {
   ratePlanCode: string;
   from: string;
   to: string;
-  /** True when every selected night is already closed — offer Open, not Close. */
+  /** True when every selected night is already closed - offer Open, not Close. */
   allClosed: boolean;
   anyClosed: boolean;
 }
@@ -32,7 +32,7 @@ export interface DateSelection {
  *
  * It defaults to whichever action makes sense for what is selected: a run of
  * closed nights offers Open, anything else offers Close. Both are still
- * available — the default is a shortcut, not a restriction.
+ * available - the default is a shortcut, not a restriction.
  */
 export function CloseoutBar({
   selection, onDone, onCancel,
@@ -145,7 +145,7 @@ export function CloseoutBar({
         <div className="space-y-3">
           <InfoNote>
             Nothing was changed. The selected dates are closed by a closure that covers more than
-            what you selected — reopening only part of it would mean splitting it across every room
+            what you selected - reopening only part of it would mean splitting it across every room
             type it applies to. Reopen the closure itself from the Close-outs tab, or narrow it first.
           </InfoNote>
           {blocked.map((b, i) => (
@@ -244,8 +244,8 @@ export function CloseoutsTab() {
                         </td>
                         <td className="py-2.5 tabular-nums text-dash-muted">{c.nights}</td>
                         <td className="py-2.5">{c.scope}</td>
-                        <td className="py-2.5 text-dash-muted">{c.reason ?? '—'}</td>
-                        <td className="py-2.5 text-dash-muted">{c.createdBy ?? '—'}</td>
+                        <td className="py-2.5 text-dash-muted">{c.reason ?? '-'}</td>
+                        <td className="py-2.5 text-dash-muted">{c.createdBy ?? '-'}</td>
                         <td className="py-2.5">
                           {c.expired ? <Pill tone="grey">expired</Pill>
                             : c.active ? <Pill tone="red">closed now</Pill>
@@ -273,7 +273,7 @@ export function CloseoutsTab() {
             <div className="flex items-start gap-2">
               <CircleAlert className="w-4 h-4 text-dash-muted shrink-0 mt-0.5" />
               <p className="text-[11px] text-dash-muted leading-relaxed">
-                A closure stops new bookings for those nights — it does not cancel bookings already
+                A closure stops new bookings for those nights - it does not cancel bookings already
                 taken. Closing is pushed to every connected channel automatically; direct bookings
                 are blocked the moment you save. Closing a single channel leaves the others, and the
                 front desk, still selling.

@@ -1,8 +1,8 @@
 // Telling the channel what happened to a booking it sent us.
 //
 // The one thing this screen must never do is imply a report reached
-// Booking.com when it did not. Every state is spelled out — not reported,
-// reported, failed with the channel's own words — and the fact that the payload
+// Booking.com when it did not. Every state is spelled out - not reported,
+// reported, failed with the channel's own words - and the fact that the payload
 // has not been confirmed against a live account is said out loud rather than
 // left for someone to discover during an argument about commission.
 import { useState } from 'react';
@@ -21,7 +21,7 @@ import { CHANNEL_HUB } from '../branding';
 const NOT_YET_CONFIRMED =
   `Reporting to Booking.com has been built to the documented ${CHANNEL_HUB} behaviour but has not yet `
   + 'been confirmed against a live account. Whatever the channel actually answers is what is '
-  + 'recorded here — nothing is assumed to have worked.';
+  + 'recorded here - nothing is assumed to have worked.';
 
 // ─── On a reservation ────────────────────────────────────────
 
@@ -48,7 +48,7 @@ export function ChannelReportPanel({ reservationId }: { reservationId: string })
                   Reported to the channel
                 </p>
                 <p className="text-[11px] text-dash-muted mt-0.5 max-w-lg leading-relaxed">
-                  Until the channel is told, it still believes the guest arrived — the commission
+                  Until the channel is told, it still believes the guest arrived - the commission
                   stands and the guest is not flagged.
                 </p>
               </div>
@@ -168,7 +168,7 @@ function Exchange({ label, value }: { label: string; value: unknown }) {
     <div>
       <p className="text-[9px] font-bold uppercase tracking-widest text-dash-muted mb-1">{label}</p>
       <pre className="text-[10px] font-mono bg-dash-bg p-2.5 rounded-xl overflow-x-auto scroll-thin">
-        {value ? JSON.stringify(value, null, 2) : '—'}
+        {value ? JSON.stringify(value, null, 2) : '-'}
       </pre>
     </div>
   );

@@ -5,7 +5,7 @@
 # the files they protect means moving or vendoring this directory cannot
 # silently drop them.
 #
-# `.env.example` is the one that is meant to be committed — it is generated
+# `.env.example` is the one that is meant to be committed - it is generated
 # from src/config.ts and holds no values.
 
 

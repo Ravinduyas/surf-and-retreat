@@ -3,7 +3,7 @@
 //
 // The race cannot be closed by a channel manager: each OTA sells from its own
 // cached copy of availability and tells you afterwards. What *can* be done is
-// hold the last room back — and that costs occupancy, so nobody should be asked
+// hold the last room back - and that costs occupancy, so nobody should be asked
 // to decide it on instinct.
 //
 // Everything below is measured from data the system already keeps. The queue
@@ -31,12 +31,12 @@ export interface ExposureReport {
   worstSeconds: number;
   /** Total time the OTAs spent holding availability that was already stale. */
   totalExposureSeconds: number;
-  /** Queued right now and not yet sent — live exposure. */
+  /** Queued right now and not yet sent - live exposure. */
   queuedNow: number;
   /** Failed and never retried. These are exposed until somebody notices. */
   failedNow: number;
   oldestFailedAt: string | null;
-  /** Nights that reached zero availability — every one was a race that could have gone wrong. */
+  /** Nights that reached zero availability - every one was a race that could have gone wrong. */
   soldOutNights: number;
   /** Nights that actually went negative. */
   oversoldNights: number;
@@ -59,7 +59,7 @@ export function exposureReport(propertyId: string, from: string, to: string): Ex
   const toTs = `${to}T23:59:59.999Z`;
 
   // The gap between raising a change and the channel being told. `sent_at` is
-  // only set on success, so a failed push contributes to `failedNow` instead —
+  // only set on success, so a failed push contributes to `failedNow` instead -
   // counting it here would flatter the median with a number that never landed.
   const sent = all<{ ms: number; channel_id: string }>(
     `SELECT channel_id,
@@ -119,7 +119,7 @@ export function exposureReport(propertyId: string, from: string, to: string): Ex
     };
   });
 
-  // A dorm's availability is counted in beds, not rooms — so that is the unit
+  // A dorm's availability is counted in beds, not rooms - so that is the unit
   // the protection setting is really holding back, and the unit the screen has
   // to say. Offering to "hold back 1 room" of a dorm would be a different and
   // much larger thing than what actually happens.
@@ -143,7 +143,7 @@ export function exposureReport(propertyId: string, from: string, to: string): Ex
       roomTypeId: r.id,
       roomType: r.name,
       isDorm: r.kind === 'dorm',
-      /** Beds for a dorm, rooms otherwise — what `protectLastRooms` counts. */
+      /** Beds for a dorm, rooms otherwise - what `protectLastRooms` counts. */
       units: r.kind === 'dorm' ? r.beds : r.rooms,
       rooms: r.rooms,
       protectLastRooms: r.protect_last_rooms ?? 0,
@@ -188,7 +188,7 @@ function verdictFor(x: {
 }): string {
   if (x.failedNow > 0) {
     return `${x.failedNow} channel update(s) have failed and are still unsent. Until they go `
-      + 'through, the OTAs are selling from stale availability — this is the largest exposure '
+      + 'through, the OTAs are selling from stale availability - this is the largest exposure '
       + 'you have, and it is fixable.';
   }
   if (x.pushes < 10) {
@@ -205,7 +205,7 @@ function verdictFor(x: {
     return `Pushes land in about ${x.median}s (worst ${x.worst}s). Nothing sold out in this `
       + 'period, so the race never had anything to race for.';
   }
-  return `Pushes land in about ${x.median}s, worst ${x.worst}s — that is how long an OTA can `
+  return `Pushes land in about ${x.median}s, worst ${x.worst}s - that is how long an OTA can `
     + `keep selling a room that has gone. ${risky} night(s) reached zero availability, and `
     + `${x.oversoldNights} went over${x.racesLost ? ` (${x.racesLost} attributed to the race)` : ''}. `
     + 'Last-room protection would make those impossible, at the cost of selling one fewer room '

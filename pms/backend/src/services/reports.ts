@@ -35,7 +35,7 @@ export function kpiSeries(propertyId: string, from: string, to: string): KpiPoin
     propertyId, from, to,
   )) closed.set(r.date, r);
 
-  // A closed day is already answered by its daily_stats row — recomputing it
+  // A closed day is already answered by its daily_stats row - recomputing it
   // from the reservation nights costs the same as computing tomorrow's, and
   // over a year of history that dominates the whole report. Work out the
   // narrowest range that still needs computing and only do that.
@@ -56,7 +56,7 @@ export function kpiSeries(propertyId: string, from: string, to: string): KpiPoin
     for (const r of all<{ date: string; revenue: number }>(
       // Forecast revenue is money the property expects to take. A website
       // booking it has not accepted is not that yet, so it stays out until it
-      // is confirmed — the same moment its rooms leave availability.
+      // is confirmed - the same moment its rooms leave availability.
       `SELECT n.date, COALESCE(SUM(n.rate_minor),0) AS revenue
          FROM reservation_nights n JOIN reservations r ON r.id = n.reservation_id
         WHERE n.property_id = ? AND n.date >= ? AND n.date <= ?
@@ -115,7 +115,7 @@ export function kpiSummary(propertyId: string, from: string, to: string) {
   };
 }
 
-/** Today's operational snapshot — what the dashboard is built from. */
+/** Today's operational snapshot - what the dashboard is built from. */
 export function todaySnapshot(propertyId: string) {
   const date = businessDate(propertyId);
   const grid = availabilityGrid(propertyId, date, addDays(date, 1));
@@ -124,7 +124,7 @@ export function todaySnapshot(propertyId: string) {
   const sold = grid.reduce((s, c) => s + c.sold, 0);
   const available = grid.reduce((s, c) => s + c.available, 0);
 
-  // Matches the arrivals list in `frontDeskLists` below — the number on the
+  // Matches the arrivals list in `frontDeskLists` below - the number on the
   // dashboard and the rows on the arrivals screen have to be the same thing.
   const arrivalsDue = scalar<number>(
     `SELECT count(*) AS n FROM reservations r WHERE r.property_id = ? AND r.arrival = ?
@@ -309,7 +309,7 @@ export function revenueBreakdown(propertyId: string, from: string, to: string) {
 export function guestValue(propertyId: string, profileId: string) {
   const stays = all<any>(
     // `preferences` and `special_requests` are what the guest actually chose
-    // when they booked — the package, the coworking desks, the surf lessons,
+    // when they booked - the package, the coworking desks, the surf lessons,
     // the airport pickup. Without them a profile shows that somebody stayed
     // three nights and nothing at all about what they came for.
     `SELECT r.id, r.confirmation, r.arrival, r.departure, r.nights, r.status,
@@ -380,7 +380,7 @@ export function frontDeskLists(propertyId: string, date: string) {
     // the property has actually accepted. A website booking nobody has
     // confirmed has no room and cannot be checked in, so putting it here would
     // offer the desk an action that always fails. It is listed separately
-    // below instead — excluded from the arrivals run, never hidden.
+    // below instead - excluded from the arrivals run, never hidden.
     arrivals: shape(all<any>(
       `${base} WHERE r.property_id = ? AND r.arrival = ?
          AND r.status IN ('Tentative','Confirmed','Guaranteed')

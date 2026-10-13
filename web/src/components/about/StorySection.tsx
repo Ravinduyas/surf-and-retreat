@@ -37,7 +37,7 @@ export const StorySection: React.FC = () => {
             <p className="text-[#59695C] text-sm sm:text-base leading-relaxed max-w-md">
               In 2019 we came to Weligama for two weeks of waves and never really left.
               We opened with six dorm beds and a single long table; today we host
-              surfers and remote workers from forty countries — but dinner is still
+              surfers and remote workers from forty countries - but dinner is still
               cooked together, and the 6 AM surf crew still leaves as one.
             </p>
             <p className="text-[#59695C] text-sm sm:text-base leading-relaxed max-w-md">

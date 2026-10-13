@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-// End-to-end demo — run: `npm run demo`  (node --experimental-strip-types)
+// End-to-end demo - run: `npm run demo`  (node --experimental-strip-types)
 //
 // Proves the DIRECT model end to end with NO Beds24 in the path:
 //   1. build the PMS source of truth (rooms, BAR + derived rates, ARI)
@@ -52,7 +52,7 @@ async function main() {
     sot.setCell({ roomType: 'OVK',  ratePlan: 'BAR', date, price: 320, available: 8,  minStay: 1 });
   }
 
-  line('\x1b[1mHelio Channel Engine — DIRECT distribution demo\x1b[0m');
+  line('\x1b[1mHelio Channel Engine - DIRECT distribution demo\x1b[0m');
   rule('Derived-rate resolution (one BAR edit cascades)');
   line(`BAR   DLXK 2026-05-04 = $${sot.resolvePrice('BAR', 'DLXK', '2026-05-04')}`);
   line(`NREF  DLXK 2026-05-04 = $${sot.resolvePrice('NREF', 'DLXK', '2026-05-04')}  (BAR -10%)`);
@@ -64,7 +64,7 @@ async function main() {
   registry.register(new MockConnector('BDC', 'Booking.com (direct)'));
   registry.register(new MockConnector('EXP', 'Expedia (direct)'));
   registry.register(new MockConnector('AGD', 'Agoda (direct)'));
-  // Real adapters — present but INERT until certified:
+  // Real adapters - present but INERT until certified:
   registry.register(new BookingComConnector());
   registry.register(new ExpediaConnector());
   registry.register(new AgodaConnector());
@@ -72,7 +72,7 @@ async function main() {
   // Note: the real BDC/EXP/AGD stubs share channel codes with the mocks;
   // the registry keeps the last registered per code, so the inert real
   // adapters would REPLACE the mocks in production once certified. For
-  // this demo we register mocks first, then overwrite with reals — so
+  // this demo we register mocks first, then overwrite with reals - so
   // re-register the mocks last to keep the demo "live".
   registry.register(new MockConnector('BDC', 'Booking.com (direct)'));
   registry.register(new MockConnector('EXP', 'Expedia (direct)'));
@@ -111,7 +111,7 @@ async function main() {
       `${color}${e.status.padEnd(8)}\x1b[0m a${e.attempt} ${e.action}${e.detail ? ' · ' + e.detail : ''}`);
   }
 
-  rule('Rate parity (BAR) — clean by construction');
+  rule('Rate parity (BAR) - clean by construction');
   const overrides = new Map([['OVK|2026-05-05', { AGD: 302 }]]); // simulate a drifted channel
   const parity = computeParity(sot, liveChannels, overrides);
   for (const p of parity) {
@@ -119,7 +119,7 @@ async function main() {
     line(`  ${p.roomType.padEnd(6)} ${p.date}  ref $${p.reference}  worst Δ ${p.worstDeltaPct}%  ${tag}`);
   }
 
-  line('\n\x1b[32m✓ direct distribution demo complete — no Beds24 in the path\x1b[0m\n');
+  line('\n\x1b[32m✓ direct distribution demo complete - no Beds24 in the path\x1b[0m\n');
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });

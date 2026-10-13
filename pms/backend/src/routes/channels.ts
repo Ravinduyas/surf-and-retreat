@@ -26,7 +26,7 @@ const pid = (ctx: Ctx) => ctx.auth.propertyId;
 const businessDate = (ctx: Ctx) =>
   get<{ business_date: string }>('SELECT business_date FROM properties WHERE id = ?', pid(ctx))!.business_date;
 
-/** The channels Beds24 can distribute to — the catalogue an operator picks from. */
+/** The channels Beds24 can distribute to - the catalogue an operator picks from. */
 // Exported so checks can assert against the codes actually issued, rather
 // than against a copy that can drift.
 export const CATALOGUE = [
@@ -135,7 +135,7 @@ router.get('/api/inventory', (ctx: Ctx) => ({
  * Change how many rooms, and beds per room, a room type has.
  *
  * Changes Helio first and reports the result. Sending the new count on to the
- * channel is a separate, explicit call — because the two can fail
+ * channel is a separate, explicit call - because the two can fail
  * independently, and a screen that did both behind one button would have to
  * lie about one of them.
  */
@@ -153,7 +153,7 @@ router.put('/api/inventory/:roomTypeId', async (ctx: Ctx) => {
   //
   // The Helio change is already committed and stays committed whatever the
   // channel says. A refusal out there is not a reason to silently undo a
-  // deliberate change in here — but it *is* something the caller has to be told
+  // deliberate change in here - but it *is* something the caller has to be told
   // about plainly, so the outcome of each half is reported separately rather
   // than folded into one "saved".
   const auto = autoPushEnabled(pid(ctx));
@@ -371,7 +371,7 @@ router.post('/api/webhooks/beds24/:propertyCode', async (ctx: Ctx) => {
  * tokens are.
  *
  * Served rather than written into the React screen so the instructions and the
- * scope check can never disagree — both read `REQUIRED_SCOPES`.
+ * scope check can never disagree - both read `REQUIRED_SCOPES`.
  */
 router.get('/api/channels/connection-guide', () => connectionGuide(),
   { perm: 'channels.read' });
@@ -381,7 +381,7 @@ router.get('/api/channels/connection-guide', () => connectionGuide(),
  * token allowed to do, which properties can it see, is the one we are bound to
  * still among them, and how much of the API budget is left.
  *
- * One call, because these are one question — "is this working?" — and asking it
+ * One call, because these are one question - "is this working?" - and asking it
  * in four places is how a screen ends up showing three green ticks and one
  * silent failure.
  */
@@ -409,7 +409,7 @@ router.get('/api/channels/:id/diagnosis', async (ctx: Ctx) => {
 /**
  * The channel's rooms, matched against this property's room types.
  *
- * Suggestions only — nothing is written. A wrong mapping quietly sends one
+ * Suggestions only - nothing is written. A wrong mapping quietly sends one
  * room's availability to another, so the last word stays with a person looking
  * at both names.
  */
@@ -429,7 +429,7 @@ router.get('/api/channels/:id/room-suggestions', async (ctx: Ctx) => {
  * Accept a set of suggested mappings in one go.
  *
  * The alternative is twelve trips through a dialog, which is where somebody
- * stops halfway and leaves half their rooms unmapped — a state that looks
+ * stops halfway and leaves half their rooms unmapped - a state that looks
  * connected and pushes nothing for the rooms that were missed.
  */
 router.post('/api/channels/:id/room-suggestions/apply', (ctx: Ctx) => {
@@ -470,7 +470,7 @@ router.post('/api/channels/:id/room-suggestions/apply', (ctx: Ctx) => {
  * the first push changes nothing rather than replacing months of live rates
  * with whatever was typed in during setup.
  *
- * A dry run by default — `apply: true` is what writes.
+ * A dry run by default - `apply: true` is what writes.
  */
 router.post('/api/channels/:id/adopt-rates', async (ctx: Ctx) => adoptChannelRates(
   pid(ctx), ctx.auth, ctx.params.id,

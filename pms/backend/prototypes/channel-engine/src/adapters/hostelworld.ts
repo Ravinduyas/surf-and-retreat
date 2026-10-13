@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-// Hostelworld DIRECT connector — BED-LEVEL distribution.
+// Hostelworld DIRECT connector - BED-LEVEL distribution.
 //
 // The distinguishing feature: dorms are sold PER BED, not per room.
 // occupancy = beds, so a 3-bed dorm at $15 sends three $15 bed listings;
@@ -8,7 +8,7 @@
 //
 // Protocol: Hostelworld Partner API (REST/Swagger) + legacy XML in places.
 // A special Hostelworld API password (from your HW account manager) is
-// required — not normal login credentials.
+// required - not normal login credentials.
 // ─────────────────────────────────────────────────────────────
 import type { Connector, PushResult, RawBooking } from '../connector.ts';
 import type {

@@ -64,7 +64,7 @@ export function GuestDashboardScreen({ reservationId }: { reservationId?: string
   const [chargeDesc, setChargeDesc] = useState('');
   const [chargeQty, setChargeQty] = useState(1);
   const [chargeUnit, setChargeUnit] = useState(0);
-  // Payment form — method, amount, cash tendered and reference all travel
+  // Payment form - method, amount, cash tendered and reference all travel
   // together, because the card fee and the change depend on all four.
   const [pay, setPay] = useState<PaymentDraft>(emptyPayment());
   /** What was outstanding when the dialog opened, for the "settle it all" link. */
@@ -175,7 +175,7 @@ export function GuestDashboardScreen({ reservationId }: { reservationId?: string
                             <p className="text-[10px] text-dash-muted mt-2">
                               {r.otaCreditMinor && r.otaCreditMinor > 0
                                 ? `A credit of ${money(r.otaCreditMinor)} is on the folio, so the balance above is what the guest still owes.`
-                                : 'No credit is on the folio — the balance above is the full stay; collect the business price.'}
+                                : 'No credit is on the folio - the balance above is the full stay; collect the business price.'}
                             </p>
                           </>
                         ) : (
@@ -193,8 +193,8 @@ export function GuestDashboardScreen({ reservationId }: { reservationId?: string
                       )}
                     </div>
                   )}
-                  {/* Hostelworld's own statement — booking price, deposit,
-                      balance due, the promotion and every night — read from
+                  {/* Hostelworld's own statement - booking price, deposit,
+                      balance due, the promotion and every night - read from
                       Beds24 and laid out like the confirmation email. */}
                   {r.hostelworldDetail && (
                     <HostelworldStatement
@@ -257,12 +257,12 @@ export function GuestDashboardScreen({ reservationId }: { reservationId?: string
             </Card>
 
             {/* What the guest bought on the website, on the screen the desk
-                opens to prepare for them — the flight to meet and the lessons
+                opens to prepare for them - the flight to meet and the lessons
                 to book are needed before check-in, not during it. */}
             <BookingExtras preferences={r.preferences} className="mb-3" />
 
             {/* A no-show that came through an OTA is not finished until the
-                channel has been told — so the state of that sits on the booking,
+                channel has been told - so the state of that sits on the booking,
                 not buried in the channel manager. */}
             {r.status === 'No-show' && r.channel && (
               <div className="mb-4">
@@ -305,7 +305,7 @@ export function GuestDashboardScreen({ reservationId }: { reservationId?: string
                     try {
                       const f = await splitFolio.mutateAsync({
                         reservationId: r.id,
-                        body: { name: `${r.guest} — window ${r.folios.length + 1}` },
+                        body: { name: `${r.guest} - window ${r.folios.length + 1}` },
                       });
                       setActiveFolioId(f.id);
                       toast.success(`Folio window ${f.windowNo} opened`);
@@ -394,7 +394,7 @@ export function GuestDashboardScreen({ reservationId }: { reservationId?: string
             {tab === 'stay' && (
               <Card>
                 <p className="text-[10px] font-bold uppercase tracking-widest text-dash-muted mb-3">
-                  Rate per night — what the night audit posts
+                  Rate per night - what the night audit posts
                 </p>
                 <div className="overflow-x-auto scroll-thin">
                   <table className="w-full min-w-[46rem] text-[12px]">
@@ -427,13 +427,13 @@ export function GuestDashboardScreen({ reservationId }: { reservationId?: string
                           <tr key={n.id} className="border-b border-black/[0.03]">
                             <td className="py-2 font-semibold">{longDate(n.date)}</td>
                             <td className="py-2">{n.roomType}</td>
-                            <td className="py-2">{n.room ?? '—'}</td>
+                            <td className="py-2">{n.room ?? '-'}</td>
                             <td className="py-2 font-mono text-[10px]">{n.rateCode}</td>
                             <td className="py-2 text-center text-dash-muted">{n.adults}{n.children ? `+${n.children}` : ''}</td>
                             {r.hostelworldDetail && r.hostelworldDetail.nights.length > 0 && (
                               <>
                                 <td className="py-2 text-right tabular-nums text-dash-muted">
-                                  {hwNight?.sellMinor != null ? money(hwNight.sellMinor) : '—'}
+                                  {hwNight?.sellMinor != null ? money(hwNight.sellMinor) : '-'}
                                 </td>
                                 <td className="py-2 text-right tabular-nums text-orange-600 whitespace-nowrap">
                                   {off > 0 && hwNight?.sellMinor

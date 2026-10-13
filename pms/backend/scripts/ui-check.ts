@@ -1,5 +1,5 @@
 // Drives the built front-end in headless Chrome against the live API and
-// asserts each screen actually renders real data — not a spinner, not an
+// asserts each screen actually renders real data - not a spinner, not an
 // error panel, not an empty shell.
 //
 //   node scripts/ui-check.ts        (API + a static server for dist must be up)
@@ -107,7 +107,7 @@ async function main() {
   await cdp.send('Page.enable');
   await cdp.send('Runtime.enable');
 
-  // Collect console errors for the whole run — a screen that renders but throws
+  // Collect console errors for the whole run - a screen that renders but throws
   // is not a screen that works.
   const consoleErrors: string[] = [];
   (cdp as any).ws.addEventListener('message', (ev: MessageEvent) => {
@@ -133,7 +133,7 @@ async function main() {
     bootText.slice(0, 200));
 
   // Seed the session the way a successful sign-in would, then force a full
-  // reload — the app resolves its session once, at boot.
+  // reload - the app resolves its session once, at boot.
   await cdp.evaluate(`
     localStorage.setItem('helio.pms.token', ${JSON.stringify(login.token)});
     localStorage.setItem('helio.pms.property', ${JSON.stringify(propertyId)});

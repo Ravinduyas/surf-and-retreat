@@ -34,7 +34,7 @@ const JOBS = [
   [`${R}/WhatsApp Image 2026-04-22 at 14.09.57 (3).jpeg`, 'building-exterior', 1400],
   [`${H}/WhatsApp Image 2025-12-23 at 13.01.21.jpeg`, 'scooter-surfboard', 1600],
   [`${H}/WhatsApp Image 2025-12-23 at 11.50.14.jpeg`, 'hostel-dog-bike', 1200],
-  // Food — the standouts
+  // Food - the standouts
   [`${F}/Banging Bagel.jpg`, 'food-bagel-beach', 1400],
   [`${F}/Hummus and homemade chips.jpg`, 'food-hummus-beach', 1400],
   [`${F}/Banana Blush smoothie bowl.jpg`, 'food-smoothie-bowl', 1200],
@@ -47,7 +47,7 @@ const JOBS = [
   [`${F}/Coastal fish curry.jpg`, 'food-fish-curry', 1200],
   [`${F}/Pistachio Prawn 2.jpg`, 'food-prawn-pasta', 1200],
   [`${F}/watermelon feta bowl.jpg`, 'food-watermelon-feta', 1200],
-  // Surf, skate & beach — delivered small (max 480px), so kept at source size
+  // Surf, skate & beach - delivered small (max 480px), so kept at source size
   [`${N}/hem5rocixl6uli2pt4bu.webp`, 'surf-walk-in', 1200],
   [`${N}/ohzm5kcp3lz4y27fflak.webp`, 'surf-board-carry', 1200],
   [`${N}/ola0ni26tz9d2dzyj1el.webp`, 'surf-beach-board', 1200],

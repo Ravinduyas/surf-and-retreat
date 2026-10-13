@@ -5,7 +5,7 @@
 //
 // The defect this exists for: the list showed "16 beds (2 × 8)" and the Edit
 // dialog had no field that could change it. Two screens describing one room
-// type, with the number only readable on one of them — so the check is that
+// type, with the number only readable on one of them - so the check is that
 // every count on the card is editable from the dialog the card opens.
 //
 // It reads and opens dialogs. It does not save, so nothing is written.
@@ -31,7 +31,7 @@ function section(title: string) {
 /**
  * Click the button whose text matches, inside the card naming `roomType`.
  *
- * "The deepest div containing the name" is the wrong element — that is the
+ * "The deepest div containing the name" is the wrong element - that is the
  * heading, which holds no buttons. What is wanted is the *smallest* div that
  * contains both the name and the button, which is the card itself.
  */
@@ -102,7 +102,7 @@ async function main() {
     check('the auto-send switch is offered',
       /Send count changes to the channel automatically/i.test(text));
 
-    // The attributes are still there — folding inventory in must not have
+    // The attributes are still there - folding inventory in must not have
     // pushed anything else out.
     for (const field of ['Code', 'Name', 'Kind', 'Base occupancy', 'Default rate', 'Amenities']) {
       check(`“${field}” is still in the dialog`,
@@ -116,7 +116,7 @@ async function main() {
     await sleep(500);
 
     section('3 · "Change count" opens the same dialog');
-    // Two entry points, one editor — the previous split was the fault.
+    // Two entry points, one editor - the previous split was the fault.
     const viaCount = await clickOnCard(cdp, 'Bed in 8-Bed Mixed Dormitory Room', 'Change count');
     check('the Change count button works', viaCount);
     await sleep(700);

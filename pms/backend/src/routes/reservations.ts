@@ -137,7 +137,7 @@ router.post('/api/reservations', (ctx: Ctx) => {
  * It lands **awaiting confirmation** (`pendingbookings.ts`): a guest submitting
  * a form is not the property agreeing to house them, so it holds no inventory,
  * has no room, and cannot be checked in until a person accepts it and picks the
- * bed. An OTA booking is the opposite — the room was already sold elsewhere —
+ * bed. An OTA booking is the opposite - the room was already sold elsewhere -
  * and is left exactly as it was.
  *
  * And a dorm party becomes **one reservation per bed**, linked by `parent_id`.
@@ -176,8 +176,8 @@ router.post('/api/public/booking-engine/reservations', (ctx: Ctx) => {
    * and a dorm bed, and sends that allocation with the booking; writing the
    * whole party against the first room type instead both lies about who is
    * sleeping where and, whenever the party is bigger than that one room, is a
-   * booking the PMS refuses outright — "Deluxe Double Room holds a maximum of
-   * 2 guest(s)" — for a combination the site had already priced and accepted.
+   * booking the PMS refuses outright - "Deluxe Double Room holds a maximum of
+   * 2 guest(s)" - for a combination the site had already priced and accepted.
    *
    * The room type is looked up per line, so a line naming a type this property
    * does not sell is a 404 rather than a booking against the wrong room.
@@ -190,8 +190,8 @@ router.post('/api/public/booking-engine/reservations', (ctx: Ctx) => {
     qty: int(e.qty ?? 1, 'room.allocation[].qty', { min: 1, max: 40 }),
   }));
 
-  // A client that sends no allocation — an older build of the site, or a link
-  // that skipped the room step — still books the single room type it named,
+  // A client that sends no allocation - an older build of the site, or a link
+  // that skipped the room step - still books the single room type it named,
   // exactly as it always did.
   const lines = allocationLines.length ? allocationLines : (() => {
     // The site picks a room type off the public catalog, so it sends the id it
@@ -206,7 +206,7 @@ router.post('/api/public/booking-engine/reservations', (ctx: Ctx) => {
    * How many of the party sleeps in each unit.
    *
    * The same rule the site prices with: every unit takes one guest first, and
-   * only then do the rest fill up to occupancy in order — so two doubles for
+   * only then do the rest fill up to occupancy in order - so two doubles for
    * two guests is one head each rather than a full room and an empty one, and a
    * double taken by one guest is booked, and charged, for one. Because no unit
    * is ever given more than its occupancy, a combination the site accepted is
@@ -271,7 +271,7 @@ router.post('/api/public/booking-engine/reservations', (ctx: Ctx) => {
    * An airport transfer as the desk needs to read it: the flight, the day and
    * the time, in one tag.
    *
-   * The site asks for all three and used to send them nowhere — the booking
+   * The site asks for all three and used to send them nowhere - the booking
    * arrived saying only that a pickup was wanted, so whoever was driving had to
    * ring the guest to find out when. Empty parts are kept in place so the tag
    * always has the same shape, and a transfer asked for without a flight still
@@ -289,13 +289,13 @@ router.post('/api/public/booking-engine/reservations', (ctx: Ctx) => {
    *
    * The name is carried because the lessons are booked for people: a surf
    * school is told who is in the beginner group, and "person 2" is not
-   * something the desk can pass on. It is optional — the site does not force a
-   * name — and the separators are stripped out of it so one traveller can never
+   * something the desk can pass on. It is optional - the site does not force a
+   * name - and the separators are stripped out of it so one traveller can never
    * spill into the next.
    *
    * Read leniently on purpose. This is a note for the desk, not a price or a
    * room, so a package the site adds later must not be able to bounce the whole
-   * booking with a 400 — an unrecognised word is written down as it came and
+   * booking with a 400 - an unrecognised word is written down as it came and
    * the reservation stands. Anything that is not a plain word is dropped.
    */
   const surfChoice = (t: any): string => {
@@ -317,7 +317,7 @@ router.post('/api/public/booking-engine/reservations', (ctx: Ctx) => {
       : null,
     // The package and level each traveller chose, in the order the site listed
     // them. The desk books the lessons off this, so "two surfers" is not enough
-    // — which of them is a beginner decides which group they go out with.
+    // - which of them is a beginner decides which group they go out with.
     model.includes('surf') && Array.isArray(b?.surf?.travellers) && b.surf.travellers.length
       ? `surf:${b.surf.travellers.slice(0, 16).map(surfChoice).join(',')}`
       : null,
@@ -368,7 +368,7 @@ router.post('/api/public/booking-engine/reservations', (ctx: Ctx) => {
      * it on each member would make the arrivals list show three small amounts
      * owed by one person, which is not how anybody chases a payment.
      *
-     * Nothing is charged here — there is no payment gateway in this system.
+     * Nothing is charged here - there is no payment gateway in this system.
      * This is the amount, on the record, so the desk can ask for it and the
      * folio can show it as outstanding.
      */
@@ -386,7 +386,7 @@ router.post('/api/public/booking-engine/reservations', (ctx: Ctx) => {
       }
     }
     // One entry per room type, so the confirmation screen can say what was
-    // actually booked — a double and a bed in the mixed dorm — rather than a
+    // actually booked - a double and a bed in the mixed dorm - rather than a
     // single number that describes neither.
     const byRoomType = new Map<string, { confirmation: string; units: number; roomType: string }>();
     plannedUnits.forEach((unit, i) => {
@@ -528,7 +528,7 @@ router.get('/api/reservations/:id/confirmation', (ctx: Ctx) => {
  * Accept the booking and commit the beds.
  *
  * `assignments` names a room or bed per member; `auto` lets the PMS pick what
- * is free. Confirming is what closes the dates — until now the booking held
+ * is free. Confirming is what closes the dates - until now the booking held
  * nothing, so this is also the first point the OTAs are told anything.
  */
 router.post('/api/reservations/:id/confirm', (ctx: Ctx) => {
@@ -579,7 +579,7 @@ router.post('/api/reservations/:id/no-show', (ctx: Ctx) =>
 
 // ─── Telling the channel what happened ───────────────────────
 // Marking a no-show is the property's side. Until the channel is told, the OTA
-// still believes the guest arrived — so these sit next to it rather than in the
+// still believes the guest arrived - so these sit next to it rather than in the
 // channel manager, which is not where the decision is made.
 
 const reportKind = (v: unknown): ReportKind =>
@@ -592,7 +592,7 @@ router.get('/api/reservations/:id/channel-report/eligibility', (ctx: Ctx) =>
   reportEligibility(pid(ctx), ctx.params.id,
     reportKind(ctx.query.get('kind')), businessDate(ctx)), { perm: 'reservations.read' });
 
-/** Retryable by design — calling it again after a failure is the retry. */
+/** Retryable by design - calling it again after a failure is the retry. */
 router.post('/api/reservations/:id/channel-report', async (ctx: Ctx) =>
   reportToChannel(pid(ctx), actor(ctx), ctx.params.id,
     reportKind(ctx.body.kind), businessDate(ctx)), { perm: 'frontdesk.write' });
@@ -625,7 +625,7 @@ router.post('/api/reservations/:id/move-room', (ctx: Ctx) =>
 
 // ─── Extending and shortening a stay ─────────────────────────
 // The preview is a GET so it can be called freely as the operator types a date
-// — it writes nothing and holds nothing.
+// - it writes nothing and holds nothing.
 router.get('/api/reservations/:id/stay-preview', (ctx: Ctx) =>
   previewStayChange(pid(ctx), ctx.params.id, {
     arrival: ctx.query.get('arrival') ?? undefined,
@@ -712,7 +712,7 @@ router.post('/api/reservations/:id/guests', (ctx: Ctx) => {
 //
 // Four staff endpoints and two public ones. The public pair are the only
 // unauthenticated way into a single reservation in the whole API, which is why
-// they live behind a hashed 256-bit token and hand back almost nothing — see
+// they live behind a hashed 256-bit token and hand back almost nothing - see
 // services/guestregistration.ts.
 
 router.post('/api/reservations/:id/registration-link', (ctx: Ctx) =>
@@ -881,7 +881,7 @@ router.post('/api/groups', (ctx: Ctx) => tx(() => {
     }
   }
   if (boolIn(b.masterFolio, true)) {
-    openFolio(pid(ctx), { groupId: gId, companyId: b.companyId ?? null, name: `${b.name} — master`, type: 'master' });
+    openFolio(pid(ctx), { groupId: gId, companyId: b.companyId ?? null, name: `${b.name} - master`, type: 'master' });
   }
   audit(ctx.auth, {
     action: 'group.create', entity: 'GROUP', entityId: gId, entityRef: b.code, after: b,
@@ -941,7 +941,7 @@ router.post('/api/groups/:id/blocks', (ctx: Ctx) => tx(() => {
   return { updated: n };
 }), { perm: 'groups.write' });
 
-/** Rooming list upload — bulk-create the group's individual reservations. */
+/** Rooming list upload - bulk-create the group's individual reservations. */
 router.post('/api/groups/:id/rooming-list', (ctx: Ctx) => tx(() => {
   const group = get<any>('SELECT * FROM groups WHERE id = ? AND property_id = ?', ctx.params.id, pid(ctx));
   if (!group) notFound('Group');

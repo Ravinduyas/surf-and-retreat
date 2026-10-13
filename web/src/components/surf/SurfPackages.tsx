@@ -19,7 +19,7 @@ export const SurfPackages: React.FC = () => {
             </h2>
           </div>
           <p className="text-[#59695C] text-sm max-w-sm leading-relaxed">
-            ISA-certified local instructors, small groups and boards for every level —
+            ISA-certified local instructors, small groups and boards for every level -
             hostel guests get 20% off everything.
           </p>
         </div>
@@ -29,7 +29,7 @@ export const SurfPackages: React.FC = () => {
             <div key={pkg.id} id={`surf-package-${pkg.id}`} className="group flex flex-col">
               <Link
                 to={`/surf-camp/${pkg.id}`}
-                aria-label={`${pkg.title} — view package`}
+                aria-label={`${pkg.title} - view package`}
                 className="relative h-[220px] rounded-2xl overflow-hidden mb-4 shadow-xs bg-[#EAF0E7] block w-full cursor-pointer"
               >
                 <img

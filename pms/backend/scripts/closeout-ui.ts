@@ -94,7 +94,7 @@ async function waitFor(
       text = await cdp.evaluate<string>('document.body.innerText');
       if (what.test(text)) return text;
     } catch {
-      // "Inspected target navigated" — the reload tore down the execution
+      // "Inspected target navigated" - the reload tore down the execution
       // context this poll was speaking to. That is expected while the page is
       // still settling, so wait and ask the new one.
     }
@@ -149,7 +149,7 @@ async function main() {
     localStorage.setItem('helio.pms.property', ${JSON.stringify(propertyId)});
     true;
   `);
-  // Navigate only — no reload. Reloading immediately after a navigate tears the
+  // Navigate only - no reload. Reloading immediately after a navigate tears the
   // execution context down twice, and every poll below then talks to a context
   // that is already gone.
   await cdp.send('Page.navigate', { url: `${APP}/#/rates-inventory` });
@@ -164,7 +164,7 @@ async function main() {
   // ── Select two dates by dragging across the first row ──────
   // Each event goes in its own evaluate with a pause between. Firing all three
   // in one tick makes React batch the state updates, so the mouseup handler
-  // still sees `drag === null` and no selection is ever committed — an artefact
+  // still sees `drag === null` and no selection is ever committed - an artefact
   // of driving the page synchronously, not something a real pointer can do.
   let found = 0;
   const cellDeadline = Date.now() + 15_000;
@@ -180,7 +180,7 @@ async function main() {
     await sleep(300);
   }
   check('the calendar exposes selectable date cells', found >= 2, `found ${found}`);
-  if (found < 2) throw new Error('No selectable calendar cells — nothing further can be checked');
+  if (found < 2) throw new Error('No selectable calendar cells - nothing further can be checked');
 
   await cdp.evaluate(`window.__fire(window.__cells[0], 'mousedown'), true`);
   await sleep(150);
@@ -190,7 +190,7 @@ async function main() {
   await cdp.evaluate(`window.__fire(window.__cells[1], 'mouseup'), true`);
   await sleep(600);
   const barText = await cdp.evaluate<string>('document.body.innerText');
-  // A placeholder is an attribute, not text — innerText will never contain it.
+  // A placeholder is an attribute, not text - innerText will never contain it.
   const hasReasonBox = await cdp.evaluate<boolean>(`
     [...document.querySelectorAll('input')].some(i => (i.placeholder || '').startsWith('Reason'))`);
   check('selecting dates raises the close/open bar', hasReasonBox === true, barText.slice(-500));
@@ -232,7 +232,7 @@ async function main() {
 
   const reasonOnHover = await cdp.evaluate<boolean>(`
     [...document.querySelectorAll('[title]')]
-      .some(el => /Closed for sale — Deep clean/.test(el.getAttribute('title') || ''))`);
+      .some(el => /Closed for sale - Deep clean/.test(el.getAttribute('title') || ''))`);
   check('hovering a closed cell explains why', reasonOnHover === true);
 
   // ── The close-out list ─────────────────────────────────────

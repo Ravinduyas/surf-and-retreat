@@ -22,8 +22,8 @@ export const Navbar: React.FC = () => {
 
   /*
    * It starts inside the hero card, then detaches and rides along the whole
-   * page. `position: sticky` can't do that — it would stop at the card's
-   * bottom edge — so past a small threshold it becomes fixed, with a spacer
+   * page. `position: sticky` can't do that - it would stop at the card's
+   * bottom edge - so past a small threshold it becomes fixed, with a spacer
    * holding its place so nothing jumps.
    */
   useEffect(() => {

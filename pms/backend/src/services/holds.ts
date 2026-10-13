@@ -2,7 +2,7 @@
 // The hold a website booking puts on a bed, and letting it go again.
 //
 // A booking taken by the property's own booking page holds its bed from the
-// moment it is made — see `pendingbookings.ts` for why — but the property has
+// moment it is made - see `pendingbookings.ts` for why - but the property has
 // not agreed to it yet, so the hold cannot be permanent. One abandoned form
 // would otherwise close a bed for good.
 //
@@ -13,7 +13,7 @@
 //   · `releaseExpiredHolds` below then tidies up: it cancels the booking, says
 //     so in the audit trail, and pushes the dates back open on the channels.
 //
-// The order matters. The sweep is bookkeeping, not the mechanism — a machine
+// The order matters. The sweep is bookkeeping, not the mechanism - a machine
 // that was asleep all night still wakes up with the right availability.
 // ─────────────────────────────────────────────────────────────
 import { all, get, run, tx } from '../db.ts';
@@ -44,7 +44,7 @@ export const MAX_HOLD_HOURS = 336;
  *
  * Clamped rather than trusted. This value decides how long a bed is off the
  * market, and a zero or a negative from a bad write would expire every hold the
- * instant it was created — a booking engine that holds nothing, which is the
+ * instant it was created - a booking engine that holds nothing, which is the
  * bug this whole module exists to fix.
  */
 export function holdWindowHours(propertyId: string): number {
@@ -91,7 +91,7 @@ interface ExpiredRow {
  * A party booked across several beds is several reservations sharing a
  * `parent_id`, and they expire together by construction: they were written in
  * one transaction with the same expiry. They are cancelled one by one all the
- * same — a partially expired party is not a thing this should ever produce,
+ * same - a partially expired party is not a thing this should ever produce,
  * but if the data ever said so, cancelling what has actually expired is the
  * honest answer.
  */
@@ -125,7 +125,7 @@ export function releaseExpiredHolds(now = nowIso()): {
                   hold_expires_at = NULL,
                   updated_at = ?
             WHERE id = ? AND status = ? AND origin = ?`,
-          now, 'Hold expired — not confirmed in time', now, r.id, PENDING_STATUS, PENDING_ORIGIN,
+          now, 'Hold expired - not confirmed in time', now, r.id, PENDING_STATUS, PENDING_ORIGIN,
         );
         audit(
           { userId: 'system', userName: 'Booking hold', propertyId: r.property_id },
@@ -160,7 +160,7 @@ export function releaseExpiredHolds(now = nowIso()): {
 
   // One notification per property, naming the bookings. A property that loses
   // four bookings overnight should see that as one line on the bell rather
-  // than four, and should see it at all — a booking quietly deleted by a timer
+  // than four, and should see it at all - a booking quietly deleted by a timer
   // is the kind of thing that erodes trust in the system.
   const byProperty = new Map<string, string[]>();
   for (const r of expired) {

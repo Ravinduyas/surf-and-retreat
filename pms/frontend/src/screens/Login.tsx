@@ -237,7 +237,7 @@ export function LoginScreen() {
               onDone={() => {
                 window.location.hash = '#/dashboard';
                 setMode('credentials');
-                setNotice('Your password has been changed — sign in with it now.');
+                setNotice('Your password has been changed - sign in with it now.');
               }}
             />
           )}
@@ -389,7 +389,7 @@ function ForgotStep({
 
       <p className="text-[10px] text-dash-muted mt-6 leading-relaxed">
         No email provider is configured on this installation, so reset links are handed over by an
-        administrator rather than emailed. That is deliberate — nothing claims to have sent a message
+        administrator rather than emailed. That is deliberate - nothing claims to have sent a message
         it did not send.
       </p>
     </>
@@ -519,7 +519,7 @@ function BrandPanel() {
         </h1>
         <p className="text-[13px] text-white/60 leading-relaxed max-w-sm">
           Reservations, front desk, housekeeping, cashiering, the night audit and channel
-          distribution — all reading and writing the same live data.
+          distribution - all reading and writing the same live data.
         </p>
       </div>
       <div className="space-y-2.5">

@@ -10,7 +10,7 @@ to be broader than reported.
 
 ---
 
-## Wave 1 — done
+## Wave 1 - done
 
 | # | Finding | Fix | Proof |
 |---|---|---|---|
@@ -29,7 +29,7 @@ to be broader than reported.
 
 **C1 was two defects, not one.** The missing membership check was the reported half.
 The other: `resolveSession` resolves a user's role for the *session's* property, and
-the header swap changed the property while keeping that role — so a manager at one
+the header swap changed the property while keeping that role - so a manager at one
 property stayed a manager at another where they were housekeeping. Both are fixed, and
 the permission gate now re-runs for the role that actually applies.
 
@@ -39,7 +39,7 @@ out read access to reservations, folios and channel settings instead of denying.
 returns nothing.
 
 **H4 had three independent routes to admin**, not one, and the role write touched
-`user_properties` as well as `users` — so an escalation survived the per-property role
+`user_properties` as well as `users` - so an escalation survived the per-property role
 override that would otherwise have contained it.
 
 **H1 has a smaller sibling.** Percentage taxes are computed per night rather than on the
@@ -48,7 +48,7 @@ gone. `verify:tax` asserts the two totals match and currently passes; if a prope
 configuration ever makes that drift material, the check will catch it before a guest does.
 
 **H7 is the one that reflects on us.** The feature had a passing test. That test asserted
-`channelCarriesMessages('AIRBNB')` — the implementation's own constant — rather than the
+`channelCarriesMessages('AIRBNB')` - the implementation's own constant - rather than the
 code the channel catalogue actually issues (`AIR`). It agreed with the bug. The
 assertions are now driven by the catalogue, plus a guard that every messaging OTA is
 reachable by the code the UI creates it with, so this class of drift fails loudly.
@@ -62,7 +62,7 @@ Both are corrected.
 ## Decisions taken
 
 **The unassigned-user fallback now depends on installation size.** A user with no
-`user_properties` rows previously saw every property — deliberate convenience for
+`user_properties` rows previously saw every property - deliberate convenience for
 single-property installs, and the reason a membership check alone would not have closed
 C1. That convenience now applies **only while exactly one property exists**. Nothing
 changes for a single-property installation today, and the hole shuts by itself the moment
@@ -79,21 +79,21 @@ and stays queued, failing only after five.
 
 ---
 
-## Not done — and why
+## Not done - and why
 
 Wave 2 and Wave 3 were out of scope for this pass by agreement. Two things deserve to be
 called out rather than buried:
 
 **C2 is Critical and still open.** Seven of eight roles can read the Beds24 refresh token
-from `GET /api/channels`, and it is stored in clear text — so it is also in every backup.
+from `GET /api/channels`, and it is stored in clear text - so it is also in every backup.
 C1 was fixed first because it made C2 reachable *across properties*; on its own C2 still
 hands a read-only staff account full control of the property's OTA distribution. **This
 should be the next work, not much later.**
 
-**H8 — no error boundary.** One render error white-screens the whole app. For an all-day
+**H8 - no error boundary.** One render error white-screens the whole app. For an all-day
 front-desk tool that is a genuine operational risk, and it is a small fix.
 
-Remaining: H5 (MFA brute force), H6 (no Beds24 timeouts — a hung socket stops all channel
+Remaining: H5 (MFA brute force), H6 (no Beds24 timeouts - a hung socket stops all channel
 sync silently), M1–M13, L1–L8.
 
 ---
@@ -101,7 +101,7 @@ sync silently), M1–M13, L1–L8.
 ## Where the audit was right about our own claims
 
 The audit noted that our 240 passing checks "verify the features the team set out to
-build — they do not cover the gaps *between* features, security boundaries, or edge
+build - they do not cover the gaps *between* features, security boundaries, or edge
 cases." That is accurate and worth keeping in view. Three of the six Wave 1 defects lived
 in exactly those gaps, and one of them had a green test sitting on top of it.
 

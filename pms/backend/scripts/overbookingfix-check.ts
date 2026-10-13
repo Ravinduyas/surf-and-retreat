@@ -49,7 +49,7 @@ function seed() {
      VALUES(?,?,?,'hotel','UTC','USD','en',?,'14:00','11:00',1,?)`,
     propertyId, 'FIX', 'Fix Test Hotel', TODAY, nowIso(),
   );
-  // Standard $100, Deluxe $200, Economy $60 — so "better" and "worse" are
+  // Standard $100, Deluxe $200, Economy $60 - so "better" and "worse" are
   // decided by what the property says each is worth.
   const types: Record<string, string> = {};
   const rooms: Record<string, string[]> = {};
@@ -298,7 +298,7 @@ async function main() {
 
   section('8 · A fix that does not fix it says so');
   reset(ctx);
-  // Four booked into two Standards — oversold by two. Moving one guest to the
+  // Four booked into two Standards - oversold by two. Moving one guest to the
   // single Deluxe leaves it still oversold by one.
   for (const guest of ['P1', 'P2', 'P3', 'P4']) book(ctx, { guest });
   ovb.scanAndRecord(P, ACTOR, WINDOW);
@@ -338,7 +338,7 @@ async function main() {
 
   // A fix is stamped with wall-clock time, not the business date. A window
   // built from TODAY would miss every fix on a property whose books are open on
-  // an earlier day than the calendar — which is most of them.
+  // an earlier day than the calendar - which is most of them.
   const costs = fix.fixCosts(P, '2000-01-01', '2100-01-01');
   check('upgrades are counted', costs.upgraded === 1, costs);
   check('downgrades are counted', costs.downgraded === 1, costs);
@@ -365,7 +365,7 @@ async function main() {
 
   process.stdout.write(`\n${checks - failures}/${checks} overbooking fix checks passed\n`);
   if (failures) { process.exitCode = 1; return; }
-  process.stdout.write('Guests are moved, not walked — and a fix that did not fix it says so.\n');
+  process.stdout.write('Guests are moved, not walked - and a fix that did not fix it says so.\n');
 }
 
 try {

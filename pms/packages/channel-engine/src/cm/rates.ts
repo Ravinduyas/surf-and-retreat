@@ -8,7 +8,7 @@
 // pricing, and per-channel multipliers (commission uplift / fx).
 //
 // Beds24 ceiling honoured: occupancy/per-person/LOS/linked/multipliers
-// are all native to Beds24 — this mirrors that model so what we compute
+// are all native to Beds24 - this mirrors that model so what we compute
 // is faithfully pushable. (Discounts are handled in promotions.ts, which
 // respects Beds24's "OTA discounts must be sent as real prices" rule.)
 // ─────────────────────────────────────────────────────────────

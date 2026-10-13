@@ -1,6 +1,6 @@
 // Keeps one broken screen from taking the whole front desk down.
 //
-// Data-fetching errors are already handled well — `QueryState` renders a
+// Data-fetching errors are already handled well - `QueryState` renders a
 // retryable panel. What was unhandled is a *render* error: an unexpected null,
 // a data shape nobody anticipated, a chart given something it cannot draw.
 // React's response to an uncaught error during render is to unmount the entire
@@ -10,13 +10,13 @@
 // For a tool somebody uses all day with a guest standing in front of them, that
 // is the difference between "this screen is broken, use another one" and "the
 // system is down". The boundary contains the failure to the screen that caused
-// it and leaves the shell — navigation, search, everything else — working.
+// it and leaves the shell - navigation, search, everything else - working.
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 import { TriangleAlert, RotateCcw, House } from 'lucide-react';
 
 interface Props {
   children: ReactNode;
-  /** Changing this resets the boundary — used to recover on navigation. */
+  /** Changing this resets the boundary - used to recover on navigation. */
   resetKey?: string;
   onGoHome?: () => void;
 }
@@ -51,7 +51,7 @@ export class ErrorBoundary extends Component<Props, State> {
   componentDidCatch(error: Error, info: ErrorInfo) {
     this.setState({ info });
     // Logged rather than swallowed. There is no error-tracking service wired up
-    // yet, so the console is the only record — and a boundary that hides the
+    // yet, so the console is the only record - and a boundary that hides the
     // stack trace makes the bug behind it far harder to find.
     console.error('[helio] a screen failed to render', error, info.componentStack);
   }
@@ -71,7 +71,7 @@ export class ErrorBoundary extends Component<Props, State> {
               <p className="text-[16px] font-black mb-1">This screen could not be displayed</p>
               <p className="text-[12px] text-dash-muted leading-relaxed">
                 Something in the data on this page was not what the screen expected. Nothing has
-                been changed or lost — the rest of the system is still working, and you can carry
+                been changed or lost - the rest of the system is still working, and you can carry
                 on using it from the menu.
               </p>
             </div>

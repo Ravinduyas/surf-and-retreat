@@ -1,11 +1,11 @@
 // ─────────────────────────────────────────────────────────────
-// YIELD optimizer — Beds24-style automated pricing.
+// YIELD optimizer - Beds24-style automated pricing.
 //
 // Beds24's native Yield Optimizer keys off two signals: remaining
 // availability and lead time (days before check-in). This mirrors that:
 // stackable rules nudge the price up when a room is scarce or demand is
 // near, and down to fill soft dates. (True comp-set/demand RMS is NOT
-// native to Beds24 — pipe PriceLabs/RoomPriceGenie in as an override.)
+// native to Beds24 - pipe PriceLabs/RoomPriceGenie in as an override.)
 // ─────────────────────────────────────────────────────────────
 export interface YieldRule {
   id: string;

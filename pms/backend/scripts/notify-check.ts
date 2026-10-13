@@ -3,8 +3,8 @@
 //
 //   node --experimental-sqlite scripts/notify-check.ts
 //
-// The bell used to be written to by three things — the night audit, the backup
-// and the integrity check — so it sat empty while the property was busy. A feed
+// The bell used to be written to by three things - the night audit, the backup
+// and the integrity check - so it sat empty while the property was busy. A feed
 // that is empty when things are happening is one people stop looking at, which
 // is worse than not having it.
 //
@@ -161,7 +161,7 @@ async function main() {
   check('the amount is in the title', /50\.00/.test(payment?.title ?? ''), payment?.title);
   check('it is filed under Cashier', payment?.source === 'Cashier');
 
-  // Money going back out is a void, not a negative payment — postPayment
+  // Money going back out is a void, not a negative payment - postPayment
   // refuses those outright.
   clearFeed(P);
   const charged = folio.postCharge(P, ACTOR, {
@@ -245,7 +245,7 @@ async function main() {
 
   section('9 · Recording a note never breaks the work it describes');
   // A notification is a side effect of real work. If writing it fails, the
-  // booking must still stand — so `notify` swallows rather than throws.
+  // booking must still stand - so `notify` swallows rather than throws.
   const survived = notifyService.notify('prp_does_not_exist', {
     source: 'System', title: 'Orphan',
   });

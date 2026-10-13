@@ -36,7 +36,7 @@ export function CheckInScreen({ reservationId }: { reservationId?: string }) {
   const [error, setError] = useState<unknown>(null);
   const [confirming, setConfirming] = useState(false);
 
-  // The deposit runs through the same till as everything else — the same
+  // The deposit runs through the same till as everything else - the same
   // panel, the same card fee, the same currencies and the same change
   // arithmetic. A deposit taken at check-in and a payment taken at the cashier
   // desk are the same act of taking money, and were never worth two forms.
@@ -149,14 +149,14 @@ export function CheckInScreen({ reservationId }: { reservationId?: string }) {
           }
           // Explained here rather than left to the server's 409. A booking the
           // website took holds no room until somebody accepts it, so there is
-          // nothing to check the guest into — and the fix is one button away.
+          // nothing to check the guest into - and the fix is one button away.
           if (r.awaitingConfirmation) {
             return (
               <Card tone="peach">
                 <p className="text-[14px] font-bold mb-1">This booking has not been confirmed yet</p>
                 <p className="text-[12px] text-dash-muted mb-4">
                   {r.guest} booked on the website, but the property has not accepted it. It holds no
-                  room and cannot be checked in. Confirm it first — that picks the room or beds and
+                  room and cannot be checked in. Confirm it first - that picks the room or beds and
                   closes the dates on the calendar.
                 </p>
                 <div className="flex gap-2">
@@ -198,7 +198,7 @@ export function CheckInScreen({ reservationId }: { reservationId?: string }) {
                       <p className="text-[11px] leading-relaxed">
                         This reservation arrives on {longDate(r.arrival)}, after the open business date
                         ({property?.businessDate}). Early check-in is refused until the business date reaches
-                        the arrival — run the night audit if the date is behind.
+                        the arrival - run the night audit if the date is behind.
                       </p>
                     </div>
                   )}
@@ -209,8 +209,8 @@ export function CheckInScreen({ reservationId }: { reservationId?: string }) {
                       <div className="grid md:grid-cols-2 gap-x-6 gap-y-3">
                         <Detail label="Guest" value={r.guest} />
                         <Detail label="Confirmation" value={r.confirmation} />
-                        <Detail label="Email" value={r.email || '—'} />
-                        <Detail label="Phone" value={r.phone || '—'} />
+                        <Detail label="Email" value={r.email || '-'} />
+                        <Detail label="Phone" value={r.phone || '-'} />
                         <Detail label="Arrival" value={longDate(r.arrival)} />
                         <Detail label="Departure" value={longDate(r.departure)} />
                         <Detail label="Nights" value={String(r.nights)} />
@@ -242,7 +242,7 @@ export function CheckInScreen({ reservationId }: { reservationId?: string }) {
                           </p>
                           {r.hostelworldDetail?.promotion && (
                             <p className="text-[11px] text-dash-muted mt-1">
-                              The price includes a Hostelworld promotion — {promotionLabel(r.hostelworldDetail)},{' '}
+                              The price includes a Hostelworld promotion - {promotionLabel(r.hostelworldDetail)},{' '}
                               {money(r.hostelworldDetail.promotion.discountMinor)} off what was on sale.
                             </p>
                           )}
@@ -394,7 +394,7 @@ export function CheckInScreen({ reservationId }: { reservationId?: string }) {
                             the stay, so that is what "full payment" offers
                             until real charges exist to settle instead. */}
                         {/* For a Hostelworld booking with the split on, what
-                            the guest is here to pay is the business price —
+                            the guest is here to pay is the business price -
                             Hostelworld already took the rest. Any credit
                             already on the folio (that same Hostelworld line,
                             or a deposit taken earlier) comes off what is

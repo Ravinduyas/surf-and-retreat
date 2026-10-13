@@ -1,10 +1,10 @@
 // ─────────────────────────────────────────────────────────────
-// ARI push engine — fans one master change out to every DIRECT channel.
+// ARI push engine - fans one master change out to every DIRECT channel.
 //
 // Replaces "PMS → Beds24 → all OTAs" with "PMS → [engine] → each OTA
 // adapter directly". Handles: certified-only gating, per-channel retry
 // with exponential backoff, and a structured sync log. The engine never
-// knows any OTA's protocol — it only speaks the Connector contract.
+// knows any OTA's protocol - it only speaks the Connector contract.
 // ─────────────────────────────────────────────────────────────
 import type { Connector } from './connector.ts';
 import { canPushLive } from './connector.ts';
@@ -61,7 +61,7 @@ export class PushEngine {
       if (!canPushLive(connector)) {
         this.record({ direction: 'push', channel: code, action: reason,
           status: 'failed', attempt: 0,
-          detail: `skipped — ${connector.certification}` });
+          detail: `skipped - ${connector.certification}` });
         continue;
       }
       const cells = this.sot.cellsForChannel(code);

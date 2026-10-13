@@ -156,7 +156,7 @@ export function GroupsScreen() {
 
                       {d.blocks.length === 0 ? (
                         <p className="text-[12px] text-dash-muted py-6 text-center">
-                          No rooms blocked yet — set a block to hold inventory for this group.
+                          No rooms blocked yet - set a block to hold inventory for this group.
                         </p>
                       ) : (
                         <div className="overflow-x-auto scroll-thin">
@@ -196,7 +196,7 @@ export function GroupsScreen() {
                       </p>
                       {d.reservations.length === 0 ? (
                         <p className="text-[12px] text-dash-muted py-6 text-center">
-                          No individual reservations yet — upload a rooming list to create them.
+                          No individual reservations yet - upload a rooming list to create them.
                         </p>
                       ) : (
                         <div className="overflow-x-auto scroll-thin">
@@ -208,7 +208,7 @@ export function GroupsScreen() {
                                   <td className="py-2 font-semibold">{r.guest}</td>
                                   <td className="py-2 font-mono text-[10px]">{r.confirmation}</td>
                                   <td className="py-2">{r.roomType}</td>
-                                  <td className="py-2">{r.room ?? '—'}</td>
+                                  <td className="py-2">{r.room ?? '-'}</td>
                                   <td className="py-2 text-right tabular-nums">{money(r.totalMinor)}</td>
                                   <td className="py-2 text-right"><Pill tone={statusTone(r.status)}>{r.status}</Pill></td>
                                 </tr>

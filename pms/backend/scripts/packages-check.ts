@@ -12,7 +12,7 @@
 //
 // Sections 3–5 used to assert that asking the public availability endpoint
 // for a model quoted the *package's* plan for the room. That is no longer how
-// the site prices, and deliberately so — see `publicRatePlanIdForModel`: the
+// the site prices, and deliberately so - see `publicRatePlanIdForModel`: the
 // room is quoted off the room rate plan whatever else the guest is buying, so a
 // guest comparing "rooms" with "rooms + surf" sees the same bed at the same
 // price in both, with the extras itemised beside it rather than buried in the

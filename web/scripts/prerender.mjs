@@ -1,5 +1,5 @@
 // Turns the client-side build into static pages, so every route is served with HTTP 200 and its own
-// title, description, canonical, JSON-LD and body text — GitHub Pages can't rewrite SPA routes.
+// title, description, canonical, JSON-LD and body text - GitHub Pages can't rewrite SPA routes.
 //
 //   vite build                                        -> dist/            (client bundle + index.html template)
 //   vite build --ssr src/entry-server.tsx --outDir dist-ssr
@@ -50,7 +50,7 @@ for (const routePath of PRERENDER_PATHS) {
 await fs.writeFile(path.join(dist, '404.html'), build('/404', ''));
 console.log('wrote 404.html (client-rendered not-found shell)');
 
-// sitemap.xml — lastmod from git history where there is any, otherwise today.
+// sitemap.xml - lastmod from git history where there is any, otherwise today.
 const SOURCES = {
   '/': 'src/pages/HomePage.tsx',
   '/experience': 'src/pages/ExperiencePage.tsx',

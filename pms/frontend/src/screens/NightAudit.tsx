@@ -129,7 +129,7 @@ export function NightAuditScreen() {
                         detail={`The property moves to ${p.nextDate} and tomorrow's task sheet is built`} />
                     </ol>
                     <p className="text-[11px] text-dash-muted mt-4 leading-relaxed">
-                      The whole run is a single database transaction — if any step fails, nothing is committed
+                      The whole run is a single database transaction - if any step fails, nothing is committed
                       and the business date stays where it is.
                     </p>
                   </Card>

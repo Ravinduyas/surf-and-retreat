@@ -3,7 +3,7 @@
 //
 // Implements every restriction a leading channel manager exposes
 // (STAAH's 7-type API is the reference standard), plus per-channel
-// capability gating — because a restriction only matters if the target
+// capability gating - because a restriction only matters if the target
 // channel can actually receive it. Includes a stay VALIDATOR: given a
 // requested stay, does it satisfy the restrictions for those dates?
 // ─────────────────────────────────────────────────────────────

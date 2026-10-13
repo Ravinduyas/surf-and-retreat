@@ -5,7 +5,7 @@
 //
 //   node --experimental-sqlite scripts/backup-check.ts
 //
-// It never touches the live database — it builds its own in a temp directory.
+// It never touches the live database - it builds its own in a temp directory.
 // ─────────────────────────────────────────────────────────────
 import { DatabaseSync } from 'node:sqlite';
 import { mkdtempSync, rmSync, existsSync, writeFileSync, readdirSync, copyFileSync } from 'node:fs';
@@ -151,7 +151,7 @@ async function main() {
 
   section('6 · Retention never destroys a good backup');
   const before = readdirSync(backupDir).filter((f) => f.endsWith('.db')).length;
-  // A row still in flight must survive pruning — this was a real bug once.
+  // A row still in flight must survive pruning - this was a real bug once.
   const inFlightId = id('bak');
   const inFlightPath = join(backupDir, 'helio-2026-07-07T07-07-07-000-manual.db');
   copyFileSync(second.path, inFlightPath);

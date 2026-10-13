@@ -85,7 +85,7 @@ function seed() {
   return { propertyId, roomTypeId, ratePlanId };
 }
 
-/** Beds free of one type over the test dates — what the channels would publish. */
+/** Beds free of one type over the test dates - what the channels would publish. */
 function free(propertyId: string, roomTypeId: string): number {
   const cells = avail.availabilityGrid(propertyId, IN, OUT).filter((c) => c.roomTypeId === roomTypeId);
   return cells.length ? Math.min(...cells.map((c) => c.available)) : -1;
@@ -108,8 +108,8 @@ async function main() {
 
   section('1 · The timestamp format the whole thing rests on');
   // The predicate compares an ISO string against SQLite's clock. Compared
-  // against `datetime('now')` — which has a space where ISO has a `T`, and `T`
-  // sorts after a space — every hold would look unexpired forever and no bed
+  // against `datetime('now')` - which has a space where ISO has a `T`, and `T`
+  // sorts after a space - every hold would look unexpired forever and no bed
   // would ever come back.
   const sqlNow = get<{ n: string }>(`SELECT strftime('%Y-%m-%dT%H:%M:%fZ','now') AS n`)!.n;
   const jsNow = new Date().toISOString();
@@ -171,7 +171,7 @@ async function main() {
   check('the bed stays held', free(P, RT) === 1, free(P, RT));
 
   section('7 · A hand-made Tentative booking is not a website hold');
-  // The state is the *pair* — status and origin. Matching on status alone
+  // The state is the *pair* - status and origin. Matching on status alone
   // would strip the inventory from every Tentative booking a person made.
   const manual = res.createReservation(P, { ...ACTOR, propertyId: P }, {
     guestName: 'Phone Guest', arrival: IN, departure: OUT, adults: 1, children: 0,
@@ -189,9 +189,9 @@ async function main() {
     holds.holdWindowHours(P) === holds.DEFAULT_HOLD_HOURS);
   holds.setHoldWindowHours(P, { userId: 'u' }, 4);
   check('a chosen window is kept', holds.holdWindowHours(P) === 4);
-  check('zero is refused — it would hold nothing',
+  check('zero is refused - it would hold nothing',
     holds.setHoldWindowHours(P, { userId: 'u' }, 0) === holds.MIN_HOLD_HOURS);
-  check('and a year is refused — it would hold forever',
+  check('and a year is refused - it would hold forever',
     holds.setHoldWindowHours(P, { userId: 'u' }, 9999) === holds.MAX_HOLD_HOURS);
 
   process.stdout.write(`\n${checks - failures}/${checks} hold checks passed\n`);

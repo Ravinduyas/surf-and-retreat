@@ -6,14 +6,14 @@
 // A property closes rooms for two quite different reasons, and Helio used to
 // have one mechanism for both:
 //
-//   · "stop the OTAs selling this" — the room exists, the desk carries on, and
+//   · "stop the OTAs selling this" - the room exists, the desk carries on, and
 //     often that is the entire point: pull the last beds off Hostelworld so
 //     they can be sold at the door;
-//   · "nobody sells this" — a burst pipe, a repaint.
+//   · "nobody sells this" - a burst pipe, a repaint.
 //
 // A `stop-sell` with no channel scope matched a walk-in too, because a walk-in
 // is simply a booking with no channel code. So closing rooms on the OTAs also
-// stopped reception serving the guest standing in front of them — backwards,
+// stopped reception serving the guest standing in front of them - backwards,
 // since the desk is the one seller who can see the room and has the guest in
 // the building.
 //
@@ -39,7 +39,7 @@ function check(name: string, ok: boolean, detail?: unknown) {
   checks++;
   if (ok) { process.stdout.write(`  ✓ ${name}\n`); return; }
   failures++;
-  process.stdout.write(`  ✗ ${name}${detail === undefined ? '' : ` — ${JSON.stringify(detail)}`}\n`);
+  process.stdout.write(`  ✗ ${name}${detail === undefined ? '' : ` - ${JSON.stringify(detail)}`}\n`);
 }
 function section(t: string) { process.stdout.write(`\n${t}\n${'─'.repeat(t.length)}\n`); }
 
@@ -112,7 +112,7 @@ async function main() {
   section('2 · A total closure stops everyone');
   close('all');
   check('the OTA is blocked', sell('BEDS24').length > 0);
-  check('and so is the walk-in — nobody sells a flooded room', sell(null).length > 0, sell(null));
+  check('and so is the walk-in - nobody sells a flooded room', sell(null).length > 0, sell(null));
   check('the OTA is told', otaClosed());
   clearRules();
 
@@ -159,7 +159,7 @@ async function main() {
 
   section('8 · Closing dates actually reaches the channel');
   // The whole of "open/close does not work": closing dates wrote a row, Helio
-  // refused to sell them, and *nothing was sent to Beds24* — so the OTAs
+  // refused to sell them, and *nothing was sent to Beds24* - so the OTAs
   // carried on selling rooms the property had shut. Reopening was worse: the
   // dates stayed closed on the OTAs and the property lost the sales silently.
   //
@@ -173,7 +173,7 @@ async function main() {
   /**
    * One handler's body: from its route line to wherever the next route begins.
    *
-   * A fixed slice is the wrong tool — the POST handler is long enough that its
+   * A fixed slice is the wrong tool - the POST handler is long enough that its
    * push lands past any window short enough to keep PATCH from bleeding into
    * the next route.
    */
@@ -188,7 +188,7 @@ async function main() {
       handler(route).includes('pushRestriction('), route);
   }
   // Moving a closure has to reopen the dates it left, not only close the new
-  // ones — otherwise the old range stays shut on the OTAs forever.
+  // ones - otherwise the old range stays shut on the OTAs forever.
   const patchBody = handler('patch');
   check('a moved closure pushes its old range too',
     (patchBody.match(/pushRestriction\(/g) ?? []).length >= 2, patchBody.slice(0, 120));

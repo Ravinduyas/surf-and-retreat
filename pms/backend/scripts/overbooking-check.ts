@@ -6,7 +6,7 @@
 // Detection is the part that has to be exactly right, in both directions. A
 // missed overbooking becomes a guest with nowhere to sleep. A false one sends
 // somebody hunting for a problem that is not there, and the third time that
-// happens they stop looking — which is how the real one gets missed.
+// happens they stop looking - which is how the real one gets missed.
 //
 // So every case below asserts both: that the problem is found, and that
 // everything which merely resembles it is not.
@@ -210,7 +210,7 @@ async function main() {
 
   section('4 · Room-level clash');
   clear(ctx);
-  // Both on room 101, while 102 sits empty — the type has space and this is
+  // Both on room 101, while 102 sits empty - the type has space and this is
   // still an overbooking for the guest who opens the door.
   book(ctx, { date: day, roomId: ctx.rooms[0] });
   book(ctx, { date: day, roomId: ctx.rooms[0] });

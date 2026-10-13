@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-// Surf & Retreat — first-run setup.
+// Surf & Retreat - first-run setup.
 //
 //   npm run setup:surfretreat -- --yes
 //
@@ -44,8 +44,8 @@ process.env.HELIO_ENV_DIR ||= 'surfretreat';
  * file Windows has an open handle on either fails outright or leaves the
  * process writing into a file that is no longer where it thinks it is.
  *
- * `config.ts` is safe to load early — it reads the `.env` cascade and opens
- * nothing — so it can tell us which file we are about to move.
+ * `config.ts` is safe to load early - it reads the `.env` cascade and opens
+ * nothing - so it can tell us which file we are about to move.
  */
 const { config } = await import('../src/config.ts');
 const DB_PATH = config.databasePath;
@@ -96,7 +96,7 @@ function archiveOldInstallation(): { dir: string; moved: string[] } | null {
    *
    * They are whole copies of the same database, so leaving them behind would
    * archive the original and keep four verbatim reproductions of it sitting in
-   * the live backup folder — which is the opposite of what somebody asking for
+   * the live backup folder - which is the opposite of what somebody asking for
    * a clean start means. The restore script reads this folder, so a stale
    * backup here is also a foot-gun: restoring one would bring the old business
    * straight back.
@@ -112,7 +112,7 @@ function archiveOldInstallation(): { dir: string; moved: string[] } | null {
       } catch { continue; }
       // Folders go too, whole. The scheduler only ever writes flat files here,
       // but people put their own copies in subfolders before doing something
-      // risky — and a subfolder holding a complete copy of the old database is
+      // risky - and a subfolder holding a complete copy of the old database is
       // exactly what this is supposed to be clearing out. Skipping it left the
       // old business sitting in the live backup folder with everything else
       // archived around it.
@@ -155,7 +155,7 @@ const OWNER = {
 };
 
 interface RoomTypeSpec {
-  /** The website's room id — the price feed is keyed by it. */
+  /** The website's room id - the price feed is keyed by it. */
   code: string;
   name: string;
   /** Shown to guests on the booking page. */
@@ -319,14 +319,14 @@ const reservations = scalar<number>('SELECT count(*) AS n FROM reservations');
 
 if (!CONFIRMED) {
   out('');
-  out('  Surf & Retreat — setup');
+  out('  Surf & Retreat - setup');
   out('  ────────────────────────────────────────────────');
   out(`  Right now it holds ${existing} propert${existing === 1 ? 'y' : 'ies'} `
     + `and ${reservations} reservation${reservations === 1 ? '' : 's'}.`);
   out('');
   out('  Two ways to start over. Nothing has been changed yet.');
   out('');
-  out('   1. Empty the tables and re-seed — same database file:');
+  out('   1. Empty the tables and re-seed - same database file:');
   out('');
   out('        npm run setup:surfretreat -- --yes');
   out('');
@@ -336,7 +336,7 @@ if (!CONFIRMED) {
   out('');
   out('        npm run setup:surfretreat -- --yes --fresh');
   out('');
-  out('      Deleting rows does not erase their bytes — they sit in free pages');
+  out('      Deleting rows does not erase their bytes - they sit in free pages');
   out('      until something reuses them. Use this when the file belonged to a');
   out('      different business, so the new one shares no bytes with the old.');
   out('      The old file and its backups are moved to a dated archive folder,');
@@ -346,15 +346,15 @@ if (!CONFIRMED) {
 }
 
 out('');
-out('  Surf & Retreat — setup');
+out('  Surf & Retreat - setup');
 out('  ────────────────────────────────────────────────');
 
 if (archived) {
   out(`  archived     ${archived.moved.length} file(s) → ${archived.dir}`);
-  out('  database     starting from nothing — no page is inherited');
+  out('  database     starting from nothing - no page is inherited');
 } else {
   const cleared = wipe();
-  out(`  cleared      ${cleared} tables (same file — use --fresh for a new one)`);
+  out(`  cleared      ${cleared} tables (same file - use --fresh for a new one)`);
 }
 
 const businessDate = todayIso();
@@ -504,7 +504,7 @@ tx(() => {
     ['booking_engine.enabled', true],
     ['booking_engine.tagline', 'Surf, stay and cowork five minutes from Weligama Bay.'],
     ['booking_engine.intro',
-      'Book straight with us — dorm beds and private doubles, plus surf, skate, yoga and desk passes.'],
+      'Book straight with us - dorm beds and private doubles, plus surf, skate, yoga and desk passes.'],
     // The website's add-on menu and prices; served by /api/public/website-prices.
     ['website.addons', WEBSITE_ADDONS],
   ];

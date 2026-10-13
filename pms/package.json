@@ -2,7 +2,7 @@
   "name": "funbunk-pms",
   "version": "1.0.0",
   "private": true,
-  "description": "The Fun Bunk PMS — hostel property management system. SQLite-backed API + React front end + built-in booking engine. Runs entirely on one machine.",
+  "description": "The Fun Bunk PMS - hostel property management system. SQLite-backed API + React front end + built-in booking engine. Runs entirely on one machine.",
   "engines": {
     "node": ">=22.6.0"
   },

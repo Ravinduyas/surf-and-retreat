@@ -8,7 +8,7 @@ import {VitePWA} from 'vite-plugin-pwa';
  * Refuses to build a bundle that is missing configuration it needs.
  *
  * The runtime check in `src/config.ts` can only complain into a console that
- * nobody is watching — by then the bundle is built and deployed. This runs
+ * nobody is watching - by then the bundle is built and deployed. This runs
  * while `npm run build` is still going and fails it, which is the only point
  * where a missing API address is cheap to fix.
  *
@@ -25,7 +25,7 @@ function validateEnv(env: Record<string, string>, mode: string): Plugin {
       const api = env.VITE_API_URL?.trim();
       if (!api) {
         problems.push(
-          'VITE_API_URL is not set. A build has no safe default for it — the app '
+          'VITE_API_URL is not set. A build has no safe default for it - the app '
           + 'would have no API to talk to.\n'
           + `      Set it in .env.${mode}, or in the hosting platform's environment.`,
         );
@@ -45,7 +45,7 @@ function validateEnv(env: Record<string, string>, mode: string): Plugin {
           // in place. The bundle would look fine and reach nothing.
           //
           // A single-machine installation is the one case where localhost is
-          // correct rather than a mistake — the API, the app and the browser
+          // correct rather than a mistake - the API, the app and the browser
           // are all the same computer. That case has to say so out loud with
           // VITE_LOCAL_INSTALL=true, which keeps it a deliberate choice rather
           // than an oversight that quietly builds anyway.
@@ -138,9 +138,9 @@ export default defineConfig(({mode}) => {
           ],
         },
         manifest: {
-          name: 'helio.pms — Property Management Suite',
+          name: 'helio.pms - Property Management Suite',
           short_name: 'helio.pms',
-          description: 'Property management for hotels & hostels — reservations, front office, cashier, housekeeping, night audit, and Beds24 channel manager.',
+          description: 'Property management for hotels & hostels - reservations, front office, cashier, housekeeping, night audit, and Beds24 channel manager.',
           theme_color: '#FCDD06',
           background_color: '#F8F8F6',
           display: 'standalone',
@@ -176,8 +176,8 @@ export default defineConfig(({mode}) => {
            * Keep the big third-party libraries in chunks of their own.
            *
            * Screens are already split by `lazy()` in App.tsx, but without this
-           * a library used by two screens is duplicated into both, and — worse
-           * for an installed PWA — React and friends land in the same chunk as
+           * a library used by two screens is duplicated into both, and - worse
+           * for an installed PWA - React and friends land in the same chunk as
            * application code, so editing one screen makes every client
            * re-download the framework too.
            *
@@ -210,7 +210,7 @@ export default defineConfig(({mode}) => {
     },
     server: {
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
-      // Do not modify — file watching is disabled to prevent flickering during agent edits.
+      // Do not modify - file watching is disabled to prevent flickering during agent edits.
       hmr: process.env.DISABLE_HMR !== 'true',
     },
   };

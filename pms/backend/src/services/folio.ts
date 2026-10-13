@@ -4,7 +4,7 @@
 //
 // Sign convention: charges and taxes are positive, payments and credits are
 // negative. A folio's balance is the sum of its non-voided lines, so it is
-// always reconstructable from the ledger — never stored as a mutable total.
+// always reconstructable from the ledger - never stored as a mutable total.
 // ─────────────────────────────────────────────────────────────
 import { all, get, run, scalar, tx, parseJson, nextSequence } from '../db.ts';
 import { id, nowIso, HttpError } from '../lib/util.ts';
@@ -111,7 +111,7 @@ export function openFolio(propertyId: string, opts: {
 
 function assertOpen(folio: FolioRow) {
   if (folio.status !== 'open') {
-    throw new HttpError(409, `Folio ${folio.number} is closed — reopen it before posting`, 'folio_closed');
+    throw new HttpError(409, `Folio ${folio.number} is closed - reopen it before posting`, 'folio_closed');
   }
 }
 
@@ -196,7 +196,7 @@ export function postCharge(
         persons: input.persons ?? 1,
         appliesTo: scope,
       });
-      // A `flat` tax is a fixed once-off for the whole stay — a booking fee, a
+      // A `flat` tax is a fixed once-off for the whole stay - a booking fee, a
       // resort fee, a tourism levy. The quote adds it once. The folio, though,
       // is posted one night at a time, and every posting recomputed the full
       // amount: a 5.00 fee on a four-night stay was charged 20.00, and the
@@ -204,7 +204,7 @@ export function postCharge(
       //
       // Skipped by looking for the line rather than by trusting a "first night"
       // flag from the caller. Extending a stay, re-posting after a void, and
-      // the check-out catch-up all post nights out of order or more than once —
+      // the check-out catch-up all post nights out of order or more than once -
       // a flag gets every one of those wrong, an existing-line check gets them
       // all right.
       const flatCodes = new Set(taxes.filter((t) => t.mode === 'flat').map((t) => t.code));
@@ -258,7 +258,7 @@ export function postPayment(
      * Cash only: what the guest handed over, and what went back to them.
      *
      * Recorded beside the payment, never inside it. The drawer gains
-     * `amountMinor` — tendering 120 against a bill of 103 is still a payment of
+     * `amountMinor` - tendering 120 against a bill of 103 is still a payment of
      * 103, with 17 returned. These are here so a till that counts 17.00 light
      * can be explained rather than argued about.
      */
@@ -313,7 +313,7 @@ export function postPayment(
                                change_currency, change_amount_minor, change_rate)
        VALUES(?,?,?,?,?,?,'payment','PAYMENT',?,1,?,?,?,?,?,0,?,?,?,?,?,?,?,?)`,
       lineId, propertyId, folio.id, folio.reservation_id, input.businessDate, nowIso(),
-      (input.description ?? `Payment — ${input.method}`) + cashNote,
+      (input.description ?? `Payment - ${input.method}`) + cashNote,
       -input.amountMinor, -input.amountMinor, input.method,
       input.reference ?? null, actor.userName, tendered, change,
       tenderCurrency, tenderAmount, input.tenderRate ?? null,
@@ -329,7 +329,7 @@ export function postPayment(
     });
 
     // Money arriving is worth a line in the feed. A refund cannot come through
-    // here — `postPayment` refuses a non-positive amount a few lines above, so
+    // here - `postPayment` refuses a non-positive amount a few lines above, so
     // money going back out is a void or an adjustment, and is notified there.
     notify(propertyId, {
       source: 'Cashier',
@@ -345,7 +345,7 @@ export function postPayment(
 /**
  * Void a line and every tax line it generated.
  *
- * The rows stay in the ledger flagged `voided` — nothing is deleted, and the
+ * The rows stay in the ledger flagged `voided` - nothing is deleted, and the
  * folio still shows what was posted and struck out. They drop out of every
  * balance and revenue sum (all of which filter on `voided = 0`), so a void
  * reverses the money exactly once. Who voided it, when and why is in the
@@ -367,7 +367,7 @@ export function voidLine(
 
     const folio = getFolio(propertyId, line.folio_id);
     if (folio.status !== 'open') {
-      throw new HttpError(409, `Folio ${folio.number} is closed — reopen it before voiding`, 'folio_closed');
+      throw new HttpError(409, `Folio ${folio.number} is closed - reopen it before voiding`, 'folio_closed');
     }
 
     const children = all<FolioLineRow>(
@@ -517,7 +517,7 @@ export function createInvoice(
            VALUES(?,?,?,?,?,?,'transfer','CITYLEDGER',?,1,?,?,?,?,0)`,
           id('fl'), propertyId, folio.id, folio.reservation_id,
           nowIso().slice(0, 10), nowIso(),
-          `Transfer to city ledger — ${number}`, -balance, -balance, number, actor.userName,
+          `Transfer to city ledger - ${number}`, -balance, -balance, number, actor.userName,
         );
       }
       run(

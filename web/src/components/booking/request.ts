@@ -10,7 +10,7 @@ export const formatDate = (value: string) =>
         day: 'numeric',
         year: 'numeric',
       })
-    : '—';
+    : '-';
 
 export interface BookingRequest {
   /** Plain-text summary of the booking, ready to paste into a chat or email. */

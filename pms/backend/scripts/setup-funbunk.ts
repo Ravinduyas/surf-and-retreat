@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-// The Fun Bunk — first-run setup.
+// The Fun Bunk - first-run setup.
 //
 //   npm run setup -- --yes
 //
@@ -10,7 +10,7 @@
 //
 // Deliberately written straight to the tables rather than through the API,
 // because it has to run before there is a server, a login or a property to
-// authenticate against — the chicken-and-egg the built-in setup wizard solves
+// authenticate against - the chicken-and-egg the built-in setup wizard solves
 // by asking a person eight questions. This answers them once, from the room
 // list the property already published on Hostelworld.
 //
@@ -30,8 +30,8 @@
 // Deleting a row in SQLite does not erase its bytes. The page is returned to a
 // free list and the old content sits there until something happens to reuse
 // it. On the file this installation started from, that left 550 readable
-// strings from the previous business — the former staff's names and email
-// addresses, and eighty-odd of their booking references — inside the file the
+// strings from the previous business - the former staff's names and email
+// addresses, and eighty-odd of their booking references - inside the file the
 // new owner was trading on, with half the file being free pages.
 //
 // `--fresh` therefore does not empty tables. It moves the old file and the old
@@ -56,8 +56,8 @@ function out(s = '') { process.stdout.write(`${s}\n`); }
  * file Windows has an open handle on either fails outright or leaves the
  * process writing into a file that is no longer where it thinks it is.
  *
- * `config.ts` is safe to load early — it reads the `.env` cascade and opens
- * nothing — so it can tell us which file we are about to move.
+ * `config.ts` is safe to load early - it reads the `.env` cascade and opens
+ * nothing - so it can tell us which file we are about to move.
  */
 const { config } = await import('../src/config.ts');
 const DB_PATH = config.databasePath;
@@ -96,7 +96,7 @@ function archiveOldInstallation(): { dir: string; moved: string[] } | null {
    *
    * They are whole copies of the same database, so leaving them behind would
    * archive the original and keep four verbatim reproductions of it sitting in
-   * the live backup folder — which is the opposite of what somebody asking for
+   * the live backup folder - which is the opposite of what somebody asking for
    * a clean start means. The restore script reads this folder, so a stale
    * backup here is also a foot-gun: restoring one would bring the old business
    * straight back.
@@ -112,7 +112,7 @@ function archiveOldInstallation(): { dir: string; moved: string[] } | null {
       } catch { continue; }
       // Folders go too, whole. The scheduler only ever writes flat files here,
       // but people put their own copies in subfolders before doing something
-      // risky — and a subfolder holding a complete copy of the old database is
+      // risky - and a subfolder holding a complete copy of the old database is
       // exactly what this is supposed to be clearing out. Skipping it left the
       // old business sitting in the live backup folder with everything else
       // archived around it.
@@ -158,15 +158,15 @@ const OWNER = {
  * The rooms, exactly as the property sells them.
  *
  * Taken from the Hostelworld rate calendar, which is the list the property has
- * already committed to publicly — so the PMS and the OTA agree on what a
+ * already committed to publicly - so the PMS and the OTA agree on what a
  * "Deluxe 6 Bed Female Dorm Ensuite" is without anyone reconciling two lists.
  *
  * `rate` is the nightly price in whole currency units. Two rate shapes appear
  * in that calendar and both are reproduced below:
  *
- *   · a season — most rooms step up on 1 October and stay there, which is the
+ *   · a season - most rooms step up on 1 October and stay there, which is the
  *     property's high season rather than a weekend pattern;
- *   · a weekend — the standard double is dearer on Friday and Saturday all
+ *   · a weekend - the standard double is dearer on Friday and Saturday all
  *     year, and does not move with the season at all.
  */
 interface RoomTypeSpec {
@@ -352,14 +352,14 @@ const reservations = scalar<number>('SELECT count(*) AS n FROM reservations');
 
 if (!CONFIRMED) {
   out('');
-  out('  The Fun Bunk — setup');
+  out('  The Fun Bunk - setup');
   out('  ────────────────────────────────────────────────');
   out(`  Right now it holds ${existing} propert${existing === 1 ? 'y' : 'ies'} `
     + `and ${reservations} reservation${reservations === 1 ? '' : 's'}.`);
   out('');
   out('  Two ways to start over. Nothing has been changed yet.');
   out('');
-  out('   1. Empty the tables and re-seed — same database file:');
+  out('   1. Empty the tables and re-seed - same database file:');
   out('');
   out('        npm run setup -- --yes');
   out('');
@@ -369,7 +369,7 @@ if (!CONFIRMED) {
   out('');
   out('        npm run setup -- --yes --fresh');
   out('');
-  out('      Deleting rows does not erase their bytes — they sit in free pages');
+  out('      Deleting rows does not erase their bytes - they sit in free pages');
   out('      until something reuses them. Use this when the file belonged to a');
   out('      different business, so the new one shares no bytes with the old.');
   out('      The old file and its backups are moved to a dated archive folder,');
@@ -379,15 +379,15 @@ if (!CONFIRMED) {
 }
 
 out('');
-out('  The Fun Bunk — setup');
+out('  The Fun Bunk - setup');
 out('  ────────────────────────────────────────────────');
 
 if (archived) {
   out(`  archived     ${archived.moved.length} file(s) → ${archived.dir}`);
-  out('  database     starting from nothing — no page is inherited');
+  out('  database     starting from nothing - no page is inherited');
 } else {
   const cleared = wipe();
-  out(`  cleared      ${cleared} tables (same file — use --fresh for a new one)`);
+  out(`  cleared      ${cleared} tables (same file - use --fresh for a new one)`);
 }
 
 const businessDate = todayIso();
@@ -537,7 +537,7 @@ tx(() => {
     ['booking_engine.enabled', true],
     ['booking_engine.tagline', 'Beds and private rooms, booked direct.'],
     ['booking_engine.intro',
-      'Book straight with us — the same beds the big sites list, without their commission.'],
+      'Book straight with us - the same beds the big sites list, without their commission.'],
   ];
   for (const [key, value] of settings) {
     run(

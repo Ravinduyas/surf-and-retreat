@@ -31,7 +31,7 @@ export const ContactForm: React.FC = () => {
           <CheckCircle2 className="w-12 h-12 text-[#2C573A] mx-auto animate-bounce" />
           <h4 className="text-lg font-bold text-[#18271E]">Message Sent!</h4>
           <p className="text-xs text-[#5D6D5F] max-w-xs mx-auto">
-            Thanks for reaching out — we&apos;ll reply within 24 hours.
+            Thanks for reaching out - we&apos;ll reply within 24 hours.
           </p>
         </div>
       ) : (
@@ -87,7 +87,7 @@ export const ContactForm: React.FC = () => {
               required
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              placeholder="Dates, group size, questions — anything at all."
+              placeholder="Dates, group size, questions - anything at all."
               className="w-full bg-[#F9FAF8] border border-[#DCE2D8] rounded-xl px-3.5 py-3 sm:py-2.5 text-[13px] sm:text-xs text-[#18271E] focus:outline-hidden focus:ring-2 focus:ring-[#2C573A]/20 resize-none"
             />
           </div>

@@ -1,5 +1,5 @@
 // First-run wizard. A fresh install has no property, no rooms and no users,
-// so this is the only way in — and everything it creates is the operator's own
+// so this is the only way in - and everything it creates is the operator's own
 // real data, not a sample estate.
 import { useState } from 'react';
 import { Building2, UserCog, ArrowRight, ArrowLeft, Check, AlertTriangle } from 'lucide-react';
@@ -144,7 +144,7 @@ export function SetupScreen() {
                   >
                     <option value="hotel">Hotel</option>
                     <option value="hostel">Hostel</option>
-                    <option value="mixed">Mixed — rooms and dorm beds</option>
+                    <option value="mixed">Mixed - rooms and dorm beds</option>
                   </select>
                 </Field>
                 <Field label="City">
@@ -233,7 +233,7 @@ export function SetupScreen() {
               <h2 className="text-[18px] font-bold tracking-tight mb-1">Ready to create</h2>
               <p className="text-[12px] text-dash-muted mb-6">
                 We'll create the property, your administrator account and the standard chart of
-                transaction codes. Nothing else is pre-filled — you'll add room types, rooms, rate
+                transaction codes. Nothing else is pre-filled - you'll add room types, rooms, rate
                 plans and taxes next, in Configuration.
               </p>
 
@@ -242,7 +242,7 @@ export function SetupScreen() {
                   ['Name', property.name],
                   ['Code', property.code],
                   ['Type', property.kind],
-                  ['Location', [property.city, property.country].filter(Boolean).join(', ') || '—'],
+                  ['Location', [property.city, property.country].filter(Boolean).join(', ') || '-'],
                   ['Currency', property.currency],
                   ['Timezone', property.timezone],
                   ['Business date', property.businessDate],
@@ -328,7 +328,7 @@ function Summary({ title, rows }: { title: string; rows: [string, string][] }) {
         {rows.map(([k, v]) => (
           <div key={k} className="flex items-baseline justify-between gap-3">
             <span className="text-[11px] text-dash-muted">{k}</span>
-            <span className="text-[11px] font-bold text-right">{v || '—'}</span>
+            <span className="text-[11px] font-bold text-right">{v || '-'}</span>
           </div>
         ))}
       </div>

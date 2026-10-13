@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-// `npm run config` — what a build would compile into the bundle.
+// `npm run config` - what a build would compile into the bundle.
 //
 // The counterpart to the API's own `npm run config`, and it answers the
 // question that used to need reading the source: given these .env files, what
@@ -15,7 +15,7 @@
 //
 // Nothing here can be secret: every VITE_ value is compiled into readable
 // JavaScript and shipped to the browser. So unlike the API's report, there is
-// nothing to redact — and a variable that *looks* like a credential is called
+// nothing to redact - and a variable that *looks* like a credential is called
 // out rather than hidden, because its presence is the problem.
 // ─────────────────────────────────────────────────────────────
 import { loadEnv } from 'vite';
@@ -28,7 +28,7 @@ const GREEN = '[32m', YELLOW = '[33m', RED = '[31m';
 const tty = process.stdout.isTTY && !process.env.NO_COLOR;
 const paint = (code, s) => (tty ? code + s + RESET : s);
 
-/** Kept in step with src/config.ts — the same three variables, same defaults. */
+/** Kept in step with src/config.ts - the same three variables, same defaults. */
 const SPECS = [
   {
     env: 'VITE_API_URL', group: 'API',
@@ -89,12 +89,12 @@ for (const spec of SPECS) {
   }
 
   if (value === null && spec.requiredForBuild) {
-    problems.push(`${spec.env} is not set — a build in mode "${mode}" would fail. ${spec.doc}`);
+    problems.push(`${spec.env} is not set - a build in mode "${mode}" would fail. ${spec.doc}`);
   }
   if (value && spec.env === 'VITE_API_URL' && mode === 'production'
     && /localhost|127\.0\.0\.1/.test(value)) {
     problems.push(
-      `${spec.env} points at ${value} in production — the deployed app would try `
+      `${spec.env} points at ${value} in production - the deployed app would try `
       + 'to reach the browser\'s own machine.',
     );
   }
@@ -111,7 +111,7 @@ const suspicious = Object.keys(env)
 for (const k of suspicious) {
   problems.push(
     `${k} looks like a credential. Every VITE_ variable is compiled into the `
-    + 'bundle in readable form — move it to the API.',
+    + 'bundle in readable form - move it to the API.',
   );
 }
 

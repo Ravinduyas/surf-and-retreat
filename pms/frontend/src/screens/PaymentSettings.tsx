@@ -3,7 +3,7 @@
 //
 // Two decisions live here and they are not the same kind of decision.
 //
-// *What the property accepts* is housekeeping — add "Voucher", retire a card
+// *What the property accepts* is housekeeping - add "Voucher", retire a card
 // you no longer take. *What a card costs the guest* is pricing: it changes what
 // somebody is charged, it is written into the audit trail as an elevated
 // change, and it is off until a property deliberately turns it on. Plenty of
@@ -22,8 +22,8 @@ import { money, bpToPercent, percentToBp } from '../format';
 import type { PaymentMethod, PaymentMethodKind, PaymentSettings } from '../types';
 
 const KINDS: { label: string; value: PaymentMethodKind }[] = [
-  { label: 'Cash — asks what was handed over and works out change', value: 'cash' },
-  { label: 'Card — carries the card fee', value: 'card' },
+  { label: 'Cash - asks what was handed over and works out change', value: 'cash' },
+  { label: 'Card - carries the card fee', value: 'card' },
   { label: 'Bank transfer', value: 'transfer' },
   { label: 'Account / ledger', value: 'account' },
   { label: 'Other', value: 'other' },
@@ -124,7 +124,7 @@ export function PaymentSettingsTab() {
                   <p className="text-[13px] font-bold tabular-nums">
                     {d.cardSurchargeEnabled
                       ? `${money(exampleFee)} fee · card charged ${money(EXAMPLE_MINOR + exampleFee)}`
-                      : 'No fee — card charged ' + money(EXAMPLE_MINOR)}
+                      : 'No fee - card charged ' + money(EXAMPLE_MINOR)}
                   </p>
                 </div>
               </div>
@@ -134,7 +134,7 @@ export function PaymentSettingsTab() {
                   <InfoNote>
                     The fee will have the property&apos;s taxes applied on top of it, so the guest
                     pays slightly more than the percentage above. Most places do not tax a card
-                    surcharge — leave this off unless your accountant has said otherwise.
+                    surcharge - leave this off unless your accountant has said otherwise.
                   </InfoNote>
                 </div>
               )}
@@ -151,7 +151,7 @@ export function PaymentSettingsTab() {
               <p className="text-[11px] text-dash-muted mb-3 leading-relaxed">
                 Money the property will take across the counter besides its own. The cashier
                 picks from these when a guest pays, and the payment is converted at the live
-                rate and recorded in both currencies. Tick only what you actually accept — a
+                rate and recorded in both currencies. Tick only what you actually accept - a
                 short list is a fast one at a busy desk.
               </p>
 
@@ -259,7 +259,7 @@ export function PaymentSettingsTab() {
                           onChange={(v) => setMethod(i, {
                             surchargeBp: v.trim() === '' ? null : percentToBp(v),
                           })}
-                          placeholder={m.kind === 'card' ? String(bpToPercent(d.cardSurchargeBp)) : '—'}
+                          placeholder={m.kind === 'card' ? String(bpToPercent(d.cardSurchargeBp)) : '-'}
                         />
                       </Field>
                       <div className="md:col-span-1 flex items-center justify-end gap-1 pb-1">

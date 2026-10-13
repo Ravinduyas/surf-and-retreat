@@ -9,7 +9,7 @@
 //
 // The page is the one part of this system a guest touches without a login,
 // and it is plain hand-written JavaScript rather than a framework, so the
-// things that break it are the things a type-checker cannot see — an element
+// things that break it are the things a type-checker cannot see - an element
 // that was renamed, a total that adds up differently from the API's, a button
 // that stays disabled. All of that only shows up in a browser.
 //
@@ -65,7 +65,7 @@ async function cancelParty(confirmation: string): Promise<number> {
    * Ask the server for the whole party rather than filtering the search.
    *
    * A dorm booking is one reservation per bed linked by `parent_id`, and the
-   * reservation list does not return that link — so filtering the search
+   * reservation list does not return that link - so filtering the search
    * found only the lead, cancelled one bed of three, and left the other two
    * holding inventory into the next run. `/confirmation` returns `members`,
    * which is the same helper the confirm dialog uses and is the one place that
@@ -227,7 +227,7 @@ async function main() {
       `${API}/api/public/booking-engine/catalog`).then((r) => r.json()) as any;
     const rt = catalog.roomTypes.find((r: any) => r.name === dates.roomTypeName);
     const option = quote.options.find((o: any) => o.roomTypeId === rt.id);
-    // Three dorm beds, one head each — which is what the page seated.
+    // Three dorm beds, one head each - which is what the page seated.
     const expected = (option.occupancyPrices[0].grandTotalMinor * 3) / 100;
     const shown = Number((dates.grandText ?? '').replace(/[^0-9.]/g, ''));
     check(`the page shows what the API quotes (${expected.toFixed(2)})`,
@@ -259,7 +259,7 @@ async function main() {
     /*
      * The two things this sentence must never do.
      *
-     * It must not tell the guest the booking is confirmed — the property has
+     * It must not tell the guest the booking is confirmed - the property has
      * not accepted it yet. And it must not promise an email, because this
      * system has no mail transport of any kind: the wording used to say "you
      * will get an email as soon as it is confirmed", which nothing could keep.
@@ -282,7 +282,7 @@ async function main() {
      * Put the beds back.
      *
      * This check books a real stay, and a website booking now *holds* its beds
-     * — so leaving it behind changed the availability the next run saw. The
+     * - so leaving it behind changed the availability the next run saw. The
      * next run then picked a different dorm, priced a different total, and
      * failed on assertions that were perfectly correct. A check that is not
      * repeatable is not a check.

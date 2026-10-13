@@ -148,7 +148,7 @@ async function main() {
   check('03:00 is inside it too', alerts.inQuietHours(night, at(3)));
   check('12:00 is not', !alerts.inQuietHours(night, at(12)));
   check('21:59 is not', !alerts.inQuietHours(night, at(21, 59)));
-  check('07:00 is not — the window ends there', !alerts.inQuietHours(night, at(7)));
+  check('07:00 is not - the window ends there', !alerts.inQuietHours(night, at(7)));
   const daytime = { ...night, quietHours: { ...night.quietHours, from: '13:00', to: '15:00' } };
   check('a same-day window works too', alerts.inQuietHours(daytime, at(14)));
   check('and excludes outside it', !alerts.inQuietHours(daytime, at(16)));
@@ -198,7 +198,7 @@ async function main() {
   ovb.guardInventory(P, ACTOR, { roomTypeId: ctx.roomTypeId, from: day, to: day, today: TODAY });
   check('one booking of two rooms closes nothing', closures(P).length === 0, closures(P));
 
-  book(ctx, day);       // now sold out — the contested last room is gone
+  book(ctx, day);       // now sold out - the contested last room is gone
   ovb.guardInventory(P, ACTOR, { roomTypeId: ctx.roomTypeId, from: day, to: day, today: TODAY });
   const closed = closures(P);
   check('selling the last room closes the date', closed.length === 1, closed);

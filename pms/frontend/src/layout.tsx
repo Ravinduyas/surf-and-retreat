@@ -63,7 +63,7 @@ const NAV: NavItem[] = [
 ];
 
 /**
- * True from `lg` up — the width at which the sidebar is a rail, not a drawer.
+ * True from `lg` up - the width at which the sidebar is a rail, not a drawer.
  *
  * Tailwind can hide and show at a breakpoint, but it cannot change what a
  * component *computes*, and several decisions here are behavioural rather than
@@ -91,13 +91,13 @@ function useIsDesktop() {
  *
  * It used to be neither: a fixed 230px column that was always mounted at every
  * width. On a 400px screen that is well over half the viewport, and what was
- * left could not hold a screen — headings broke mid-word, tables clipped, and
+ * left could not hold a screen - headings broke mid-word, tables clipped, and
  * the "Accounts Receivable" title wrapped into four lines beside an empty white
  * strip. A phone is where a housekeeper and a receptionist actually stand, so
  * this is not a nice-to-have.
  *
  * Below `lg` it slides in over the content and the rest of the app gets the
- * whole width. From `lg` up nothing changes — `collapsed` still drives the
+ * whole width. From `lg` up nothing changes - `collapsed` still drives the
  * 72/230 rail, and that preference is deliberately ignored on mobile, where a
  * drawer you have opened on purpose should show its labels.
  */
@@ -343,7 +343,7 @@ export function TopBar({
   const items = notifications.data?.notifications ?? [];
 
   // The alert watcher. Lives in the header because the header is on every
-  // screen — an alarm that only sounds while you are looking at the
+  // screen - an alarm that only sounds while you are looking at the
   // overbooking desk is an alarm for a problem you already know about.
   const alerts = useAlertWatcher(fetchAlertFeed);
   const acknowledgeAll = useAcknowledgeAllAlerts();
@@ -389,7 +389,7 @@ export function TopBar({
       {/*
         The property pill carries four things on a desktop. On a phone only two
         of them earn their width: which property you are in, and the business
-        date — the date decides what every screen behind it is showing, so it is
+        date - the date decides what every screen behind it is showing, so it is
         the last thing that may be dropped. The code, city and clock are hidden
         rather than shrunk; a 9px line squeezed to three characters is not a
         smaller version of the information, it is a worse one.
@@ -401,7 +401,7 @@ export function TopBar({
       >
         <Building2 className="w-3.5 h-3.5 text-dash-muted shrink-0 hidden sm:block" />
         <div className="leading-tight text-left min-w-0 hidden sm:block">
-          <p className="text-[10px] font-bold truncate">{property?.name ?? '—'}</p>
+          <p className="text-[10px] font-bold truncate">{property?.name ?? '-'}</p>
           <p className="text-[9px] text-dash-muted truncate hidden sm:block">
             {property?.code}{property?.city ? ` · ${property.city}` : ''}
           </p>
@@ -409,7 +409,7 @@ export function TopBar({
         <div className="w-px h-6 bg-black/10 mx-1 shrink-0 hidden sm:block" />
         <div className="leading-tight text-left shrink-0">
           <p className="text-[9px] font-bold uppercase tracking-widest text-dash-muted hidden sm:block">Business date</p>
-          <p className="text-[11px] font-black whitespace-nowrap">{property?.businessDate ?? '—'}</p>
+          <p className="text-[11px] font-black whitespace-nowrap">{property?.businessDate ?? '-'}</p>
         </div>
         <div className="w-px h-6 bg-black/10 mx-1 hidden md:block" />
         <div className="hidden md:flex items-center gap-1.5 text-[11px] font-bold">
@@ -467,7 +467,7 @@ export function TopBar({
       </button>
 
       <div className="relative flex items-center gap-1.5 sm:gap-2 shrink-0">
-        {/* An unacknowledged overbooking is loud on screen as well as audibly —
+        {/* An unacknowledged overbooking is loud on screen as well as audibly -
             the sound gets attention, this says what for and stops the alarm. */}
         {alerts.unacknowledged > 0 && (
           <button
@@ -476,7 +476,7 @@ export function TopBar({
               navigate('overbooking');
             }}
             className="rounded-full h-10 px-3.5 flex items-center gap-2 bg-status-bad text-white text-[11px] font-black animate-pulse"
-            aria-label={`${alerts.unacknowledged} overbooking alerts — open and silence`}
+            aria-label={`${alerts.unacknowledged} overbooking alerts - open and silence`}
           >
             <AlertTriangle className="w-3.5 h-3.5" />
             {alerts.unacknowledged} overbooking{alerts.unacknowledged === 1 ? '' : 's'}
@@ -658,7 +658,7 @@ export function StatusBar() {
     return { label: 'Connected', tone: 'text-black' };
   })();
 
-  // Hidden below `lg`, and not for want of room — the floating quick bar is
+  // Hidden below `lg`, and not for want of room - the floating quick bar is
   // fixed to the bottom of the viewport and sat directly on top of this,
   // leaving "Cashier shift: Closed" and the signed-in user legible only in the
   // gaps between five buttons. Every fact here has a home elsewhere: the
@@ -795,7 +795,7 @@ export function RightPanel({ open, onClose }: { open: boolean; onClose: () => vo
               <p className="text-[11px] font-bold mb-2">Recent activity</p>
               <div className="space-y-1.5 text-[10px] text-dash-muted">
                 {recent.slice(0, 6).map((n) => (
-                  <p key={n.id}>{relativeTime(n.ts)} — {n.title}</p>
+                  <p key={n.id}>{relativeTime(n.ts)} - {n.title}</p>
                 ))}
                 {recent.length === 0 && <p>No activity yet today.</p>}
               </div>
@@ -900,7 +900,7 @@ export function AppShell({ children, breadcrumb }: { children: ReactNode; breadc
   const [navOpen, setNavOpen] = useState(false);
 
   // Deliberately not persisted, unlike `sidebarCollapsed`. A drawer is a thing
-  // you opened a moment ago, not a preference — restoring it over the dashboard
+  // you opened a moment ago, not a preference - restoring it over the dashboard
   // on next launch would be a bug, not a courtesy.
 
   return (
@@ -913,7 +913,7 @@ export function AppShell({ children, breadcrumb }: { children: ReactNode; breadc
           onNavigate={() => setNavOpen(false)}
         />
 
-        {/* Tapping beside an open drawer closes it — the gesture everyone tries
+        {/* Tapping beside an open drawer closes it - the gesture everyone tries
             first. Only below `lg`, where a drawer exists to be dismissed. */}
         {navOpen && (
           <button
@@ -935,7 +935,7 @@ export function AppShell({ children, breadcrumb }: { children: ReactNode; breadc
           <OfflineBar />
           {/* `pb-24` clears the floating quick bar, which is fixed to the bottom
               of the viewport and otherwise sits on top of the last row of every
-              list — reachable only by scrolling past the end. */}
+              list - reachable only by scrolling past the end. */}
           <div className="flex-1 panel p-3 sm:p-5 lg:p-7 pb-24 sm:pb-24 lg:pb-7 min-h-0 flex flex-col overflow-hidden">
             {breadcrumb && <Breadcrumb items={breadcrumb} />}
             {/*
@@ -944,7 +944,7 @@ export function AppShell({ children, breadcrumb }: { children: ReactNode; breadc
               not visible, so `overflow-y-auto` alone made this pane scroll
               *sideways* as well. A wide table then stretched the pane instead of
               scrolling inside its own wrapper, and dragged the section header,
-              the stat cards and the tab strip off-screen with it — the whole
+              the stat cards and the tab strip off-screen with it - the whole
               screen slid, and the column headings slid away from their rows.
               Pinning the horizontal axis here is what lets each table scroll on
               its own. `min-w-0` stops this flex child from refusing to shrink

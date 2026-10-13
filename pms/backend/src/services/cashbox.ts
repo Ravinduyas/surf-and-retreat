@@ -30,7 +30,7 @@
 //   **A count that contradicts the last withdrawal warns the administrator.**
 //   If the box was emptied to a known figure last night and this morning's
 //   count says something else, that is precisely the moment worth telling
-//   somebody about — and the only moment, because a difference with no
+//   somebody about - and the only moment, because a difference with no
 //   administrator action behind it is the ordinary business of a busy till.
 // ─────────────────────────────────────────────────────────────
 import { all, get, run, scalar, tx } from '../db.ts';
@@ -132,8 +132,8 @@ export function balances(propertyId: string): {
   }
 
   // Cash taken over the counter. A payment records the note in the currency it
-  // was handed over in and the change in the currency it went back in — which
-  // can be a different one — so each side is counted where it actually landed.
+  // was handed over in and the change in the currency it went back in - which
+  // can be a different one - so each side is counted where it actually landed.
   const base = propertyCurrency(propertyId);
   for (const p of all<{ currency: string; taken: number }>(
     `SELECT COALESCE(tender_currency, ?) AS currency,
@@ -249,7 +249,7 @@ function readItems(input: unknown, field: string): CurrencyAmount[] {
  * The cashier writes down what is in the box before taking a penny, and the
  * system says what it believed was there. Where those disagree **and an
  * administrator emptied the box on an earlier day**, the administrator is told
- * — that is the case the property asked to be warned about, and the one where
+ * - that is the case the property asked to be warned about, and the one where
  * two people's figures for the same drawer have genuinely parted company.
  */
 export function recordOpeningCount(
@@ -267,7 +267,7 @@ export function recordOpeningCount(
       expectedMinor: expected.get(item.currency) ?? 0,
     }));
     // A currency the box held but the count does not mention is counted as
-    // zero rather than quietly carried forward — "it is not in the box" is a
+    // zero rather than quietly carried forward - "it is not in the box" is a
     // statement the cashier is making by leaving it out.
     for (const [currency, amountMinor] of expected) {
       if (!rows.some((r) => r.currency === currency) && amountMinor !== 0) {
@@ -373,7 +373,7 @@ export function withdraw(
       source: 'Cashier', severity: 'info',
       title: `${actor.userName} took money out of the cash box`,
       message: items.map((i) => `${(i.amountMinor / 100).toFixed(2)} ${i.currency}`).join(' · ')
-        + (input.note ? ` — ${input.note}` : ''),
+        + (input.note ? ` - ${input.note}` : ''),
       link: '#/cashier',
     });
 
@@ -381,7 +381,7 @@ export function withdraw(
   });
 }
 
-/** Money put back into the box — the other direction, same accountability. */
+/** Money put back into the box - the other direction, same accountability. */
 export function deposit(
   propertyId: string, actor: Actor, input: { items: unknown; note?: string | null },
 ) {
@@ -437,7 +437,7 @@ export function history(propertyId: string, limit = 40) {
  * A cashier reconciling a day does not think in two tables. They think: what
  * came in, what went back out, whose stay it was for, and what the
  * administrator took at the end. So payments and cash-box events are read
- * together and told in the same shape — money **in**, money **out**, each in
+ * together and told in the same shape - money **in**, money **out**, each in
  * the currency it actually moved in, against the guest and room it belongs to.
  *
  * Whether a payment was the whole bill or part of it is worked out rather than
@@ -464,7 +464,7 @@ export interface LedgerEntry {
   /** Money into the box, in the currency it arrived in. */
   inCurrency: string | null;
   inMinor: number | null;
-  /** Money back out — change, or an administrator's withdrawal. */
+  /** Money back out - change, or an administrator's withdrawal. */
   outCurrency: string | null;
   outMinor: number | null;
   /** What the folio was credited, always the property's own currency. */
@@ -608,7 +608,7 @@ export function transactions(propertyId: string, opts: { date?: string; limit?: 
     at: l.posted_at,
     businessDate: l.business_date,
     description: l.description,
-    method: l.method ?? '—',
+    method: l.method ?? '-',
     guest: l.guest_name ?? l.folio_name,
     confirmation: l.confirmation ?? null,
     folio: l.folio_number,

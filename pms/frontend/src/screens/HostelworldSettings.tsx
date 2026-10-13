@@ -2,7 +2,7 @@
 // Configuration → Hostelworld.
 //
 // A Hostelworld guest agrees to one total on Hostelworld, pays part of it
-// there and then — which Hostelworld keeps as its commission — and pays the
+// there and then - which Hostelworld keeps as its commission - and pays the
 // rest at the desk. Out of the box the system shows the total and nothing
 // else, so the desk asks for money Hostelworld already took.
 //
@@ -82,7 +82,7 @@ export function HostelworldSettingsTab() {
               <p className="text-[11px] text-dash-muted leading-relaxed mb-4 max-w-2xl">
                 Hostelworld collects a deposit from the guest when they book and keeps it as its
                 commission. The guest pays the rest at the desk. With this on, every Hostelworld
-                booking shows three figures instead of one — the total the guest agreed to, what
+                booking shows three figures instead of one - the total the guest agreed to, what
                 Hostelworld collected, and the business price the property actually receives.
                 Bookings from anywhere else are not affected.
               </p>
@@ -141,7 +141,7 @@ export function HostelworldSettingsTab() {
                   <span className="font-bold text-dash-text">Folio credit.</span> On, a line
                   "Collected by Hostelworld at booking" reduces the folio balance to the business
                   price, so check-in asks for the right amount and check-out closes at zero. It is
-                  an adjustment, not a payment — it never appears in the till or the cash-up. Off,
+                  an adjustment, not a payment - it never appears in the till or the cash-up. Off,
                   the figures are shown but the folio is left exactly as it was.
                 </p>
               </div>
@@ -167,7 +167,7 @@ export function HostelworldSettingsTab() {
             <InfoNote>
               Bookings imported before this was switched on were priced from your own rate plan and
               carry no collected amount. <span className="font-bold">Refresh from Beds24</span> re-reads
-              every open booking from the channel and applies Hostelworld's own total and deposit —
+              every open booking from the channel and applies Hostelworld's own total and deposit -
               use this first. <span className="font-bold">Apply to existing bookings</span> is the
               fallback when Beds24 cannot be reached: it uses the percentage above. Saving keeps the
               folio credits in step with these settings, and a figure can always be corrected on the
@@ -227,7 +227,7 @@ export function HostelworldSettingsTab() {
               onCancel={() => setApplyOpen(false)}
               busy={apply.isPending}
               title="Apply to existing Hostelworld bookings?"
-              body={`Every open Hostelworld booking without a collected amount will be given one — ${bpToPercent(query.data?.percentBp ?? 0)}% of its total — and its folio credit posted if that option is on. Amounts already set are not changed.`}
+              body={`Every open Hostelworld booking without a collected amount will be given one - ${bpToPercent(query.data?.percentBp ?? 0)}% of its total - and its folio credit posted if that option is on. Amounts already set are not changed.`}
               confirmLabel="Apply"
               onConfirm={async () => {
                 try {

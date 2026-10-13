@@ -106,7 +106,7 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ showCta = false }) =
             </h2>
           </div>
           <p className="text-[#59695C] text-sm max-w-sm leading-relaxed">
-            Sleep, work, surf and skate under one roof — plus the small things that
+            Sleep, work, surf and skate under one roof - plus the small things that
             make a long stay easy. Book any of it on arrival or before you land.
           </p>
         </div>

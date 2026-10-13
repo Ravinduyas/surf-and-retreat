@@ -10,7 +10,7 @@ export const Preloader: React.FC = () => {
   const [gone, setGone] = useState(false);
 
   /**
-   * Leave as soon as the page is actually ready — a fixed timer made the
+   * Leave as soon as the page is actually ready - a fixed timer made the
    * hero look slow to load. A short floor stops it flashing on fast loads,
    * a ceiling stops a stalled asset holding the page hostage.
    */

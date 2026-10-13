@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-// Night audit — the transaction that closes one business day and opens
+// Night audit - the transaction that closes one business day and opens
 // the next. It is the only operation allowed to move `business_date`.
 //
 // It runs inside a single database transaction: either the whole day rolls
@@ -53,7 +53,7 @@ export function preflight(propertyId: string): {
     const unconfirmed = pendingArrivals.filter((r) => r.unconfirmed).length;
     issues.push({
       kind: 'pending-arrival', severity: 'warn', count: pendingArrivals.length,
-      message: `${pendingArrivals.length} arrival(s) never checked in — they will be marked no-show`
+      message: `${pendingArrivals.length} arrival(s) never checked in - they will be marked no-show`
         + (unconfirmed
           ? `, including ${unconfirmed} website booking(s) never confirmed (closed out with no charge)`
           : ''),
@@ -189,8 +189,8 @@ export function runNightAudit(
     );
     for (const r of pendingArrivals) {
       // A no-show charge is for a guest who had a room held and did not come.
-      // A website booking nobody confirmed never had one — the property, not
-      // the guest, is why it did not happen — so it is closed out without a
+      // A website booking nobody confirmed never had one - the property, not
+      // the guest, is why it did not happen - so it is closed out without a
       // charge whatever the policy says.
       const charge = r.unconfirmed || opts.noShowChargePolicy === 'none'
         ? 0
@@ -218,7 +218,7 @@ export function runNightAudit(
       const result = postCharge(propertyId, actor, {
         folioId: folio.id,
         code: 'ROOM',
-        description: `Room charge — ${n.room_type_name} — ${date}`,
+        description: `Room charge - ${n.room_type_name} - ${date}`,
         unitMinor: n.rate_minor,
         businessDate: date,
         reservationId: n.reservation_id,
@@ -260,7 +260,7 @@ export function runNightAudit(
     // ── 7. Prepare the new day ──────────────────────────────────────────
     generateTasks(propertyId, actor, next);
 
-    // Rate changes scheduled for the new business date take effect now — before
+    // Rate changes scheduled for the new business date take effect now - before
     // the desk opens and before the morning's channel push goes out. A change
     // that fails is recorded against its own row and does not stop the audit: a
     // mistyped rate plan must not block the close of business.
@@ -306,7 +306,7 @@ export function runNightAudit(
     // completed audit.
     setImmediate(() => {
       try {
-        // Check first — a snapshot of a corrupt database is worse than none,
+        // Check first - a snapshot of a corrupt database is worse than none,
         // because it looks like protection.
         const check = nightlyMaintenance(actor.userName);
         if (!check.check.ok) {
@@ -427,7 +427,7 @@ export function dailyReport(propertyId: string, date: string) {
     propertyId, date,
   );
   const paymentsByMethod = all<any>(
-    `SELECT COALESCE(method,'—') AS method, COALESCE(SUM(-amount_minor),0) AS total, count(*) AS n
+    `SELECT COALESCE(method,'-') AS method, COALESCE(SUM(-amount_minor),0) AS total, count(*) AS n
        FROM folio_lines
       WHERE property_id = ? AND business_date = ? AND kind = 'payment' AND voided = 0
       GROUP BY method ORDER BY total DESC`,

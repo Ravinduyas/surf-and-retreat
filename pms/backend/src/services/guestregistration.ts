@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-// Guest self-registration — the QR code handed across the desk.
+// Guest self-registration - the QR code handed across the desk.
 //
 // The desk shows a code, the guest scans it with their own phone, and fills in
 // their own passport details, photograph and signature instead of reading them
@@ -12,7 +12,7 @@
 //
 //   * 256 bits of randomness, and only its SHA-256 hash is stored. A copy of
 //     the table cannot be replayed to open somebody's booking.
-//   * One live link per reservation — minting a new one revokes the old, so a
+//   * One live link per reservation - minting a new one revokes the old, so a
 //     code photographed off the screen earlier stops working.
 //   * It dies with the check-in. Checked in, cancelled, departed or no-show and
 //     the link is spent; there is no window left over afterwards.
@@ -64,7 +64,7 @@ export interface GuestSubmission {
  * Create the link behind the QR code, revoking any earlier one.
  *
  * The token is returned exactly once, here. It is never stored and there is no
- * endpoint that will read it back — if the code is lost, a new one is minted.
+ * endpoint that will read it back - if the code is lost, a new one is minted.
  */
 export function createRegistrationLink(propertyId: string, actor: Actor, reservationId: string) {
   return tx(() => {
@@ -81,7 +81,7 @@ export function createRegistrationLink(propertyId: string, actor: Actor, reserva
     }
 
     // What the guest has already sent belongs to the *booking*, not to the code
-    // they sent it through — the code is only the door. Carried across before
+    // they sent it through - the code is only the door. Carried across before
     // the old row is retired, or a receptionist pressing "new code" after the
     // guest had filled everything in would strand those answers on a revoked
     // row: invisible to the desk, impossible to accept, and gone.
@@ -147,7 +147,7 @@ export function revokeRegistrationLink(propertyId: string, actor: Actor, reserva
 /**
  * The state of the current link, and the guest's answers if they have sent any.
  *
- * The payload is decrypted for this — it is the whole point of the screen, and
+ * The payload is decrypted for this - it is the whole point of the screen, and
  * the caller is an authenticated member of staff looking at a booking they can
  * already open.
  */
@@ -205,7 +205,7 @@ function resolveToken(token: string) {
   }
   // Acceptance is the end of the link. The desk has taken these details into
   // the record, so a later submission would sit unaccepted behind a panel that
-  // already reads "accepted" — and nobody would look at it again. If the guest
+  // already reads "accepted" - and nobody would look at it again. If the guest
   // needs to change something, reception shows a new code.
   if (row.accepted_at) {
     throw new HttpError(410,
@@ -224,7 +224,7 @@ function resolveToken(token: string) {
   if (!OPEN_FOR_REGISTRATION.includes(res.status)) {
     throw new HttpError(410,
       res.status === 'Checked-in'
-        ? 'You are already checked in — there is nothing left to fill in.'
+        ? 'You are already checked in - there is nothing left to fill in.'
         : 'This booking is no longer open for registration.',
       'link_spent');
   }
@@ -235,7 +235,7 @@ function resolveToken(token: string) {
  * What the page shows before the guest types anything.
  *
  * Deliberately thin. Somebody holding this token learns the property, their own
- * name and their own dates — which is what they are standing there holding a
+ * name and their own dates - which is what they are standing there holding a
  * booking for. No folio, no rate, no other guest, no reservation id.
  */
 export function registrationContext(token: string) {
@@ -269,7 +269,7 @@ function withoutImages(s: GuestSubmission): GuestSubmission {
  * Take what the guest sent.
  *
  * It is stored encrypted and goes no further on its own. Re-submitting is
- * allowed and replaces the previous answers — a guest who mistypes a passport
+ * allowed and replaces the previous answers - a guest who mistypes a passport
  * number should be able to fix it without finding a member of staff, and the
  * link stays open until they are checked in.
  */
@@ -279,7 +279,7 @@ export function submitRegistration(token: string, submission: GuestSubmission) {
 
     // Merged over what they sent before, not swapped for it. A guest who
     // reopens the page to fix a misspelt surname has not re-photographed their
-    // passport, so a wholesale replace would silently throw the document away —
+    // passport, so a wholesale replace would silently throw the document away -
     // and the desk would find a registration that had gone backwards.
     const previous = row.payload ? readPayload(row.payload) : null;
     const merged: GuestSubmission = { ...(previous ?? {}) };
@@ -302,7 +302,7 @@ export function submitRegistration(token: string, submission: GuestSubmission) {
     );
 
     // The desk is told, because the guest has now done their part and is
-    // waiting — and because the screen they are waiting on may not be open.
+    // waiting - and because the screen they are waiting on may not be open.
     notify(res.property_id, {
       source: 'Front Desk',
       severity: 'info',
@@ -454,7 +454,7 @@ export function discardRegistration(propertyId: string, actor: Actor, reservatio
   return linkStatus(propertyId, reservationId);
 }
 
-/** Every link ever minted for a booking — read by nothing yet, kept for audit. */
+/** Every link ever minted for a booking - read by nothing yet, kept for audit. */
 export function registrationHistory(propertyId: string, reservationId: string) {
   return all<any>(
     `SELECT id, created_at, created_by, revoked_at, submitted_at, submissions,

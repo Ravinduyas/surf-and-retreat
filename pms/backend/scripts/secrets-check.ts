@@ -5,7 +5,7 @@
 //
 // A Beds24 refresh token is a working key to the property's whole OTA
 // distribution. It was stored as clear text and returned whole by
-// `GET /api/channels`, which seven of the eight roles can read — so a
+// `GET /api/channels`, which seven of the eight roles can read - so a
 // read-only account, or anyone holding a backup file, had it.
 //
 // The assertions are mostly negative: what must **not** appear. Those are the
@@ -133,14 +133,14 @@ async function main() {
 
   section('6 · Without a key, nothing pretends to be encrypted');
   // A deployment with no key must keep working and must not claim protection
-  // it does not have — a silent downgrade is worse than none.
+  // it does not have - a silent downgrade is worse than none.
   delete process.env.HELIO_SECRET_KEY;
   const fresh = await import(`../src/lib/secrets.ts?nokey=${Date.now()}`);
   check('encryption reports itself unavailable', fresh.encryptionAvailable() === false);
   const unsealed = fresh.encryptSecret(TOKEN);
   check('the value is stored as-is rather than fake-encrypted', unsealed === TOKEN);
   check('and is not marked as encrypted', fresh.isEncrypted(unsealed) === false);
-  // But redaction is unconditional — it never depended on a key.
+  // But redaction is unconditional - it never depended on a key.
   check('redaction still strips secrets without a key',
     !JSON.stringify(fresh.redactSecrets({ credentials: { refreshToken: TOKEN } })).includes(TOKEN));
 

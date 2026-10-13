@@ -5,7 +5,7 @@ interface QuickAnswerProps {
   children: React.ReactNode;
 }
 
-/** A question heading with a direct, self-contained answer — easy for search and AI answers to quote. */
+/** A question heading with a direct, self-contained answer - easy for search and AI answers to quote. */
 export const QuickAnswer: React.FC<QuickAnswerProps> = ({ question, children }) => (
   <section className="mt-6 sm:mt-10">
     <div className="bg-white rounded-[28px] sm:rounded-[32px] p-6 sm:p-8 lg:p-10 shadow-xs">

@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-// Beds24 connector — the channel-manager backbone.
+// Beds24 connector - the channel-manager backbone.
 //
 // In this build Beds24 STAYS as the distribution layer: the PMS holds the
 // world-class rate/restriction/yield/inventory brain (cm/*) and pushes the
@@ -7,7 +7,7 @@
 //
 // API v2 shape: REST/JSON, token auth (invite→refresh→24h session token),
 // endpoints /inventory/rooms/calendar (ARI), /bookings (+webhooks),
-// /channels/settings (mapping). Rate limit ≈100 credits / 5 min — so the
+// /channels/settings (mapping). Rate limit ≈100 credits / 5 min - so the
 // connector BATCHES calendar writes and prefers webhooks over polling.
 // ─────────────────────────────────────────────────────────────
 import type { Connector, PushResult, RawBooking } from '../connector.ts';
@@ -47,7 +47,7 @@ export class Beds24Connector implements Connector {
     const batches = this.planBatches(update.cells.length);
     if (this.creditsUsed + batches > RATE_LIMIT_CREDITS) {
       return { ok: false, channel: this.channel, accepted: 0, rejected: update.cells.length,
-        detail: 'rate-limit budget exhausted — defer to next window', retryable: true };
+        detail: 'rate-limit budget exhausted - defer to next window', retryable: true };
     }
     // In production: POST batched rows to `${API_BASE}/inventory/rooms/calendar`
     // with header token = sessionToken. Body maps each AriCell to a

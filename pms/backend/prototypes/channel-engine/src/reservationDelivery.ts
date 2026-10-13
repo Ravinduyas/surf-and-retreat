@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-// Reservation delivery — the inbound half + the overbooking guard.
+// Reservation delivery - the inbound half + the overbooking guard.
 //
 // When ANY OTA delivers a booking, we: (1) let that OTA's adapter
 // normalize it, (2) decrement the shared pooled inventory in the

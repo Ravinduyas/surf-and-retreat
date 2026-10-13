@@ -6,7 +6,7 @@
 // deployment: the operator sets one variable and the PMS is talking to
 // Booking.com on the next restart.
 //
-// The token exchange itself already lives in `channels/beds24.ts` — refresh
+// The token exchange itself already lives in `channels/beds24.ts` - refresh
 // token in, short-lived access token out, cached until a minute before it
 // expires and re-persisted whenever it rotates. This module is only the
 // bootstrap: find or create the channel row, store the credential, and prove it
@@ -33,7 +33,7 @@ type Actor = Pick<AuthContext, 'userId' | 'userName' | 'propertyId'>;
 /**
  * The name this connection carries on screen.
  *
- * The `code` stays `BEDS24` — it is a stable internal key that mappings, the
+ * The `code` stays `BEDS24` - it is a stable internal key that mappings, the
  * queue and the sync log all join on, and renaming it would orphan them. Only
  * the label a person reads changes, so the supplier is not announced on every
  * property's Channel Manager. Set `HELIO_CHANNEL_NAME` to override.
@@ -75,7 +75,7 @@ export async function bootstrapBeds24(): Promise<BootstrapResult> {
   if (properties.length === 0) {
     return {
       attempted: true, connected: false,
-      message: 'BEDS24_REFRESH_TOKEN is set but no property exists yet — run the setup wizard first',
+      message: 'BEDS24_REFRESH_TOKEN is set but no property exists yet - run the setup wizard first',
     };
   }
   if (properties.length > 1) {
@@ -92,7 +92,7 @@ export async function bootstrapBeds24(): Promise<BootstrapResult> {
   // The channel is **Beds24**, not any one OTA.
   //
   // Beds24 is a channel manager: it fronts whichever OTAs the property has
-  // connected on its side — Hostelworld today, Booking.com and Airbnb later —
+  // connected on its side - Hostelworld today, Booking.com and Airbnb later -
   // and Helio talks only to Beds24. Naming this connection "Booking.com" would
   // claim a relationship that may not exist, and would be wrong the moment the
   // property adds or drops an OTA without telling Helio.
@@ -107,12 +107,12 @@ export async function bootstrapBeds24(): Promise<BootstrapResult> {
 
   if (existing?.status === 'connected') {
     // An installation connected before this was named correctly still says
-    // "Booking.com" on every screen. Correct it in place — re-authorising a
+    // "Booking.com" on every screen. Correct it in place - re-authorising a
     // working channel to fix a label would be a poor trade.
     //
     // The uplift is reset with it, and that matters more than the name. A demo
     // "Booking.com" row is seeded with an OTA markup (×1.18); adopting that row
-    // for Beds24 keeps the markup, and Beds24 is not an OTA — it is the hub the
+    // for Beds24 keeps the markup, and Beds24 is not an OTA - it is the hub the
     // prices were *read from*. Pushing through it would send every rate back
     // 18% higher than the property set, once per sync, silently.
     if (existing.code !== 'BEDS24') {

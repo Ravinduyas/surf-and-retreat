@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 // Secrets at rest.
 //
-// A Beds24 refresh token is not a setting — it is a working key to the
+// A Beds24 refresh token is not a setting - it is a working key to the
 // property's entire OTA distribution: rates, availability, bookings. The same
 // will shortly be true of payment-provider keys. Those were stored as clear
 // text inside a JSON column and returned whole by the channel list endpoint,
@@ -16,7 +16,7 @@
 //      environment, so the database file alone is not enough.
 //
 // The key lives in `HELIO_SECRET_KEY`. Without it, secrets are stored as they
-// always were and the system says so loudly on startup — an installation that
+// always were and the system says so loudly on startup - an installation that
 // silently downgraded its own encryption would be worse than one that never
 // had any.
 // ─────────────────────────────────────────────────────────────
@@ -36,7 +36,7 @@ function key(): Buffer | null {
   if (cachedKey !== undefined) return cachedKey;
   // Read from the live environment rather than the frozen config, and this is
   // the one place that difference matters. A module loaded with no key must
-  // report no key — `encryptionAvailable()` is what tells an operator whether
+  // report no key - `encryptionAvailable()` is what tells an operator whether
   // their credentials are actually protected, and answering from a value
   // captured at boot would make it a claim about the past. The schema has
   // already enforced the minimum length by the time anything gets here.
@@ -59,7 +59,7 @@ export function encryptionAvailable(): boolean {
 /**
  * Encrypt a value for storage.
  *
- * Returns the input unchanged when no key is configured — an installation
+ * Returns the input unchanged when no key is configured - an installation
  * without one keeps working exactly as before, and `encryptionAvailable()` is
  * what tells the operator the difference.
  */
@@ -79,7 +79,7 @@ export function encryptSecret(plain: string): string {
  * A value written before encryption was switched on is returned as-is, so
  * turning the key on does not orphan existing credentials. A value that *is*
  * encrypted but cannot be decrypted throws rather than returning something
- * plausible — a silently wrong token would be diagnosed as a channel outage.
+ * plausible - a silently wrong token would be diagnosed as a channel outage.
  */
 export function decryptSecret(stored: string): string {
   if (!stored?.startsWith(PREFIX)) return stored;
@@ -87,7 +87,7 @@ export function decryptSecret(stored: string): string {
   if (!k) {
     throw new Error(
       'This value is encrypted but HELIO_SECRET_KEY is not set. '
-      + 'Restore the key to read it — it cannot be recovered without it.');
+      + 'Restore the key to read it - it cannot be recovered without it.');
   }
   const raw = Buffer.from(stored.slice(PREFIX.length), 'base64');
   const iv = raw.subarray(0, 12);
@@ -99,7 +99,7 @@ export function decryptSecret(stored: string): string {
     return Buffer.concat([decipher.update(body), decipher.final()]).toString('utf8');
   } catch {
     // AES-GCM fails the same way for a wrong key and for tampered data, and
-    // Node's own message — "Unsupported state or unable to authenticate data" —
+    // Node's own message - "Unsupported state or unable to authenticate data" -
     // tells an operator nothing about either. The overwhelmingly likely cause
     // is a changed HELIO_SECRET_KEY, so say that and say what to do.
     throw new Error(
@@ -129,7 +129,7 @@ function looksSecret(key: string): boolean {
  * Strip secrets from anything on its way out of the API.
  *
  * Redacts by key name recursively rather than by naming the one field that
- * leaked. The channel settings blob is open-ended — a provider added later will
+ * leaked. The channel settings blob is open-ended - a provider added later will
  * put its key somewhere new, and an allowlist of known-bad fields would miss it.
  * Presence is reported (`"__redacted"`) rather than the key being removed, so a
  * screen can still say "a token is configured" without ever holding one.

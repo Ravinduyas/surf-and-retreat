@@ -5,7 +5,7 @@
 //
 // The check that matters most is that **the preview does not lie**. Every
 // applied change is compared cell by cell against what the preview promised,
-// because a preview that disagrees with the outcome is worse than no preview —
+// because a preview that disagrees with the outcome is worse than no preview -
 // it is a reason to trust a number that turns out to be wrong.
 //
 // It builds its own database in a temp directory; the live one is never opened.
@@ -278,7 +278,7 @@ async function main() {
   catch { badSeason = true; }
   check('a season that ends before it starts is refused', badSeason);
 
-  // Three exist by now — Peak (renamed from High), Shoulder and Christmas.
+  // Three exist by now - Peak (renamed from High), Shoulder and Christmas.
   rp.deleteSeason(P, ACTOR, high.id);
   check('a season can be deleted', rp.listSeasons(P).length === 2, rp.listSeasons(P).length);
   check('the right one went',
@@ -332,7 +332,7 @@ async function main() {
   check('cancelling twice is refused', doubleCancel);
 
   // A change that cannot be applied when it falls due must fail loudly and
-  // leave the reason behind — not disappear, and not retry forever.
+  // leave the reason behind - not disappear, and not retry forever.
   const orphan = rp.scheduleChange(P, ACTOR, {
     name: 'Orphaned', effectiveDate: '2026-08-01',
     change: { from: '2027-03-01', to: '2027-03-02', ratePlanIds: [ctx.barId], priceMinor: 20_000 },
@@ -366,7 +366,7 @@ async function main() {
 
   section('11 · Channel pushes');
   const pushes = all<any>(`SELECT DISTINCT reason FROM channel_queue WHERE property_id = ?`, P);
-  // No channel is connected in this fixture, so the queue is empty by design —
+  // No channel is connected in this fixture, so the queue is empty by design -
   // the point is that applying never throws when there is nothing to tell.
   check('applying without a connected channel is safe', Array.isArray(pushes));
 

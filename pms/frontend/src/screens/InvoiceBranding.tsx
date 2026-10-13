@@ -2,7 +2,7 @@
 // it, and the wording underneath.
 //
 // Kept apart from the Property tab because these are not facts about the
-// property — they are choices about a document. The address and tax id on an
+// property - they are choices about a document. The address and tax id on an
 // invoice come from Property; what is set here is how that information is
 // presented and what is added to it.
 import { useEffect, useRef, useState } from 'react';
@@ -17,7 +17,7 @@ import type { InvoiceBranding } from '../types';
  *
  * Checked here as well as there so an operator who picks a 3 MB photograph is
  * told immediately, by a message naming the file, rather than after a slow
- * upload that ends in a generic failure. The server still enforces it — this is
+ * upload that ends in a generic failure. The server still enforces it - this is
  * a courtesy, not the control.
  */
 const MAX_LOGO_CHARS = 512 * 1024;
@@ -41,7 +41,7 @@ function BrandingForm({ saved }: { saved: InvoiceBranding }) {
   const [form, setForm] = useState<InvoiceBranding>(saved);
   const [error, setError] = useState<string | null>(null);
 
-  // A save elsewhere — another terminal, another administrator — refetches and
+  // A save elsewhere - another terminal, another administrator - refetches and
   // should be reflected here rather than silently overwritten by a stale form.
   useEffect(() => { setForm(saved); }, [saved]);
 
@@ -69,7 +69,7 @@ function BrandingForm({ saved }: { saved: InvoiceBranding }) {
       setForm((f) => ({ ...f, logoDataUrl: url }));
     };
     // Read as a data URL because that is exactly what is stored and what the
-    // invoice renders — no separate upload endpoint, and the logo travels with
+    // invoice renders - no separate upload endpoint, and the logo travels with
     // the document so a printed invoice never depends on a second request.
     reader.readAsDataURL(file);
   }

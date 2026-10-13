@@ -4,15 +4,15 @@
 // The public site sells four things, and two of them are packages: "Rooms +
 // surf" and "Rooms + coworking + surf". A guest buying one of those is buying
 // a surf trip, not a room with lessons itemised beside it, and the property
-// prices it as one thing — which means the price cannot be arithmetic the
+// prices it as one thing - which means the price cannot be arithmetic the
 // browser does on a room rate plus an extras table. It has to be a rate the
 // property sets, per date, per room type, and moves for a shoulder season the
 // same way it moves a room rate.
 //
 // So a package is a rate plan. `booking_model` names which of the site's
-// models the plan sells, and everything the PMS already does to a rate plan —
+// models the plan sells, and everything the PMS already does to a rate plan -
 // the rate calendar, bulk edits, price planning, restrictions, yield rules,
-// the channel push — applies to it unchanged. Nothing here re-implements
+// the channel push - applies to it unchanged. Nothing here re-implements
 // pricing; it only says which plan answers for which model.
 // ─────────────────────────────────────────────────────────────
 import { all, get, run } from '../db.ts';
@@ -37,7 +37,7 @@ export function isBookingModel(v: unknown): v is BookingModel {
  * The models sold as a package.
  *
  * Rooms and rooms + coworking are left off deliberately: the first is a room
- * and nothing else, and the second is a room with a desk beside it — both are
+ * and nothing else, and the second is a room with a desk beside it - both are
  * already priced by the room rate plan and its extras, and giving them a
  * package plan would only be a second place to set the same number.
  */
@@ -57,8 +57,8 @@ interface PackageSeed {
  *
  * No prices: a seeded figure would be a number nobody at the property chose,
  * shown in the same grid as the ones they did. With no base rate the calendar
- * resolves each cell to the room type's own default and marks it grey — "this
- * is not set yet" — until somebody sets it.
+ * resolves each cell to the room type's own default and marks it grey - "this
+ * is not set yet" - until somebody sets it.
  */
 const SEEDS: PackageSeed[] = [
   {
@@ -138,7 +138,7 @@ export function assertModelFree(propertyId: string, model: unknown, exceptPlanId
 /**
  * Create the package rate plans this property is missing.
  *
- * Idempotent, and never touches a plan that already exists — a property that
+ * Idempotent, and never touches a plan that already exists - a property that
  * has renamed its surf package, repriced it or pointed the model at a plan of
  * its own gets left exactly as it is.
  */

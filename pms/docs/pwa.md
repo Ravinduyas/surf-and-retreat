@@ -16,7 +16,7 @@ the one guarantee this system is built on.
 
 Helio prevents overbooking because every booking goes through one serialised writer:
 twelve simultaneous requests for the last room produce exactly one booking. A client
-that queues bookings offline breaks that completely — two devices each take "the last
+that queues bookings offline breaks that completely - two devices each take "the last
 room", both queue, both replay, and the property is oversold with a clean sync log.
 The same reasoning kills offline payments, rate changes and the night audit.
 
@@ -48,24 +48,24 @@ system refuses to show.
 
 ### P1 · Cache the operational reads
 1. GET responses for today's operational data are cached and served when offline.
-2. The cache is **per property** — switching property must never show another one's data.
+2. The cache is **per property** - switching property must never show another one's data.
 3. Signing out clears it. A cached arrivals list is guest personal data.
 
 ### P2 · Never lie about freshness
 1. When serving cached data the screen says so, with the age: *"showing data from 14 minutes ago"*.
-2. The distinction between "offline" and "the server is down" is preserved — they need different actions.
+2. The distinction between "offline" and "the server is down" is preserved - they need different actions.
 3. Nothing shows a spinner forever; a failed read that has a cached answer shows the answer.
 
 ### P3 · A queue for the two safe writes
 1. Housekeeping status changes and inspection notes queue when offline.
 2. The count is always visible: *"3 changes waiting to sync"*. Never hidden.
 3. They replay in order on reconnect, and a **rejected** replay surfaces as a real
-   failure the user must resolve — not a silent drop.
+   failure the user must resolve - not a silent drop.
 4. The queue survives a page reload and an app restart.
 
 ### P4 · Refuse the dangerous writes clearly
 1. Attempting one offline gives a plain reason, not a generic network error:
-   *"A booking cannot be taken offline — it would risk selling the same room twice."*
+   *"A booking cannot be taken offline - it would risk selling the same room twice."*
 2. The button says it before it is pressed where possible, rather than failing after.
 
 ### P5 · Make it a real app
@@ -81,8 +81,8 @@ system refuses to show.
 
 | # | Item | Why here |
 |---|---|---|
-| 1 | **P1 + P2** — cached reads with honest freshness | The whole value; useless without honesty |
-| 2 | **P4** — refuse dangerous writes | Must land with P1, or offline becomes unsafe |
-| 3 | **P3** — the safe write queue | The genuinely new capability |
-| 4 | **P5** — install polish, shortcuts, mobile | Makes it feel like an app |
-| 5 | **P6** — update handling | Small, last |
+| 1 | **P1 + P2** - cached reads with honest freshness | The whole value; useless without honesty |
+| 2 | **P4** - refuse dangerous writes | Must land with P1, or offline becomes unsafe |
+| 3 | **P3** - the safe write queue | The genuinely new capability |
+| 4 | **P5** - install polish, shortcuts, mobile | Makes it feel like an app |
+| 5 | **P6** - update handling | Small, last |

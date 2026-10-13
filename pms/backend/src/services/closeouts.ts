@@ -4,8 +4,8 @@
 // The restrictions engine already stores a `stop-sell` as a dated range scoped
 // to a room type, a rate plan and/or a channel. What it did not have was the
 // operator's side of it: closing was a six-field form, and reopening meant
-// finding the right row and deleting it. This module is the verbs — close,
-// open, list — expressed the way the decision is actually made at the desk:
+// finding the right row and deleting it. This module is the verbs - close,
+// open, list - expressed the way the decision is actually made at the desk:
 // "shut the 14th to the 16th" and "let the 15th back out".
 //
 // The interesting work is in `openDates`. Reopening is not "delete the rule",
@@ -49,7 +49,7 @@ function sameScope(a: CloseScope, b: StopSellRow): boolean {
 /**
  * Is `row` closing something the caller is entitled to open?
  *
- * Opening one room type cannot carve a hole in a property-wide closure — that
+ * Opening one room type cannot carve a hole in a property-wide closure - that
  * closure is a single row covering everything, and honouring the request would
  * mean exploding it into one row per room type. Rather than do that silently,
  * or fail silently, rows broader than the request are reported back to the
@@ -102,8 +102,8 @@ function affectedRoomTypes(propertyId: string, roomTypeId?: string | null): stri
  * Queue an ARI push for every affected room type.
  *
  * `queueChannelPush` takes an exclusive end date, matching how the rest of the
- * system expresses a stay. A closure's `date_to` is inclusive — the last night
- * that is shut — so it is advanced by one here. Getting this wrong leaves the
+ * system expresses a stay. A closure's `date_to` is inclusive - the last night
+ * that is shut - so it is advanced by one here. Getting this wrong leaves the
  * final closed night still on sale, which is exactly the night that matters.
  */
 function pushClosure(propertyId: string, scope: CloseScope, from: string, to: string, reason: string) {
@@ -178,7 +178,7 @@ export interface OpenResult {
   opened: number;          // rows changed
   removed: number;         // closures that disappeared entirely
   split: number;           // closures cut in two
-  /** Closures too broad to carve — reported rather than silently ignored. */
+  /** Closures too broad to carve - reported rather than silently ignored. */
   stillClosedBy: Array<{ id: string; from: string; to: string; scope: string; reason: string | null }>;
 }
 

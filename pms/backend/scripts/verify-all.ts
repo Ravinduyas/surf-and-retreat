@@ -4,7 +4,7 @@
 //   node --experimental-sqlite scripts/verify-all.ts
 //
 // The individual scripts each talk to a running API, which used to mean they
-// could only be trusted once — against a virgin database, before anyone had
+// could only be trusted once - against a virgin database, before anyone had
 // used the system. That makes them useless as a regression suite, which is
 // what they are for. This runner gives each one the clean instance it expects:
 // its own temp database, its own port, its own server process, torn down
@@ -110,7 +110,7 @@ function runScript(script: string, instance: Instance, extra: Record<string, str
     child.stdout?.on('data', (d) => { output += String(d); });
     child.stderr?.on('data', (d) => { output += String(d); });
     child.on('close', (code) => {
-      // Keep the summary lines — the last few carry the counts and any failures.
+      // Keep the summary lines - the last few carry the counts and any failures.
       const lines = output.trimEnd().split('\n');
       const failed = lines.filter((l) => l.includes('✗'));
       const tail = [...failed.slice(0, 12), ...lines.slice(-3)].join('\n');
@@ -308,7 +308,7 @@ try {
   process.exitCode = 1;
 } finally {
   cleanup();
-  // Give the servers a moment to release their file handles before deleting —
+  // Give the servers a moment to release their file handles before deleting -
   // Windows refuses to remove a directory with an open SQLite file in it.
   await new Promise((r) => setTimeout(r, 500));
   try { rmSync(workdir, { recursive: true, force: true }); } catch { /* windows file locks */ }

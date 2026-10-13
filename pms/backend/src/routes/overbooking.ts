@@ -38,7 +38,7 @@ router.get('/api/overbookings', (ctx: Ctx) => {
   };
 }, { perm: 'reservations.read' });
 
-/** A dry look — writes nothing, records nothing. */
+/** A dry look - writes nothing, records nothing. */
 router.get('/api/overbookings/scan', (ctx: Ctx) => {
   const today = businessDate(ctx);
   const from = ctx.query.get('from') ? assertDate(ctx.query.get('from'), 'from') : today;
@@ -72,7 +72,7 @@ router.get('/api/overbookings/closures', (ctx: Ctx) =>
 
 // ─── Fixing without a walk ───────────────────────────────────
 
-/** Who can be moved, and where to — per guest, for their whole remaining stay. */
+/** Who can be moved, and where to - per guest, for their whole remaining stay. */
 router.get('/api/overbookings/:id/options', (ctx: Ctx) =>
   resolutionOptions(pid(ctx), ctx.params.id, businessDate(ctx)), { perm: 'frontdesk.read' });
 
@@ -87,7 +87,7 @@ router.post('/api/overbookings/:id/fix', (ctx: Ctx) => applyFix(pid(ctx), ctx.au
   note: ctx.body.note ? str(ctx.body.note, 'note', { max: 300 }) : undefined,
 }), { perm: 'frontdesk.write' });
 
-/** What the courtesies have cost — upgrades given away and compensation paid. */
+/** What the courtesies have cost - upgrades given away and compensation paid. */
 router.get('/api/overbookings/costs', (ctx: Ctx) => {
   const today = businessDate(ctx);
   return fixCosts(
@@ -132,7 +132,7 @@ router.post('/api/reservations/:id/walk', (ctx: Ctx) => walkGuest(pid(ctx), ctx.
   reason: ctx.body.reason ? str(ctx.body.reason, 'reason', { max: 300 }) : undefined,
 }), { perm: 'frontdesk.write' });
 
-/** What overbooking actually cost — the number that should set the allowance. */
+/** What overbooking actually cost - the number that should set the allowance. */
 router.get('/api/walks', (ctx: Ctx) => {
   const today = businessDate(ctx);
   return walkCosts(
@@ -174,7 +174,7 @@ router.put('/api/room-types/:id/protection', (ctx: Ctx) => {
     // what somebody wants, the close-out tools say so honestly.
     throw new HttpError(400,
       `${roomType.name} has ${rooms} room(s). Holding back ${protect} would take the type off `
-      + 'sale entirely — close the dates instead if that is the intention.');
+      + 'sale entirely - close the dates instead if that is the intention.');
   }
 
   run('UPDATE room_types SET protect_last_rooms = ? WHERE id = ?', protect, ctx.params.id);
@@ -203,7 +203,7 @@ router.put('/api/room-types/:id/protection', (ctx: Ctx) => {
  *
  * Called with `?since=<iso>` the answer is only what is new, and the browser
  * may sound the alarm for it. Called without, it is a replay for display and
- * the browser stays silent — which is why refreshing the page does not set off
+ * the browser stays silent - which is why refreshing the page does not set off
  * a klaxon for something that happened this morning.
  */
 router.get('/api/alerts', (ctx: Ctx) => feed(pid(ctx), {

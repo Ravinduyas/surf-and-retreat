@@ -2,7 +2,7 @@
 // the two lines of copy at the top of it.
 //
 // Setting up rooms is the whole of setting up a booking engine. There is no
-// separate site to build or deploy — the API serves the page and reads the
+// separate site to build or deploy - the API serves the page and reads the
 // rooms, rates and availability straight out of the PMS. This screen exists to
 // hand somebody the link, and to say plainly when the link would open onto an
 // empty page.
@@ -41,7 +41,7 @@ function Engine({ data }: { data: BookingLink }) {
   const [tagline, setTagline] = useState(data.tagline);
   const [intro, setIntro] = useState(data.intro);
 
-  // Re-seeded whenever the server's copy changes — otherwise a save made in
+  // Re-seeded whenever the server's copy changes - otherwise a save made in
   // another tab leaves this form showing the old words.
   useEffect(() => { setTagline(data.tagline); setIntro(data.intro); }, [data.tagline, data.intro]);
 
@@ -98,13 +98,13 @@ function Engine({ data }: { data: BookingLink }) {
               <p className="text-[12px] text-dash-muted leading-relaxed max-w-xl">
                 {live
                   ? <>Guests can book {data.property.name} directly at the address below. Every
-                    booking arrives in Reservations awaiting your confirmation — nothing takes a
+                    booking arrives in Reservations awaiting your confirmation - nothing takes a
                     bed until you accept it.</>
                   : ready
                     ? <>The page is built and working, but switched off. Anyone opening the link is
                       asked to contact you instead.</>
                     : <>The page is switched on, but there is nothing to sell yet. Fix the points
-                      below and it starts working immediately — there is nothing to rebuild.</>}
+                      below and it starts working immediately - there is nothing to rebuild.</>}
               </p>
             </div>
           </div>
@@ -150,7 +150,7 @@ function Engine({ data }: { data: BookingLink }) {
                 : <div className="w-[200px] h-[200px] rounded-xl bg-white/60 animate-pulse" />}
               <p className="text-[11px] text-dash-muted leading-relaxed max-w-xs">
                 Print this for the front desk, the common room or a flyer. A guest checking out
-                scans it to book their next stay without going through an OTA — which is the
+                scans it to book their next stay without going through an OTA - which is the
                 cheapest booking the property will ever take.
               </p>
             </div>
@@ -239,7 +239,7 @@ function Engine({ data }: { data: BookingLink }) {
 
       <InfoNote>
         The page has no separate copy of anything. Room names, descriptions, prices, stay limits
-        and what is free all come from this PMS as the guest loads the page — so a rate changed in
+        and what is free all come from this PMS as the guest loads the page - so a rate changed in
         Rates &amp; Inventory is quoted on the next booking, with nothing to publish or rebuild.
       </InfoNote>
     </div>
@@ -275,7 +275,7 @@ const ADDON_GROUPS: { group: WebsiteAddon['group']; label: string }[] = [
  * Prices for the add-ons the property's own website sells beside the room.
  *
  * The website reads them, with every room's "from" price, from
- * /api/public/website-prices on each page load — so a price saved here is on
+ * /api/public/website-prices on each page load - so a price saved here is on
  * the site straight away. Room prices are not here: they come from Rates &
  * Inventory like every other rate.
  */
@@ -345,7 +345,7 @@ function WebsiteAddons() {
               await save.mutateAsync({
                 prices: Object.fromEntries(changed.map((a) => [a.id, toMinor(draft[a.id] ?? '')])),
               });
-              toast.success('Saved — the website shows the new prices now');
+              toast.success('Saved - the website shows the new prices now');
             } catch (e) { toast.fail(e, 'Could not save'); }
           }}>
           {save.isPending ? 'Saving…' : 'Save'}
@@ -395,14 +395,14 @@ function Money() {
       <p className="text-[12px] text-dash-muted leading-relaxed max-w-2xl mb-4">
         A direct booking that asks for nothing costs nothing to abandon, which is most of why
         no-show rates on direct and OTA bookings are not comparable. Nothing is charged by this
-        PMS &mdash; there is no card processing here &mdash; but the amount is stated to the guest
+        PMS - there is no card processing here - but the amount is stated to the guest
         and recorded against the booking as owed, so the desk can ask for it.
       </p>
 
       <div className="grid md:grid-cols-2 gap-4 max-w-3xl">
         <Field label="Deposit" hint="Asked for when the guest books.">
           <Select value={draft.mode} onChange={(v) => setDraft({ ...draft, mode: v })} options={[
-            { label: 'Nothing — confirm by email', value: 'none' },
+            { label: 'Nothing - confirm by email', value: 'none' },
             { label: 'A percentage of the stay', value: 'percent' },
             { label: 'The first night', value: 'first_night' },
             { label: 'The full amount', value: 'full' },
@@ -421,7 +421,7 @@ function Money() {
 
         <Field label="How long a booking holds its bed"
           hint={`Between ${d.limits.minHoldHours} and ${d.limits.maxHoldHours} hours. After this `
-            + 'the booking is cancelled and the bed goes back on sale — on your own page and on '
+            + 'the booking is cancelled and the bed goes back on sale - on your own page and on '
             + 'every OTA.'}>
           <Select value={String(draft.holdHours)}
             onChange={(v) => setDraft({ ...draft, holdHours: Number(v) })}

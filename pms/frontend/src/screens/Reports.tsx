@@ -256,7 +256,7 @@ export function ReportsScreen() {
                             <td className="py-2.5 text-right tabular-nums text-dash-muted">{money(r.commissionMinor)}</td>
                             <td className="py-2.5 text-right tabular-nums font-bold">{money(r.revenueMinor)}</td>
                             <td className="py-2.5 text-right text-dash-muted">
-                              {total ? `${Math.round((r.revenueMinor / total) * 100)}%` : '—'}
+                              {total ? `${Math.round((r.revenueMinor / total) * 100)}%` : '-'}
                             </td>
                           </tr>
                         ))}
@@ -467,10 +467,10 @@ export function ReportsScreen() {
                           <tr key={r.folioId} className="border-b border-black/[0.03]">
                             <td className="py-2 font-mono text-[11px]">{r.number}</td>
                             <td className="py-2 font-semibold">{r.guest ?? r.name}</td>
-                            <td className="py-2">{r.room ?? '—'}</td>
+                            <td className="py-2">{r.room ?? '-'}</td>
                             <td className="py-2 text-dash-muted">{r.reservationStatus ?? r.folioStatus}</td>
                             <td className="py-2 text-dash-muted whitespace-nowrap">
-                              {r.arrival ? `${r.arrival} → ${r.departure}` : '—'}
+                              {r.arrival ? `${r.arrival} → ${r.departure}` : '-'}
                             </td>
                             <td className={`py-2 text-right tabular-nums font-bold ${r.balanceMinor > 0 ? 'text-status-bad' : 'text-status-info'}`}>
                               {money(r.balanceMinor)}

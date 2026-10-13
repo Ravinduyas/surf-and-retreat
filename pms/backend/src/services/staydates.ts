@@ -10,7 +10,7 @@
 //
 //   · Nights the guest already agreed keep their rate. Adding a fourth night
 //     must not silently re-price the first three because a yield rule moved in
-//     the meantime — the guest was quoted a number and expects to pay it.
+//     the meantime - the guest was quoted a number and expects to pay it.
 //
 //   · The room is never dropped behind the operator's back. If it is not free
 //     for the extra nights, that is said plainly and the rooms that *are* free
@@ -70,7 +70,7 @@ function assertChangeable(res: any, arrival: string, departure: string) {
       `A ${res.status.toLowerCase()} reservation's dates can no longer be changed`);
   }
   if (nightsBetween(arrival, departure) < 1) {
-    throw new HttpError(400, 'A stay must be at least one night — cancel the booking instead');
+    throw new HttpError(400, 'A stay must be at least one night - cancel the booking instead');
   }
   if (res.status === 'Checked-in' && arrival !== res.arrival) {
     throw new HttpError(409,
@@ -148,7 +148,7 @@ export function previewStayChange(
   }
 
   // Availability is only asked about the *added* nights. The nights already
-  // held are this reservation's own — asking about them would have it compete
+  // held are this reservation's own - asking about them would have it compete
   // with itself.
   if (addedDates.length) {
     for (const d of addedDates) {
@@ -229,7 +229,7 @@ export function changeStayDates(
       conflict(preview.blockers[0], { blockers: preview.blockers });
     }
     if (preview.violations.length) {
-      // Explained, not just refused — the caller gets every rule that objects.
+      // Explained, not just refused - the caller gets every rule that objects.
       conflict('The new dates break a selling restriction', { violations: preview.violations });
     }
 
@@ -269,7 +269,7 @@ export function changeStayDates(
       }
     }
 
-    // Nights inside both the old and new range are left exactly as they are —
+    // Nights inside both the old and new range are left exactly as they are -
     // that is what keeps the guest's agreed rate.
     for (const night of preview.addedNights) {
       run(

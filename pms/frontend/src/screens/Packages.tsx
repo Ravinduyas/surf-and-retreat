@@ -8,7 +8,7 @@
 // A package is a rate plan (see services/packages.ts), which means every price
 // here could already be set from the rate calendar. This screen exists because
 // that grid answers "what does each room type cost on each date across every
-// plan" — seven columns of context nobody needs when the question is the much
+// plan" - seven columns of context nobody needs when the question is the much
 // smaller "what does the surf package cost". So: one card per package, one
 // price per room type, and a date range for the seasons that differ.
 import { useState } from 'react';
@@ -73,7 +73,7 @@ export function PackagesScreen() {
       />
 
       {/* A package price is a rate like any other, so it reaches the channels
-          the same way — and is held back the same way. */}
+          the same way - and is held back the same way. */}
       <ChannelPublishNote className="mb-4" />
 
       <QueryState query={plans} loadingRows={3}>
@@ -89,7 +89,7 @@ export function PackagesScreen() {
                 <p className="mt-1 text-xs text-dash-muted leading-relaxed">
                   Until a package has a plan, the booking site quotes it as a room rate with the
                   lessons and desk added on top. "Set up packages" creates a rate plan for each
-                  one, with no prices in it — you set those below.
+                  one, with no prices in it - you set those below.
                 </p>
               </Card>
             )}
@@ -118,7 +118,7 @@ export function PackagesScreen() {
 /**
  * One package: its standard price per room type, and a way to price a season.
  *
- * The standard price is the plan's base rate — what the site quotes on any date
+ * The standard price is the plan's base rate - what the site quotes on any date
  * nobody has priced specifically. The date range writes calendar cells, which
  * win over it. Both are shown together because a base rate that a calendar
  * override is quietly beating is the confusing half of rate management.
@@ -267,7 +267,7 @@ function PackageCard({
                     />
                   </td>
                   <td className="py-2 text-dash-muted">
-                    {resolved === null ? '—' : (
+                    {resolved === null ? '-' : (
                       <>
                         {money(resolved)}
                         {/* Says which number the guest sees when the two differ,

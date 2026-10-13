@@ -32,7 +32,7 @@ const SUFFIX = 'Surf & Retreat';
 export const ROUTE_META: Record<string, RouteMeta> = {
   '/': {
     name: 'Home',
-    title: 'Surf & Retreat Hostel Weligama — Surf, Stay & Cowork in Sri Lanka',
+    title: 'Surf & Retreat Hostel Weligama - Surf, Stay & Cowork in Sri Lanka',
     description:
       'A coliving & coworking surf hostel five minutes from Weligama Bay, Sri Lanka. Dorms and private rooms, daily surf lessons and 300 Mbps fiber wifi.',
     indexable: true,
@@ -40,7 +40,7 @@ export const ROUTE_META: Record<string, RouteMeta> = {
   '/experience': {
     name: 'Stay, Surf & Work',
     title: 'Stay, Surf & Work | Surf & Retreat Hostel Weligama',
-    description: `Dorms from ${dormFrom}, daily surf lessons on Weligama Bay and a coworking space with 300 Mbps fiber — everything under one roof, five minutes from the beach.`,
+    description: `Dorms from ${dormFrom}, daily surf lessons on Weligama Bay and a coworking space with 300 Mbps fiber - everything under one roof, five minutes from the beach.`,
     indexable: true,
   },
   '/rooms': {
@@ -65,28 +65,28 @@ export const ROUTE_META: Record<string, RouteMeta> = {
     name: 'Guest Services',
     title: 'Guest Services | Surf & Retreat Hostel Weligama',
     description:
-      'Rooms, co-working, surfing, skating, yoga and whale watching — every service at Surf & Retreat Hostel Weligama, bookable at the front desk.',
+      'Rooms, co-working, surfing, skating, yoga and whale watching - every service at Surf & Retreat Hostel Weligama, bookable at the front desk.',
     indexable: true,
   },
   '/gallery': {
     name: 'Gallery',
     title: 'Gallery | Surf & Retreat Hostel Weligama',
     description:
-      'Rooms, waves, workspaces and family dinners — see what a week at Surf & Retreat Hostel Weligama actually looks like.',
+      'Rooms, waves, workspaces and family dinners - see what a week at Surf & Retreat Hostel Weligama actually looks like.',
     indexable: true,
   },
   '/about': {
     name: 'About',
     title: 'About Us | Surf & Retreat Hostel Weligama',
     description:
-      'The story, values and community behind Surf & Retreat — a family-run coliving and coworking surf hostel in Weligama, Sri Lanka.',
+      'The story, values and community behind Surf & Retreat - a family-run coliving and coworking surf hostel in Weligama, Sri Lanka.',
     indexable: true,
   },
   '/contact': {
     name: 'Contact & FAQs',
     title: 'Contact & FAQs | Surf & Retreat Hostel Weligama',
     description:
-      'Get in touch with Surf & Retreat Hostel Weligama — booking questions, directions from Colombo Airport and answers to common questions.',
+      'Get in touch with Surf & Retreat Hostel Weligama - booking questions, directions from Colombo Airport and answers to common questions.',
     indexable: true,
   },
   '/blog': {
@@ -149,7 +149,7 @@ export const normalizePath = (pathname: string) => {
   return trimmed === '' ? '/' : trimmed;
 };
 
-/** Real pages only — unknown URLs get the noindex not-found page, with no canonical or JSON-LD. */
+/** Real pages only - unknown URLs get the noindex not-found page, with no canonical or JSON-LD. */
 export const isKnownRoute = (pathname: string) => normalizePath(pathname) in ROUTE_META;
 
 export const metaFor = (pathname: string): RouteMeta => ROUTE_META[normalizePath(pathname)] ?? NOT_FOUND_META;
@@ -169,7 +169,7 @@ export interface HeadTag {
   content: string;
 }
 
-/** The <meta> tags for a route — used by the client hook and by the prerenderer. */
+/** The <meta> tags for a route - used by the client hook and by the prerenderer. */
 export const headTags = (pathname: string): HeadTag[] => {
   const meta = metaFor(pathname);
   const tags: HeadTag[] = [

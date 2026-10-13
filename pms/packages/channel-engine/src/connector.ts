@@ -4,8 +4,8 @@
 // This is the seam that replaces "everything goes through Beds24".
 // Each OTA gets its own adapter implementing this interface. The push
 // engine talks ONLY to this contract, so adding/removing a direct OTA
-// connection — or swapping in a white-label fallback like Channex for
-// the long tail — never touches the engine.
+// connection - or swapping in a white-label fallback like Channex for
+// the long tail - never touches the engine.
 // ─────────────────────────────────────────────────────────────
 import type {
   ChannelCode, Protocol, CertificationState, ConnectorHealth,

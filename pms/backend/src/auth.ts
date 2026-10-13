@@ -9,7 +9,7 @@ import { HttpError, id, nowIso, token, addDays } from './lib/util.ts';
 
 const SCRYPT_KEYLEN = 64;
 const SESSION_HOURS = 12;
-/** "Keep me signed in" — a shift-long session becomes a fortnight. */
+/** "Keep me signed in" - a shift-long session becomes a fortnight. */
 const REMEMBERED_HOURS = 24 * 14;
 /** How long a half-finished sign-in may sit waiting for its 2FA code. */
 const MFA_CHALLENGE_MINUTES = 10;
@@ -251,12 +251,12 @@ export function authenticate(emailAddr: string, password: string): UserRow {
   }
   if (user.active !== 1) {
     throw new HttpError(403,
-      'This account has been disabled — ask an administrator to re-enable it', 'account_disabled');
+      'This account has been disabled - ask an administrator to re-enable it', 'account_disabled');
   }
   if (user.locked_until && user.locked_until > nowIso()) {
     const minutes = Math.max(1, Math.ceil((Date.parse(user.locked_until) - Date.now()) / 60_000));
     throw new HttpError(423,
-      `Too many failed attempts — this account is locked for another ${minutes} minute(s)`,
+      `Too many failed attempts - this account is locked for another ${minutes} minute(s)`,
       'locked', { lockedUntil: user.locked_until, minutes });
   }
   if (!verifyPassword(password, user.password_hash, user.password_salt)) {
@@ -267,7 +267,7 @@ export function authenticate(emailAddr: string, password: string): UserRow {
     run('UPDATE users SET failed_logins = ?, locked_until = ? WHERE id = ?', failed, lockUntil, user.id);
     if (lockUntil) {
       throw new HttpError(423,
-        `Too many failed attempts — this account is locked for ${LOCK_MINUTES} minutes`,
+        `Too many failed attempts - this account is locked for ${LOCK_MINUTES} minutes`,
         'locked', { lockedUntil: lockUntil, minutes: LOCK_MINUTES });
     }
     // Warn only as the limit gets close; earlier than that it is noise, and it
@@ -275,7 +275,7 @@ export function authenticate(emailAddr: string, password: string): UserRow {
     const remaining = MAX_FAILED - failed;
     if (remaining <= 3) {
       throw new HttpError(401,
-        `Invalid email or password — ${remaining} attempt(s) left before the account locks`,
+        `Invalid email or password - ${remaining} attempt(s) left before the account locks`,
         'invalid_credentials', { remainingAttempts: remaining });
     }
     throw genericError();
@@ -298,7 +298,7 @@ export function propertiesForUser(userId: string, role: string) {
   );
   if (rows.length > 0) return rows;
 
-  // A user with no explicit assignment sees everything — but **only while this
+  // A user with no explicit assignment sees everything - but **only while this
   // installation has one property**. That keeps the common single-property case
   // free of pointless admin, without the convenience quietly becoming a hole:
   // the moment a second property is created, an unassigned user can reach

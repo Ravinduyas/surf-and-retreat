@@ -166,8 +166,8 @@ export function AccountsReceivableScreen({ companyId }: { companyId?: string }) 
                                 <td className="py-2">
                                   <Pill tone={t.kind === 'payment' ? 'mint' : 'grey'}>{t.kind}</Pill>
                                 </td>
-                                <td className="py-2 font-mono text-[10px]">{t.invoice ?? '—'}</td>
-                                <td className="py-2 text-dash-muted">{t.reference ?? t.note ?? '—'}</td>
+                                <td className="py-2 font-mono text-[10px]">{t.invoice ?? '-'}</td>
+                                <td className="py-2 text-dash-muted">{t.reference ?? t.note ?? '-'}</td>
                                 <td className="py-2 text-dash-muted">{t.createdBy}</td>
                                 <td className={`py-2 text-right tabular-nums font-bold ${t.kind === 'payment' ? 'text-status-ok' : ''}`}>
                                   {t.kind === 'payment' ? '−' : ''}{money(t.amountMinor)}
@@ -212,7 +212,7 @@ export function AccountsReceivableScreen({ companyId }: { companyId?: string }) 
                         <td className="py-2 font-mono text-[11px] font-bold">{i.number}</td>
                         <td className="py-2 whitespace-nowrap">{longDate(i.issuedAt.slice(0, 10))}</td>
                         <td className="py-2 font-semibold">{i.billTo}</td>
-                        <td className="py-2 text-dash-muted">{i.company ?? '—'}</td>
+                        <td className="py-2 text-dash-muted">{i.company ?? '-'}</td>
                         <td className="py-2 text-right tabular-nums">{money(i.netMinor)}</td>
                         <td className="py-2 text-right tabular-nums text-dash-muted">{money(i.taxMinor)}</td>
                         <td className="py-2 text-right tabular-nums font-bold">{money(i.totalMinor)}</td>
@@ -262,7 +262,7 @@ export function AccountsReceivableScreen({ companyId }: { companyId?: string }) 
                         <td className="py-2.5 font-semibold">{co.name}</td>
                         <td className="py-2.5 text-dash-muted">{co.type.replace('_', ' ')}</td>
                         <td className="py-2.5 text-dash-muted">
-                          {[co.contactName, co.email].filter(Boolean).join(' · ') || '—'}
+                          {[co.contactName, co.email].filter(Boolean).join(' · ') || '-'}
                         </td>
                         <td className="py-2.5 text-right">{bpToPercent(co.commissionBp)}%</td>
                         <td className="py-2.5 text-right tabular-nums">{money(co.creditLimitMinor)}</td>

@@ -35,7 +35,7 @@ export const RoomsGrid: React.FC = () => {
               {/* Image */}
               <Link
                 to={`/rooms/${room.id}`}
-                aria-label={`${room.title} — view details`}
+                aria-label={`${room.title} - view details`}
                 className="relative h-[220px] rounded-2xl overflow-hidden mb-4 shadow-xs bg-[#EAF0E7] block w-full cursor-pointer"
               >
                 <Photo

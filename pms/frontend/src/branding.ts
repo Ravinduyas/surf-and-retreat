@@ -4,13 +4,13 @@ import { config } from './config';
  * What the distribution hub is called on screen.
  *
  * Helio distributes through Beds24, and the property's own guests and clients
- * have no reason to know that — a channel-manager contract is a supplier
+ * have no reason to know that - a channel-manager contract is a supplier
  * relationship, not a product feature, and naming it on screen tells every
  * customer who to go to directly.
  *
  * So the partner's name appears in exactly one place: this constant. Everything
  * user-facing reads it, nothing hardcodes it. Set `VITE_CHANNEL_HUB_NAME` to
- * change the label — including back to "Beds24" on an internal build, where the
+ * change the label - including back to "Beds24" on an internal build, where the
  * setup instructions are easier to follow with the real name on them.
  *
  * Code comments still say Beds24 on purpose. They describe the system as it

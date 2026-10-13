@@ -1,10 +1,10 @@
 // ─────────────────────────────────────────────────────────────
-// Agoda DIRECT connector — YCS (Yield Control System), YCS 5 API.
+// Agoda DIRECT connector - YCS (Yield Control System), YCS 5 API.
 //
 // Protocol: OTA XML for ARI/reservations (OTA_HotelRateAmountNotif,
 // OTA_HotelResRQ/RS, OTA_CancelRQ/RS) + REST/JSON for Content Push
 // and Promotions. Onboarding via Agoda's Onboarding API, then cert.
-// Strong in Asia-Pacific — relevant for Sri Lanka / regional demand.
+// Strong in Asia-Pacific - relevant for Sri Lanka / regional demand.
 // ─────────────────────────────────────────────────────────────
 import type { Connector, PushResult, RawBooking } from '../connector.ts';
 import type {

@@ -5,7 +5,7 @@
 // The organising idea is that **planning and applying are the same code path**.
 // `planChange` works out every cell the change would touch and what each would
 // go from and to; `applyChange` takes that plan and writes it. A preview can
-// therefore never disagree with what actually happens — which is the only way a
+// therefore never disagree with what actually happens - which is the only way a
 // preview is worth showing. A scheduled change stores the same input and runs
 // the same two steps when it falls due.
 // ─────────────────────────────────────────────────────────────
@@ -50,7 +50,7 @@ export interface PlannedCell {
   date: string;
   fromMinor: number;
   toMinor: number;
-  /** The cell had no explicit price — it was inheriting from the plan or parent. */
+  /** The cell had no explicit price - it was inheriting from the plan or parent. */
   inherited: boolean;
 }
 
@@ -122,7 +122,7 @@ export function planChange(propertyId: string, input: RateChangeInput): ChangePl
     throw new HttpError(400, 'Provide a new price, a percentage or an amount to adjust by');
   }
   if (methods.length > 1) {
-    throw new HttpError(400, 'Provide only one of price, percentage or amount — not several');
+    throw new HttpError(400, 'Provide only one of price, percentage or amount - not several');
   }
 
   const dates = targetDates(input);
@@ -131,13 +131,13 @@ export function planChange(propertyId: string, input: RateChangeInput): ChangePl
   const warnings: string[] = [];
 
   if (!dates.length) {
-    warnings.push('No dates match — the days of the week chosen do not occur in this range.');
+    warnings.push('No dates match - the days of the week chosen do not occur in this range.');
   }
   const derived = ratePlans.filter((rp) => rp.parent_id);
   if (derived.length) {
     warnings.push(
       `${derived.map((rp) => rp.code).join(', ')} ${derived.length === 1 ? 'is a derived plan' : 'are derived plans'}`
-      + ' — a price written here is recalculated the next time the parent changes.');
+      + ' - a price written here is recalculated the next time the parent changes.');
   }
 
   const cells: PlannedCell[] = [];
@@ -149,7 +149,7 @@ export function planChange(propertyId: string, input: RateChangeInput): ChangePl
             WHERE property_id = ? AND room_type_id = ? AND rate_plan_id = ? AND date = ?`,
           propertyId, rt.id, rp.id, date,
         );
-        // An unset cell still has an effective price — the plan's base, or its
+        // An unset cell still has an effective price - the plan's base, or its
         // parent's. That is what a percentage moves, and what the operator sees
         // on the calendar, so it is the honest "from".
         const fromMinor = existing?.price_minor
@@ -247,7 +247,7 @@ function queueRatePush(propertyId: string, roomTypeIds: string[], from: string, 
   const channels = all<{ id: string }>(
     // Queue for channels in error too. A channel is marked `error` by one
     // failed call, and a price or availability change made in that window would
-    // otherwise never be recorded at all — not delayed, *lost*. Queueing is
+    // otherwise never be recorded at all - not delayed, *lost*. Queueing is
     // free; the drain retries until it lands.
     `SELECT id FROM channels WHERE property_id = ? AND active = 1
        AND status IN ('connected', 'error')`, propertyId);
@@ -286,7 +286,7 @@ export function applyChange(
     for (const cell of moving) writeCell(propertyId, actor, cell, input, source);
 
     // The channels are told about price movements. What one occupancy pays is
-    // not one of them — the channel is sent the room's own rate — so a cell
+    // not one of them - the channel is sent the room's own rate - so a cell
     // written only for its per-guest table does not queue a push.
     const movers = moving.filter((c) => c.fromMinor !== c.toMinor || c.inherited);
     if (movers.length) {
@@ -330,7 +330,7 @@ export interface CopyPeriodInput {
  * The mapping is by offset, not by date arithmetic on the calendar: day 1 of
  * the source becomes day 1 of the target. That is what "take last December and
  * apply it to this December" means to the person asking, and it keeps weekend
- * shape intact only if they line the ranges up themselves — so the plan reports
+ * shape intact only if they line the ranges up themselves - so the plan reports
  * the day-of-week drift rather than silently reshuffling.
  */
 export function planCopy(propertyId: string, input: CopyPeriodInput): ChangePlan {
@@ -347,7 +347,7 @@ export function planCopy(propertyId: string, input: CopyPeriodInput): ChangePlan
 
   const targetTo = addDays(targetFrom, sourceDates.length - 1);
   if (targetFrom <= sourceTo && sourceFrom <= targetTo) {
-    warnings.push('The source and target periods overlap — prices would be copied onto themselves.');
+    warnings.push('The source and target periods overlap - prices would be copied onto themselves.');
   }
   const sourceDow = new Date(`${sourceFrom}T00:00:00Z`).getUTCDay();
   const targetDow = new Date(`${targetFrom}T00:00:00Z`).getUTCDay();
@@ -508,7 +508,7 @@ export function deleteSeason(propertyId: string, actor: Actor, seasonId: string)
   return { ok: true };
 }
 
-/** Which season a date falls in — highest priority wins where they overlap. */
+/** Which season a date falls in - highest priority wins where they overlap. */
 export function seasonFor(propertyId: string, date: string) {
   return get<any>(
     `SELECT * FROM rate_seasons
@@ -571,7 +571,7 @@ export function cancelScheduledChange(propertyId: string, actor: Actor, schedId:
     schedId, propertyId);
   if (!row) throw new HttpError(404, 'Scheduled change not found');
   if (row.status !== 'scheduled') {
-    throw new HttpError(409, `That change is already ${row.status} — there is nothing to cancel`);
+    throw new HttpError(409, `That change is already ${row.status} - there is nothing to cancel`);
   }
   run(`UPDATE scheduled_rate_changes SET status = 'cancelled', cancelled_at = ? WHERE id = ?`,
     nowIso(), schedId);

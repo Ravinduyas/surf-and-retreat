@@ -11,9 +11,9 @@
 //
 // So two things live here:
 //
-//   · **Comparison** — what Helio holds beside what Beds24 last said, per room
+//   · **Comparison** - what Helio holds beside what Beds24 last said, per room
 //     type, cheap enough to render on a screen.
-//   · **Change** — editing the count in Helio and sending it to Beds24, with the
+//   · **Change** - editing the count in Helio and sending it to Beds24, with the
 //     one guard that makes it safe to hand to a receptionist: you cannot delete
 //     a bed somebody has booked.
 // ─────────────────────────────────────────────────────────────
@@ -117,7 +117,7 @@ export function inventoryDrift(propertyId: string) {
  * Change how much of a room type exists.
  *
  * `rooms` is how many physical rooms; `bedsPerRoom` how many beds in each, for
- * a dorm. Growing adds; shrinking removes from the end — highest-numbered
+ * a dorm. Growing adds; shrinking removes from the end - highest-numbered
  * first, so the rooms people know by name keep their names.
  *
  * Nothing that is sold is ever removed. That check is the difference between an
@@ -158,7 +158,7 @@ export function setInventory(
     }
     if (blocked.length) {
       throw new HttpError(409,
-        `Cannot remove ${blocked.join(', ')} — ${blocked.length === 1 ? 'it has' : 'they have'} `
+        `Cannot remove ${blocked.join(', ')} - ${blocked.length === 1 ? 'it has' : 'they have'} `
         + 'bookings. Move or cancel those first.',
         'rooms_sold');
     }
@@ -179,7 +179,7 @@ export function setInventory(
         roomId, propertyId, roomTypeId, number, nowIso());
     }
 
-    // Beds, for a dorm — brought to `bedsPerRoom` in every room that survives.
+    // Beds, for a dorm - brought to `bedsPerRoom` in every room that survives.
     if (isDorm) {
       const kept = all<any>(
         `SELECT id, number FROM rooms WHERE property_id = ? AND room_type_id = ? AND active = 1
@@ -200,7 +200,7 @@ export function setInventory(
             b.id, propertyId);
           if (n > 0) {
             throw new HttpError(409,
-              `Cannot remove bed ${b.code} — it has bookings. Move or cancel those first.`,
+              `Cannot remove bed ${b.code} - it has bookings. Move or cancel those first.`,
               'beds_sold');
           }
           run('DELETE FROM beds WHERE id = ?', b.id);
@@ -233,7 +233,7 @@ const AUTO_PUSH_KEY = 'inventory.autoPush';
  *
  * **Off unless switched on.** With it on, editing a number on a configuration
  * screen becomes a live change to what the OTAs are selling, with no second
- * look — which is the right trade for a property that keeps Helio as its source
+ * look - which is the right trade for a property that keeps Helio as its source
  * of truth, and the wrong one for anybody still setting up. Defaulting it on
  * would make that choice for them silently.
  */

@@ -1,5 +1,5 @@
 // Client state: UI preferences, the authenticated session, and connectivity.
-// Server data lives in TanStack Query (see queries.ts) — never here.
+// Server data lives in TanStack Query (see queries.ts) - never here.
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import {
@@ -40,7 +40,7 @@ export const useUiStore = create<UiState>()(
 export type AuthPhase =
   | 'booting'          // checking the API and any stored session
   | 'unreachable'      // the API is not answering
-  | 'setup'            // no property exists yet — run the first-run wizard
+  | 'setup'            // no property exists yet - run the first-run wizard
   | 'login'
   | 'password-change'  // signed in, but the password must be replaced first
   | 'property-select'
@@ -259,7 +259,7 @@ onAuthEvent((event) => {
   if (event === 'unauthenticated' && store.phase === 'ready') {
     useAuthStore.setState({
       phase: 'login', user: null, property: null,
-      error: 'Your session expired — please sign in again',
+      error: 'Your session expired - please sign in again',
     });
   }
   if (event === 'setup-required') {

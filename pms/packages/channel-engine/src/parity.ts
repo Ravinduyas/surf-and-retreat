@@ -4,12 +4,12 @@
 // Compares each channel's would-be price against the source-of-truth
 // reference (BAR) and flags disparities. Because we derive every child
 // rate from one parent and push from a single source, parity is clean
-// by construction — this monitor exists to CATCH drift (a manual per-
+// by construction - this monitor exists to CATCH drift (a manual per-
 // channel override, a failed push, an OTA-side promo) before it hurts.
 //
 // Note (2026): Booking.com parity CLAUSES are prohibited in the EEA
 // under the DMA since Nov 2024, but hoteliers still watch parity for
-// ranking/visibility reasons — so the monitor stays useful.
+// ranking/visibility reasons - so the monitor stays useful.
 // ─────────────────────────────────────────────────────────────
 import type { ChannelCode, ParityRow } from './types.ts';
 import type { SourceOfTruth } from './sourceOfTruth.ts';

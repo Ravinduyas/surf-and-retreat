@@ -107,7 +107,7 @@ export const EXPLORE_CARDS: ExploreCard[] = [
   },
 ];
 
-/** "from $12/night" — the room card text for a bundled nightly rate. */
+/** "from $12/night" - the room card text for a bundled nightly rate. */
 export const perNight = (amount: number) => `from $${amount}/night`;
 
 /**
@@ -134,7 +134,7 @@ export const ROOMS: RoomItem[] = [
     capacity: 'Sleeps 6 · Mixed · Ground floor',
     maxGuests: 6,
     features: ['Bunk beds: 2 × 7′×4′, 4 × 6′×5′', 'Ground floor', 'Shared bathroom', 'Mixed dorm'],
-    highlight: 'The social heart of the hostel — easiest place to find a surf buddy.',
+    highlight: 'The social heart of the hostel - easiest place to find a surf buddy.',
   }),
   room({
     id: 'female-dorm',
@@ -166,7 +166,7 @@ export const ROOMS: RoomItem[] = [
     id: 'bunk-double',
     tag: 'Private',
     title: 'Bunk Bed Double Room',
-    description: 'A private ground-floor room with one bunk bed for two — great for friends travelling together.',
+    description: 'A private ground-floor room with one bunk bed for two - great for friends travelling together.',
     image: img('dorm-bunk-close.webp'),
     category: 'Private',
     nightly: 22,
@@ -212,7 +212,7 @@ export const ROOMS: RoomItem[] = [
     capacity: 'Sleeps 2 · Queen bed · Kitchen',
     maxGuests: 2,
     features: ['Kitchen included', 'Private ensuite bathroom', 'Queen-size bed', 'Fan (non-A/C)'],
-    highlight: 'Cook your own meals — made for long stays.',
+    highlight: 'Cook your own meals - made for long stays.',
   }),
   room({
     id: 'double-ac-ensuite',
@@ -225,7 +225,7 @@ export const ROOMS: RoomItem[] = [
     capacity: 'Sleeps 2 · Queen bed · A/C',
     maxGuests: 2,
     features: ['Air conditioning', 'Private ensuite bathroom', 'Queen-size bed', 'Private room'],
-    highlight: 'Our most comfortable double — favourite of couples and remote workers.',
+    highlight: 'Our most comfortable double - favourite of couples and remote workers.',
   }),
 ];
 
@@ -239,7 +239,7 @@ export const SURF_PACKAGES: SurfPackage[] = [
     category: 'Surf Package',
     level: 'Beginner',
     includes: ['5 × 90-min group lessons', 'Board & rash vest all week', 'ISA-certified instructors', 'Video debrief on day 5'],
-    highlight: 'Most guests stand up on day one — Weligama is the easiest wave in Sri Lanka.',
+    highlight: 'Most guests stand up on day one - Weligama is the easiest wave in Sri Lanka.',
     amount: 149,
     unit: ' / week',
     price: '$149 / week',
@@ -253,7 +253,7 @@ export const SURF_PACKAGES: SurfPackage[] = [
     category: 'Surf Package',
     level: 'Intermediate',
     includes: ['4 × coached sessions', 'Daily video analysis', 'Guided trips to Lazy Left', 'Surf theory evening'],
-    highlight: 'Small groups of max 4 — filmed from land and reviewed over coffee.',
+    highlight: 'Small groups of max 4 - filmed from land and reviewed over coffee.',
     amount: 189,
     unit: ' / week',
     price: '$189 / week',
@@ -267,7 +267,7 @@ export const SURF_PACKAGES: SurfPackage[] = [
     category: 'Surf Package',
     level: 'All levels',
     includes: ['Soft-tops to shortboards', 'Free wax & leash', 'Swap boards anytime', 'Free rack storage for guests'],
-    highlight: 'Guests get 20% off all rentals — half-day from just $5.',
+    highlight: 'Guests get 20% off all rentals - half-day from just $5.',
     amount: 5,
     unit: ' / half-day',
     from: true,
@@ -322,7 +322,7 @@ export const SURF_SPOTS: SurfSpot[] = [
     name: 'Weligama Bay',
     distance: 'On your doorstep',
     level: 'Beginner',
-    description: 'A 2 km sandy-bottom beach break — the best learning wave in Sri Lanka.',
+    description: 'A 2 km sandy-bottom beach break - the best learning wave in Sri Lanka.',
   },
   {
     id: 'lazy-left',
@@ -390,21 +390,21 @@ export const TESTIMONIALS: Testimonial[] = [
     name: 'Mara K.',
     origin: 'Berlin, Germany',
     quote:
-      'I came for a week and stayed two months. Morning surf, deep work till four, sunset with the crew — the routine I never wanted to leave.',
+      'I came for a week and stayed two months. Morning surf, deep work till four, sunset with the crew - the routine I never wanted to leave.',
   },
   {
     id: 't2',
     name: 'Dan O.',
     origin: 'Melbourne, Australia',
     quote:
-      'The wifi is genuinely fast — I ran client calls from the booth every day. And I finally learned to surf at 34. Best month of my year.',
+      'The wifi is genuinely fast - I ran client calls from the booth every day. And I finally learned to surf at 34. Best month of my year.',
   },
   {
     id: 't3',
     name: 'Priya S.',
     origin: 'London, UK',
     quote:
-      'The female dorm was spotless and the staff treated us like family. Weligama Bay is five minutes barefoot — you can’t beat that.',
+      'The female dorm was spotless and the staff treated us like family. Weligama Bay is five minutes barefoot - you can’t beat that.',
   },
 ];
 
@@ -446,7 +446,7 @@ export const SERVICES: ServiceItem[] = [
     id: 'skating',
     title: 'Skating',
     description:
-      'Surfskate and skate sessions — keep your balance dialled in on the flat days.',
+      'Surfskate and skate sessions - keep your balance dialled in on the flat days.',
     price: 'Ask at the desk',
     image: img('skate-park.webp'),
     iconType: 'skating',
@@ -519,7 +519,7 @@ export const REVIEWS: Review[] = [
     stayType: 'Surf Camp',
     date: 'August 2026',
     quote:
-      'Stood up on day two thanks to the instructors. Boards, lessons and beach transport all sorted by the hostel — zero hassle, all fun.',
+      'Stood up on day two thanks to the instructors. Boards, lessons and beach transport all sorted by the hostel - zero hassle, all fun.',
   },
   {
     id: 'r2',
@@ -559,7 +559,7 @@ export const REVIEWS: Review[] = [
     stayType: 'Surf Camp',
     date: 'May 2026',
     quote:
-      'Great value surf package and honest coaching with video review. Wish I had booked longer — the intermediate spots trips are worth it alone.',
+      'Great value surf package and honest coaching with video review. Wish I had booked longer - the intermediate spots trips are worth it alone.',
   },
   {
     id: 'r6',
@@ -569,7 +569,7 @@ export const REVIEWS: Review[] = [
     stayType: 'Coliving',
     date: 'April 2026',
     quote:
-      'The 300 Mbps wifi is real — I uploaded video projects daily with no drama. Weligama Bay at sunrise before work never got old.',
+      'The 300 Mbps wifi is real - I uploaded video projects daily with no drama. Weligama Bay at sunrise before work never got old.',
   },
 ];
 
@@ -584,13 +584,13 @@ export const FAQS: FaqItem[] = [
     id: 'faq-season',
     question: 'When is the surf season in Weligama?',
     answer:
-      'The south coast works best from November to April, with clean, gentle waves ideal for learning. Weligama Bay is surfable almost year-round though — summer just brings more onshore wind.',
+      'The south coast works best from November to April, with clean, gentle waves ideal for learning. Weligama Bay is surfable almost year-round though - summer just brings more onshore wind.',
   },
   {
     id: 'faq-transfer',
     question: 'Do you arrange airport transfers?',
     answer:
-      'Yes. We can book a private taxi from Colombo Airport (about 2.5 hours, ~$55) — just send us your flight details after booking. Budget option: the highway bus to Matara plus a short tuk-tuk ride.',
+      'Yes. We can book a private taxi from Colombo Airport (about 2.5 hours, ~$55) - just send us your flight details after booking. Budget option: the highway bus to Matara plus a short tuk-tuk ride.',
   },
   {
     id: 'faq-wifi',
@@ -608,7 +608,7 @@ export const FAQS: FaqItem[] = [
     id: 'faq-private',
     question: 'Do you have private rooms for couples or families?',
     answer:
-      'Yes — we have four queen-bed doubles (with or without A/C, ensuite or shared bathroom, one with its own kitchen) and a private bunk-bed room for two friends. For families we can also connect a private room with dorm beds nearby.',
+      'Yes - we have four queen-bed doubles (with or without A/C, ensuite or shared bathroom, one with its own kitchen) and a private bunk-bed room for two friends. For families we can also connect a private room with dorm beds nearby.',
   },
 ];
 

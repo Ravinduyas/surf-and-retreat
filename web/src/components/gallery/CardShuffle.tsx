@@ -70,7 +70,7 @@ export const CardShuffle: React.FC = () => {
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
     >
-      {/* The stack — cards fan out to the right, so inset them to stay in bounds */}
+      {/* The stack - cards fan out to the right, so inset them to stay in bounds */}
       <div
         className="relative h-[296px] sm:h-[376px] select-none cursor-pointer"
         aria-live="polite"

@@ -5,8 +5,8 @@
 //
 // This exists because of a bug that was invisible to everything else we run.
 //
-// Configuration → Invoice branding was a finished screen — logo upload, size
-// validation, wording, a save button — talking to `GET /api/config/invoice-branding`,
+// Configuration → Invoice branding was a finished screen - logo upload, size
+// validation, wording, a save button - talking to `GET /api/config/invoice-branding`,
 // which had never been written. It answered "Not found" every time anybody
 // opened it. So did `GET /api/invoices/:id/document`, which meant no invoice
 // could be viewed or printed at all: a property could issue one and then had
@@ -18,8 +18,8 @@
 // string. The browser checks drive the screens somebody thought to script. The
 // business suites run against the API and never open a screen.
 //
-// A missing endpoint is not a subtle failure — it is a whole feature that does
-// nothing — so it is worth one cheap check that compares the two lists.
+// A missing endpoint is not a subtle failure - it is a whole feature that does
+// nothing - so it is worth one cheap check that compares the two lists.
 //
 // It needs no database and no browser: it reads the front end's source for
 // call sites, and asks a running server for its route table.
@@ -71,7 +71,7 @@ function sourceFiles(dir: string): string[] {
  *     own, so a non-greedy `\$\{[^}]*\}` stops at the wrong one and leaves the
  *     rest of the expression in the path. Braces are counted instead.
  *   · Not every interpolation is a path segment. `${qs(…)}` and `${params}`
- *     build a *query string*, which the router never sees — turning those
+ *     build a *query string*, which the router never sees - turning those
  *     into `:param` invents a segment and reports a perfectly good call as
  *     missing. They are dropped.
  */
@@ -123,7 +123,7 @@ function normalise(raw: string): string {
  *
  * contains a backtick *inside* its own interpolation, so `[^`'"]*` stops
  * there and yields the truncated `/api/cashbox/transactions${date ? `. That
- * then normalises to `/api/cashbox/transactions:param` — a route nobody has,
+ * then normalises to `/api/cashbox/transactions:param` - a route nobody has,
  * reported against a call that was perfectly fine.
  *
  * Returns null at an unterminated literal rather than guessing.
@@ -214,7 +214,7 @@ async function main() {
    * Two things live outside the table and are perfectly real: `/health`, which
    * `index.ts` answers before the router is consulted, and anything a future
    * change handles the same way. Keeping a hand-written exception list for
-   * those rots — so the check asks the server instead.
+   * those rots - so the check asks the server instead.
    *
    * Probed without a token on purpose. A 401 proves the route exists just as
    * well as a 200 does, and proves it without touching any data. Only a 404
@@ -240,7 +240,7 @@ async function main() {
   for (const m of missing) {
     process.stdout.write(
       `      ${m.method} ${m.path}\n`
-      + `        called from ${m.file}:${m.line} — no such route on the server\n`);
+      + `        called from ${m.file}:${m.line} - no such route on the server\n`);
   }
 
   section('3 · The screens that broke before');

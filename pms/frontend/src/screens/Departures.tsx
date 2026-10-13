@@ -33,7 +33,7 @@ export function DeparturesScreen() {
   }
 
   const cols: GridCol<FrontDeskRow>[] = useMemo(() => [
-    { key: 'room', header: 'Room', width: '8%', render: (r) => <span className="font-black text-[13px]">{r.room ?? '—'}</span> },
+    { key: 'room', header: 'Room', width: '8%', render: (r) => <span className="font-black text-[13px]">{r.room ?? '-'}</span> },
     {
       key: 'guest', header: 'Guest', width: '26%',
       render: (r) => (
@@ -57,7 +57,7 @@ export function DeparturesScreen() {
     },
     {
       key: 'etd', header: 'ETD',
-      render: (r) => <span className="text-dash-muted">{r.etd ?? property?.checkOutTime ?? '—'}</span>,
+      render: (r) => <span className="text-dash-muted">{r.etd ?? property?.checkOutTime ?? '-'}</span>,
     },
     {
       key: 'balance', header: 'Balance', align: 'right',

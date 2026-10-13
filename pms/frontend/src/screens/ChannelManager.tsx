@@ -149,8 +149,8 @@ export function ChannelManagerScreen() {
               {/* The pipe, folded away.
                   Beds24 is not a place anyone books, so it does not belong in a
                   list of where the rooms are sold. Its controls are still here
-                  — test, import, push, disconnect are real operations someone
-                  needs — just behind one click instead of above the OTAs. */}
+                  - test, import, push, disconnect are real operations someone
+                  needs - just behind one click instead of above the OTAs. */}
               <button
                 onClick={() => setShowConnection((v) => !v)}
                 className="flex items-center gap-1.5 mt-6 mb-2 text-[10px] font-bold uppercase
@@ -189,7 +189,7 @@ export function ChannelManagerScreen() {
                         )}
                         {!c.configured && (
                           <p className="text-[11px] text-dash-muted mt-2">
-                            No credentials stored — connect the channel to start distributing.
+                            No credentials stored - connect the channel to start distributing.
                           </p>
                         )}
                       </div>
@@ -306,7 +306,7 @@ export function ChannelManagerScreen() {
                           it failed. `queueStatus` has always returned `lastError` and
                           this table has always dropped it, so a row of red "failed"
                           pills said something was wrong and gave no way at all to find
-                          out what — the one question anybody has when they see it.
+                          out what - the one question anybody has when they see it.
                         */}
                         {queue.data.slice(0, 20).map((q: any) => (
                           <Fragment key={q.id}>
@@ -372,7 +372,7 @@ export function ChannelManagerScreen() {
             <div className="space-y-2">
               <WarnNote>
                 These bookings arrived from a channel but could not be matched to a room type or rate plan.
-                Resolve each one by choosing what it should map to — the mapping is remembered for next time.
+                Resolve each one by choosing what it should map to - the mapping is remembered for next time.
               </WarnNote>
               {rows.map((c) => (
                 <ConflictCard
@@ -555,7 +555,7 @@ function MappingsTab({ channelId, channels, mappings, roomTypes, ratePlans, onSa
                       externalRoomId: u.externalId,
                       externalName: u.name,
                     })}>
-                    Map to {u.suggestedRoomType ?? roomTypes[0]?.name ?? '—'}
+                    Map to {u.suggestedRoomType ?? roomTypes[0]?.name ?? '-'}
                   </PermissionButton>
                 )}
               </div>
@@ -584,10 +584,10 @@ function MappingsTab({ channelId, channels, mappings, roomTypes, ratePlans, onSa
                 <tbody>
                   {rows.map((m) => (
                     <tr key={m.id} className="border-b border-black/[0.03]">
-                      <td className="py-2.5 font-semibold">{m.roomType ?? '—'}</td>
+                      <td className="py-2.5 font-semibold">{m.roomType ?? '-'}</td>
                       <td className="py-2.5 text-dash-muted">{m.ratePlanCode ?? 'Any'}</td>
-                      <td className="py-2.5 font-mono text-[11px]">{m.externalRoomId ?? '—'}</td>
-                      <td className="py-2.5 font-mono text-[11px]">{m.externalRateId ?? '—'}</td>
+                      <td className="py-2.5 font-mono text-[11px]">{m.externalRoomId ?? '-'}</td>
+                      <td className="py-2.5 font-mono text-[11px]">{m.externalRateId ?? '-'}</td>
                       <td className="py-2.5">
                         <Pill tone={m.active && m.externalRoomId ? 'mint' : 'peach'}>
                           {m.externalRoomId ? (m.active ? 'active' : 'inactive') : 'incomplete'}
@@ -720,10 +720,10 @@ function AriTab({ channels, roomTypes, ratePlans, today }: any) {
                         {c.available}
                       </td>
                       <td className="py-2 text-right tabular-nums font-bold">{money(c.priceMinor)}</td>
-                      <td className="py-2 text-center text-dash-muted">{c.minStay ?? '—'}</td>
-                      <td className="py-2 text-center">{c.cta ? <Pill tone="red">yes</Pill> : '—'}</td>
-                      <td className="py-2 text-center">{c.ctd ? <Pill tone="red">yes</Pill> : '—'}</td>
-                      <td className="py-2 text-center">{c.stopSell ? <Pill tone="red">closed</Pill> : '—'}</td>
+                      <td className="py-2 text-center text-dash-muted">{c.minStay ?? '-'}</td>
+                      <td className="py-2 text-center">{c.cta ? <Pill tone="red">yes</Pill> : '-'}</td>
+                      <td className="py-2 text-center">{c.ctd ? <Pill tone="red">yes</Pill> : '-'}</td>
+                      <td className="py-2 text-center">{c.stopSell ? <Pill tone="red">closed</Pill> : '-'}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -846,15 +846,15 @@ function ContentTab({ channelId, channels }: any) {
           ) : current && (
             <div className="space-y-3">
               <div className="grid md:grid-cols-2 gap-x-6 gap-y-3">
-                <Detail label="Listing name" value={current.shortName ?? '—'} />
+                <Detail label="Listing name" value={current.shortName ?? '-'} />
                 <Detail label="Photos" value={String(current.photoCount)} />
-                <Detail label="Cancellation" value={current.cancellationPolicy ?? '—'} />
+                <Detail label="Cancellation" value={current.cancellationPolicy ?? '-'} />
                 <Detail label="Occupancy / stay"
-                  value={`${current.maxOccupancy ?? '—'} guests · ${current.minStay ?? 1}-${current.maxStay ?? '—'} nights`} />
+                  value={`${current.maxOccupancy ?? '-'} guests · ${current.minStay ?? 1}-${current.maxStay ?? '-'} nights`} />
               </div>
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-widest text-dash-muted mb-1">Description</p>
-                <p className="text-[12px]">{current.description || '—'}</p>
+                <p className="text-[12px]">{current.description || '-'}</p>
               </div>
               <div className="flex flex-wrap gap-1.5">
                 {(current.amenities ?? []).map((a: string) => <Pill key={a} tone="mint">{a}</Pill>)}
@@ -977,7 +977,7 @@ function ConnectModal({ open, channel, onClose, onConnect, busy }: any) {
           </Field>
         )}
 
-        <Field label={`${CHANNEL_HUB_SHORT} property id`} hint="Optional — restricts the sync to one property in a multi-property account">
+        <Field label={`${CHANNEL_HUB_SHORT} property id`} hint="Optional - restricts the sync to one property in a multi-property account">
           <TextInput value={externalPropertyId} onChange={setExternalPropertyId} />
         </Field>
 
@@ -1008,7 +1008,7 @@ function ConflictCard({ conflict, roomTypes, ratePlans, onResolve, onIgnore }: a
             Reference {conflict.otaReference} · received {relativeTime(conflict.receivedAt)}
           </p>
           <p className="text-[11px] text-dash-muted mt-1">
-            Channel sent room <span className="font-mono font-bold">{conflict.roomTypeRaw ?? '—'}</span>
+            Channel sent room <span className="font-mono font-bold">{conflict.roomTypeRaw ?? '-'}</span>
             {conflict.ratePlanRaw ? <> and rate <span className="font-mono font-bold">{conflict.ratePlanRaw}</span></> : null}
           </p>
         </div>
@@ -1062,14 +1062,14 @@ function Detail({ label, value }: { label: string; value: string }) {
 /**
  * The OTAs behind the hub.
  *
- * Beds24 is one connection and many shopfronts. Nobody sells on Beds24 — guests
- * book on Hostelworld, Booking.com, Airbnb — and every question a property
+ * Beds24 is one connection and many shopfronts. Nobody sells on Beds24 - guests
+ * book on Hostelworld, Booking.com, Airbnb - and every question a property
  * actually asks is per-shopfront: which one produces, which cancels, which has
  * gone quiet. A screen showing a single "Beds24" row is honest about the pipe
  * and useless about the business.
  *
  * **Every row says how it knows.** Beds24's API cannot answer "which OTAs am I
- * connected to" — `/channels` returns literal null, `/properties/channels`
+ * connected to" - `/channels` returns literal null, `/properties/channels`
  * returns 500, and that is with the `all:channels` scope granted. So the state
  * is assembled from a booking (proof), a rate code (evidence) or a person
  * saying so (declared), and the reason is written next to the state rather than

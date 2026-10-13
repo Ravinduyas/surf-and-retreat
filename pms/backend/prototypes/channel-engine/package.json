@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "DEPRECATED prototype — not wired into the app. See DEPRECATED.md.",
+  "description": "DEPRECATED prototype - not wired into the app. See DEPRECATED.md.",
   "engines": {
     "node": ">=22.6.0"
   },

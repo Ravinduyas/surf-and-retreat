@@ -338,7 +338,7 @@ function AuditTab() {
                       </td>
                       <td className="py-2 text-[10px] text-dash-muted max-w-[280px] truncate"
                         title={JSON.stringify({ before: a.before, after: a.after })}>
-                        {a.after ? JSON.stringify(a.after) : '—'}
+                        {a.after ? JSON.stringify(a.after) : '-'}
                       </td>
                       <td className="py-2 font-mono text-[10px] text-dash-muted">{a.ip}</td>
                     </tr>
@@ -391,7 +391,7 @@ function PropertiesTab() {
                         {!p.active && <Pill tone="peach">Inactive</Pill>}
                       </div>
                       <p className="text-[11px] text-dash-muted">
-                        {p.location || '—'} · {p.rooms} rooms · {p.currency} · business date {p.businessDate}
+                        {p.location || '-'} · {p.rooms} rooms · {p.currency} · business date {p.businessDate}
                       </p>
                     </div>
                   </div>

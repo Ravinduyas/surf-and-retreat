@@ -1,12 +1,12 @@
 // ─────────────────────────────────────────────────────────────
-// Exercises walking a guest — the last resort.
+// Exercises walking a guest - the last resort.
 //
 //   node --experimental-sqlite scripts/walking-check.ts
 //
 // Two things are being proved. First, that the *right* guest is suggested: a
 // VIP, a group member, a long stay and somebody already checked in must never
 // come top of the list, whatever the arithmetic says. Second, that a walked
-// guest is not charged for the room they were sent away from — which is the
+// guest is not charged for the room they were sent away from - which is the
 // mistake that turns a bad night into a complaint and a refund.
 //
 // It builds its own database in a temp directory; the live one is never opened.
@@ -183,7 +183,7 @@ async function main() {
   );
   const regular = book(ctx, { guest: 'Regular Guest', nights: 1 });
   run('UPDATE reservations SET profile_id = ? WHERE id = ?', profileId, regular.id);
-  // Three completed stays on the same profile. Written straight in — the
+  // Three completed stays on the same profile. Written straight in - the
   // booking path rightly refuses an arrival before the open business date.
   for (let i = 0; i < 3; i++) {
     run(
@@ -224,7 +224,7 @@ async function main() {
     roomCostMinor: 12_000,
     transportCostMinor: 2_000,
     compensationMinor: 5_000,
-    reason: 'Oversold — no room of any type',
+    reason: 'Oversold - no room of any type',
   });
   check('the walk is recorded', !!walk.id, walk);
   check('the hotel is kept', walk.hotel === 'The Grand Next Door', walk.hotel);

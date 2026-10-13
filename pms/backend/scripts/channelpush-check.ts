@@ -10,7 +10,7 @@
 // `connected`, the previous error was wiped, and the queued change was dropped
 // without retry.
 //
-// The consequence is the one thing this whole system exists to prevent —
+// The consequence is the one thing this whole system exists to prevent -
 // Booking.com carries on selling a room the property has closed, and Helio
 // shows green. So the assertions below are mostly about *not* claiming success.
 //
@@ -170,7 +170,7 @@ async function main() {
   const P = ctx.propertyId;
 
   section('1 · Reading a write response');
-  // The pure function, from every angle — this is the fix in one place.
+  // The pure function, from every angle - this is the fix in one place.
   check('a clean success is a success',
     readWriteResult({ data: { success: true, data: [{ success: true }] } }).ok === true);
   check('an item failure is NOT a success',
@@ -265,7 +265,7 @@ async function main() {
 
   // ── The property id the writes need ─────────────────────────
   section('5b · Connecting learns which property this is');
-  // Reads work without it — the token already scopes them — so a null
+  // Reads work without it - the token already scopes them - so a null
   // `external_property_id` looks harmless right up until the first *write*,
   // which fails with "this channel has no property id" long after anyone would
   // connect that to the connection they made days earlier. It is filled in from
@@ -311,7 +311,7 @@ async function main() {
       /HELIO_CHANNEL_READONLY/.test(refused?.message ?? ''), refused?.message);
 
     // The queue must survive. Discarding it would leave the OTAs holding
-    // whatever they last heard with nothing left to correct them — the exact
+    // whatever they last heard with nothing left to correct them - the exact
     // silent divergence the rest of this suite exists to prevent.
     const roQid = queueOne(ctx, 'while read-only');
     const drained: any = await channels.processQueue(P, ACTOR, 5);

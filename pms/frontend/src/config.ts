@@ -4,11 +4,11 @@
 // The mirror of `backend/src/config.ts`, and it exists for the same reason:
 // configuration used to be read inline wherever it was wanted, with a fallback
 // written next to it. In this app that produced something worse than an
-// untidy default —
+// untidy default -
 //
 //     import.meta.env.VITE_API_URL ?? 'https://…execute-api…amazonaws.com'
 //
-// — a *production* API address compiled into the source. A build with the
+// - a *production* API address compiled into the source. A build with the
 // variable missing or misspelled did not fail, and did not fall back to
 // localhost. It quietly pointed a developer's browser at the live property's
 // bookings. The address now lives in `.env.production`, where it is a
@@ -18,7 +18,7 @@
 // One thing to understand about Vite: these values are **inlined at build
 // time**, not read when the page loads. `npm run build` bakes in whatever was
 // set then, so changing an API address means rebuilding, and nothing here can
-// ever be a secret — every value ships to the browser in readable JavaScript.
+// ever be a secret - every value ships to the browser in readable JavaScript.
 // Anything that must stay private belongs to the API, behind a login.
 // ─────────────────────────────────────────────────────────────
 
@@ -62,7 +62,7 @@ const SPECS = {
     env: 'VITE_APP_URL',
     kind: 'url',
     doc: 'Public address of this app, used when building a link somebody else has '
-      + 'to open — the check-in QR code, for one. Defaults to whatever host served '
+      + 'to open - the check-in QR code, for one. Defaults to whatever host served '
       + 'the page, which is right in production and wrong on a developer machine: '
       + 'a code containing "localhost" points a phone at itself.',
     fallback: '',
@@ -81,7 +81,7 @@ const SPECS = {
 
 /**
  * Vite replaces `import.meta.env.VITE_X` textually during the build, so the
- * property has to be written out in full — a lookup by variable never gets
+ * property has to be written out in full - a lookup by variable never gets
  * substituted and is `undefined` in the bundle. That is why this is a literal
  * map rather than a loop over `SPECS`.
  */
@@ -140,7 +140,7 @@ function read(key: keyof typeof SPECS): string {
  */
 export const config = Object.freeze({
   apiUrl: read('apiUrl'),
-  /** Empty when unset — callers fall back to `window.location.origin`. */
+  /** Empty when unset - callers fall back to `window.location.origin`. */
   appUrl: read('appUrl'),
   channelHubName: read('channelHubName'),
   channelHubShort: read('channelHubShort'),
@@ -161,7 +161,7 @@ if (problems.length) {
   // eslint-disable-next-line no-console
   console.error(
     `helio.pms is misconfigured:\n${lines}\n\n`
-    + 'These are build-time values. Set them in an .env file and rebuild — '
+    + 'These are build-time values. Set them in an .env file and rebuild - '
     + 'see frontend/.env.example.',
   );
 }

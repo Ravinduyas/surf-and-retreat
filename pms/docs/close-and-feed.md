@@ -9,7 +9,7 @@ Two requests, one of which turned out to be a live defect.
 A property closes rooms for one of two quite different reasons:
 
 - **"Stop the OTAs selling this."** The room still exists, the front desk can
-  still walk somebody into it, and often that is the whole point — pull the last
+  still walk somebody into it, and often that is the whole point - pull the last
   few beds off Hostelworld so the desk can sell them at the door, or hold
   inventory back over a busy weekend.
 - **"Nobody sells this."** Maintenance, a burst pipe, a room being repainted.
@@ -43,7 +43,7 @@ knows it is free, and has the guest in the building.
       screen says the room is closed to OTAs so the receptionist knows why it
       looked unavailable online.
 - [x] **K4 · Both kinds still push to Beds24.** `channels` and `all` both close
-      the dates on the OTAs — the difference is only what Helio itself allows.
+      the dates on the OTAs - the difference is only what Helio itself allows.
 - [ ] **K5 · Say which one you are doing.** The close dialog spells out the
       consequence in a sentence rather than offering a checkbox called "scope".
 
@@ -76,7 +76,7 @@ the queue drains every 60 seconds.
 
 ### Verification
 
-- [x] **K10 · `scripts/closing-check.ts`** — a channel closure does not stop a
+- [x] **K10 · `scripts/closing-check.ts`** - a channel closure does not stop a
       walk-in; an `all` closure stops everyone; existing rows keep their meaning;
       both kinds reach the ARI push; and a closure scoped to one OTA leaves the
       others selling.

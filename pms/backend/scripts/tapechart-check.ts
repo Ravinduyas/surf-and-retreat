@@ -8,7 +8,7 @@
 // boundary comes back from the endpoint **clipped to each chunk**, because the
 // span is computed as MIN/MAX of the reservation's nights within the range that
 // was asked for. Concatenate those and a three-week booking draws as two bars
-// with a seam through the middle — which reads, to anyone glancing at the
+// with a seam through the middle - which reads, to anyone glancing at the
 // chart, as two separate guests and a free night between them.
 //
 // It runs against the real frontend module (no browser, no React) and a second,
@@ -32,7 +32,7 @@ function check(name: string, ok: boolean, detail?: unknown) {
   checks++;
   if (ok) { process.stdout.write(`  ✓ ${name}\n`); return; }
   failures++;
-  process.stdout.write(`  ✗ ${name}${detail === undefined ? '' : ` — ${JSON.stringify(detail)}`}\n`);
+  process.stdout.write(`  ✗ ${name}${detail === undefined ? '' : ` - ${JSON.stringify(detail)}`}\n`);
 }
 function section(title: string) {
   process.stdout.write(`\n${title}\n${'─'.repeat(title.length)}\n`);
@@ -120,7 +120,7 @@ async function main() {
     merged.spans[0].from === long.from && merged.spans[0].to === long.to,
     [merged.spans[0].from, merged.spans[0].to]);
 
-  // Arrival order must not matter — chunks resolve as the network returns them.
+  // Arrival order must not matter - chunks resolve as the network returns them.
   const reversed = mergeChunks([b, a]);
   check('the result does not depend on which chunk arrives first',
     reversed.spans[0].from === merged.spans[0].from
@@ -171,7 +171,7 @@ async function main() {
   section('6b · Merged availability equals one wide query');
   // The occupancy strip is summed from these cells. If stitching lost a date or
   // double-counted one, the chart would report an occupancy the property never
-  // had — so the merge of two chunks is compared against the same range fetched
+  // had - so the merge of two chunks is compared against the same range fetched
   // whole, cell for cell.
   const days = (from: string, n: number) =>
     Array.from({ length: n }, (_, i) => ({
@@ -230,7 +230,7 @@ async function main() {
   check('housekeeping filter excludes a clean room when asking for dirty',
     roomMatches(ROOM, { ...f, housekeeping: ['Occupied Dirty'] }) === false);
 
-  check('filters compose — count reflects all of them',
+  check('filters compose - count reflects all of them',
     activeFilterCount({ ...f, floors: [1], vipOnly: true, search: 'x' }) === 3);
 
   // Search dims rather than hides, so it is kept out of spanMatches on purpose.

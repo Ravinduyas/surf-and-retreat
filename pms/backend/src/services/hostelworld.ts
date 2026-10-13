@@ -2,7 +2,7 @@
 // Hostelworld money: what the guest agreed to pay, what Hostelworld already
 // took, and what is left for the property to collect.
 //
-// A Hostelworld booking arrives with one figure the guest saw — the total —
+// A Hostelworld booking arrives with one figure the guest saw - the total -
 // but the guest does not hand that total over at the desk. Hostelworld
 // collects a deposit at booking time and keeps it as its commission; the guest
 // pays the rest on arrival. Showing only the total therefore overstates what
@@ -16,8 +16,8 @@
 //   Business price         Total − Collected: what the property receives
 //
 // The whole thing is switched on in Configuration → Hostelworld and applies
-// **only** to bookings whose OTA is Hostelworld. Every other booking — direct,
-// website, Booking.com, Airbnb — is untouched whether the switch is on or off.
+// **only** to bookings whose OTA is Hostelworld. Every other booking - direct,
+// website, Booking.com, Airbnb - is untouched whether the switch is on or off.
 //
 // When the credit is posted, it goes on the folio as an *adjustment*, never as
 // a payment. The till counts payments; this money never crossed the counter,
@@ -38,8 +38,8 @@ type Actor = { userId: string; userName: string; propertyId: string };
 //
 // The three figures above are the arithmetic. This is the statement behind
 // them, kept on the booking so a screen can show the desk exactly what the
-// confirmation email shows the property — booking price, deposit paid,
-// balance due, the nights at the prices they sold for — and, beside each
+// confirmation email shows the property - booking price, deposit paid,
+// balance due, the nights at the prices they sold for - and, beside each
 // night, the price that was on sale, so a Hostelworld promotion shows as the
 // difference rather than as a number that mysteriously fails to add up.
 
@@ -183,7 +183,7 @@ export function sameHostelworldDetail(a: HostelworldDetail | null, b: Hostelworl
  * Returned only when the statement has a price for every night of the stay
  * and those prices add up to the total exactly; otherwise null, and the
  * caller falls back to `splitTotal`. The guest paid 7.99 for the first night
- * and 9.40 for the rest, and the folio should say so — not 9.19 seven times.
+ * and 9.40 for the rest, and the folio should say so - not 9.19 seven times.
  */
 export function channelNightRates(
   detail: HostelworldDetail | null | undefined, dates: string[], totalMinor: number,
@@ -295,7 +295,7 @@ export function isHostelworld(otaChannel: string | null | undefined, channelCode
   const name = (otaChannel && otaChannel.trim()) || (channelCode && channelCode.trim()) || '';
   if (!name) return false;
   if (codeForReferer(name) === 'hostelworld') return true;
-  // "Hostelworld.com", "Hostelworld Group" — a trailing word must not hide it.
+  // "Hostelworld.com", "Hostelworld Group" - a trailing word must not hide it.
   return name.toLowerCase().replace(/[^a-z0-9]/g, '').startsWith('hostelworld');
 }
 
@@ -362,7 +362,7 @@ export interface HostelworldMoney {
   /** The credit already sitting on the folio for this, as a positive number. */
   otaCreditMinor: number;
   /**
-   * Hostelworld's full statement — nights, promotion, paid / due, reference,
+   * Hostelworld's full statement - nights, promotion, paid / due, reference,
    * deadlines. A raw fact, shown whether or not the split is switched on;
    * null for other channels and for bookings imported before it was kept.
    */
@@ -512,7 +512,7 @@ export function syncCollectedCredit(
  * Bring every open Hostelworld booking in line with the policy.
  *
  * Runs after the settings are saved, so switching the credit off strikes the
- * lines and switching it on posts them — the property does not have to open
+ * lines and switching it on posts them - the property does not have to open
  * each booking. A booking with no collected figure yet is given one from the
  * policy when `fillMissing` is set, which is what "apply to existing bookings"
  * means: turning the feature on should reach the bookings that were already
@@ -535,7 +535,7 @@ export function applyPolicyToBookings(
     out.scanned++;
     if (opts.fillMissing && policy.enabled && r.ota_collected_minor === null) {
       // The channel figure was never stored for this one, so the percentage
-      // is the only source — the fallback the policy already names.
+      // is the only source - the fallback the policy already names.
       const collected = resolveCollected(policy, r.total_minor);
       run('UPDATE reservations SET ota_collected_minor = ?, updated_at = ? WHERE id = ?',
         collected, nowIso(), r.id);

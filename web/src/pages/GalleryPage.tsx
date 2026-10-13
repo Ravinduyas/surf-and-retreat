@@ -26,7 +26,7 @@ export default function GalleryPage() {
               You <span className="text-[#2C573A]">Sleep</span> In It.
             </>
           }
-          subtitle="The dorms, the bay, the desks and the dinner table — a look around the hostel and the corner of Sri Lanka we call home."
+          subtitle="The dorms, the bay, the desks and the dinner table - a look around the hostel and the corner of Sri Lanka we call home."
           media={<CardShuffle />}
         >
           <Button variant="primary" book>

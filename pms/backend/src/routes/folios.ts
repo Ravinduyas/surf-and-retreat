@@ -92,14 +92,14 @@ router.get('/api/reservations/:id/folios', (ctx: Ctx) =>
     status: f.status, balanceMinor: f.balanceMinor,
   })), { perm: 'folio.read' });
 
-/** Split folio — open another window on the same reservation. */
+/** Split folio - open another window on the same reservation. */
 router.post('/api/reservations/:id/folios', (ctx: Ctx) => {
   const res = get<any>('SELECT * FROM reservations WHERE id = ? AND property_id = ?',
     ctx.params.id, pid(ctx));
   if (!res) notFound('Reservation');
   const folio = openFolio(pid(ctx), {
     reservationId: ctx.params.id,
-    name: str(ctx.body.name ?? `${res.guest_name} — window`, 'name', { max: 120 }),
+    name: str(ctx.body.name ?? `${res.guest_name} - window`, 'name', { max: 120 }),
     type: oneOf(ctx.body.type, 'type', ['guest', 'company', 'master', 'house'] as const, 'guest'),
     companyId: ctx.body.companyId ?? null,
   });
@@ -133,14 +133,14 @@ router.post('/api/folios/:id/charges', (ctx: Ctx) => {
  *
  * `amountMinor` is what the guest is **settling**, before any card fee. The fee
  * is worked out server-side and posted as its own charge, so the amount that
- * lands on the folio is always the amount the desk was shown — a percentage
+ * lands on the folio is always the amount the desk was shown - a percentage
  * computed in the browser is one that will one day disagree with this one,
  * while the guest is standing there holding the card.
  */
 /**
  * An exchange rate off the wire.
  *
- * Rates are the one number here that is not money, so they are not integers —
+ * Rates are the one number here that is not money, so they are not integers -
  * but they are still bounded. A negative or zero rate turns a payment into a
  * refund, and one out by a factor of a million is a typo nobody wants
  * discovered by a folio.
@@ -191,7 +191,7 @@ router.get('/api/payment-methods', (ctx: Ctx) => {
     cardSurchargeEnabled: s.cardSurchargeEnabled,
     cardSurchargeBp: s.cardSurchargeBp,
     cardSurchargeLabel: s.cardSurchargeLabel,
-    /** The property's own currency — what the folio is kept in. */
+    /** The property's own currency - what the folio is kept in. */
     currency,
     /** Everything the desk may be handed, its own money first. */
     currencies: [currency, ...s.currencies.filter((c) => c !== currency)],
@@ -202,7 +202,7 @@ router.get('/api/payment-methods', (ctx: Ctx) => {
  * Today's rates, for the panel that takes the money.
  *
  * Served from the cache and refreshed in front of the request only when the
- * cache has gone past its life — a desk should not wait on a rate feed, and
+ * cache has gone past its life - a desk should not wait on a rate feed, and
  * when the feed cannot be reached the last known rates are returned with the
  * time they were fetched, so the screen can say how old they are rather than
  * pretending they are current.
@@ -240,14 +240,14 @@ router.get('/api/fx/rates', async (ctx: Ctx) => {
   };
 }, { perm: 'folio.read' });
 
-/** The totals before committing — the same arithmetic the write path uses. */
+/** The totals before committing - the same arithmetic the write path uses. */
 router.get('/api/payment-quote', (ctx: Ctx) => quotePayment(
   pid(ctx),
   str(ctx.query.get('method'), 'method', { max: 40 }),
   money(Number(ctx.query.get('amountMinor') ?? 0), 'amountMinor'),
 ), { perm: 'folio.read' });
 
-/** Everything, including inactive methods — the Configuration screen's view. */
+/** Everything, including inactive methods - the Configuration screen's view. */
 router.get('/api/payment-settings', (ctx: Ctx) =>
   paymentSettings(pid(ctx)), { perm: 'config.read' });
 
@@ -316,7 +316,7 @@ router.get('/api/invoices', (ctx: Ctx) => all<any>(
  * One invoice as a printable document.
  *
  * The screen that renders this has existed all along; the endpoint had not,
- * so viewing or printing any invoice answered "Not found" — which meant a
+ * so viewing or printing any invoice answered "Not found" - which meant a
  * property could issue an invoice and then had no way to show it to anybody.
  */
 router.get('/api/invoices/:id/document', (ctx: Ctx) =>
@@ -456,7 +456,7 @@ router.post('/api/cashbox/withdraw', (ctx: Ctx) => {
   return cashboxWithdraw(pid(ctx), ctx.auth, { items: ctx.body?.items, note: ctx.body?.note ?? null });
 }, { perm: 'folio.payment' });
 
-/** Putting money back — the same control, the other direction. */
+/** Putting money back - the same control, the other direction. */
 router.post('/api/cashbox/deposit', (ctx: Ctx) => {
   if (ctx.auth.role !== 'admin') {
     throw new HttpError(403,
@@ -481,7 +481,7 @@ router.get('/api/cashier/shift', (ctx: Ctx) => {
     pid(ctx), ctx.auth.userName, shift.opened_at,
   );
   const byMethod = all<any>(
-    `SELECT COALESCE(method,'—') AS method, COALESCE(SUM(-amount_minor),0) AS total
+    `SELECT COALESCE(method,'-') AS method, COALESCE(SUM(-amount_minor),0) AS total
        FROM folio_lines
       WHERE property_id = ? AND posted_by = ? AND posted_at >= ? AND kind = 'payment' AND voided = 0
       GROUP BY method`,

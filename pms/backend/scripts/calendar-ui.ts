@@ -38,7 +38,7 @@ function section(title: string) {
 // The chart's horizontal scroller, by an explicit hook rather than by guessing
 // which element overflows. The guess used to pick the toolbar once it wrapped,
 // and the resulting failures pointed at the scrolling code rather than at the
-// selector — a test that lies about *where* the fault is costs more than one
+// selector - a test that lies about *where* the fault is costs more than one
 // that simply fails.
 const SCROLLER = `document.querySelector('[data-testid="tape-scroller"]')`;
 
@@ -51,7 +51,7 @@ async function metrics(cdp: Cdp) {
       width: Math.round(el.scrollWidth),
       client: Math.round(el.clientWidth),
       // Day columns in **one** lane. Counting them across the whole grid says
-      // nothing — it scales with the number of rooms, not the number of days,
+      // nothing - it scales with the number of rooms, not the number of days,
       // so a perfectly virtualised chart with 35 lanes still reports a big
       // number. One lane's column count is the actual signal.
       cols: (() => {
@@ -109,7 +109,7 @@ async function main() {
     await scrollBy(cdp, beforeRight.width - beforeRight.client - beforeRight.left - 50);
     await sleep(900);
     const afterRight = await metrics(cdp);
-    check('the scrollable width grew — the future was fetched',
+    check('the scrollable width grew - the future was fetched',
       afterRight.width > beforeRight.width, { before: beforeRight.width, after: afterRight.width });
     check('…and the view actually moved', afterRight.left > beforeRight.left,
       { before: beforeRight.left, after: afterRight.left });
@@ -199,7 +199,7 @@ async function main() {
     })()`);
     await sleep(500);
     const searched = await metrics(cdp);
-    // Search dims rather than hides — the lanes must still be there.
+    // Search dims rather than hides - the lanes must still be there.
     const stillThere = Number(
       (await cdp.evaluate<string>('document.body.innerText')).match(/(\d+) sellable unit/)?.[1] ?? -1);
     check('a search that matches nothing still shows every room',
@@ -232,7 +232,7 @@ async function main() {
     await sleep(800);
     const afterZoom = await metrics(cdp);
     const dayAfter = afterZoom.left / 30;
-    // Same date at the left edge, not the same pixel — that is the whole point.
+    // Same date at the left edge, not the same pixel - that is the whole point.
     check('zooming keeps the same date at the left edge',
       Math.abs(dayAfter - dayBefore) < 3, { dayBefore, dayAfter });
 
@@ -266,7 +266,7 @@ async function main() {
     // The defect this exists for: the label column used to live inside the
     // scrolling area, so scrolling to January took the room numbers with it and
     // the chart read as empty rather than as scrolled. Measuring the label's
-    // position on screen before and after a scroll is the only way to see it —
+    // position on screen before and after a scroll is the only way to see it -
     // the lanes are all still in the DOM either way.
     const labelAt = () => cdp.evaluate<{ x: number; text: string; view: number }>(`(() => {
       const el = ${SCROLLER};

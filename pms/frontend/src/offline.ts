@@ -2,13 +2,13 @@
 // The offline front desk.
 //
 // Hostel wifi drops. A receptionist with a guest in front of them needs to see
-// tonight's arrivals whether or not the connection is up — but a PMS cannot
+// tonight's arrivals whether or not the connection is up - but a PMS cannot
 // simply "work offline" the way a note-taking app can.
 //
 // Helio prevents overbooking because every booking passes through one
 // serialised writer: twelve simultaneous requests for the last room produce
 // exactly one booking. A client that queued bookings offline would destroy that
-// — two devices each take "the last room", both replay, and the property is
+// - two devices each take "the last room", both replay, and the property is
 // oversold with a clean sync log. The same reasoning rules out offline
 // payments, rate changes and the night audit.
 //
@@ -25,7 +25,7 @@ const CACHE_KEY = 'helio.pms.offline.v1';
 const QUEUE_KEY = 'helio.pms.queue.v1';
 
 // Reads worth keeping. Everything a person needs to run the desk for the next
-// few hours, and nothing else — a cached report is not worth the storage or the
+// few hours, and nothing else - a cached report is not worth the storage or the
 // staleness confusion.
 const CACHEABLE = [
   '/api/front-desk',
@@ -67,7 +67,7 @@ const QUEUEABLE: Array<{ method: string; pattern: RegExp; describe: (body: any) 
 const REFUSALS: Array<{ pattern: RegExp; reason: string }> = [
   {
     pattern: /^\/api\/reservations(\/|$)/,
-    reason: 'A booking cannot be taken offline — two devices could sell the same '
+    reason: 'A booking cannot be taken offline - two devices could sell the same '
       + 'room. Write the details down and enter it when the connection is back.',
   },
   {
@@ -123,7 +123,7 @@ function writeCache(map: CacheMap) {
   try {
     localStorage.setItem(CACHE_KEY, JSON.stringify(map));
   } catch {
-    // Storage full. Drop the oldest half rather than losing everything — the
+    // Storage full. Drop the oldest half rather than losing everything - the
     // most recent reads are the ones somebody is about to need.
     const entries = Object.entries(map).sort((a, b) => b[1].at - a[1].at);
     const kept = Object.fromEntries(entries.slice(0, Math.floor(entries.length / 2)));
@@ -239,8 +239,8 @@ function notify() {
  * Order matters: two status changes to the same room must land in the order
  * they were made, or the room ends up in the state it was in first.
  *
- * A **rejected** write is not retried. The server said no — the room was
- * reassigned, the task was cancelled — and hammering it will not change that.
+ * A **rejected** write is not retried. The server said no - the room was
+ * reassigned, the task was cancelled - and hammering it will not change that.
  * It stays in the queue carrying its reason so a person can resolve it, because
  * silently dropping somebody's work is the one outcome worse than failing.
  */
@@ -266,7 +266,7 @@ export async function replayQueue(
         });
         failed++;
       } else {
-        // Still offline, or the server is down. Leave it untouched and stop —
+        // Still offline, or the server is down. Leave it untouched and stop -
         // continuing would just burn through the rest for the same reason.
         updateQueued(item.id, { attempts: item.attempts + 1 });
         break;

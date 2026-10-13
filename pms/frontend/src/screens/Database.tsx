@@ -1,6 +1,6 @@
 // Database health: size, settings, integrity history and maintenance.
 //
-// Everything here answers one question — is the file underneath this business
+// Everything here answers one question - is the file underneath this business
 // sound? The numbers are secondary to the integrity result, which is the only
 // thing on this screen that can tell you your data is wrong.
 import { useState } from 'react';
@@ -51,7 +51,7 @@ export function DatabaseTab() {
                     </p>
                     <p className="text-[12px] text-dash-muted leading-relaxed max-w-xl">
                       {last
-                        ? <>Last checked {relativeTime(last.at)} by {last.triggeredBy} —
+                        ? <>Last checked {relativeTime(last.at)} by {last.triggeredBy} -
                           every page read in {last.durationMs}ms. </>
                         : <>Nothing has verified the file's structure. </>}
                       Checks run on startup and after every night audit; corruption is silent
@@ -95,7 +95,7 @@ export function DatabaseTab() {
                     </p>
                   )}
                   <p className="text-[11px] text-dash-muted mt-2">
-                    Restore from the most recent verified backup — see the Backups tab.
+                    Restore from the most recent verified backup - see the Backups tab.
                   </p>
                 </div>
               )}
@@ -113,11 +113,11 @@ export function DatabaseTab() {
               <WarnNote>
                 {h.walOversized
                   ? 'The write-ahead log has grown larger than the database. Checkpoints are not '
-                    + 'completing — run Checkpoint below.'
+                    + 'completing - run Checkpoint below.'
                   : h.needsVacuum
                     ? `${h.freePercent}% of this file is free space left by deleted rows. `
                       + 'Compact it with Vacuum.'
-                    : 'The query planner has no statistics. Run Analyze — it takes milliseconds '
+                    : 'The query planner has no statistics. Run Analyze - it takes milliseconds '
                       + 'and it is what keeps queries fast as the property fills up.'}
               </WarnNote>
             )}
@@ -138,13 +138,13 @@ export function DatabaseTab() {
                   note="FULL means a committed payment has reached the disk" />
                 <Setting label="Foreign keys" value={h.foreignKeys ? 'enforced' : 'OFF'}
                   good={h.foreignKeys}
-                  note="Enforced, not advisory — a folio cannot outlive its reservation" />
+                  note="Enforced, not advisory - a folio cannot outlive its reservation" />
                 <Setting label="Busy timeout" value={`${h.busyTimeoutMs} ms`}
                   good={h.busyTimeoutMs >= 5000}
                   note="How long a writer waits rather than failing outright" />
                 <Setting label="Planner statistics" value={h.hasStatistics ? 'present' : 'none'}
                   good={h.hasStatistics}
-                  note="ANALYZE results — without them the planner is guessing" />
+                  note="ANALYZE results - without them the planner is guessing" />
                 <Setting label="Schema version" value={h.schemaVersion} good
                   note={`${h.tableCount} tables · ${h.pageCount.toLocaleString()} pages of ${bytes(h.pageSize)}`} />
               </Card>
@@ -178,7 +178,7 @@ export function DatabaseTab() {
                   <Action
                     icon={<Database className="w-3.5 h-3.5" />}
                     title="Vacuum"
-                    body={`Rewrite the file to reclaim ${bytes(h.freeBytes)} of free space. Locks the database while it runs — do it out of hours.`}
+                    body={`Rewrite the file to reclaim ${bytes(h.freeBytes)} of free space. Locks the database while it runs - do it out of hours.`}
                     danger
                     busy={maintain.isPending}
                     onClick={() => setVacuumOpen(true)}
@@ -253,7 +253,7 @@ export function DatabaseTab() {
               open={vacuumOpen}
               title="Vacuum the database?"
               body={`This rewrites the entire file to reclaim ${bytes(h.freeBytes)}. `
-                + 'The database is locked for the duration — nobody can check a guest in while '
+                + 'The database is locked for the duration - nobody can check a guest in while '
                 + 'it runs. On a file this size that is seconds, but do it when the desk is quiet.'}
               confirmLabel="Vacuum"
               busy={maintain.isPending}

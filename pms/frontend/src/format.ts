@@ -41,11 +41,11 @@ export function money(minor: number | null | undefined, opts: { currency?: strin
 }
 
 /**
- * 28500 → "$285", but 550 → "$5.50" — dense, without lying.
+ * 28500 → "$285", but 550 → "$5.50" - dense, without lying.
  *
  * Cents are noise on a $285 room and they are the whole story on a $5.50 dorm
  * bed. Dropping them unconditionally rounded a hostel's rate grid to the
- * nearest dollar, so a bed priced at 5.50 was displayed as "$6" — which read as
+ * nearest dollar, so a bed priced at 5.50 was displayed as "$6" - which read as
  * a nine percent disagreement with the same rate shown on the OTA, and sent
  * somebody looking for a sync fault that did not exist.
  *
@@ -94,7 +94,7 @@ export function parseDate(date: string): Date {
 
 /** '2026-06-04' → 'Thu 4 Jun' */
 export function shortDate(date?: string | null): string {
-  if (!date) return '—';
+  if (!date) return '-';
   const d = parseDate(date);
   if (Number.isNaN(d.getTime())) return date;
   return `${DAYS[d.getUTCDay()]} ${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]}`;
@@ -102,7 +102,7 @@ export function shortDate(date?: string | null): string {
 
 /** '2026-06-04' → '4 Jun 2026' */
 export function longDate(date?: string | null): string {
-  if (!date) return '—';
+  if (!date) return '-';
   const d = parseDate(date);
   if (Number.isNaN(d.getTime())) return date;
   return `${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
@@ -167,25 +167,25 @@ export function today(): string {
 
 /** ISO timestamp → '14:21' */
 export function clock(ts?: string | null): string {
-  if (!ts) return '—';
+  if (!ts) return '-';
   const d = new Date(ts);
-  if (Number.isNaN(d.getTime())) return '—';
+  if (Number.isNaN(d.getTime())) return '-';
   return d.toTimeString().slice(0, 5);
 }
 
 /** ISO timestamp → '4 Jun, 14:21' */
 export function timestamp(ts?: string | null): string {
-  if (!ts) return '—';
+  if (!ts) return '-';
   const d = new Date(ts);
-  if (Number.isNaN(d.getTime())) return '—';
+  if (Number.isNaN(d.getTime())) return '-';
   return `${d.getDate()} ${MONTHS[d.getMonth()]}, ${d.toTimeString().slice(0, 5)}`;
 }
 
 /** ISO timestamp → 'just now' / '4m ago' / '2h ago' / '3 Jun' */
 export function relativeTime(ts?: string | null): string {
-  if (!ts) return '—';
+  if (!ts) return '-';
   const d = new Date(ts);
-  if (Number.isNaN(d.getTime())) return '—';
+  if (Number.isNaN(d.getTime())) return '-';
   const diff = Date.now() - d.getTime();
   if (diff < 60_000) return 'just now';
   if (diff < 3_600_000) return `${Math.floor(diff / 60_000)}m ago`;
@@ -202,15 +202,15 @@ export function bytes(n?: number | null): string {
 }
 
 export function initials(name?: string | null): string {
-  if (!name) return '—';
+  if (!name) return '-';
   return name.trim().split(/\s+/).slice(0, 2).map((p) => p[0]?.toUpperCase() ?? '').join('');
 }
 
 /**
  * Turn the tags the booking engine stamps on a reservation into English.
  *
- * The site records what the guest chose as machine-readable strings —
- * `model:rooms-coworking-surf`, `coworking:2xoffice`, `surfGuests:3` — because
+ * The site records what the guest chose as machine-readable strings -
+ * `model:rooms-coworking-surf`, `coworking:2xoffice`, `surfGuests:3` - because
  * that is what survives a round trip through a database column. Nobody at a
  * front desk should have to read them, and "what did this guest actually buy"
  * is the one thing those tags answer that nothing else in the PMS does.

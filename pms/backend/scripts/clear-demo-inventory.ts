@@ -43,7 +43,7 @@ function fail(s: string): never { throw new Error(s); }
  * Tables that survive a clear.
  *
  * The test for membership is: *would a person have to set this up again, or is
- * it a credential or a record of what happened?* Room rates fail that test —
+ * it a credential or a record of what happened?* Room rates fail that test -
  * they come back from Beds24. Tax rules pass it: someone entered them, they
  * reference no inventory, and re-typing them is how a property ends up billing
  * the wrong VAT.
@@ -55,7 +55,7 @@ const KEEP = new Set([
   'users', 'user_properties', 'sessions', 'password_resets', 'login_attempts',
   'mfa_recovery_codes',
   // Channel connections hold encrypted credentials, so they are never deleted
-  // wholesale — see PARTIAL below, which drops only the ones never configured.
+  // wholesale - see PARTIAL below, which drops only the ones never configured.
   'channels',
   // Configured rules that reference no inventory.
   'settings', 'policies', 'taxes', 'transaction_codes', 'sequences',
@@ -68,7 +68,7 @@ const KEEP = new Set([
 /**
  * Tables that are kept, but not entirely.
  *
- * A channel row that was never configured is a demo placeholder — a name in a
+ * A channel row that was never configured is a demo placeholder - a name in a
  * list with no credential behind it, offering to sync a property that has not
  * agreed to sync with it. Those go. A *connected* channel is the one thing in
  * this database that cannot be recreated from a script, so it stays.
@@ -108,7 +108,7 @@ function hasPropertyId(table: string): boolean {
  * Order the deletes so a table goes before anything it points at.
  *
  * Derived from the foreign keys rather than hand-sequenced, because a hand
- * sequence is correct only until the next table is added — and the failure is a
+ * sequence is correct only until the next table is added - and the failure is a
  * constraint error halfway through a delete, on a database someone is waiting on.
  */
 function deletionOrder(targets: string[]): string[] {
@@ -145,7 +145,7 @@ function realUseSignals(propertyId: string) {
     connectedChannels: one(
       `SELECT COUNT(*) c FROM channels WHERE property_id = ? AND status = 'connected'`, propertyId),
     // A booking that carries an OTA reference was created by an importer, not
-    // by the seeder — the seeded rows have a source of 'OTA' but no reference,
+    // by the seeder - the seeded rows have a source of 'OTA' but no reference,
     // because nothing ever imported them.
     channelBookings: one(
       `SELECT COUNT(*) c FROM reservations
@@ -179,7 +179,7 @@ async function main() {
   if (!target) {
     fail(propertyArg
       ? `No property matches "${propertyArg}".`
-      : `This installation has ${properties.length} properties — name the one to clear.`);
+      : `This installation has ${properties.length} properties - name the one to clear.`);
   }
   out(`\nProperty: ${target.name} (${target.code})`);
 
@@ -206,7 +206,7 @@ async function main() {
   }
 
   if (!counted.length) {
-    out('\nNothing to clear — this property is already empty.');
+    out('\nNothing to clear - this property is already empty.');
     return;
   }
 
@@ -218,8 +218,8 @@ async function main() {
   out(`\nWould keep: the property, ${KEEP.size} configuration and account tables,`);
   out('            and every connected channel with its credentials.');
 
-  // A connected channel is expected — this script exists to make room behind
-  // one — so it is reported, not treated as a blocker. Money and real bookings
+  // A connected channel is expected - this script exists to make room behind
+  // one - so it is reported, not treated as a blocker. Money and real bookings
   // are blockers.
   const s = realUseSignals(target.id);
   const blockers: string[] = [];
@@ -238,7 +238,7 @@ async function main() {
     out('\n   --force given, continuing.');
   }
   if (s.connectedChannels) {
-    out(`\n   ${s.connectedChannels} connected channel(s) — kept, credentials intact.`);
+    out(`\n   ${s.connectedChannels} connected channel(s) - kept, credentials intact.`);
   }
 
   if (!CONFIRM) {
@@ -253,8 +253,8 @@ async function main() {
   }
   out(`  ✓ ${backup.filename}`);
 
-  // One transaction. A half-cleared property — rooms gone, bookings still
-  // pointing at them — is worse than either state on its own.
+  // One transaction. A half-cleared property - rooms gone, bookings still
+  // pointing at them - is worse than either state on its own.
   let deleted = 0;
   tx(() => {
     for (const t of ordered) {
@@ -265,7 +265,7 @@ async function main() {
 
   out(`\n✓ Cleared ${deleted} row(s) from ${target.name}.`);
   out(`  Backup: ${backup.filename}`);
-  out('\nNext — rebuild the inventory from Beds24:');
+  out('\nNext - rebuild the inventory from Beds24:');
   out('  npm run beds24:golive -- --create-room-types --import');
 }
 

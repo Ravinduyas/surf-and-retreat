@@ -11,8 +11,8 @@
 // endpoint refuses anything that does not present it.
 //
 // **The URL has to be reachable from the internet.** Beds24 cannot call
-// `localhost`. Until this is deployed somewhere with a hostname — or put behind
-// a tunnel — the booking poll is what keeps Helio current, which it does on its
+// `localhost`. Until this is deployed somewhere with a hostname - or put behind
+// a tunnel - the booking poll is what keeps Helio current, which it does on its
 // own every minute.
 // ─────────────────────────────────────────────────────────────
 const args = process.argv.slice(2);
@@ -65,9 +65,9 @@ async function main() {
     `${BASE}/properties?id=${propertyId}`, { headers: H })).json() as any;
   const current = read?.data?.[0]?.webhooks ?? {};
   out(`\nProperty ${propertyId} · ${read?.data?.[0]?.name ?? ''}`);
-  out(`  url          ${current.url || '(none — Beds24 is not calling this installation)'}`);
+  out(`  url          ${current.url || '(none - Beds24 is not calling this installation)'}`);
   out(`  customHeader ${current.customHeader ? '(set)' : '(none)'}`);
-  out(`  version      ${current.version ?? '—'}`);
+  out(`  version      ${current.version ?? '-'}`);
 
   if (!target && !CLEAR) {
     out('\nPass a public base URL to register it, or --clear to stop Beds24 calling.');
@@ -84,7 +84,7 @@ async function main() {
     }
     if (!/^https:\/\//i.test(target!)) {
       // The secret travels in a header on every call.
-      fail('The URL must be https — the shared secret is sent with every request.');
+      fail('The URL must be https - the shared secret is sent with every request.');
     }
     if (/localhost|127\.0\.0\.1|0\.0\.0\.0/i.test(target!)) {
       fail('Beds24 cannot reach localhost. Deploy Helio, or put it behind a tunnel,\n'

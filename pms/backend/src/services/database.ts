@@ -4,7 +4,7 @@
 // SQLite asks for very little, but the little it asks for is not optional:
 //
 //   integrity_check     silent corruption is the failure mode that matters.
-//                       A bad page does not raise an error — it returns a
+//                       A bad page does not raise an error - it returns a
 //                       wrong number, and a wrong number in a folio is money.
 //   foreign_key_check   `PRAGMA foreign_keys = ON` only guards new writes; it
 //                       says nothing about rows written before it was set or
@@ -73,7 +73,7 @@ export function databaseHealth() {
     pageCount,
     freePages,
     freeBytes,
-    // Wasted space only matters as a proportion — 2 MB of slack in a 2 GB file
+    // Wasted space only matters as a proportion - 2 MB of slack in a 2 GB file
     // is nothing, the same 2 MB in a 4 MB file means half the reads are air.
     freePercent: pageCount ? Math.round((freePages / pageCount) * 100) : 0,
     journalMode: pragma<string>('journal_mode'),
@@ -116,7 +116,7 @@ export interface CheckResult {
 /**
  * Run both structural checks and record the result.
  *
- * `integrity_check` reads every page, so it is not free — on a database this
+ * `integrity_check` reads every page, so it is not free - on a database this
  * size it is milliseconds, and it is the only thing standing between a bad
  * disk and a wrong invoice.
  */
@@ -230,7 +230,7 @@ export function runMaintenance(action: MaintenanceAction, triggeredBy: string) {
       const row = database.prepare('PRAGMA wal_checkpoint(TRUNCATE)').get() as any;
       const walAfter = fileSize(`${DB_PATH}-wal`);
       detail = row?.busy === 1
-        ? 'A reader was active — the WAL was checkpointed but not truncated'
+        ? 'A reader was active - the WAL was checkpointed but not truncated'
         : `WAL reset (${Math.round((walBefore - walAfter) / 1024)} KB moved into the database)`;
       break;
     }
@@ -240,7 +240,7 @@ export function runMaintenance(action: MaintenanceAction, triggeredBy: string) {
       // write lock throughout, so it is an explicit action, never scheduled.
       if (fileBefore > 512 * 1024 * 1024) {
         throw new HttpError(409,
-          'This database is over 512 MB. VACUUM would lock it for a long time — '
+          'This database is over 512 MB. VACUUM would lock it for a long time - '
           + 'run it out of hours from the command line instead.', 'too_large');
       }
       database.exec('VACUUM');

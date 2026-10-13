@@ -51,7 +51,7 @@ function TwoFactorCard() {
   const [password, setPassword] = useState('');
   const [copied, setCopied] = useState(false);
 
-  // The QR is drawn locally from the otpauth URI — the secret never leaves
+  // The QR is drawn locally from the otpauth URI - the secret never leaves
   // this machine to be turned into an image somewhere else.
   useEffect(() => {
     if (!enrolling) { setQr(null); return; }
@@ -115,7 +115,7 @@ function TwoFactorCard() {
                   ? `Enabled ${status.data.enrolledAt ? relativeTime(status.data.enrolledAt) : ''}. `
                     + `Signing in needs a code from your authenticator app. `
                     + `${status.data.recoveryCodesRemaining} recovery code(s) left.`
-                  : 'Add a second step to sign-in using any authenticator app — Google Authenticator, '
+                  : 'Add a second step to sign-in using any authenticator app - Google Authenticator, '
                     + '1Password, Authy or Microsoft Authenticator. Strongly recommended for accounts '
                     + 'that can change rates, void postings or run the night audit.'}
               </p>
@@ -209,7 +209,7 @@ function TwoFactorCard() {
         )}
       </Card>
 
-      {/* Recovery codes — shown once */}
+      {/* Recovery codes - shown once */}
       <Modal
         open={!!recoveryCodes}
         onClose={() => setRecoveryCodes(null)}

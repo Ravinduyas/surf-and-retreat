@@ -10,7 +10,7 @@
 //
 // That last group is the point of the exercise. Beds24 reports write failures
 // *inside* a successful HTTP response, so the temptation is to treat a 200 as
-// done — which is exactly how a system ends up telling a receptionist a no-show
+// done - which is exactly how a system ends up telling a receptionist a no-show
 // was reported to Booking.com when it was not. Every case below asserts that a
 // failure is recorded as a failure.
 //
@@ -52,7 +52,7 @@ function startStub(): Promise<{ server: Server; base: string }> {
             case 'http-error':
               return send(503, { error: 'Service unavailable' });
             case 'item-error':
-              // A 200 whose body says the write failed — the dangerous shape.
+              // A 200 whose body says the write failed - the dangerous shape.
               return send(200, { success: true, data: [{ success: false, errors: [{ error: 'Booking is already cancelled' }] }] });
             case 'envelope-error':
               return send(200, { success: false, errors: [{ error: 'Property not linked' }] });
@@ -244,7 +244,7 @@ async function main() {
   check('the status code is kept', /503/.test(http.error ?? ''), http.error);
 
   mode = 'no-token';
-  // Drop the cached access token — otherwise the client never asks for a new
+  // Drop the cached access token - otherwise the client never asks for a new
   // one and the refusal is never exercised.
   run(`UPDATE channels SET settings = ? WHERE id = ?`,
     JSON.stringify({ credentials: { refreshToken: 'stub-refresh-token' } }), ctx.channelId);

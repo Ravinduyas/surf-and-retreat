@@ -6,8 +6,8 @@
 // money because a website is slow. So rates are **cached**: fetched from a
 // public feed in the background, written to `fx_rates`, and read from the
 // database on the hot path. A payment taken during an outage still has a rate
-// to be taken at — the last one known, stamped with when it was fetched so
-// nobody mistakes it for today's — and the cashier can override it outright
+// to be taken at - the last one known, stamped with when it was fetched so
+// nobody mistakes it for today's - and the cashier can override it outright
 // when the house rate differs.
 //
 // One direction, everywhere: `rate` is **how many units of the property's own
@@ -17,7 +17,7 @@
 //
 // The feed is open.er-api.com: no key, no signup, 160-odd currencies including
 // the ones a Sri Lankan property is handed daily. Google publishes no rate API
-// — what a search shows comes from licensed feeds that may not be scraped — so
+// - what a search shows comes from licensed feeds that may not be scraped - so
 // "the Google rate" is not something any system can honestly promise.
 // ─────────────────────────────────────────────────────────────
 import { all, get, run } from '../db.ts';
@@ -66,7 +66,7 @@ const row = (base: string, currency: string) => get<{
 /**
  * The rate to convert `currency` into `base`, from the cache.
  *
- * A currency against itself is 1 and is never fetched — a property whose own
+ * A currency against itself is 1 and is never fetched - a property whose own
  * currency went missing from a feed would otherwise be unable to take a
  * payment in it.
  */
@@ -126,13 +126,13 @@ async function withTimeout(url: string): Promise<Response> {
  * Fetch the feed for one base currency and write what came back.
  *
  * The feed answers "one BASE buys this much of X"; the cache holds the inverse,
- * because the question at a till is always "the guest gave me X — what is that
+ * because the question at a till is always "the guest gave me X - what is that
  * worth to us". Rows are replaced one by one rather than the table being
  * emptied first: a feed that answers with half a list should leave the other
  * half of yesterday's rates in place, not delete them.
  *
  * Returns how many rates were written. Never throws for a network or feed
- * failure — the caller falls back to the cache, which is the entire point of
+ * failure - the caller falls back to the cache, which is the entire point of
  * there being one.
  */
 export async function refreshRates(base: string): Promise<{ written: number; error?: string }> {
@@ -177,7 +177,7 @@ export async function refreshIfStale(base: string): Promise<{ written: number; e
 /**
  * Convert minor units of `currency` into minor units of `base`.
  *
- * Both sides are integers — money is never a float here — and the rate is
+ * Both sides are integers - money is never a float here - and the rate is
  * applied once, at the boundary, so the rest of the system keeps working in
  * whole minor units of the property's own currency.
  */

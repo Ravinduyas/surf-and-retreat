@@ -2,7 +2,7 @@
 //
 // A revenue manager does not think in screens. They look at a grid, see that
 // next weekend is filling, and want to raise the rate, close the cheap channel
-// and set a two-night minimum — in one place, on the dates they are already
+// and set a two-night minimum - in one place, on the dates they are already
 // looking at. Making them leave for a "bulk edit rates" modal, then a
 // "restrictions" tab, then a close-out form, is three chances to type the wrong
 // date range.
@@ -62,8 +62,8 @@ export function CalendarEditor({
   const [mode, setMode] = useState<Mode>('price');
 
   // Applies the change to every room type rather than only the row that was
-  // dragged. This is the common case — a property raises all rates for a
-  // holiday, or shuts everything for a refurbishment — and doing it row by row
+  // dragged. This is the common case - a property raises all rates for a
+  // holiday, or shuts everything for a refurbishment - and doing it row by row
   // is where mistakes happen.
   const [allTypes, setAllTypes] = useState(false);
 
@@ -74,7 +74,7 @@ export function CalendarEditor({
    * Dragging is a fine way to say "this weekend" and a poor way to say "all of
    * December": the grid shows a fortnight, so a longer run meant dragging to
    * the edge, waiting for it to scroll, and hoping. It also did not work at all
-   * on a phone — the selection is built from `mousedown`/`mouseenter`/`mouseup`,
+   * on a phone - the selection is built from `mousedown`/`mouseenter`/`mouseup`,
    * and a touch screen sends none of those. Two date fields make the range
    * sayable directly, and keep the drag for the cases where it is quicker.
    */
@@ -205,7 +205,7 @@ export function CalendarEditor({
 
 function PriceEditor({ scope, roomTypeId, currentPriceMinor, priceVaries, onDone, toast }: {
   scope: Record<string, unknown>; roomTypeId: string | null;
-  /** What the selected nights cost now — where the new-price box starts. */
+  /** What the selected nights cost now - where the new-price box starts. */
   currentPriceMinor: number;
   /** True when the selected nights do not all cost the same. */
   priceVaries: boolean;
@@ -228,7 +228,7 @@ function PriceEditor({ scope, roomTypeId, currentPriceMinor, priceVaries, onDone
   // A four-person suite is not one price. The database has carried
   // `occupancy_prices` since the beginning and `quoteStay` already reads it, so
   // a direct booking for two in a family room has always been able to cost less
-  // than a booking for four — there was simply no way to enter the numbers.
+  // than a booking for four - there was simply no way to enter the numbers.
   //
   // It also matters off-property. What Helio sends the channel is a single
   // figure, and the channel decides how many guests that figure covers; get
@@ -251,8 +251,8 @@ function PriceEditor({ scope, roomTypeId, currentPriceMinor, priceVaries, onDone
    *
    * A per-occupancy table has to be anchored, or the room has a rate that
    * belongs to nobody. Properties anchor it one of two ways, so the form asks
-   * which: `first` — the price is what one guest pays and a fuller room pays
-   * more, the boxes above one guest being the operator's to set; or `last` —
+   * which: `first` - the price is what one guest pays and a fuller room pays
+   * more, the boxes above one guest being the operator's to set; or `last` -
    * the price is what a full room pays, and every smaller party pays it too,
    * which is a room sold at one price whatever the occupancy. One of the two
    * is always chosen, so the price on screen is always in the table.
@@ -266,7 +266,7 @@ function PriceEditor({ scope, roomTypeId, currentPriceMinor, priceVaries, onDone
 
   /**
    * What each occupancy box shows. The anchored end is the price above itself,
-   * and under `last` the smaller parties are not priced separately at all —
+   * and under `last` the smaller parties are not priced separately at all -
    * they fall through to that same price, which is what the table means by an
    * occupancy it does not name.
    */
@@ -370,12 +370,12 @@ function PriceEditor({ scope, roomTypeId, currentPriceMinor, priceVaries, onDone
               <p className="text-[10px] text-dash-muted leading-relaxed max-w-2xl">
                 {basis === 'first'
                   ? `${money(priceMinor)} is what one guest pays; type what a larger party pays.`
-                  : `${money(priceMinor)} is what ${lastOccupancy} guests pay, and a smaller party pays it too — one price whatever the occupancy.`}
+                  : `${money(priceMinor)} is what ${lastOccupancy} guests pay, and a smaller party pays it too - one price whatever the occupancy.`}
                 {' '}
                 Leave a box at zero to charge the price above for that occupancy. These
                 figures are what a direct booking is quoted; the channel is sent the single
                 price above, so check that the rate on {CHANNEL_HUB} is defined as covering
-                the whole room — a rate set to cover fewer guests than the room sleeps is
+                the whole room - a rate set to cover fewer guests than the room sleeps is
                 charged more than once.
               </p>
             </>
@@ -409,12 +409,12 @@ function PreviewLine({ plan, savesGuestPrices }: { plan: any; savesGuestPrices?:
   if (!plan.changedCount) {
     // Leaving the nightly rate where it is and pricing the occupancies under it
     // is a real edit, and the commonest one now that the box opens on the
-    // current price — so it must not read as "nothing happens".
+    // current price - so it must not read as "nothing happens".
     return (
       <InfoNote>
         {savesGuestPrices
-          ? 'The nightly price stays as it is — the per-guest prices are saved on these nights.'
-          : 'Nothing would change — those cells already hold this price.'}
+          ? 'The nightly price stays as it is - the per-guest prices are saved on these nights.'
+          : 'Nothing would change - those cells already hold this price.'}
       </InfoNote>
     );
   }
@@ -471,7 +471,7 @@ function AvailabilityEditor({ from, to, roomTypeId, onDone, toast }: {
 
       <p className="text-[10px] text-dash-muted leading-relaxed max-w-2xl">
         A <span className="font-semibold">hold</span> takes rooms out of sale without closing the
-        dates — for a group still deciding, or a room you want to keep back.
+        dates - for a group still deciding, or a room you want to keep back.
         An <span className="font-semibold">overbooking allowance</span> deliberately sells past
         capacity on the expectation of no-shows; it is the one setting here that can create the
         problem the overbooking desk exists to solve, so it starts at zero.
@@ -491,7 +491,7 @@ function AvailabilityEditor({ from, to, roomTypeId, onDone, toast }: {
       </div>
       {!roomTypeId && (
         <p className="text-[10px] text-status-warn text-right">
-          Inventory is held per room type — clear "all room types" to set it.
+          Inventory is held per room type - clear "all room types" to set it.
         </p>
       )}
     </div>
@@ -539,7 +539,7 @@ function RulesEditor({ from, to, roomTypeId, ratePlanId, onDone, toast }: {
         {type === 'cta' && 'Guests may stay through these dates but cannot start a stay on them.'}
         {type === 'ctd' && 'Guests may stay through these dates but cannot check out on them.'}
         {type === 'min-stay' && 'A stay starting on these dates must be at least this many nights.'}
-        {type === 'min-stay-through' && 'Any stay covering these dates must be this long — stricter than a minimum stay, and the right rule for a peak weekend.'}
+        {type === 'min-stay-through' && 'Any stay covering these dates must be this long - stricter than a minimum stay, and the right rule for a peak weekend.'}
         {type === 'max-stay' && 'A stay starting on these dates may be at most this many nights.'}
         {type.includes('advance') && 'Applies to when the booking is made, relative to arrival.'}
       </p>
@@ -578,7 +578,7 @@ function OpenCloseEditor({ selection, from, to, rangeChanged, allTypes, onDone, 
 
   // `anyClosed` was worked out from the cells the grid had selected. Once the
   // dates have been typed beyond those, it no longer describes what is on
-  // screen — so Reopen is offered unconditionally rather than hidden on a stale
+  // screen - so Reopen is offered unconditionally rather than hidden on a stale
   // answer. Reopening dates that were already open is harmless; not being able
   // to reopen the ones you just typed is not.
   const canReopen = rangeChanged || selection.anyClosed;
@@ -642,7 +642,7 @@ function OpenCloseEditor({ selection, from, to, rangeChanged, allTypes, onDone, 
 
       {blocked.length > 0 && (
         <WarnNote>
-          Nothing was changed. These dates are held by a wider closure than what you selected —
+          Nothing was changed. These dates are held by a wider closure than what you selected -
           {blocked.map((b) => ` ${shortDate(b.from)}–${shortDate(b.to)}${b.reason ? ` (${b.reason})` : ''}`)}.
           Reopen it from the Close-outs tab, or narrow it first.
         </WarnNote>

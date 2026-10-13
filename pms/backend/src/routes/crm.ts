@@ -73,7 +73,7 @@ router.get('/api/profiles/:id', (ctx: Ctx) => {
 /**
  * The identity documents and signatures collected across this guest's stays.
  *
- * Metadata only — the images are fetched one at a time through
+ * Metadata only - the images are fetched one at a time through
  * `/api/documents/:id`, which writes an audit entry, because "who looked at
  * this guest's passport, and when" is a question worth being able to answer.
  * `profiles.read` is not enough on its own for that; reading a document still
@@ -233,7 +233,7 @@ router.get('/api/messages', (ctx: Ctx) => {
  *
  * When the booking came through a channel that carries messages, it goes out
  * through that channel. When it did not, the message stays on the thread as a
- * draft and the response says why — it is never shown as sent.
+ * draft and the response says why - it is never shown as sent.
  */
 router.post('/api/messages', async (ctx: Ctx) => sendGuestMessage(pid(ctx), ctx.auth, {
   reservationId: str(ctx.body.reservationId, 'reservationId'),

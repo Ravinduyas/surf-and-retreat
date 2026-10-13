@@ -6,7 +6,7 @@
 // The defect this guards against is quiet and expensive: a Hostelworld guest
 // has already paid part of the stay to Hostelworld, and a desk shown only the
 // total asks for it again. Every check here is one half of getting that
-// right — the arithmetic, which bookings it touches, what the folio does, and
+// right - the arithmetic, which bookings it touches, what the folio does, and
 // what happens when the booking dies.
 //
 // It builds its own database in a temp directory; the live one is never opened.
@@ -150,7 +150,7 @@ async function main() {
   check('business price is total − collected', b1.businessMinor === 8_800, b1.businessMinor);
   const lines1 = creditLines(booking.id);
   check('one credit line is on the folio', lines1.length === 1, lines1.length);
-  check('it is an adjustment, not a payment — the till must not see it',
+  check('it is an adjustment, not a payment - the till must not see it',
     lines1[0]?.kind === 'adjustment' && lines1[0]?.amount_minor === -1_200, lines1[0]);
   check('the folio balance is the credit (nothing posted yet)', b1.balanceMinor === -1_200, b1.balanceMinor);
   check('the credit is reported on the booking', b1.otaCreditMinor === 1_200, b1.otaCreditMinor);
@@ -343,7 +343,7 @@ async function main() {
   // future. Hostelworld's email said Total 64.39 · Deposit 19.32 · Balance
   // due 45.07; Beds24 said price 45.07, deposit 0, commission 19.32, and put
   // the whole story in `rateDescription`. Room 732619 was on sale at 8.50
-  // for the first night and 10.00 for the rest — a 6% promotion throughout.
+  // for the first night and 10.00 for the rest - a 6% promotion throughout.
   function realPayload(bookingId: string | number, from: string) {
     const nights = [0, 1, 2, 3, 4, 5, 6].map((i) =>
       `${addDays(from, i)}, 1 pax, USD ${i === 0 ? '7.99' : '9.40'} per bed, rate id 2032723`);
@@ -361,7 +361,7 @@ async function main() {
   }
   const sellPrices = (b: any) => new Map<string, number>(b.nightly.map((n: any, i: number) => [n.date, i === 0 ? 8.5 : 10]));
   const real = normaliseBooking(realPayload(93684853, addDays(TODAY, 40)));
-  check('the booking price is paid + due — what the email calls Total Price', real.totalMajor === 64.39, real.totalMajor);
+  check('the booking price is paid + due - what the email calls Total Price', real.totalMajor === 64.39, real.totalMajor);
   check('not Beds24\'s `price`, which is the balance due', real.priceMajor === 45.07 && real.dueMajor === 45.07);
   check('the deposit is what Hostelworld says was paid', real.depositMajor === 19.32, real.depositMajor);
   check('seven nightly prices are read and add up to the total',
@@ -412,7 +412,7 @@ async function main() {
   hw.syncCollectedCredit(P, A, imported.id, realPolicy);
   const imp = res.getReservationDetail(P, imported.id);
   check('imported new, the stay total is Hostelworld\'s booking price', imp.totalMinor === 6_439, imp.totalMinor);
-  check('the first night is 7.99 and the rest 9.40 — not 9.19 seven times',
+  check('the first night is 7.99 and the rest 9.40 - not 9.19 seven times',
     imp.nightRows[0].rateMinor === 799 && imp.nightRows.slice(1).every((n: any) => n.rateMinor === 940),
     imp.nightRows.map((n: any) => n.rateMinor));
   check('collected is the deposit, business price is the balance due', imp.otaCollectedMinor === 1_932 && imp.businessMinor === 4_507);

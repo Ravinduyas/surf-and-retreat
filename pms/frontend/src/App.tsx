@@ -21,7 +21,7 @@ import { PropertySelectScreen } from './screens/PropertySelect';
 // downloaded the charting library for Reports and the QR encoder for Security
 // in order to look at this morning's arrivals. Splitting them also means a
 // change to one screen no longer invalidates the whole bundle for every
-// installed copy — which for a PWA that precaches is the difference between
+// installed copy - which for a PWA that precaches is the difference between
 // re-downloading 1.6 MB after a deploy and re-downloading the part that moved.
 //
 // The service worker still precaches every chunk (`globPatterns` in
@@ -154,8 +154,8 @@ export default function App() {
           resetKey={`${screen.name}:${JSON.stringify(screen.params ?? {})}`}
           onGoHome={() => navigate('dashboard')}
         >
-          {/* Inside the boundary, so a chunk that fails to arrive — a deploy
-              mid-shift, a dropped connection — lands on the same "something went
+          {/* Inside the boundary, so a chunk that fails to arrive - a deploy
+              mid-shift, a dropped connection - lands on the same "something went
               wrong, go home" panel as any other screen failure rather than
               leaving the desk on a spinner that never resolves. */}
           <Suspense fallback={<ScreenLoading />}>
@@ -171,7 +171,7 @@ export default function App() {
  * Shown while a screen's chunk is on its way.
  *
  * Deliberately quiet and centred in the content area rather than a full-page
- * spinner: the shell — navigation, search, the property switcher — is already
+ * spinner: the shell - navigation, search, the property switcher - is already
  * on screen and stays usable, so this must read as one panel filling in, not as
  * the application restarting.
  */

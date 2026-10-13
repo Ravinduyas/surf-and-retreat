@@ -5,9 +5,9 @@
 // Three things live here because they have to agree with each other:
 //
 //   1. **The methods.** One list, held in settings and editable in
-//      Configuration. There used to be four hardcoded copies in the front end —
+//      Configuration. There used to be four hardcoded copies in the front end -
 //      the cashier offered "Voucher", check-in offered "OTA prepaid", and the
-//      guest dashboard offered neither — so what a receptionist could record
+//      guest dashboard offered neither - so what a receptionist could record
 //      depended on which screen they happened to be standing on.
 //
 //   2. **The card surcharge.** A percentage the property adds when a guest pays
@@ -55,7 +55,7 @@ export interface PaymentMethod {
   kind: MethodKind;
   active: boolean;
   /**
-   * Overrides the property-wide card rate for this one method — Amex costing
+   * Overrides the property-wide card rate for this one method - Amex costing
    * more than Visa is the usual reason. `null` means "use the default", which
    * is what makes changing the property rate actually change every card.
    */
@@ -67,7 +67,7 @@ export interface PaymentSettings {
   cardSurchargeEnabled: boolean;
   /** The default, in basis points. 300 = 3%. */
   cardSurchargeBp: number;
-  /** Whether the fee is itself taxed. Off by default — see `takePayment`. */
+  /** Whether the fee is itself taxed. Off by default - see `takePayment`. */
   cardSurchargeTaxable: boolean;
   /** What the fee is called on the guest's folio. */
   cardSurchargeLabel: string;
@@ -88,14 +88,14 @@ export interface PaymentSettings {
 /**
  * What a desk starts with: the two ways money actually arrives at a counter.
  *
- * It used to be the union of four older lists — Visa, Mastercard, Amex, bank
- * transfer, company account, voucher, OTA prepaid — which meant a receptionist
+ * It used to be the union of four older lists - Visa, Mastercard, Amex, bank
+ * transfer, company account, voucher, OTA prepaid - which meant a receptionist
  * settling a bill in cash scrolled past six things they would never pick, and
  * a card payment made somebody decide which brand of card it was for no reason
  * the folio cares about. A card is a card; the brand is on the terminal slip.
  *
- * Anything else a property genuinely uses — a company account, an OTA prepaid
- * line, a voucher — is added in Configuration → Payments, where it can also be
+ * Anything else a property genuinely uses - a company account, an OTA prepaid
+ * line, a voucher - is added in Configuration → Payments, where it can also be
  * given its own card fee. Nothing is lost by their absence here: a folio line
  * already written against "Visa" keeps saying Visa, because `methodFor` reads
  * historic values rather than refusing them.
@@ -117,7 +117,7 @@ export const DEFAULT_PAYMENT_SETTINGS: PaymentSettings = {
    * anything.
    *
    * A guest arriving with dollars, euro or pounds is not an edge case a
-   * property should have to switch on before the till can count it — and a
+   * property should have to switch on before the till can count it - and a
    * setting nobody knows exists is a feature nobody has. These are the
    * currencies a property in this part of the world is actually offered, and
    * the shortlist in Configuration → Payments narrows or widens it the moment
@@ -137,7 +137,7 @@ const bp = (v: unknown, fallback: number): number =>
  * Read the settings, merged over the defaults.
  *
  * Merged rather than replaced so a half-written setting cannot leave a property
- * with no way to take money — the failure mode of "methods: []" is a front desk
+ * with no way to take money - the failure mode of "methods: []" is a front desk
  * that cannot be paid.
  */
 export function paymentSettings(propertyId: string): PaymentSettings {
@@ -223,7 +223,7 @@ export interface Surcharge {
  * What the card costs on top, for an amount the guest is settling.
  *
  * Zero for everything that is not a card, and zero when the property has not
- * switched the surcharge on — which is the default, because charging one is a
+ * switched the surcharge on - which is the default, because charging one is a
  * decision a property makes deliberately and in some places may not make at all.
  */
 export function surchargeFor(
@@ -301,8 +301,8 @@ export interface TakePaymentInput {
   /**
    * Property-currency units per one unit of `tenderCurrency`.
    *
-   * Passed in by the desk — the same figure it was shown when it counted the
-   * money — so the payment is recorded at the rate the guest was quoted, not
+   * Passed in by the desk - the same figure it was shown when it counted the
+   * money - so the payment is recorded at the rate the guest was quoted, not
    * at whatever the feed says a second later. Falls back to the cached rate
    * when the caller does not send one.
    */
@@ -312,8 +312,8 @@ export interface TakePaymentInput {
    *
    * A guest hands over two thousand rupees and says "take fifteen hundred".
    * Without this the change could only ever be "everything above the bill",
-   * and the two figures the guest cares about — what they handed over and what
-   * comes back — were arrived at by converting into the property's currency
+   * and the two figures the guest cares about - what they handed over and what
+   * comes back - were arrived at by converting into the property's currency
    * and back again, which is how five hundred rupees becomes four hundred and
    * ninety-nine. Given here, the change is exact subtraction in the money the
    * guest is holding.
@@ -374,7 +374,7 @@ export function takePayment(propertyId: string, actor: Actor, input: TakePayment
   /**
    * The rate to use for one currency: the desk's figure if it sent one, else
    * the cached feed rate. A currency with neither is refused rather than
-   * guessed — a payment converted at a rate nobody chose is worse than a
+   * guessed - a payment converted at a rate nobody chose is worse than a
    * payment that did not go through.
    */
   const rateFor = (currency: string, given: number | null | undefined): number => {
@@ -383,7 +383,7 @@ export function takePayment(propertyId: string, actor: Actor, input: TakePayment
     const cached = cachedRate(propertyCurrency, currency);
     if (cached) return cached.rate;
     throw new HttpError(400,
-      `No exchange rate is known for ${currency} — enter today's rate to take this payment`,
+      `No exchange rate is known for ${currency} - enter today's rate to take this payment`,
       'no_rate', { currency, base: propertyCurrency });
   };
 
@@ -495,7 +495,7 @@ export function takePayment(propertyId: string, actor: Actor, input: TakePayment
     totalMinor: total,
     tenderedMinor: tendered,
     changeMinor,
-    /** The property's own currency — everything above is in it. */
+    /** The property's own currency - everything above is in it. */
     currency: propertyCurrency,
     /** What the guest actually handed over, and what went back to them. */
     tenderCurrency,
@@ -510,10 +510,10 @@ export function takePayment(propertyId: string, actor: Actor, input: TakePayment
   };
 }
 
-/** Payments taken today, by method — what a shift count is checked against. */
+/** Payments taken today, by method - what a shift count is checked against. */
 export function paymentsByMethod(propertyId: string, businessDate: string) {
   return all<{ method: string; total: number; count: number }>(
-    `SELECT COALESCE(method,'—') AS method, COALESCE(SUM(-amount_minor),0) AS total,
+    `SELECT COALESCE(method,'-') AS method, COALESCE(SUM(-amount_minor),0) AS total,
             count(*) AS count
        FROM folio_lines
       WHERE property_id = ? AND business_date = ? AND kind = 'payment' AND voided = 0

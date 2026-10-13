@@ -33,7 +33,7 @@ export function InHouseScreen() {
   const cols: GridCol<FrontDeskRow>[] = useMemo(() => [
     {
       key: 'room', header: 'Room', width: '8%',
-      render: (r) => <span className="font-black text-[13px]">{r.room ?? '—'}</span>,
+      render: (r) => <span className="font-black text-[13px]">{r.room ?? '-'}</span>,
     },
     {
       key: 'guest', header: 'Guest', width: '24%',

@@ -137,7 +137,7 @@ export function setRoomStatus(
   );
   if ((occupied?.n ?? 0) > 0 && status.startsWith('Vacant')) {
     throw new HttpError(409,
-      `Room ${room.number} has an in-house guest — check them out before marking it vacant`,
+      `Room ${room.number} has an in-house guest - check them out before marking it vacant`,
       'room_occupied');
   }
   if (['Out of Order', 'Out of Service'].includes(status) && (occupied?.n ?? 0) > 0) {
@@ -289,7 +289,7 @@ export function blockRoom(
     );
     if ((clash?.n ?? 0) > 0) {
       throw new HttpError(409,
-        `Room ${room.number} has reservations inside that window — move them first`,
+        `Room ${room.number} has reservations inside that window - move them first`,
         'room_has_reservations');
     }
 
@@ -463,7 +463,7 @@ export function discrepancies(propertyId: string, date: string) {
   return roomBoard(propertyId, date).filter((r) => r.discrepancy);
 }
 
-/** Forecast of rooms needing a clean tomorrow — used by the HK planner. */
+/** Forecast of rooms needing a clean tomorrow - used by the HK planner. */
 export function forecast(propertyId: string, date: string) {
   const next = addDays(date, 1);
   const departures = get<{ n: number }>(

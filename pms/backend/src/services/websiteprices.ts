@@ -3,7 +3,7 @@
 //
 // The Surf & Retreat site is a static build with its own room pages and its own
 // booking wizard; it does not use /book. What it needs from the PMS is the one
-// thing that changes from week to week — the price — so the front desk edits a
+// thing that changes from week to week - the price - so the front desk edits a
 // rate here and the site quotes it on the next page load, with nothing to
 // rebuild.
 //
@@ -60,7 +60,7 @@ export function writeWebsiteAddons(propertyId: string, addons: WebsiteAddon[], b
 /**
  * New prices for existing add-ons. Only the price moves: the list itself is the
  * website's menu, so an id the PMS has never heard of is refused rather than
- * created — it would have nowhere on the site to appear.
+ * created - it would have nowhere on the site to appear.
  */
 export function updateWebsiteAddonPrices(
   propertyId: string,

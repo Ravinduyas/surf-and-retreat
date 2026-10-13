@@ -3,20 +3,20 @@
 //
 //   node --experimental-sqlite scripts/ota-check.ts
 //
-// Beds24 will not say which OTAs a property is connected to — `/channels`
+// Beds24 will not say which OTAs a property is connected to - `/channels`
 // returns literal null and `/properties/channels` returns 500, with the
 // `all:channels` scope granted. So the state is assembled from three signals of
 // very different strength, and the whole risk lives in mixing them up:
 //
 //   · a **booking** is proof;
-//   · a **rate code** is evidence — it shows a mapping exists on the Beds24
+//   · a **rate code** is evidence - it shows a mapping exists on the Beds24
 //     side, not that the channel is live, and it outlives the connection that
 //     created it;
 //   · a person **declaring** it is neither, but it is often the only thing
 //     available.
 //
-// Getting this wrong in the flattering direction — showing "connected" for a
-// channel that has never sold anything — is the green tick this codebase keeps
+// Getting this wrong in the flattering direction - showing "connected" for a
+// channel that has never sold anything - is the green tick this codebase keeps
 // taking out. So most of what follows asserts that a state is *not* claimed.
 //
 // It builds its own database. Nothing real is called.
@@ -39,7 +39,7 @@ function check(name: string, ok: boolean, detail?: unknown) {
   checks++;
   if (ok) { process.stdout.write(`  ✓ ${name}\n`); return; }
   failures++;
-  process.stdout.write(`  ✗ ${name}${detail === undefined ? '' : ` — ${JSON.stringify(detail)}`}\n`);
+  process.stdout.write(`  ✗ ${name}${detail === undefined ? '' : ` - ${JSON.stringify(detail)}`}\n`);
 }
 function section(title: string) {
   process.stdout.write(`\n${title}\n${'─'.repeat(title.length)}\n`);
@@ -61,7 +61,7 @@ function seed() {
     `INSERT INTO channels(id, property_id, code, name, kind, active, commission_bp,
                           price_multiplier_bp, status, created_at)
      VALUES('chn1',?,'BEDS24','Beds24','ota',1,0,10000,'connected',?)`, P, nowIso());
-  // A reservation needs something to point at — foreign keys are enforced here,
+  // A reservation needs something to point at - foreign keys are enforced here,
   // which is the whole reason this suite catches shape mistakes at all.
   run(
     `INSERT INTO room_types(id, property_id, code, name, kind, created_at)
@@ -199,7 +199,7 @@ async function main() {
 
   // A dorm sells beds, not rooms. Comparing Beds24's bed count against Helio's
   // *room* count would report drift on every dorm in the property while the two
-  // agree perfectly — so the comparison is against what is actually sellable.
+  // agree perfectly - so the comparison is against what is actually sellable.
   run(
     `INSERT INTO room_types(id, property_id, code, name, kind, created_at)
      VALUES('rtd',?,'DORM','Mixed Dorm','dorm',?)`, P, nowIso());
@@ -272,7 +272,7 @@ async function main() {
   check('removing a booked room is refused too', refused !== null, refused?.message);
   check('the booked count is reported', line.sold >= 0, line.sold);
 
-  // Reducing to exactly what is booked is allowed — only what is sold is safe.
+  // Reducing to exactly what is booked is allowed - only what is sold is safe.
   check('reducing to the booked size is allowed',
     inv.setInventory(P, ACTOR, 'rtd', { rooms: 1, bedsPerRoom: 8 }).sellable === 8);
 

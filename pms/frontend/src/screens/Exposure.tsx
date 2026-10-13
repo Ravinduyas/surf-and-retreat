@@ -1,7 +1,7 @@
 // Last-room protection, and the numbers that make it a decision rather than a guess.
 //
 // The race between two OTAs selling the same last room cannot be prevented by
-// any channel manager — each OTA sells from its own cached copy and tells you
+// any channel manager - each OTA sells from its own cached copy and tells you
 // afterwards. Holding the last room back is the only thing that closes it, and
 // it costs occupancy. So the setting never appears without the property's own
 // figures beside it: how long your pushes actually take, how many nights sold
@@ -42,7 +42,7 @@ export function ExposureTab() {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-5 pt-4 border-t border-black/5">
-              <Stat label="Typical push" value={x.pushes ? duration(x.medianSeconds) : '—'}
+              <Stat label="Typical push" value={x.pushes ? duration(x.medianSeconds) : '-'}
                 sub={x.pushes ? `worst ${duration(x.worstSeconds)}` : 'no data yet'} />
               <Stat label="Waiting now" value={String(x.queuedNow)}
                 sub={x.queuedNow ? 'stale on the OTAs' : 'everything is current'} />
@@ -56,7 +56,7 @@ export function ExposureTab() {
           {x.failedNow > 0 && (
             <WarnNote>
               <span className="font-bold">{x.failedNow} channel update(s) have failed.</span>{' '}
-              Until they go through, the OTAs are selling from availability that is out of date —
+              Until they go through, the OTAs are selling from availability that is out of date -
               this is a larger exposure than the race itself, and unlike the race it is entirely
               fixable. The oldest has been stuck since{' '}
               {x.oldestFailedAt ? relativeTime(x.oldestFailedAt) : 'an unknown time'}. Check the
@@ -72,7 +72,7 @@ export function ExposureTab() {
               </p>
             </div>
             <p className="text-[11px] text-dash-muted leading-relaxed mb-4 max-w-3xl">
-              The race exists because two OTAs can each sell the <em>same last room</em> — neither
+              The race exists because two OTAs can each sell the <em>same last room</em> - neither
               asks Helio first. Holding a room back removes it from the channels, so there is
               nothing to race for. The front desk can still sell it. The cost is real: you will
               finish some nights one room short of full.
@@ -106,7 +106,7 @@ export function ExposureTab() {
                         <td className="py-2.5 font-semibold">{c.name}</td>
                         <td className="py-2.5 text-right tabular-nums">{c.pushes}</td>
                         <td className="py-2.5 text-right tabular-nums">
-                          {c.pushes ? duration(c.medianSeconds) : '—'}
+                          {c.pushes ? duration(c.medianSeconds) : '-'}
                         </td>
                         <td className="py-2.5 text-right">
                           {c.failed
@@ -127,7 +127,7 @@ export function ExposureTab() {
               <p className="text-[11px] text-dash-muted leading-relaxed">
                 <span className="font-bold">How this is measured.</span> Every change queues a push
                 and records when the channel confirmed it. The gap between those two is the window
-                in which an OTA could still sell a room that had already gone —{' '}
+                in which an OTA could still sell a room that had already gone -{' '}
                 {x.pushes ? `about ${duration(x.medianSeconds)} here` : 'not yet measurable here'}.
                 Total exposure over the period was {duration(x.totalExposureSeconds)} across{' '}
                 {x.pushes} push(es). A failed push is excluded from the average, because it never
@@ -151,11 +151,11 @@ function ProtectionRow({ row }: {
   const save = useSetRoomProtection();
   const [value, setValue] = useState(String(row.protectLastRooms));
 
-  // A dorm is sold by the bed, so that is what is being held back — saying
+  // A dorm is sold by the bed, so that is what is being held back - saying
   // "room" here would describe something much larger than what happens.
   const unit = row.isDorm ? 'bed' : 'room';
 
-  // Holding back everything is a stop-sell, not protection — so the choices
+  // Holding back everything is a stop-sell, not protection - so the choices
   // stop one short of what the type actually has.
   const options = Array.from({ length: Math.max(1, row.units) }, (_, i) => ({
     value: String(i),

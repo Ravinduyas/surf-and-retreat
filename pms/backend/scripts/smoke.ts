@@ -77,14 +77,14 @@ async function main() {
   });
 
   if (boot.status === 409) {
-    // Already set up — sign in with the seeded admin instead.
+    // Already set up - sign in with the seeded admin instead.
     const email = config.smokeEmail;
     const password = config.smokePassword;
     if (!email || !password) {
       process.stdout.write(
         '  ! Installation already set up. Re-run against a clean database, or set '
         + 'SMOKE_EMAIL / SMOKE_PASSWORD to sign in.\n');
-      // Set the code and unwind rather than calling process.exit() — exiting
+      // Set the code and unwind rather than calling process.exit() - exiting
       // with an in-flight socket trips a libuv assertion on Windows, which
       // buries this message under a crash dump.
       process.exitCode = 1;
@@ -281,7 +281,7 @@ async function main() {
   section('6 · Cashiering');
   const folioId = checkedIn.folios[0].id;
   const charge = await must('POST', `/api/folios/${folioId}/charges`, {
-    code: 'FNB', description: 'Dinner — restaurant', unitMinor: 4500, qty: 2,
+    code: 'FNB', description: 'Dinner - restaurant', unitMinor: 4500, qty: 2,
   });
   check('charge posts 90.00', charge.amountMinor === 9000, charge.amountMinor);
   check('tax lines posted with the charge', charge.taxLineIds.length > 0, charge.taxLineIds);

@@ -36,7 +36,7 @@ async function main() {
   const password = config.smokePassword;
   if (!email || !password) {
     process.stderr.write('Set SMOKE_EMAIL and SMOKE_PASSWORD to the admin created by scripts/smoke.ts\n');
-    // Unwind rather than process.exit() — exiting with an in-flight socket
+    // Unwind rather than process.exit() - exiting with an in-flight socket
     // trips a libuv assertion on Windows that buries this message.
     process.exitCode = 1;
     return;

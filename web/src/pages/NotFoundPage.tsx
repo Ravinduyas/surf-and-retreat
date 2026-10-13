@@ -20,7 +20,7 @@ export default function NotFoundPage() {
             Doesn&apos;t <span className="text-[#2C573A]">Exist.</span>
           </>
         }
-        subtitle="We could not find that page. Head back to the beach — the rooms, surf lessons and coworking are all one click away."
+        subtitle="We could not find that page. Head back to the beach - the rooms, surf lessons and coworking are all one click away."
       >
         <Button variant="primary" to="/">
           <span>Back to Home</span>

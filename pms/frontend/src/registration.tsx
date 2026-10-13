@@ -32,7 +32,7 @@ const JPEG_QUALITY = 0.82;
 /**
  * Shrink and re-encode a photograph in the browser.
  *
- * Returns a JPEG data URL. Anything that is not an image — a PDF, say — is
+ * Returns a JPEG data URL. Anything that is not an image - a PDF, say - is
  * passed through untouched, because re-encoding a document is not this
  * function's business and a PDF is already small.
  */
@@ -157,7 +157,7 @@ export function SignaturePad({
         // scroll gesture; without it a signature drags the page instead.
         className={`w-full h-36 rounded-2xl border-2 border-dashed touch-none bg-white
                     ${disabled ? 'opacity-50' : 'border-black/15 cursor-crosshair'}`}
-        aria-label="Signature area — sign here"
+        aria-label="Signature area - sign here"
       />
       <div className="flex items-center gap-2">
         <p className="text-[10px] text-dash-muted flex-1">
@@ -355,7 +355,7 @@ function DocumentRow({ doc, onView, onDelete }: {
         </p>
       </div>
       <Button size="sm" variant="ghost" icon={<Eye className="w-3.5 h-3.5" />} onClick={onView}
-        title="Open — recorded in the audit trail">
+        title="Open - recorded in the audit trail">
         View
       </Button>
       <span title="Delete this document">
@@ -373,7 +373,7 @@ function DocumentRow({ doc, onView, onDelete }: {
  * A QR code that opens this reservation's check-in form.
  *
  * The desk creates the booking on a computer and the guest is standing
- * somewhere else — at the door, by the van, in a dorm three floors up. Reading
+ * somewhere else - at the door, by the van, in a dorm three floors up. Reading
  * a confirmation number down a corridor and typing it into a phone is how the
  * wrong reservation gets checked in.
  *
@@ -440,8 +440,8 @@ export function CheckInQr({ reservationId, confirmation, guest }: {
               It points at <span className="font-mono">{base.replace(/^https?:\/\//, '')}</span>,
               which on another device means that device itself. Set{' '}
               <span className="font-mono text-[10px]">VITE_APP_URL</span> to the address
-              staff phones can reach — this machine&apos;s network address, or the deployed
-              site — and rebuild.
+              staff phones can reach - this machine&apos;s network address, or the deployed
+              site - and rebuild.
             </p>
           </div>
         )}

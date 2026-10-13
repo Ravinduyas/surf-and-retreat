@@ -163,7 +163,7 @@ async function main() {
   section('1 · Which channels can carry a reply');
   // Asserted against the codes the catalogue actually issues, not against the
   // implementation's own constants. The previous version of this section tested
-  // `'AIRBNB'` and `'HW'` — neither of which the UI can create — so it passed
+  // `'AIRBNB'` and `'HW'` - neither of which the UI can create - so it passed
   // while every real Airbnb conversation was unreplyable and the screen told the
   // operator Airbnb "does not carry guest messages". A test that quotes the
   // implementation back to itself proves nothing.

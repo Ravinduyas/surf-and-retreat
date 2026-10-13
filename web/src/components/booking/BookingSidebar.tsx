@@ -34,8 +34,8 @@ const NEXT: Record<StepKind, { title: string; text: string }> = {
   guests: { title: 'Tell us who is coming', text: 'Group size decides which rooms you can book.' },
   dates: { title: 'Select your dates', text: 'Pick your arrival and departure on the calendar.' },
   room: { title: 'Pick your room', text: 'Choose a bed that fits your group, or book add-ons or a desk only.' },
-  addons: { title: 'Pick your add-ons', text: 'Optional — surfing, skating, yoga or a co-working desk.' },
-  coworking: { title: 'Add a desk pass', text: 'Optional — a desk on 300 Mbps fiber by the day, week or month.' },
+  addons: { title: 'Pick your add-ons', text: 'Optional - surfing, skating, yoga or a co-working desk.' },
+  coworking: { title: 'Add a desk pass', text: 'Optional - a desk on 300 Mbps fiber by the day, week or month.' },
   details: { title: 'Your details', text: 'Your name and email so we can confirm the booking.' },
   review: { title: 'Review & send', text: 'Check everything, then send the request on WhatsApp or by email.' },
 };
@@ -73,7 +73,7 @@ export const BookingSidebar: React.FC<BookingSidebarProps> = ({ formData, steps,
   // Co-working-only bookings have no room step, so "No bed needed" would only be noise there.
   const hasRoomStep = steps.some((s) => s.kind === 'room');
 
-  const length = !hasDates ? '—' : nights === 0 ? '1 day' : `${nights} ${nights === 1 ? 'night' : 'nights'}`;
+  const length = !hasDates ? '-' : nights === 0 ? '1 day' : `${nights} ${nights === 1 ? 'night' : 'nights'}`;
   const upNext = next ? NEXT[next.kind] : null;
 
   return (
@@ -91,7 +91,7 @@ export const BookingSidebar: React.FC<BookingSidebarProps> = ({ formData, steps,
           <span className={`${eyebrow} text-[#2A4E38]`}>Length of stay</span>
         </span>
         <span className="text-sm text-[#637265]">
-          <span className="text-xl font-bold text-[#18271E] mr-1">{hasDates ? (nights || 1) : '—'}</span>
+          <span className="text-xl font-bold text-[#18271E] mr-1">{hasDates ? (nights || 1) : '-'}</span>
           {hasDates && (nights === 0 ? 'day' : nights === 1 ? 'night' : 'nights')}
         </span>
       </div>

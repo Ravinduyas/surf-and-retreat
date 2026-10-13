@@ -23,7 +23,7 @@ const PORT = Number(process.env.PORT ?? 5000);
 function out(s: string) { process.stdout.write(s + '\n'); }
 
 /**
- * Stop with a message. This throws rather than calling `process.exit()` —
+ * Stop with a message. This throws rather than calling `process.exit()` -
  * exiting while a socket or timer is still open trips a libuv assertion on
  * Windows, which buries the actual message under a crash dump.
  */
@@ -114,7 +114,7 @@ async function main() {
   }
   if (source.integrity !== 'ok') fail(`   ✗ integrity_check says: ${source.integrity}`);
   if (source.fk > 0) fail(`   ✗ ${source.fk} foreign key violation(s) in the backup`);
-  if (!source.property) fail('   ✗ The backup contains no property — wrong file?');
+  if (!source.property) fail('   ✗ The backup contains no property - wrong file?');
   out(`   ✓ integrity ok · no foreign key violations`);
   out(`   ✓ ${source.property.name} (${source.property.code}) · business date ${source.property.business_date}`);
   out(`   ✓ ${Object.entries(source.counts).map(([k, v]) => `${k}=${v}`).join(' · ')}\n`);
@@ -124,7 +124,7 @@ async function main() {
   if (existsSync(DB_PATH)) {
     try {
       const current = inspect(DB_PATH);
-      out(`   ${current.property?.name ?? 'unknown'} · business date ${current.property?.business_date ?? '—'}`);
+      out(`   ${current.property?.name ?? 'unknown'} · business date ${current.property?.business_date ?? '-'}`);
       out(`   ${Object.entries(current.counts).map(([k, v]) => `${k}=${v}`).join(' · ')}`);
       const delta = source.counts.reservations - current.counts.reservations;
       if (delta < 0) {
@@ -132,10 +132,10 @@ async function main() {
         out('     Restoring will discard work recorded since the backup was taken.');
       }
     } catch {
-      out('   (unreadable — this is presumably why you are restoring)');
+      out('   (unreadable - this is presumably why you are restoring)');
     }
   } else {
-    out('   No current database — this will be a fresh restore.');
+    out('   No current database - this will be a fresh restore.');
   }
   out('');
 
@@ -150,7 +150,7 @@ async function main() {
   out('3 · Checking the API is stopped');
   if (await apiIsRunning()) {
     fail(`   ✗ The API is still answering on port ${PORT}.\n`
-      + '     Stop it first — swapping the file under a running server corrupts both.');
+      + '     Stop it first - swapping the file under a running server corrupts both.');
   }
   out('   ✓ Nothing listening\n');
 

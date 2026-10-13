@@ -4,7 +4,7 @@
 //
 //   node --experimental-sqlite scripts/tax-check.ts
 //
-// An audit found a flat fee quoted once and charged once *per night* — a 5.00
+// An audit found a flat fee quoted once and charged once *per night* - a 5.00
 // booking fee billed as 20.00 on a four-night stay, with the folio permanently
 // disagreeing with the confirmation the guest signed. That is a dispute and a
 // compliance problem, not a rounding nit.
@@ -116,7 +116,7 @@ function clearTaxes(propertyId: string) {
  * Book, check in, then run the night audit forward so every night posts.
  *
  * The check-in is not incidental. Without it the guest is a no-show after the
- * first audit and nothing further posts — which made an earlier version of this
+ * first audit and nothing further posts - which made an earlier version of this
  * file report "exactly one fee line" as a pass when in truth only one night had
  * been billed at all. A test that passes for the wrong reason is worse than one
  * that fails.
@@ -230,7 +230,7 @@ async function main() {
     taxLinesFor(mixedStay.id, 'CITY').length === 5,
     taxLinesFor(mixedStay.id, 'CITY').length);
 
-  section('5 · Compounding — the default is unchanged');
+  section('5 · Compounding - the default is unchanged');
   clearTaxes(P);
   addTax(P, { code: 'SVC', name: 'Service charge', mode: 'percent', value: 1000, sortOrder: 1 });
   addTax(P, { code: 'VAT', name: 'VAT', mode: 'percent', value: 1500, sortOrder: 2 });
@@ -243,7 +243,7 @@ async function main() {
   check('and VAT compounds on top of it, as before',
     compounded.find((t) => t.code === 'VAT')?.amountMinor === 1_650, compounded);
 
-  section('6 · Compounding — an explicit base is honoured');
+  section('6 · Compounding - an explicit base is honoured');
   clearTaxes(P);
   addTax(P, { code: 'SVC', name: 'Service charge', mode: 'percent', value: 1000, sortOrder: 1 });
   // Two independent taxes that should each apply to the room net. Before this,

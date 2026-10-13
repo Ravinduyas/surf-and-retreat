@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 // Backups.
 //
-// The whole property is one SQLite file, which makes a good backup cheap — but
+// The whole property is one SQLite file, which makes a good backup cheap - but
 // only if three things are true, and this module enforces all three:
 //
 //   1. It is taken while the system is running, without blocking the front desk.
@@ -20,7 +20,7 @@ import { all, get, run, database, DB_PATH, jsonCol } from '../db.ts';
 import { id, nowIso, HttpError } from '../lib/util.ts';
 import { config } from '../config.ts';
 
-/** Where snapshots are written — outside the database directory by default. */
+/** Where snapshots are written - outside the database directory by default. */
 export const BACKUP_DIR = config.backupDir;
 
 export const BACKUP_ENABLED = config.backupEnabled;
@@ -49,7 +49,7 @@ function fileSize(path: string): number {
   try { return statSync(path).size; } catch { return 0; }
 }
 
-/** Source size counts the WAL too — that is data not yet in the main file. */
+/** Source size counts the WAL too - that is data not yet in the main file. */
 function sourceSize(): number {
   return fileSize(DB_PATH) + fileSize(`${DB_PATH}-wal`);
 }
@@ -60,7 +60,7 @@ function stamp(): string {
 
 /**
  * Take a snapshot, verify it, record it, prune old ones.
- * Never throws for an operational failure — a failed backup is recorded as
+ * Never throws for an operational failure - a failed backup is recorded as
  * failed and reported, because a backup crashing the process would be worse
  * than a backup that did not happen.
  */
@@ -140,7 +140,7 @@ export function verifyBackupFile(path: string): {
     const fkRows = copy.prepare('PRAGMA foreign_key_check').all();
 
     // Reading the tables that carry the money and the inventory is the real
-    // test — a file can pass integrity_check and still be the wrong file.
+    // test - a file can pass integrity_check and still be the wrong file.
     const counts: Record<string, number> = {};
     for (const table of ['properties', 'reservations', 'reservation_nights', 'folio_lines', 'rooms', 'users']) {
       const row = copy.prepare(`SELECT count(*) AS n FROM ${table}`).get() as { n: number };
@@ -184,7 +184,7 @@ export function reverify(backupId: string): BackupRow {
 
 /**
  * Thin out old snapshots: keep everything recent, then one a day, one a week,
- * one a month. Failed snapshots are removed once a later one has verified —
+ * one a month. Failed snapshots are removed once a later one has verified -
  * keeping a broken file helps nobody.
  */
 export function prune(): { removed: number; kept: number } {
@@ -220,7 +220,7 @@ export function prune(): { removed: number; kept: number } {
     if (keep.has(row.id)) continue;
     // Never delete a snapshot that has not reached a final state. A row still
     // marked `running` is either in flight right now, or is the artifact a
-    // restore always leaves behind — deleting either destroys a good backup.
+    // restore always leaves behind - deleting either destroys a good backup.
     if (row.status === 'running') continue;
     try { rmSync(row.path, { force: true }); } catch { /* already gone */ }
     run('UPDATE backups SET pruned_at = ? WHERE id = ?', nowIso(), row.id);
@@ -260,7 +260,7 @@ export function backupStatus() {
     ageHours: ageHours === null ? null : Math.round(ageHours * 10) / 10,
     stale,
     // `health` answers one question only: is the data protected right now?
-    // Whether the *schedule* is running is a separate fact — a manual backup
+    // Whether the *schedule* is running is a separate fact - a manual backup
     // taken ten minutes ago protects the data whether or not automation is on,
     // and an enabled schedule that has never produced a good snapshot protects
     // nothing. Conflating the two hides both problems.
@@ -312,7 +312,7 @@ export function orphanedFiles(): string[] {
  *
  * Two situations need this, and both are normal rather than exceptional:
  *
- *   · A snapshot can never contain its own completion record — the file is
+ *   · A snapshot can never contain its own completion record - the file is
  *     written before the row is marked verified. So a restored database always
  *     has one backup stuck at `running`. The same is true after a crash
  *     mid-backup.
@@ -325,7 +325,7 @@ export function reconcileBackups(): { resolved: number; adopted: number } {
   let adopted = 0;
 
   for (const row of all<BackupRow>(`SELECT * FROM backups WHERE status = 'running'`)) {
-    // A file that is simply not there any more was pruned or moved — that is
+    // A file that is simply not there any more was pruned or moved - that is
     // housekeeping, not a failure, and recording it as failed would raise a
     // false alarm.
     if (!existsSync(row.path)) {
@@ -380,7 +380,7 @@ let timer: ReturnType<typeof setInterval> | null = null;
  * installation is protected immediately rather than in six hours.
  */
 export function startBackupSchedule() {
-  // Always reconcile, even when the schedule is off — the table should reflect
+  // Always reconcile, even when the schedule is off - the table should reflect
   // the directory either way.
   try {
     reconcileBackups();
@@ -411,7 +411,7 @@ export function stopBackupSchedule() {
 
 // ─── Notifications ───────────────────────────────────────────
 function notify(title: string, message: string, severity: 'info' | 'warn' | 'critical') {
-  // Raise against every property — a backup covers all of them.
+  // Raise against every property - a backup covers all of them.
   for (const p of all<{ id: string }>('SELECT id FROM properties WHERE active = 1')) {
     run(
       `INSERT INTO notifications(id, property_id, ts, title, message, source, severity)
@@ -428,7 +428,7 @@ export function backupAfterNightAudit(triggeredBy: string) {
   const status = backupStatus();
   if (status.health === 'stale' || status.health === 'never-run') {
     notify('Backups are not running',
-      `The last verified backup is ${status.ageHours ?? '—'} hours old.`, 'critical');
+      `The last verified backup is ${status.ageHours ?? '-'} hours old.`, 'critical');
   }
   return result;
 }

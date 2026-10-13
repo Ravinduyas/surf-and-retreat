@@ -1,13 +1,13 @@
 // ─────────────────────────────────────────────────────────────
-// The notification feed — what happened, across the whole property.
+// The notification feed - what happened, across the whole property.
 //
 // This is not the alarm system. `alerts.ts` handles the three things worth
 // making a *noise* about; this is the running record a person reads when they
 // choose to: a booking came in, a guest checked out, a payment cleared, a
 // channel push failed, the backup ran.
 //
-// Until now only three things wrote here — the night audit, the backup and the
-// integrity check — so the bell was almost always empty while the property was
+// Until now only three things wrote here - the night audit, the backup and the
+// integrity check - so the bell was almost always empty while the property was
 // busy. Everything significant now goes through `notify()`.
 //
 // Two rules keep the feed worth reading:
@@ -26,7 +26,7 @@ export type NotificationSeverity = 'info' | 'success' | 'warn' | 'critical';
 
 /**
  * Where a notification came from. Used for filtering and for the icon, so it is
- * a closed set rather than free text — a feed with forty distinct sources
+ * a closed set rather than free text - a feed with forty distinct sources
  * cannot be filtered by anybody.
  */
 export type NotificationSource =
@@ -47,8 +47,8 @@ export interface NotifyInput {
 /**
  * Record something that happened.
  *
- * Deliberately never throws. A notification is a side effect of real work — a
- * booking, a payment — and a failure to record the note must not roll back the
+ * Deliberately never throws. A notification is a side effect of real work - a
+ * booking, a payment - and a failure to record the note must not roll back the
  * thing it was noting. That is the one place where swallowing an error is
  * correct rather than lazy.
  */
@@ -129,7 +129,7 @@ export function listNotifications(
   };
 }
 
-/** Everything since a timestamp — what makes the bell update without a refresh. */
+/** Everything since a timestamp - what makes the bell update without a refresh. */
 export function notificationsSince(propertyId: string, userId: string, since: string) {
   return all<any>(
     `SELECT * FROM notifications

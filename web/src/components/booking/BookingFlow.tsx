@@ -178,7 +178,7 @@ export const BookingFlow: React.FC<BookingFlowProps> = ({ initialTab = 'stay', i
           <CheckCircle2 className="w-12 h-12 text-[#2C573A] mx-auto animate-bounce" />
           <h2 className="text-xl font-bold text-[#18271E]">Almost there!</h2>
           <p className="text-sm text-[#5D6D5F]">
-            Your request is written out in {sentVia === 'whatsapp' ? 'WhatsApp' : 'your mail app'} — just hit send
+            Your request is written out in {sentVia === 'whatsapp' ? 'WhatsApp' : 'your mail app'} - just hit send
             there. We&apos;ll reply within 24 hours to confirm. See you in Weligama!
           </p>
           <p className="text-xs text-[#5D6D5F]">
@@ -293,7 +293,7 @@ export const BookingFlow: React.FC<BookingFlowProps> = ({ initialTab = 'stay', i
                           </span>
                           <span className="block text-xs text-[#637265] mt-0.5">
                             {mode === 'stay'
-                              ? 'Book co-working only — no room needed.'
+                              ? 'Book co-working only - no room needed.'
                               : 'Switch to a stay with a room, add-ons and an optional desk.'}
                           </span>
                         </span>

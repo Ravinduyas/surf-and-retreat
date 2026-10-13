@@ -28,12 +28,12 @@ const DOW = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 /**
  * The rows the rate calendar shows.
  *
- * A package plan prices a website package — bed, desk and lessons together —
+ * A package plan prices a website package - bed, desk and lessons together -
  * rather than the room, so it doubles every room type in a grid that is read to
  * answer "what does this room cost tonight". They are hidden here, not removed:
  * the plans, their rates and everything downstream of them are untouched, and
  * picking one in the rate-plan filter above brings its row straight back. A
- * property whose only plans are packages keeps them on screen — an empty grid
+ * property whose only plans are packages keeps them on screen - an empty grid
  * would be a worse answer than the one it has.
  */
 const shownRows = <T extends { ratePlanId: string; bookingModel?: string | null }>(
@@ -44,7 +44,7 @@ const shownRows = <T extends { ratePlanId: string; bookingModel?: string | null 
   return rows.filter((r) => !r.bookingModel || r.ratePlanId === pickedRatePlanId);
 };
 
-/** One calendar row is one room type × rate plan — the scope of a closure. */
+/** One calendar row is one room type × rate plan - the scope of a closure. */
 const rowKey = (row: { roomTypeId: string; ratePlanId: string }) =>
   `${row.roomTypeId}-${row.ratePlanId}`;
 const selKey = (s: GridSelection) => `${s.roomTypeId}-${s.ratePlanId}`;
@@ -84,7 +84,7 @@ export function RatesInventoryScreen() {
    * length.
    *
    * A fixed set of window sizes is the wrong shape for the job. Rates are set
-   * against a season, a school holiday, a festival — periods with their own
+   * against a season, a school holiday, a festival - periods with their own
    * start and end that rarely fall on a 7, 14 or 30 day boundary from today.
    * The old control could not express "1 December to 6 January" at all, and its
    * longest option was a month, which meant a property pricing next summer
@@ -126,10 +126,10 @@ export function RatesInventoryScreen() {
 
   /**
    * Where the grid is scrolled to, which is a separate question from which
-   * dates it holds — and the one that made "Today" look broken.
+   * dates it holds - and the one that made "Today" look broken.
    *
    * With a 180-day window starting today, scrolled out to February, pressing
-   * Today set the range to today…+179 — exactly what it already was. No state
+   * Today set the range to today…+179 - exactly what it already was. No state
    * changed, so nothing re-rendered, so the grid stayed in February and the
    * button appeared to do nothing at all.
    */
@@ -151,13 +151,13 @@ export function RatesInventoryScreen() {
    *
    * This has to wait for the data, not just the dates. Changing the window
    * changes the query key, which puts the screen into its loading state, which
-   * unmounts the grid — so a scroll issued when the dates changed is applied to
+   * unmounts the grid - so a scroll issued when the dates changed is applied to
    * an element that is about to be replaced, and the replacement arrives at
    * zero. Positioning once the rows are actually rendered is the only version
    * that holds.
    *
    * `landedFor` keys on the window the *data* describes, so a refetch of the
-   * same window — every fifteen seconds, and on every window focus — leaves the
+   * same window - every fifteen seconds, and on every window focus - leaves the
    * operator's scroll position alone.
    */
   const landedFor = useRef('');
@@ -199,7 +199,7 @@ export function RatesInventoryScreen() {
    * Which booking-engine packages have no rate plan behind them.
    *
    * Until one exists, the site prices that package by adding the room rate to
-   * the extras table — a figure the property never set and cannot move on its
+   * the extras table - a figure the property never set and cannot move on its
    * own. The Rate plans tab offers to create the missing ones.
    */
   const missingPackages = PACKAGE_MODELS.filter(
@@ -270,7 +270,7 @@ export function RatesInventoryScreen() {
   const [bulkDows, setBulkDows] = useState<string[]>([]);
 
   // The one description of the change, shared by the preview, the apply call
-  // and the scheduler — so all three are talking about the same thing.
+  // and the scheduler - so all three are talking about the same thing.
   const bulkBody: Record<string, unknown> | null = bulkFrom && bulkTo && bulkTo >= bulkFrom
     ? {
       from: bulkFrom, to: bulkTo,
@@ -288,7 +288,7 @@ export function RatesInventoryScreen() {
       <SectionHeader
         eyebrow="Revenue"
         title="Rates & inventory"
-        // Seven tabs are too tall to sit on the title's baseline — pinned to the
+        // Seven tabs are too tall to sit on the title's baseline - pinned to the
         // top right they read as the screen's own navigation, which is what they
         // are, rather than as something hanging off the heading.
         actionAlign="top"
@@ -447,7 +447,7 @@ export function RatesInventoryScreen() {
                           <p className="text-[12px] font-bold truncate" title={row.roomType}>{row.roomType}</p>
                           <Pill tone="grey">{row.ratePlanCode}</Pill>
                           {/* A package row prices the whole website package for
-                              this room — bed, desk and lessons — not the bed. */}
+                              this room - bed, desk and lessons - not the bed. */}
                           {row.bookingModel && (
                             <Pill tone="mint">
                               package
@@ -475,7 +475,7 @@ export function RatesInventoryScreen() {
                               }}
                               onMouseUp={() => commitDrag(row)}
                               title={c.stopSell
-                                ? `Closed for sale${c.closeReason ? ` — ${c.closeReason}` : ''}`
+                                ? `Closed for sale${c.closeReason ? ` - ${c.closeReason}` : ''}`
                                 : 'Drag to select dates to close'}
                               className={`shrink-0 px-1 space-y-[3px] cursor-pointer select-none rounded-lg
                                 ${c.stopSell ? 'bg-status-bad/10 ring-1 ring-inset ring-status-bad/25' : ''}
@@ -552,7 +552,7 @@ export function RatesInventoryScreen() {
                     {missingPackages.map((m) => BOOKING_MODEL_LABELS[m]).join(' and ')}
                     {missingPackages.length === 1 ? ' is' : ' are'} priced on the website by adding the
                     room rate to the surf and coworking prices. Give each one a plan and it becomes a row
-                    in the rate calendar, priced per date like any other rate — and priced separately from
+                    in the rate calendar, priced per date like any other rate - and priced separately from
                     the other.
                   </p>
                 </div>
@@ -561,7 +561,7 @@ export function RatesInventoryScreen() {
                   onClick={async () => {
                     try {
                       await ensurePackages.mutateAsync();
-                      toast.success('Package rate plans created — set their prices in the rate calendar');
+                      toast.success('Package rate plans created - set their prices in the rate calendar');
                     } catch (e) { toast.fail(e); }
                   }}>
                   Create package plans
@@ -672,7 +672,7 @@ export function RatesInventoryScreen() {
                           <td className="py-2.5 text-dash-muted">{r.channelCode ?? 'All channels'}</td>
                           <td className="py-2.5">{longDate(r.dateFrom)}</td>
                           <td className="py-2.5">{longDate(r.dateTo)}</td>
-                          <td className="py-2.5 text-right font-bold">{r.value ?? '—'}</td>
+                          <td className="py-2.5 text-right font-bold">{r.value ?? '-'}</td>
                           <td className="py-2.5 text-right">
                             <PermissionButton permission="rates.write" size="sm" variant="ghost"
                               onClick={() => setDeleteRestrictionId(r.id)}>
@@ -699,7 +699,7 @@ export function RatesInventoryScreen() {
             </PermissionButton>
           </div>
           <QueryState query={yieldRules} loadingRows={3} empty="No yield rules"
-            emptyHint="Rules adjust the resolved rate automatically — e.g. +10% when occupancy is above 80%.">
+            emptyHint="Rules adjust the resolved rate automatically - e.g. +10% when occupancy is above 80%.">
             {(rows) => (
               <div className="space-y-2">
                 {rows.map((y) => (
@@ -842,7 +842,7 @@ export function RatesInventoryScreen() {
             </div>
           </Field>
 
-          <Field label="Rate plans" hint="Leave empty to apply to every parent (non-derived) plan — derived plans follow automatically">
+          <Field label="Rate plans" hint="Leave empty to apply to every parent (non-derived) plan - derived plans follow automatically">
             <div className="flex flex-wrap gap-1.5">
               {(ratePlans.data ?? []).map((rp) => (
                 <button key={rp.id}
@@ -897,7 +897,7 @@ export function RatesInventoryScreen() {
           </p>
 
           {/* The preview runs the same planning code the apply call runs, so
-              what is shown here is what will happen — not a client-side guess. */}
+              what is shown here is what will happen - not a client-side guess. */}
           <div className="border-t subtle-divider pt-4">
             <p className="text-[10px] font-bold uppercase tracking-widest text-dash-muted mb-2">
               Before you apply
@@ -1227,7 +1227,7 @@ function PromotionModal({ open, onClose, ratePlans, onSave, busy }: any) {
           <Field label="Book at least (days ahead)"><NumberInput value={minAdvance} onChange={setMinAdvance} min={0} /></Field>
         </div>
         <Field label="Delivery to channels"
-          hint="OTAs must receive a discounted price or a native promotion — never a raw discount rule they cannot interpret">
+          hint="OTAs must receive a discounted price or a native promotion - never a raw discount rule they cannot interpret">
           <Select value={deliveryMode} onChange={setDeliveryMode} options={[
             { label: 'Send as a discounted price', value: 'price' },
             { label: 'Send as a native OTA promotion', value: 'native_promo' },
@@ -1249,7 +1249,7 @@ function RatePlanModal({ open, onClose, roomTypes, ratePlans, onSave, busy }: an
   const [inclusions, setInclusions] = useState('');
   const [bookingModel, setBookingModel] = useState('');
 
-  /** Models already spoken for — one plan per model, or the price is ambiguous. */
+  /** Models already spoken for - one plan per model, or the price is ambiguous. */
   const takenModels = new Set(
     ratePlans.map((p: RatePlan) => p.bookingModel).filter(Boolean) as BookingModel[],
   );
@@ -1329,19 +1329,19 @@ function RatePlanModal({ open, onClose, roomTypes, ratePlans, onSave, busy }: an
         )}
 
         <Field label="Website package"
-          hint="Set this and the plan becomes the price of that package on the booking engine — one figure covering the room and everything the package includes">
+          hint="Set this and the plan becomes the price of that package on the booking engine - one figure covering the room and everything the package includes">
           <Select value={bookingModel} onChange={setBookingModel} options={[
             { label: 'Not a website package', value: '' },
             ...BOOKING_MODELS.map((m) => ({
               label: takenModels.has(m)
-                ? `${BOOKING_MODEL_LABELS[m]} — already has a plan`
+                ? `${BOOKING_MODEL_LABELS[m]} - already has a plan`
                 : BOOKING_MODEL_LABELS[m],
               value: m,
             })),
           ]} />
         </Field>
 
-        <Field label="Inclusions" hint="Comma separated — shown to the guest at booking">
+        <Field label="Inclusions" hint="Comma separated - shown to the guest at booking">
           <TextInput value={inclusions} onChange={setInclusions} placeholder="Breakfast for 2, Airport transfer" />
         </Field>
 

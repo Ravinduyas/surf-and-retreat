@@ -3,8 +3,8 @@
 //
 // A Hostelworld guest agreed to one total, paid part of it to Hostelworld at
 // booking time (which Hostelworld keeps as commission), and pays the rest at
-// the desk. The server works the three figures out — `hostelworld.ts` on the
-// API — and every screen shows them the same way through the pieces here:
+// the desk. The server works the three figures out - `hostelworld.ts` on the
+// API - and every screen shows them the same way through the pieces here:
 //
 //   HostelworldBadge   marks a Hostelworld booking wherever a bar or a row
 //                      names its source, whether or not the split is on
@@ -118,7 +118,7 @@ export function HostelworldMoney({ split, dark = false, compact = false, classNa
   );
 }
 
-/** "6% off" — or "6% off on 3 of 7 nights" when the promotion did not cover the stay. */
+/** "6% off" - or "6% off on 3 of 7 nights" when the promotion did not cover the stay. */
 export function promotionLabel(d: HostelworldDetail): string | null {
   const p = d.promotion;
   if (!p) return null;
@@ -133,7 +133,7 @@ export function promotionLabel(d: HostelworldDetail): string | null {
  * Where the booking on the books disagrees with what Hostelworld said.
  *
  * Empty when they agree. Each line is a plain sentence the desk can act on;
- * the fix for all of them is the same — Refresh from Beds24 — so the caller
+ * the fix for all of them is the same - Refresh from Beds24 - so the caller
  * says that once, underneath.
  */
 export function hostelworldMismatch(
@@ -170,7 +170,7 @@ export function HostelworldStatement({ detail, booking, className = '' }: {
 }) {
   const d = detail;
   const cur = d.currency ?? undefined;
-  const fmt = (v: number | null | undefined) => (v === null || v === undefined ? '—' : money(v, { currency: cur }));
+  const fmt = (v: number | null | undefined) => (v === null || v === undefined ? '-' : money(v, { currency: cur }));
   const promo = d.promotion;
   const promoLabel = promotionLabel(d);
   const mismatch = hostelworldMismatch(d, booking);
@@ -185,7 +185,7 @@ export function HostelworldStatement({ detail, booking, className = '' }: {
     rows.push({ label: 'Hostelworld promotion', hint: promoLabel ?? undefined, value: `− ${fmt(promo.discountMinor)}`, tone: 'accent' });
   }
   rows.push({ label: 'Total booking price', hint: 'Total price', value: fmt(d.totalMinor), tone: 'strong' });
-  rows.push({ label: 'Deposit paid to Hostelworld', hint: 'Deposit paid', value: d.paidMinor === null ? '—' : `− ${fmt(d.paidMinor)}`, tone: 'accent' });
+  rows.push({ label: 'Deposit paid to Hostelworld', hint: 'Deposit paid', value: d.paidMinor === null ? '-' : `− ${fmt(d.paidMinor)}`, tone: 'accent' });
   rows.push({ label: 'Balance due on arrival', hint: 'What the desk collects', value: fmt(d.dueMinor), tone: 'strong' });
 
   return (
@@ -223,11 +223,11 @@ export function HostelworldStatement({ detail, booking, className = '' }: {
           {promo && (
             <p className="text-[10px] text-dash-muted pt-1">
               {promoLabel}
-              {pricedNights < d.nights.length && ` — ${d.nights.length - pricedNights} night(s) had no channel price to compare against.`}
+              {pricedNights < d.nights.length && ` - ${d.nights.length - pricedNights} night(s) had no channel price to compare against.`}
             </p>
           )}
           {!promo && pricedNights === d.nights.length && d.nights.length > 0 && (
-            <p className="text-[10px] text-dash-muted pt-1">No Hostelworld promotion — every night sold at the price on sale.</p>
+            <p className="text-[10px] text-dash-muted pt-1">No Hostelworld promotion - every night sold at the price on sale.</p>
           )}
           {!promo && pricedNights === 0 && (
             <p className="text-[10px] text-dash-muted pt-1">
@@ -256,9 +256,9 @@ export function HostelworldStatement({ detail, booking, className = '' }: {
                     <tr key={n.date} className="border-b border-orange-100/60">
                       <td className="py-1 font-semibold whitespace-nowrap">{shortDate(n.date)}</td>
                       <td className="py-1 text-center text-dash-muted">{n.pax}</td>
-                      <td className="py-1 text-right tabular-nums text-dash-muted">{n.sellMinor === null ? '—' : fmt(n.sellMinor)}</td>
+                      <td className="py-1 text-right tabular-nums text-dash-muted">{n.sellMinor === null ? '-' : fmt(n.sellMinor)}</td>
                       <td className="py-1 text-right tabular-nums text-orange-600 whitespace-nowrap">
-                        {off > 0 ? `− ${fmt(off)} (${pct}%)` : n.sellMinor === null ? '—' : ''}
+                        {off > 0 ? `− ${fmt(off)} (${pct}%)` : n.sellMinor === null ? '-' : ''}
                       </td>
                       <td className="py-1 text-right tabular-nums font-bold">{fmt(n.rateMinor)}</td>
                     </tr>

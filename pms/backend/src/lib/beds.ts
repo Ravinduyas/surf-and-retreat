@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-// Bed configuration — what is actually in the room.
+// Bed configuration - what is actually in the room.
 //
 // Until now a room type said how many people were *permitted* (`max_occupancy`)
 // but never where they would sleep. Those are different questions, and the
@@ -29,7 +29,7 @@ export interface BedKind {
  * The vocabulary.
  *
  * `sleeps` is the number the capacity calculation uses. A bunk sleeps two
- * because it is two berths in one frame — the single most common place to get
+ * because it is two berths in one frame - the single most common place to get
  * this wrong, and the reason a 6-bunk dorm holds 12 people rather than 6.
  */
 export const BED_KINDS: BedKind[] = [
@@ -48,7 +48,7 @@ export const BED_KINDS: BedKind[] = [
   { code: 'futon', label: 'Futon', sleeps: 1, dorm: false, extra: false,
     description: 'One adult, on the floor or a low frame.' },
 
-  // Dorm berths — sold one at a time. See I4 for their per-bed attributes.
+  // Dorm berths - sold one at a time. See I4 for their per-bed attributes.
   { code: 'dorm_bunk', label: 'Bunk berth', sleeps: 1, dorm: true, extra: false,
     description: 'One berth of a bunk, sold on its own.' },
   { code: 'dorm_single', label: 'Single berth', sleeps: 1, dorm: true, extra: false,
@@ -60,7 +60,7 @@ export const BED_KINDS: BedKind[] = [
   { code: 'double_berth', label: 'Double berth', sleeps: 2, dorm: true, extra: false,
     description: 'A berth wide enough for two, sold as one bed.' },
 
-  // Extras. Excluded from standing capacity — they are brought in on request.
+  // Extras. Excluded from standing capacity - they are brought in on request.
   { code: 'extra_bed', label: 'Extra bed', sleeps: 1, dorm: false, extra: true,
     description: 'A rollaway, added on request and usually charged.' },
   { code: 'cot', label: 'Cot / crib', sleeps: 1, dorm: false, extra: true,
@@ -91,7 +91,7 @@ export function parseBedConfig(value: unknown, field = 'bedConfig'): BedSpec[] {
   // A string came out of the database column; an array came out of a request
   // body. They are held to different standards on purpose: a column that will
   // not parse is one corrupt row, and throwing would take the whole room-types
-  // page down with it, so it reads as "no beds configured" — which the capacity
+  // page down with it, so it reads as "no beds configured" - which the capacity
   // check then flags. A caller submitting rubbish is refused outright.
   if (typeof value === 'string') {
     const stored = safeJson(value);
@@ -139,7 +139,7 @@ export function sleeps(config: BedSpec[]): number {
   }, 0);
 }
 
-/** Capacity including extras — the most the room could hold if asked. */
+/** Capacity including extras - the most the room could hold if asked. */
 export function sleepsWithExtras(config: BedSpec[]): number {
   return config.reduce((total, b) => {
     const kind = BY_CODE.get(b.kind);
@@ -147,7 +147,7 @@ export function sleepsWithExtras(config: BedSpec[]): number {
   }, 0);
 }
 
-/** How many separate berths there are — what a dorm sells. */
+/** How many separate berths there are - what a dorm sells. */
 export function berths(config: BedSpec[]): number {
   return config.reduce((total, b) => {
     const kind = BY_CODE.get(b.kind);
@@ -158,7 +158,7 @@ export function berths(config: BedSpec[]): number {
 }
 
 /**
- * "1 king, 2 singles" — the line a guest reads.
+ * "1 king, 2 singles" - the line a guest reads.
  *
  * Pluralised properly and ordered by size, so the biggest bed is named first,
  * which is how people describe a room.
@@ -204,7 +204,7 @@ export function checkCapacity(
   if (!config.length) {
     warnings.push('No beds are configured, so nobody can be told what they are booking.');
   } else if (standing === 0) {
-    warnings.push('Only extra beds are configured — the room has no standing bed.');
+    warnings.push('Only extra beds are configured - the room has no standing bed.');
   }
 
   if (config.length && claims.maxOccupancy > withExtras) {
@@ -229,7 +229,7 @@ export function checkCapacity(
       .map((b) => BY_CODE.get(b.kind)!.label);
     warnings.push(
       `${wrong.join(', ')} ${wrong.length === 1 ? 'is' : 'are'} a private-room bed. `
-      + 'A dorm is sold by the berth — use bunk berth, pod or capsule.');
+      + 'A dorm is sold by the berth - use bunk berth, pod or capsule.');
   }
   if (claims.kind !== 'dorm' && config.some((b) => BY_CODE.get(b.kind)?.dorm)) {
     warnings.push('This is a private room but it is configured with dorm berths.');

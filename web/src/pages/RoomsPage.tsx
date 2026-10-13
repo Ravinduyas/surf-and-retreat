@@ -26,7 +26,7 @@ export default function RoomsPage() {
               in <span className="text-[#2C573A]">Weligama.</span>
             </>
           }
-          subtitle="Curtain-pod dorms and private rooms with lockers, hot showers and air-con — a five-minute walk from Weligama Bay."
+          subtitle="Curtain-pod dorms and private rooms with lockers, hot showers and air-con - a five-minute walk from Weligama Bay."
           image={ROOMS[0].image}
           imageAlt="The 6-bed mixed dorm with bunk beds"
         >

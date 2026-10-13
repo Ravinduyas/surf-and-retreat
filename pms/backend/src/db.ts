@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-// SQLite persistence layer (node:sqlite — no external deps).
+// SQLite persistence layer (node:sqlite - no external deps).
 //
 // Every write in this API goes through here. The database file is the
 // system of record: restart the process and the hotel's state is intact.
@@ -19,7 +19,7 @@ mkdirSync(dirname(DB_PATH), { recursive: true });
 export const database = new DatabaseSync(DB_PATH);
 
 // Durability and contention settings. These are per-connection, so they are set
-// here rather than in schema.sql — that file only runs its PRAGMAs once, at
+// here rather than in schema.sql - that file only runs its PRAGMAs once, at
 // migration time.
 //
 //   busy_timeout  wait rather than failing instantly when another connection
@@ -51,14 +51,14 @@ function bindValue(v: unknown): Bindable {
   if (v instanceof Uint8Array) return v;
   if (v instanceof Date) return v.toISOString();
   // Objects / arrays are stored as JSON by explicit callers; guard here.
-  throw new Error(`Cannot bind value of type ${typeof v} — JSON.stringify it first`);
+  throw new Error(`Cannot bind value of type ${typeof v} - JSON.stringify it first`);
 }
 
 function bindAll(params: unknown[]): Bindable[] {
   return params.map(bindValue);
 }
 
-// Statement cache — prepared statements are reused across requests.
+// Statement cache - prepared statements are reused across requests.
 const stmtCache = new Map<string, ReturnType<DatabaseSync['prepare']>>();
 function prep(sql: string) {
   let s = stmtCache.get(sql);
@@ -97,7 +97,7 @@ let txDepth = 0;
 
 /**
  * Run `fn` inside a transaction. Nested calls join the outer transaction
- * (SQLite has no real nesting for our purposes — savepoints are used).
+ * (SQLite has no real nesting for our purposes - savepoints are used).
  * Any throw rolls the whole thing back: a half-posted folio or a half-run
  * night audit must never survive.
  */
@@ -138,7 +138,7 @@ const SCHEMA_VERSION = '13';
 /**
  * Add a column to an existing table if it is not already there.
  * `CREATE TABLE IF NOT EXISTS` cannot evolve a table that already exists, so
- * every column added after v1 goes through here — that keeps an installation
+ * every column added after v1 goes through here - that keeps an installation
  * with live data upgradeable rather than needing a rebuild.
  */
 function ensureColumn(table: string, column: string, definition: string) {
@@ -151,7 +151,7 @@ function ensureColumn(table: string, column: string, definition: string) {
  * Bring an index in line with its definition.
  *
  * `CREATE INDEX IF NOT EXISTS` does nothing when an index of that name already
- * exists — even if its columns have changed since. A widened index therefore
+ * exists - even if its columns have changed since. A widened index therefore
  * reaches new installations and silently skips every existing one, which is the
  * worst possible outcome: the query is fast on the developer's fresh database
  * and slow on the one with three years of bookings in it. This compares what is
@@ -173,7 +173,7 @@ export function migrate() {
   const sql = readFileSync(join(HERE, 'schema.sql'), 'utf8');
   database.exec(sql);
 
-  // v2 — two-factor authentication, password resets and long-lived sessions.
+  // v2 - two-factor authentication, password resets and long-lived sessions.
   ensureColumn('users', 'mfa_enabled', 'INTEGER NOT NULL DEFAULT 0');
   ensureColumn('users', 'mfa_secret', 'TEXT');
   ensureColumn('users', 'mfa_enrolled_at', 'TEXT');
@@ -181,13 +181,13 @@ export function migrate() {
   ensureColumn('sessions', 'mfa_pending', 'INTEGER NOT NULL DEFAULT 0');
   ensureColumn('sessions', 'remembered', 'INTEGER NOT NULL DEFAULT 0');
 
-  // v3 — the reservation list sorted in memory. `ix_res_status` grew the two
+  // v3 - the reservation list sorted in memory. `ix_res_status` grew the two
   // sort columns so a status-filtered page can be walked rather than sorted;
   // existing databases need it rebuilt, not skipped. Keep this in step with
   // schema.sql.
   ensureIndex('ix_res_status', 'reservations', 'property_id, status, arrival, guest_name');
 
-  // v4 — reporting a booking's fate back to the channel it came from. Kept on
+  // v4 - reporting a booking's fate back to the channel it came from. Kept on
   // the reservation rather than in a side table because "was this no-show ever
   // reported?" is a question asked while looking at the booking.
   ensureColumn('reservations', 'channel_report_kind', 'TEXT');
@@ -198,7 +198,7 @@ export function migrate() {
   ensureColumn('reservations', 'channel_report_request', 'TEXT');
   ensureColumn('reservations', 'channel_report_response', 'TEXT');
 
-  // v5 — guest messaging through the channel. `messages` existed as a local
+  // v5 - guest messaging through the channel. `messages` existed as a local
   // notes thread; these columns are what make it a conversation with somebody.
   ensureColumn('messages', 'channel_code', 'TEXT');
   ensureColumn('messages', 'external_id', 'TEXT');
@@ -210,20 +210,20 @@ export function migrate() {
   // a poll that overlaps its own window is normal rather than exceptional.
   ensureIndex('ix_msg_external', 'messages', 'property_id, external_id');
 
-  // v6 — last-room protection. How many rooms of a type are held back from the
+  // v6 - last-room protection. How many rooms of a type are held back from the
   // channels, so the last one cannot be sold twice by two OTAs at once. Zero
   // means sell everything, which is the default: the protection costs occupancy
   // and that is the property's call, not ours.
   ensureColumn('room_types', 'protect_last_rooms', 'INTEGER NOT NULL DEFAULT 0');
 
-  // v7 — what is actually in the room. Sleeping capacity is derived from this;
+  // v7 - what is actually in the room. Sleeping capacity is derived from this;
   // max_occupancy only ever said how many guests were permitted.
   ensureColumn('room_types', 'bed_config', 'TEXT');
   ensureColumn('rooms', 'bed_config', 'TEXT');
 
-  // v8 — which OTA a booking actually came from, when the channel is a hub.
+  // v8 - which OTA a booking actually came from, when the channel is a hub.
   //
-  // `channel_code` is the *connection* — BEDS24 — and rate rules and mappings
+  // `channel_code` is the *connection* - BEDS24 - and rate rules and mappings
   // are keyed on it, so it cannot double as the OTA name. But a property
   // connected through Beds24 sells on Hostelworld, Booking.com and Airbnb at
   // once, and "every booking came from BEDS24" answers none of the questions
@@ -233,13 +233,13 @@ export function migrate() {
   // (Direct / OTA / Corporate) and would lose that distinction.
   ensureColumn('reservations', 'ota_channel', 'TEXT');
 
-  // v9 — the OTAs behind the hub.
+  // v9 - the OTAs behind the hub.
   //
   // Beds24 is one connection but many shopfronts, and the questions a property
   // asks are per-shopfront: which OTA produces, which cancels, which has gone
-  // quiet. Beds24's own API will not answer "which OTAs am I connected to" —
+  // quiet. Beds24's own API will not answer "which OTAs am I connected to" -
   // `/channels` returns literal null and `/properties/channels` 500s, with the
-  // `all:channels` scope granted — so what is known about each OTA is kept here
+  // `all:channels` scope granted - so what is known about each OTA is kept here
   // along with *how* it came to be known, and the screen says which.
   database.exec(`
     CREATE TABLE IF NOT EXISTS channel_otas (
@@ -251,7 +251,7 @@ export function migrate() {
       -- How we know, weakest to strongest:
       --   available  nothing suggests it is in use
       --   declared   a person said so; the API cannot tell us
-      --   evidence   Beds24 holds a rate code for it — a hint, not proof
+      --   evidence   Beds24 holds a rate code for it - a hint, not proof
       --   confirmed  a booking has arrived from it; not arguable
       state        TEXT NOT NULL DEFAULT 'available',
       rate_code    TEXT,
@@ -265,19 +265,19 @@ export function migrate() {
     CREATE INDEX IF NOT EXISTS ix_otas_property ON channel_otas(property_id, state);
   `);
 
-  // v10 — what the channel holds, kept beside what we hold.
+  // v10 - what the channel holds, kept beside what we hold.
   //
   // Beds24 sells `qty` units of a room; Helio holds rooms and beds. They are
   // two numbers for the same inventory and nothing has been comparing them, so
-  // a change on either side drifts silently — and drift on this number is not a
+  // a change on either side drifts silently - and drift on this number is not a
   // cosmetic bug, it is selling a bed that does not exist. Recorded on the
   // mapping at discovery time so the comparison costs nothing to display.
-  // v11 — who a closure applies to.
+  // v11 - who a closure applies to.
   //
   // A property closes rooms for two quite different reasons: "stop the OTAs
   // selling this, the desk carries on" and "nobody sells this, it is being
   // repainted". Helio had one mechanism for both, and a stop-sell with no
-  // channel scope matched a walk-in too — so closing rooms on the OTAs also
+  // channel scope matched a walk-in too - so closing rooms on the OTAs also
   // stopped reception serving the guest standing in front of them.
   //
   // **Existing rows default to `all`**, which is what they have meant until
@@ -289,7 +289,7 @@ export function migrate() {
   ensureColumn('channel_mappings', 'external_max_people', 'INTEGER');
   ensureColumn('channel_mappings', 'external_seen_at', 'TEXT');
 
-  // v12 — cash tendered and change given.
+  // v12 - cash tendered and change given.
   //
   // The payment is what the property kept; these two are what crossed the
   // counter in each direction. Stored rather than derived because they cannot
@@ -306,12 +306,12 @@ export function migrate() {
   // when it last went out. See `reviveParkedPushes`.
   ensureColumn('channel_queue', 'last_attempt_at', 'TEXT');
 
-  // v13 — which booking-engine model a rate plan sells.
+  // v13 - which booking-engine model a rate plan sells.
   //
   // The public site offers four things: rooms, rooms + coworking, rooms + surf,
   // and all three together. The last two are sold as a package under a single
   // price rather than as a room with extras added on top of it, and that price
-  // has to be the property's own — set per date, per room type, like any other
+  // has to be the property's own - set per date, per room type, like any other
   // rate. So a package is a rate plan, and this names the model it sells.
   // Null on every existing plan, which is what a plain room rate is.
   ensureColumn('rate_plans', 'booking_model', 'TEXT');
@@ -322,7 +322,7 @@ export function migrate() {
        ON CONFLICT(key) DO UPDATE SET value = excluded.value`,
     SCHEMA_VERSION,
   );
-  // v12 — the registration record: a scanned identity document and the guest's
+  // v12 - the registration record: a scanned identity document and the guest's
   // signature, captured at check-in.
   //
   // Both are held in the database rather than on disk so they are covered by
@@ -344,7 +344,7 @@ export function migrate() {
       uploaded_by    TEXT
     )`);
   ensureIndex('ix_resdoc_reservation', 'reservation_documents', 'property_id, reservation_id');
-  // v12 — money taken in a currency that is not the property's own. The
+  // v12 - money taken in a currency that is not the property's own. The
   // property-currency figures stay where they were, so the drawer, the folio
   // and every report keep reading the same columns they always did; these are
   // the note of what actually crossed the counter, and the rate it was taken
@@ -356,34 +356,34 @@ export function migrate() {
   ensureColumn('folio_lines', 'change_amount_minor', 'INTEGER');
   ensureColumn('folio_lines', 'change_rate', 'REAL');
 
-  // v13 — the cash box, counted currency by currency. The table is created by
+  // v13 - the cash box, counted currency by currency. The table is created by
   // schema.sql; nothing on an existing installation needs altering, because
   // what was there before is a single-currency shift and stays exactly that
   // until somebody counts the box.
 
-  // v14 — how long a website booking holds its bed.
+  // v14 - how long a website booking holds its bed.
   //
   // A booking taken by the property's own booking page used to hold nothing at
   // all: it landed awaiting confirmation, and the availability engine skipped
   // it entirely. On an installation with no channel manager that is merely
-  // optimistic. With one connected it is an overbooking generator — the last
+  // optimistic. With one connected it is an overbooking generator - the last
   // bed is sold on the website at 02:00, availability still reports it free,
   // the next push tells the OTAs so, and Booking.com sells the same bed before
   // anyone at the property has woken up.
   //
   // So a website booking now holds its bed from the moment it is made, and
   // this column is when that hold runs out. The property still has to accept
-  // the booking — nothing about that changed — but the bed is off the market
+  // the booking - nothing about that changed - but the bed is off the market
   // while they decide, and comes back automatically if they never do.
   //
   // NULL means "holds indefinitely", which is every booking that is not
   // awaiting confirmation: an ordinary reservation has no expiry.
   ensureColumn('reservations', 'hold_expires_at', 'TEXT');
-  // The release sweep asks one question — "which holds have run out?" — and
+  // The release sweep asks one question - "which holds have run out?" - and
   // asks it on a timer, so it should never scan the reservation table.
   ensureIndex('ix_res_hold', 'reservations', 'hold_expires_at');
 
-  // v15 — what the OTA said a booking is worth, and what it already took.
+  // v15 - what the OTA said a booking is worth, and what it already took.
   //
   // A Hostelworld guest agrees to one total on Hostelworld, pays part of it
   // to Hostelworld there and then (which Hostelworld keeps as commission),
@@ -398,7 +398,7 @@ export function migrate() {
   ensureColumn('reservations', 'ota_total_minor', 'INTEGER');
   ensureColumn('reservations', 'ota_collected_minor', 'INTEGER');
 
-  // v16 — the rest of what Hostelworld said about a booking, as JSON.
+  // v16 - the rest of what Hostelworld said about a booking, as JSON.
   //
   // The two columns above are the arithmetic. This is the statement behind
   // it: the nightly prices Hostelworld sold at, the price that was on sale
@@ -410,7 +410,7 @@ export function migrate() {
 
 }
 
-/** True when no property exists yet — the app must run first-time setup. */
+/** True when no property exists yet - the app must run first-time setup. */
 export function needsSetup(): boolean {
   return scalar<number>('SELECT count(*) AS n FROM properties') === 0;
 }

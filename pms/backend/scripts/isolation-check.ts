@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-// Exercises tenant isolation — the boundary between one property's data and
+// Exercises tenant isolation - the boundary between one property's data and
 // another's.
 //
 //   node --experimental-sqlite scripts/isolation-check.ts
@@ -30,7 +30,7 @@ const dbPath = join(workdir, 'data', 'helio.db');
  * `config.ts` resolves the database path once, when it is first imported, and
  * `db.ts` opens whatever it resolved. A *static* `import { config }` above
  * this line therefore ran before the override and froze the path to the real
- * database — so this script, which creates two properties and five users and
+ * database - so this script, which creates two properties and five users and
  * deliberately never cleans up after itself, wrote all of it into the live
  * installation. Found after the fact: a property's database carrying "Alpha
  * Hotel", "Beta Hotel" and five `@test` logins that nobody had created, and a
@@ -224,7 +224,7 @@ async function main() {
 
   section('5 · Permissions fail closed');
   // `permissionsFor` used to fall back to the readonly grants for any role it
-  // did not recognise — so a typo in a role column handed out read access to
+  // did not recognise - so a typo in a role column handed out read access to
   // reservations, folios and channel settings instead of denying.
   check('an unknown role gets no permissions at all',
     permissionsFor('wizard').length === 0, permissionsFor('wizard'));
@@ -234,7 +234,7 @@ async function main() {
 
   section('6 · A manager cannot promote themselves to administrator');
   // `admin.users` lets a manager run the staff list. It must not let them mint
-  // an administrator — otherwise the role hierarchy is decoration. There were
+  // an administrator - otherwise the role hierarchy is decoration. There were
   // three ways through: create one, promote yourself, or take an admin's
   // account by resetting its password.
   const mgr = asUser(managerToken, alpha);

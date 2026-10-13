@@ -2,8 +2,8 @@
 //
 // Drawn as inline SVG rather than shipped as images for three reasons that all
 // matter to a manual: they stay sharp at any size, they re-colour themselves in
-// a dark theme because they use the app's own CSS variables, and — the one that
-// actually decides it — they cannot go stale in the way a screenshot does. A
+// a dark theme because they use the app's own CSS variables, and - the one that
+// actually decides it - they cannot go stale in the way a screenshot does. A
 // screenshot of a screen that has since gained a column is worse than no
 // picture at all, because the reader trusts it.
 //
@@ -78,7 +78,7 @@ export function BookingSourcesDiagram() {
       </>}>
       <Arrow id="a1" />
       {/* sources */}
-      <Box x={10} y={20} w={150} h={46} label="Your booking page" sub="/book — no commission" tone="accent" />
+      <Box x={10} y={20} w={150} h={46} label="Your booking page" sub="/book - no commission" tone="accent" />
       <Box x={10} y={80} w={150} h={46} label="Booking.com, etc." sub="via the channel manager" />
       <Box x={10} y={140} w={150} h={46} label="Front desk" sub="walk-in, phone, email" />
 
@@ -117,7 +117,7 @@ export function DayFlowDiagram() {
   return (
     <Frame viewBox="0 0 700 120"
       caption={<>
-        The front desk day, left to right. Only the night audit moves the business date —
+        The front desk day, left to right. Only the night audit moves the business date -
         it posts the night&rsquo;s room charges, flags no-shows, freezes the day&rsquo;s
         statistics and advances to tomorrow, all in one transaction.
       </>}>
@@ -143,7 +143,7 @@ export function StatusDiagram() {
     <Frame viewBox="0 0 700 220"
       caption={<>
         A booking from your own page is the only one that arrives <em>awaiting confirmation</em>.
-        It still holds its bed — the bed is off the market from the moment the guest books — but
+        It still holds its bed - the bed is off the market from the moment the guest books - but
         you decide whether to accept it. If nobody does within the hold window, it cancels itself
         and the bed goes back on sale everywhere.
       </>}>
@@ -181,7 +181,7 @@ export function PricingChainDiagram() {
       caption={<>
         The first one that has an answer wins. Then occupancy supplements, length-of-stay
         pricing, yield rules, promotions and tax are applied on top, and finally the
-        channel&rsquo;s own price multiplier. Everything quotes from this one chain — the
+        channel&rsquo;s own price multiplier. Everything quotes from this one chain - the
         booking page, the front desk and the OTAs cannot disagree about a price.
       </>}>
       <Arrow id="a4" />
@@ -215,7 +215,7 @@ export function FolioDiagram() {
     <Frame viewBox="0 0 700 200"
       caption={<>
         A folio is a ledger, never a stored total. Its balance is always the sum of its
-        lines that have not been voided, recalculated every time you look — which is why
+        lines that have not been voided, recalculated every time you look - which is why
         it cannot drift, and why a posting is voided rather than deleted.
       </>}>
       <Arrow id="a5" />
@@ -233,7 +233,7 @@ export function FolioDiagram() {
       <Box x={500} y={45} w={190} h={40} label="Balance = sum of lines" />
       <Box x={500} y={100} w={190} h={40} label="Payments reduce it" sub="cash, card, transfer" />
       <text x={250} y={155} fontSize="10" fill={MUTED}>
-        every amount is whole cents — never a decimal fraction
+        every amount is whole cents - never a decimal fraction
       </text>
     </Frame>
   );
@@ -252,7 +252,7 @@ export function ChannelSetupDiagram() {
     <Frame viewBox="0 0 700 150"
       caption={<>
         You only ever handle the invite code. It is exchanged once, straight away, for a
-        long-lived refresh token — the code itself is never stored. Everything after that
+        long-lived refresh token - the code itself is never stored. Everything after that
         happens without you: the short-lived access token on every call is minted and
         renewed automatically.
       </>}>
@@ -269,7 +269,7 @@ export function ChannelSetupDiagram() {
         </g>
       ))}
       <text x={10} y={112} fontSize="10" fill={MUTED}>
-        Nothing is pushed until every room is matched — an unmatched room has nowhere to send its prices.
+        Nothing is pushed until every room is matched - an unmatched room has nowhere to send its prices.
       </text>
     </Frame>
   );
@@ -282,16 +282,16 @@ export function DormDiagram() {
     <Frame viewBox="0 0 700 180"
       caption={<>
         This is the difference that makes a hostel PMS different from a hotel one. A private
-        room is sold whole — one booking takes the room. A dorm is sold by the bed, so four
+        room is sold whole - one booking takes the room. A dorm is sold by the bed, so four
         guests in one dorm are four reservations that happen to share a room number.
       </>}>
-      <text x={10} y={22} fontSize="11" fontWeight="700" fill={INK}>Private room — sold whole</text>
+      <text x={10} y={22} fontSize="11" fontWeight="700" fill={INK}>Private room - sold whole</text>
       <rect x={10} y={32} width={310} height={52} rx="10" fill="rgba(0,0,0,.035)" stroke={LINE} />
       <text x={24} y={62} fontSize="12" fontWeight="700" fill={INK}>Room 101</text>
       <rect x={110} y={42} width={200} height={32} rx="8" fill="rgba(180,73,31,.12)" stroke="rgba(180,73,31,.45)" />
       <text x={210} y={62} textAnchor="middle" fontSize="11" fill={INK}>one booking · 2 guests</text>
 
-      <text x={370} y={22} fontSize="11" fontWeight="700" fill={INK}>Dorm — sold by the bed</text>
+      <text x={370} y={22} fontSize="11" fontWeight="700" fill={INK}>Dorm - sold by the bed</text>
       <rect x={370} y={32} width={320} height={130} rx="10" fill="rgba(0,0,0,.035)" stroke={LINE} />
       <text x={384} y={52} fontSize="12" fontWeight="700" fill={INK}>Room 202 · 6 beds</text>
       {[0, 1, 2, 3, 4, 5].map((i) => {
@@ -319,8 +319,8 @@ export function ScreenMapDiagram() {
     <Frame viewBox="0 0 700 260"
       caption={<>
         Every screen sits in the same frame. The sidebar is where you are, the top bar is
-        what is true right now — the property, the business date, whether the channels are
-        live — and the strip along the bottom is the fastest route to the four things a
+        what is true right now - the property, the business date, whether the channels are
+        live - and the strip along the bottom is the fastest route to the four things a
         receptionist does most.
       </>}>
       <rect x={6} y={6} width={688} height={248} rx="12" fill="transparent" stroke={LINE} strokeWidth="1.5" />
@@ -339,7 +339,7 @@ export function ScreenMapDiagram() {
       <text x={158} y={31} fontSize="10" fontWeight="700" fill={INK}>The Fun Bunk</text>
       <text x={158} y={45} fontSize="9" fill={MUTED}>property</text>
       <text x={268} y={31} fontSize="10" fontWeight="700" fill={INK}>2026-09-20</text>
-      <text x={268} y={45} fontSize="9" fill={MUTED}>business date — only the night audit moves it</text>
+      <text x={268} y={45} fontSize="9" fill={MUTED}>business date - only the night audit moves it</text>
       <text x={560} y={31} fontSize="10" fontWeight="700" fill={INK}>Channels</text>
       <text x={560} y={45} fontSize="9" fill={MUTED}>live / not connected</text>
 

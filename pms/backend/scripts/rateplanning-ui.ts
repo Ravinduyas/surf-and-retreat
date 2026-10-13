@@ -1,5 +1,5 @@
 // Drives the real front end through a rate change, a scheduled change and a
-// season — and checks the number the screen promised is the number that lands.
+// season - and checks the number the screen promised is the number that lands.
 //
 //   node scripts/rateplanning-ui.ts   (API, app and Chrome with --remote-debugging-port must be up)
 //
@@ -90,7 +90,7 @@ async function waitFor(cdp: Cdp, what: RegExp, timeoutMs = 20_000): Promise<stri
 }
 
 // A modal renders over the page, so the page's own controls are still in the
-// DOM. Every interaction below scopes to the modal when one is open — without
+// DOM. Every interaction below scopes to the modal when one is open - without
 // that, "the From field" finds the rate calendar's filter and the modal is
 // filled in with nothing.
 const SCOPE = `(document.querySelector('.fixed.inset-0.z-50') || document)`;
@@ -105,7 +105,7 @@ function clickText(cdp: Cdp, needle: string) {
 
 function setInputByLabel(cdp: Cdp, label: string, value: string) {
   // `Field` renders the <label> *around* its input, so the input is a
-  // descendant of the label — not a sibling. Reaching up to parentElement finds
+  // descendant of the label - not a sibling. Reaching up to parentElement finds
   // the first input in the whole row instead, which silently writes the value
   // into the field next door.
   return cdp.evaluate<boolean>(`(() => {
@@ -145,7 +145,7 @@ async function main() {
     'content-type': 'application/json',
   };
   const property: any = await (await fetch(`${API}/api/property`, { headers: auth })).json();
-  // Far enough out that nothing is booked there and no demo data is disturbed —
+  // Far enough out that nothing is booked there and no demo data is disturbed -
   // and a different stretch on every run, because this writes to the live
   // database and a second run over the same dates would find the prices it set
   // last time, leaving nothing to change and nothing to assert.
@@ -195,7 +195,7 @@ async function main() {
   await sleep(250);
   const setFrom = await setInputByLabel(cdp, 'from', from);
   await sleep(250);
-  // MoneyInput takes major units — 180.00 is 18,000 minor.
+  // MoneyInput takes major units - 180.00 is 18,000 minor.
   const setPrice = await setInputByLabel(cdp, 'new nightly price', '180.00');
   check('the change can be described in the form', setFrom && setTo && setPrice,
     JSON.stringify({ setFrom, setTo, setPrice }));
@@ -205,7 +205,7 @@ async function main() {
   // is part of the document anyway, and scoping the *read* proved brittle while
   // scoping the *interactions* is what actually matters.
   //
-  // innerText reflects CSS text-transform, so these labels arrive uppercased —
+  // innerText reflects CSS text-transform, so these labels arrive uppercased -
   // every assertion here is case-insensitive on purpose.
   const previewText = await waitFor(cdp, /would change/i);
   check('a preview appears without applying anything',
@@ -252,7 +252,7 @@ async function main() {
   check('rate history is offered', /Rate history/i.test(planningText));
 
   check('the history panel opens', await clickText(cdp, 'Rate history') === true);
-  // Wait for a row, not the header — the table renders before its data lands.
+  // Wait for a row, not the header - the table renders before its data lands.
   const historyText = await waitFor(cdp, /\bbulk\b/i);
   check('the change just made is listed', /\bbulk\b/i.test(historyText), historyText.slice(0, 800));
 
@@ -268,7 +268,7 @@ async function main() {
   await setInputByLabel(cdp, 'to (inclusive)', to);
   await sleep(150);
   check('the season form accepts a name', named === true);
-  // Scoped to the modal — the panel behind it has an "Add season" button too.
+  // Scoped to the modal - the panel behind it has an "Add season" button too.
   check('the season is saved', await clickText(cdp, 'Add season') === true);
   await sleep(2000);
 
@@ -282,7 +282,7 @@ async function main() {
   const realErrors = consoleErrors.filter((e) => !/favicon|DevTools|Download the React/i.test(e));
   check('no console errors during the run', realErrors.length === 0, realErrors.join(' | '));
 
-  // Clean up — this runs against the live database.
+  // Clean up - this runs against the live database.
   if (created) await fetch(`${API}/api/seasons/${created.id}`, { method: 'DELETE', headers: auth });
 
   cdp.close();

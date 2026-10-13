@@ -94,7 +94,7 @@ export function ArrivalsScreen() {
         )
         : <Pill tone="peach">Unassigned</Pill>,
     },
-    { key: 'eta', header: 'ETA', render: (r) => <span className="text-dash-muted">{r.eta ?? '—'}</span> },
+    { key: 'eta', header: 'ETA', render: (r) => <span className="text-dash-muted">{r.eta ?? '-'}</span> },
     {
       key: 'balance', header: 'Balance', align: 'right',
       render: (r) => <span className="tabular-nums font-semibold">{money(r.balanceMinor)}</span>,
@@ -164,8 +164,8 @@ export function ArrivalsScreen() {
 
               {/*
                 Website bookings arriving today that nobody has accepted. They
-                are deliberately not in "Due to arrive" — they have no room and
-                cannot be checked in — but a guest turning up at the desk is not
+                are deliberately not in "Due to arrive" - they have no room and
+                cannot be checked in - but a guest turning up at the desk is not
                 helped by the booking being invisible, so they are listed here
                 with the one action that does apply.
               */}
@@ -178,7 +178,7 @@ export function ArrivalsScreen() {
                         today still awaiting confirmation
                       </p>
                       <p className="text-[11px] text-dash-muted">
-                        These hold no room yet. Confirm one to pick its room or beds — then it joins
+                        These hold no room yet. Confirm one to pick its room or beds - then it joins
                         the arrivals list and can be checked in.
                       </p>
                     </div>
@@ -213,7 +213,7 @@ export function ArrivalsScreen() {
                   <AlertTriangle className="w-3.5 h-3.5 text-status-warn mt-0.5 shrink-0" />
                   <p className="text-[11px] leading-relaxed">
                     {notReady} arriving guest{notReady > 1 ? 's have' : ' has'} a room that housekeeping has not
-                    released yet. Check-in will be blocked until the room is clean — mark it clean on the
+                    released yet. Check-in will be blocked until the room is clean - mark it clean on the
                     <button onClick={() => navigate('housekeeping')} className="font-bold underline mx-1">housekeeping board</button>
                     or move the guest to another room.
                   </p>
@@ -269,7 +269,7 @@ export function ArrivalsScreen() {
                       else toast.push({
                         kind: 'warn',
                         title: `${ok} assigned, ${failed} could not be`,
-                        body: 'The remaining guests have no free room of their type — try a room move or an upgrade.',
+                        body: 'The remaining guests have no free room of their type - try a room move or an upgrade.',
                       });
                     }}
                   >
@@ -303,7 +303,7 @@ export function ArrivalsScreen() {
             toast.success(`${noShowTarget.guest} marked as a no-show`);
             // Marking it here is only the property's half. A booking that came
             // through an OTA has to be reported, or the channel keeps its
-            // commission — so offer that immediately rather than leaving it to
+            // commission - so offer that immediately rather than leaving it to
             // be remembered.
             if (noShowTarget.channel) setReportTarget(noShowTarget);
           } catch (e) {

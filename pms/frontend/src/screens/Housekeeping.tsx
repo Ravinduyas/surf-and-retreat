@@ -162,7 +162,7 @@ export function HousekeepingScreen() {
                     <div className="space-y-1">
                       {discrepancies.map((r) => (
                         <p key={r.id} className="text-[11px]">
-                          <span className="font-bold">Room {r.number}</span> — {r.discrepancy}
+                          <span className="font-bold">Room {r.number}</span> - {r.discrepancy}
                         </p>
                       ))}
                     </div>
@@ -196,7 +196,7 @@ export function HousekeepingScreen() {
                 {rooms.length === 0 ? (
                   <p className="text-[12px] text-dash-muted py-10 text-center">
                     {data.rooms.length === 0
-                      ? 'No rooms configured yet — add them in Configuration.'
+                      ? 'No rooms configured yet - add them in Configuration.'
                       : 'No rooms match these filters.'}
                   </p>
                 ) : (
@@ -522,7 +522,7 @@ export function HousekeepingScreen() {
             </Field>
             {statusTarget.occupied && newStatus.startsWith('Vacant') && (
               <p className="text-[11px] text-status-bad font-semibold">
-                This room has an in-house guest — it cannot be marked vacant until they check out.
+                This room has an in-house guest - it cannot be marked vacant until they check out.
               </p>
             )}
           </div>
@@ -621,7 +621,7 @@ export function HousekeepingScreen() {
           </Field>
           <div className="grid grid-cols-2 gap-3">
             <Field label="From" required><DateInput value={blockFrom} onChange={setBlockFrom} /></Field>
-            <Field label="To" required hint="Exclusive — the room returns on this date">
+            <Field label="To" required hint="Exclusive - the room returns on this date">
               <DateInput value={blockTo} onChange={setBlockTo} min={blockFrom} />
             </Field>
           </div>
@@ -629,7 +629,7 @@ export function HousekeepingScreen() {
             <TextInput value={blockReason} onChange={setBlockReason} placeholder="e.g. bathroom refurbishment" />
           </Field>
           <p className="text-[11px] text-dash-muted">
-            Blocking is refused if the room has reservations inside the window — move them first.
+            Blocking is refused if the room has reservations inside the window - move them first.
           </p>
         </div>
       </Modal>

@@ -66,7 +66,7 @@ export function ReservationsScreen() {
       key: 'room', header: 'Room / type',
       render: (r) => (
         <div>
-          <p className="font-semibold">{r.room ?? '—'}</p>
+          <p className="font-semibold">{r.room ?? '-'}</p>
           <p className="text-[10px] text-dash-muted">{r.roomType}</p>
         </div>
       ),
@@ -128,7 +128,7 @@ export function ReservationsScreen() {
     {
       key: 'status', header: 'Status', align: 'right',
       // A website booking waiting on a person reads as its own thing rather
-      // than as "Tentative". The status underneath is Tentative either way —
+      // than as "Tentative". The status underneath is Tentative either way -
       // what a person needs to see is that this one is theirs to action.
       render: (r) => (r.awaitingConfirmation
         ? <Pill tone="yellow" solid>Awaiting confirmation</Pill>
@@ -277,7 +277,7 @@ export function ReservationsScreen() {
               <div className="flex items-center justify-between mb-3">
                 <p className="text-[11px] text-dash-muted">
                   {shown.length} reservation{shown.length === 1 ? '' : 's'}
-                  {rows.length === 500 && ' (showing the first 500 — narrow the filters)'}
+                  {rows.length === 500 && ' (showing the first 500 - narrow the filters)'}
                 </p>
                 <Button size="sm" variant="ghost" icon={<Download className="w-3 h-3" />}
                   onClick={() => exportCsv(shown)}>

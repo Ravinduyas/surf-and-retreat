@@ -26,7 +26,7 @@ export default function SurfCampPage() {
               on <span className="text-[#2C573A]">Weligama Bay.</span>
             </>
           }
-          subtitle="Weekly beginner and intermediate packages, video coaching and board rental — with the bay a five-minute walk from your bed."
+          subtitle="Weekly beginner and intermediate packages, video coaching and board rental - with the bay a five-minute walk from your bed."
           image={SURF_PACKAGES[0].image}
           imageAlt="Walking into the water at Weligama Bay with a surfboard"
         >

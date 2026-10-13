@@ -1,8 +1,8 @@
 // ─────────────────────────────────────────────────────────────
 // Two-factor authentication (TOTP, RFC 6238) and password resets.
 //
-// Implemented on node:crypto so it works with any authenticator app —
-// Google Authenticator, 1Password, Authy, Microsoft Authenticator — with no
+// Implemented on node:crypto so it works with any authenticator app -
+// Google Authenticator, 1Password, Authy, Microsoft Authenticator - with no
 // third-party service and no dependency.
 //
 // Nothing reusable is stored in the clear: the TOTP secret is the only shared
@@ -181,7 +181,7 @@ export function completeEnrolment(userId: string, code: string): string[] {
     throw new HttpError(409, 'Start the two-factor setup before confirming a code', 'mfa_not_started');
   }
   if (!verifyTotp(user.mfa_secret, code)) {
-    throw new HttpError(400, 'That code is not right — check the clock on your phone and try again', 'mfa_invalid');
+    throw new HttpError(400, 'That code is not right - check the clock on your phone and try again', 'mfa_invalid');
   }
   run('UPDATE users SET mfa_enabled = 1, mfa_enrolled_at = ? WHERE id = ?', nowIso(), userId);
   return issueRecoveryCodes(userId);
@@ -221,7 +221,7 @@ export function resolvePasswordReset(token: string): { userId: string; resetId: 
     throw new HttpError(400, 'This reset link has already been used or is not valid', 'reset_invalid');
   }
   if (row.expires_at <= nowIso()) {
-    throw new HttpError(400, 'This reset link has expired — request a new one', 'reset_expired');
+    throw new HttpError(400, 'This reset link has expired - request a new one', 'reset_expired');
   }
   return { userId: row.user_id, resetId: row.id };
 }

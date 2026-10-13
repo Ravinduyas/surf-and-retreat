@@ -91,7 +91,7 @@ function Wizard({ channelId, channel }: { channelId: string; channel: any }) {
         <WarnNote>
           <span className="font-semibold">The stored credential cannot be decrypted.</span>{' '}
           This happens when <span className="font-mono">HELIO_SECRET_KEY</span> changed, or a
-          database was restored beside a different one. Nothing can read it again — create a
+          database was restored beside a different one. Nothing can read it again - create a
           fresh invite code below and reconnect.
         </WarnNote>
       )}
@@ -159,7 +159,7 @@ function Wizard({ channelId, channel }: { channelId: string; channel: any }) {
         open={showDisconnect}
         title={`Disconnect ${channel.name}?`}
         body={
-          'The stored credential is deleted and all distribution stops immediately — no rates, '
+          'The stored credential is deleted and all distribution stops immediately - no rates, '
           + 'no availability, no booking imports. Your room mappings are kept, so reconnecting '
           + 'later does not mean setting them up again.'
         }
@@ -213,7 +213,7 @@ function Header({ connected, diagnosis, loading, onRecheck, onTest, testing, onD
                   rest without keeping three calendars by hand.</>
                 : blocking > 0
                   ? <>The credential works, but it is missing permission for things this PMS does.
-                    Until that is fixed those actions fail silently — see below.</>
+                    Until that is fixed those actions fail silently - see below.</>
                   : <>Rates, availability and stay rules go out automatically; bookings come back
                     in. Your booking page and the OTAs now sell from one pool of beds.</>}
             </p>
@@ -251,12 +251,12 @@ function Header({ connected, diagnosis, loading, onRecheck, onTest, testing, onD
               : diagnosis.scopes.blocking.length ? `${diagnosis.scopes.blocking.length} missing`
                 : 'All present'} />
           <Metric icon={<Clock className="w-3.5 h-3.5" />} label="Access token"
-            value={diagnosis.credential.accessTokenMinutesLeft === null ? '—'
+            value={diagnosis.credential.accessTokenMinutesLeft === null ? '-'
               : diagnosis.credential.accessTokenMinutesLeft > 60
                 ? `${Math.round(diagnosis.credential.accessTokenMinutesLeft / 60)}h left`
                 : `${Math.max(0, diagnosis.credential.accessTokenMinutesLeft)}m left`} />
           <Metric icon={<Gauge className="w-3.5 h-3.5" />} label="API credit"
-            value={diagnosis.credits.remaining === null ? '—'
+            value={diagnosis.credits.remaining === null ? '-'
               : `${diagnosis.credits.remaining}${diagnosis.credits.limit ? ` / ${diagnosis.credits.limit}` : ''}`} />
         </div>
       )}
@@ -380,7 +380,7 @@ function Connect({ guide, busy, onConnect }: {
       <div className="pt-1 border-t border-black/5 space-y-3">
         <Field label="What are you pasting?">
           <Select value={mode} onChange={(v) => { setMode(v as any); setValue(''); }} options={[
-            { label: 'An invite code — the normal way', value: 'invite' },
+            { label: 'An invite code - the normal way', value: 'invite' },
             { label: 'A refresh token I already have', value: 'refresh' },
           ]} />
         </Field>
@@ -409,7 +409,7 @@ function Connect({ guide, busy, onConnect }: {
         </PermissionButton>
         <p className="text-[11px] text-dash-muted leading-relaxed">
           The credential is checked against the live API before it is kept. If it is wrong, or
-          missing a permission, you will see exactly which — nothing is stored on a failed attempt.
+          missing a permission, you will see exactly which - nothing is stored on a failed attempt.
         </p>
       </div>
     </div>
@@ -421,7 +421,7 @@ function TokenHealth({ diagnosis }: { diagnosis: ConnectionDiagnosis }) {
   return (
     <div className="space-y-2">
       <Row ok label="Refresh token stored"
-        detail="Encrypted at rest. This is the connection itself — revoke it in the channel
+        detail="Encrypted at rest. This is the connection itself - revoke it in the channel
                 manager account and distribution stops everywhere, immediately." />
       <Row
         ok={mins === null || mins > 0}
@@ -429,7 +429,7 @@ function TokenHealth({ diagnosis }: { diagnosis: ConnectionDiagnosis }) {
           : mins > 0 ? `Access token valid for ${mins > 60 ? `${Math.round(mins / 60)} hours` : `${mins} minutes`}`
             : 'Access token expired'}
         detail="Minted from the refresh token whenever it is needed and kept in memory only.
-                An expired one is not a problem — the next call mints another." />
+                An expired one is not a problem - the next call mints another." />
       {diagnosis.ownerId && (
         <Row ok label={`Channel account #${diagnosis.ownerId}`}
           detail="The account this credential belongs to. Worth checking against the account you
@@ -448,7 +448,7 @@ function Scopes({ diagnosis, guide }: { diagnosis: ConnectionDiagnosis; guide: a
     return (
       <InfoNote>
         This credential could not be asked what it is allowed to do. That is not the same as
-        having no permissions — older tokens do not answer the question. If pushes start failing,
+        having no permissions - older tokens do not answer the question. If pushes start failing,
         create a fresh invite code with every permission ticked.
       </InfoNote>
     );
@@ -466,7 +466,7 @@ function Scopes({ diagnosis, guide }: { diagnosis: ConnectionDiagnosis; guide: a
             and the connection will not work properly without {scopes.blocking.length === 1 ? 'it' : 'them'}.
           </span>{' '}
           Create a new invite code in {CHANNEL_HUB} with every box ticked, then reconnect above.
-          Nothing else needs redoing — your room mappings are kept.
+          Nothing else needs redoing - your room mappings are kept.
         </WarnNote>
       )}
 
@@ -592,7 +592,7 @@ function RoomMatching({ channelId }: { channelId: string }) {
       <div className="space-y-2">
         <p className="text-[12px] text-dash-muted leading-relaxed">
           Each room in {CHANNEL_HUB} has to be paired with a room type here, or nothing can be
-          pushed for it. This reads both lists and matches what it can — by name, and for dorms by
+          pushed for it. This reads both lists and matches what it can - by name, and for dorms by
           bed count and gender policy, which is the only thing that reliably separates a 4-bed
           mixed from a 6-bed female.
         </p>
@@ -610,7 +610,7 @@ function RoomMatching({ channelId }: { channelId: string }) {
   }
 
   const chosen = rooms.filter((r) => picks[r.channelRoomId]);
-  // One PMS room type may back only one channel room — two channel rooms
+  // One PMS room type may back only one channel room - two channel rooms
   // sharing a type push from one pool and overbook each other.
   const duplicates = new Set(
     Object.values(picks).filter((v, i, a) => v && a.indexOf(v) !== i),

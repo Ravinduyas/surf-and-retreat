@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-// Mock OTA adapter — a fully working connector used for local demos
+// Mock OTA adapter - a fully working connector used for local demos
 // and tests. Simulates an OTA that accepts ARI and occasionally throws
 // a retryable transient error, and can mint an inbound booking.
 //

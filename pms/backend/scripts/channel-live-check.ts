@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 // Every channel-manager operation, against the live Beds24 account.
 //
-//   npm run channel-live            read-only — safe to run any time
+//   npm run channel-live            read-only - safe to run any time
 //   npm run channel-live -- --push  also sends one real ARI push
 //
 // The other suites run against throwaway databases and a fake world. This one
@@ -13,7 +13,7 @@
 // **Read-only by default, and that default is the point.** Everything here
 // either reads, or reports what a write *would* do. Nothing leaves this
 // machine unless `--push` is passed, and `--push` is refused while
-// HELIO_CHANNEL_READONLY is set — so going live stays a deliberate act.
+// HELIO_CHANNEL_READONLY is set - so going live stays a deliberate act.
 //
 // What it will not tell you: whether Beds24 has passed anything on to each
 // OTA. That is between them and Booking.com. This proves the PMS ↔ Beds24
@@ -86,12 +86,12 @@ async function main() {
   check('no permission this PMS needs is missing', d.scopes.blocking.length === 0,
     d.scopes.blocking.map((s: any) => s.scope).join(', '));
   if (d.scopes.extra?.length) {
-    note(`token also grants ${d.scopes.extra.join(', ')} — unused here, narrow it when convenient`);
+    note(`token also grants ${d.scopes.extra.join(', ')} - unused here, narrow it when convenient`);
   }
 
   /* ──────────────────────────────────────── 2. property ── */
   section('2 · The property it is bound to');
-  check('a property is bound', !!d.boundPropertyId, 'nothing chosen — every write would fail');
+  check('a property is bound', !!d.boundPropertyId, 'nothing chosen - every write would fail');
   check('the token can still see it', d.boundPropertyMissing !== true,
     `bound to ${d.boundPropertyId}, which this token cannot see`);
   note(`bound to ${d.boundPropertyId} · ${d.boundPropertyName}`);
@@ -114,7 +114,7 @@ async function main() {
   const mappedIds = new Set(units.filter((u) => u.mappedRoomTypeId).map((u) => u.mappedRoomTypeId));
   const notSold = cat.roomTypes.filter((r: any) => !mappedIds.has(r.id));
   check('every room type this PMS sells reaches the channel', notSold.length === 0,
-    notSold.map((r: any) => r.name).join(', ') + ' — these sell on the booking page only');
+    notSold.map((r: any) => r.name).join(', ') + ' - these sell on the booking page only');
 
   // Two channel rooms sharing one room type sell from one pool and overbook
   // each other. The server refuses it; this proves it did.
@@ -131,7 +131,7 @@ async function main() {
   section('4 · Do both sides agree how many beds exist?');
   // The check that stops an overbooking before it is possible. If the channel
   // thinks a dorm holds 8 and this PMS thinks 16, one of them is selling beds
-  // that do not exist — or refusing to sell beds that do.
+  // that do not exist - or refusing to sell beds that do.
   let capacityMismatch = 0;
   for (const u of units) {
     const rt = u.mappedRoomTypeId ? pms.get(u.mappedRoomTypeId) : null;
@@ -141,19 +141,19 @@ async function main() {
       warn(`${rt.name}`,
         `this PMS has ${rt.unitsTotal} sellable, Beds24 room ${u.externalId} has qty ${u.quantity}.\n`
         + (rt.unitsTotal > u.quantity
-          ? `Beds24 is short by ${rt.unitsTotal - u.quantity} — those beds cannot be sold on any OTA.`
-          : `This PMS is short by ${u.quantity - rt.unitsTotal} — the OTAs may sell beds that do not exist here.`));
+          ? `Beds24 is short by ${rt.unitsTotal - u.quantity} - those beds cannot be sold on any OTA.`
+          : `This PMS is short by ${u.quantity - rt.unitsTotal} - the OTAs may sell beds that do not exist here.`));
     }
   }
   check('every mapped room holds the same number of beds on both sides', capacityMismatch === 0,
-    `${capacityMismatch} room type(s) disagree — see above`);
+    `${capacityMismatch} room type(s) disagree - see above`);
 
   /* ────────────────────────────────────── 5. what we hold ── */
   section('5 · What this PMS would publish');
   const ari = (await call('GET', '/api/channels/ari')).b as any;
   const first = new Map<string, any>();
   for (const c of ari.cells ?? []) if (!first.has(c.roomTypeId)) first.set(c.roomTypeId, c);
-  check('there is something to publish', first.size > 0, 'no ARI cells — check rates are loaded');
+  check('there is something to publish', first.size > 0, 'no ARI cells - check rates are loaded');
   for (const [id, c] of first) {
     const rt = pms.get(id);
     note(`${String(rt?.name ?? id).slice(0, 44).padEnd(46)} ${String(c.available).padStart(3)} free  ${money(c.priceMinor).padStart(7)}  stay ${c.minStay}-${c.maxStay}`);
@@ -180,12 +180,12 @@ async function main() {
   const readOnly = d.channel?.status === 'connected' && config.channelReadonly;
   note(`${(queue ?? []).length} item(s) waiting`);
   if (config.channelReadonly) {
-    warn('read-only is on — nothing queued will ever be sent',
+    warn('read-only is on - nothing queued will ever be sent',
       'Bookings still import and every read works. Clear HELIO_CHANNEL_READONLY\n'
       + 'and set HELIO_CHANNEL_DRAIN_SECONDS to publish.');
   } else {
     check('the queue is draining', (queue ?? []).length < 500,
-      `${queue?.length} items backed up — the drain may be failing, check the sync log`);
+      `${queue?.length} items backed up - the drain may be failing, check the sync log`);
   }
   void readOnly;
 

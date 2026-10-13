@@ -1,13 +1,13 @@
 // ─────────────────────────────────────────────────────────────
-// INVENTORY models — every distribution model a top CM offers.
+// INVENTORY models - every distribution model a top CM offers.
 //
-//  • pooled       — one shared count; every channel draws from it (default)
-//  • allocated    — a per-channel cap (contracted allotment / wholesaler)
-//  • virtual      — one physical room sold as several room-type listings
+//  • pooled       - one shared count; every channel draws from it (default)
+//  • allocated    - a per-channel cap (contracted allotment / wholesaler)
+//  • virtual      - one physical room sold as several room-type listings
 //                   (e.g. "Double" also sold as "Twin"); components linked
-//  • dependent    — a unit sellable only when its components are free
+//  • dependent    - a unit sellable only when its components are free
 //                   (combine two rooms into a suite; split a house)
-//  • bed-level    — dorm sold per bed (occupancy = beds) for hostels
+//  • bed-level    - dorm sold per bed (occupancy = beds) for hostels
 //
 // Mirrors Beds24's Room Linking & Dependencies + pooled/contracted models.
 // ─────────────────────────────────────────────────────────────
@@ -22,7 +22,7 @@ export interface RoomTypeInv {
   // omit a channel = it draws freely from the pool.
   caps?: Partial<Record<ChannelCode, number>>;
   // virtual/derived: this listing is really the SAME physical stock as
-  // another room type — selling one decrements the shared parent.
+  // another room type - selling one decrements the shared parent.
   virtualOf?: string;
   // dependency: sellable only if ALL of these component types are free
   // (and selling it consumes one of each).

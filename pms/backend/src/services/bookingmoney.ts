@@ -13,7 +13,7 @@
 // that collected card numbers into a PMS would be a compliance problem rather
 // than a feature. What it does instead is state the amount, record it against
 // the reservation as money owed, and let the property collect it the way they
-// already collect money — a link, a transfer, or on arrival.
+// already collect money - a link, a transfer, or on arrival.
 //
 // `deposit_required_minor` on the reservation is where it lands, which is a
 // column the folio and the arrivals list already read. Nothing new had to be
@@ -50,7 +50,7 @@ export interface DepositPolicy {
 
 export const DEFAULT_DEPOSIT: DepositPolicy = {
   // Off by default. Turning it on is a commercial decision with a real
-  // trade-off — a deposit cuts no-shows and also cuts bookings — and a PMS
+  // trade-off - a deposit cuts no-shows and also cuts bookings - and a PMS
   // should not make that choice on a property's behalf.
   mode: 'none',
   percentBp: 2_000,

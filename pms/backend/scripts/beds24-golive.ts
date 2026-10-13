@@ -16,7 +16,7 @@
 //
 // Nothing is destructive. It maps by exact name and leaves anything ambiguous
 // for a person, because a wrong mapping sends one room type's prices to another
-// room's calendar — which is worse than no mapping at all, and harder to notice.
+// room's calendar - which is worse than no mapping at all, and harder to notice.
 //
 // The token is stored the way every credential is: encrypted at rest when
 // HELIO_SECRET_KEY is set, and never returned by the API.
@@ -78,7 +78,7 @@ async function main() {
   // ── 3. What Beds24 holds ──────────────────────────────────
   step(3, 'Reading the rooms Beds24 has');
   // `discoverUnits` returns a flat array and has already tried to match each
-  // Beds24 room to a PMS room type by name — reuse that rather than repeating
+  // Beds24 room to a PMS room type by name - reuse that rather than repeating
   // the guess here with slightly different rules.
   let units = await channels.discoverUnits(propertyId, systemActor(propertyId), channelId);
   if (!units.length) {
@@ -94,7 +94,7 @@ async function main() {
   if (CREATE_TYPES) {
     step('3b', 'Creating room types from Beds24');
     await createRoomTypes(propertyId, units);
-    // `units` carries the name match worked out in step 3 — against the room
+    // `units` carries the name match worked out in step 3 - against the room
     // types that existed *then*, which was none of the ones just created. Ask
     // again, or step 4 maps nothing and says the inventory is missing.
     units = await channels.discoverUnits(propertyId, systemActor(propertyId), channelId);
@@ -152,7 +152,7 @@ async function main() {
       out(`     · ${u.id.padEnd(8)} ${u.name}  (${u.kind}, ${u.quantity} unit${u.quantity === 1 ? '' : 's'})`);
     }
     out('');
-    warn('Create these as room types in Configuration, then run this again —');
+    warn('Create these as room types in Configuration, then run this again -');
     warn('or map them by hand in Channel Manager → Mappings. Nothing was guessed.');
   }
   if (!mapped) {
@@ -171,11 +171,11 @@ async function main() {
     ok(`${result.imported ?? 0} imported · ${result.updated ?? 0} updated · `
       + `${result.skipped ?? 0} skipped`);
     if (result.conflicts?.length) {
-      warn(`${result.conflicts.length} booking(s) need a decision — see Channel Manager → Conflicts`);
+      warn(`${result.conflicts.length} booking(s) need a decision - see Channel Manager → Conflicts`);
     }
   } else {
     step(5, 'Importing bookings');
-    out('   (skipped — re-run with --import once the mapping above looks right)');
+    out('   (skipped - re-run with --import once the mapping above looks right)');
   }
 
   // ── 6. Outbound ───────────────────────────────────────────
@@ -190,7 +190,7 @@ async function main() {
     else fail(`Beds24 rejected the push: ${JSON.stringify(pushed.errors).slice(0, 300)}`);
   } else {
     step(6, 'Pushing rates and availability');
-    out('   (skipped — re-run with --push when your rates are ready to go out)');
+    out('   (skipped - re-run with --push when your rates are ready to go out)');
   }
 
   out('\n────────────────────────────────────────');
@@ -211,7 +211,7 @@ function systemActor(propertyId: string) {
  * wrong produces an inventory that looks plausible and oversells:
  *
  *   · **A dorm bed is sold as a one-person room.** "Bed in 8-Bed Mixed
- *     Dormitory Room" arrives as `maxPeople: 1, qty: 16` — sixteen *beds*, not
+ *     Dormitory Room" arrives as `maxPeople: 1, qty: 16` - sixteen *beds*, not
  *     sixteen rooms. Helio models a dorm natively, so 16 beds at 8 per room
  *     becomes 2 rooms of 8. The beds-per-room comes from the name when it says
  *     so, and otherwise the whole lot is treated as one room.
@@ -221,7 +221,7 @@ function systemActor(propertyId: string) {
  *
  * The price is read from the live calendar rather than invented. Where Beds24
  * has several prices across the window the median is used and the range is
- * printed, because a default rate is a starting point a human should confirm —
+ * printed, because a default rate is a starting point a human should confirm -
  * not a number to be silently chosen.
  */
 async function createRoomTypes(propertyId: string, units: any[]) {
@@ -299,7 +299,7 @@ async function createRoomTypes(propertyId: string, units: any[]) {
 
     if (existing) {
       // Already here. Its prices are still refreshed below, because that is
-      // what this command is for — but the type's own shape is left alone.
+      // what this command is for - but the type's own shape is left alone.
       //
       // The default rate is only re-derived for a type this script created
       // itself. If a person has set one, Beds24's median is not better
@@ -309,12 +309,12 @@ async function createRoomTypes(propertyId: string, units: any[]) {
         run('UPDATE room_types SET default_rate_minor = ? WHERE id = ?', rateMinor, existing.id);
       }
       targets.push({ rtId: existing.id, name, externalId });
-      warn(`${name} already exists — kept${ours && rateMinor
+      warn(`${name} already exists - kept${ours && rateMinor
         ? `, rate refreshed to ${(rateMinor / 100).toFixed(2)}` : ''}`);
       continue;
     }
 
-    // "8-Bed", "6-Bed" — Beds24 puts the dorm size in the name and nowhere else.
+    // "8-Bed", "6-Bed" - Beds24 puts the dorm size in the name and nowhere else.
     const perRoom = isDorm
       ? (Number(/(\d+)\s*-?\s*bed/i.exec(name)?.[1]) || qty)
       : 1;

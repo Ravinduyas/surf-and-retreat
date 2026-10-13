@@ -3,13 +3,13 @@
 //
 // Polling closes the gap; a webhook closes the delay. Beds24 will POST to a URL
 // of the property's choosing whenever a booking is made, changed or cancelled,
-// which turns "within a minute" into "within a second" — and, more usefully,
+// which turns "within a minute" into "within a second" - and, more usefully,
 // means the front desk sees a booking at the same moment the OTA does.
 //
 // Two things make this endpoint different from every other route here:
 //
 //   · **It has no session.** Beds24 does not sign in. So it is authenticated by
-//     a shared secret instead — Beds24's `customHeader`, set when the webhook
+//     a shared secret instead - Beds24's `customHeader`, set when the webhook
 //     is registered and checked on every call. An unauthenticated endpoint that
 //     creates reservations is not an endpoint, it is a way in.
 //   · **It must never be trusted for content.** The payload names a booking; it
@@ -18,7 +18,7 @@
 //     write anything the account does not already say.
 //
 // It always answers 200 once the secret checks out. A webhook that returns an
-// error gets retried, and then disabled — losing real-time entirely because one
+// error gets retried, and then disabled - losing real-time entirely because one
 // booking could not be parsed is a bad trade. Failures are recorded and the
 // poll picks them up.
 // ─────────────────────────────────────────────────────────────
@@ -51,7 +51,7 @@ function webhookSecret(): string | null {
 /**
  * Beds24 sends its `customHeader` verbatim, and different Beds24 versions have
  * put it in different places, so every plausible carrier is checked. The
- * comparison is constant-time — a timing oracle on a shared secret is a slow
+ * comparison is constant-time - a timing oracle on a shared secret is a slow
  * way to leak it.
  */
 function presentedSecret(ctx: Ctx): string {
@@ -117,7 +117,7 @@ router.post('/api/webhooks/beds24', async (ctx: Ctx) => {
 
   try {
     // Deliberately re-read from the API rather than trusting the body. The
-    // payload is a nudge — "something changed" — and `importBookings` is
+    // payload is a nudge - "something changed" - and `importBookings` is
     // already idempotent on the OTA reference, so the same booking arriving
     // here and again on the next poll updates once rather than twice.
     const result: any = await importBookings(channel.property_id, actor, channel.id);
@@ -143,7 +143,7 @@ router.get('/api/webhooks/beds24/status', (ctx: Ctx) => {
   return {
     secretConfigured: configured,
     externalPropertyId: channel?.external_property_id ?? null,
-    // Registering the URL with Beds24 is a separate, deliberate step — see
+    // Registering the URL with Beds24 is a separate, deliberate step - see
     // `scripts/beds24-webhook.ts`. Whether Beds24 is actually calling is only
     // knowable from Beds24, so this reports readiness, not success.
     ready: configured && !!channel?.external_property_id,

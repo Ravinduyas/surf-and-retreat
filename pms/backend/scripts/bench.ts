@@ -7,7 +7,7 @@
 //
 // The demo database has 66 reservations. Everything is fast at 66 reservations.
 // The question this answers is whether it is still fast after three years of
-// trading — which is when a missing index stops being theoretical and starts
+// trading - which is when a missing index stops being theoretical and starts
 // being a guest standing at the desk.
 //
 // It builds its own database in a temp directory and deletes it afterwards.
@@ -134,7 +134,7 @@ function seed() {
 }
 
 /**
- * Deterministic pseudo-randomness — the benchmark has to compare like with
+ * Deterministic pseudo-randomness - the benchmark has to compare like with
  * like across runs, and Math.random() would make every run a different shape.
  */
 let seedState = 12345;
@@ -156,7 +156,7 @@ function seedReservations(ctx: ReturnType<typeof seed>) {
   let lines = 0;
 
   // One transaction per month keeps the WAL from exploding while still being
-  // fast — 20,000 individual commits would take minutes and prove nothing.
+  // fast - 20,000 individual commits would take minutes and prove nothing.
   for (let d = 0; d < days; d += 30) {
     tx(() => {
       for (let offset = 0; offset < 30 && d + offset < days; offset++) {
@@ -223,7 +223,7 @@ function seedReservations(ctx: ReturnType<typeof seed>) {
                 chargeId, propertyId, folioId, resId, addDays(arrival, k), nowIso(), rate, rate,
               );
               // Every room charge carries its tax, pointing back at the charge
-              // it taxes — that is what parent_line_id is for, and voiding the
+              // it taxes - that is what parent_line_id is for, and voiding the
               // charge has to find these.
               const tax = Math.round(rate * 0.15);
               run(
@@ -296,7 +296,7 @@ interface Timing { name: string; p50: number; p95: number; max: number; runs: nu
 const timings: Timing[] = [];
 
 function time(name: string, runs: number, fn: () => unknown) {
-  // One untimed pass so the statement cache and page cache are warm — this
+  // One untimed pass so the statement cache and page cache are warm - this
   // measures steady state, not first-call cost.
   try { fn(); } catch (e) {
     out(`  ! ${name} threw: ${e instanceof Error ? e.message : e}\n`);
@@ -329,7 +329,7 @@ function report() {
  * Break the reservation list into its parts.
  *
  * The list is the slowest read in the system and the table above only says so
- * — it does not say which half is to blame. Guessing at that is how you end up
+ * - it does not say which half is to blame. Guessing at that is how you end up
  * optimising the wrong one, so `--profile` measures the SQL and the shaping
  * separately.
  */
@@ -367,7 +367,7 @@ function profileReservationList(propertyId: string) {
 async function main() {
   out(`\nHelio performance benchmark\n${'═'.repeat(27)}\n`);
   out(`${YEARS} years · ${ROOMS} rooms · indexes ${DROP_INDEXES ? 'DROPPED (the "before")' : 'as shipped'}\n`);
-  out(`Building the database — this takes a minute…\n`);
+  out(`Building the database - this takes a minute…\n`);
 
   const buildStart = Date.now();
   migrate();
@@ -466,12 +466,12 @@ async function main() {
   const warn = timings.filter((t) => t.p95 > 50 && t.p95 <= 200);
   out(`\n${counts.made.toLocaleString()} reservations · ${(pageCount * pageSize / 1024 / 1024).toFixed(1)} MB\n`);
   if (slow.length) {
-    out(`\n✗ ${slow.length} operation(s) over 200ms — the desk would feel these:\n`);
-    for (const t of slow) out(`    ${t.name} — p95 ${t.p95.toFixed(0)}ms\n`);
+    out(`\n✗ ${slow.length} operation(s) over 200ms - the desk would feel these:\n`);
+    for (const t of slow) out(`    ${t.name} - p95 ${t.p95.toFixed(0)}ms\n`);
     process.exitCode = 1;
   } else if (warn.length) {
     out(`\n⚠ ${warn.length} operation(s) between 50 and 200ms. Usable, worth watching.\n`);
-    for (const t of warn) out(`    ${t.name} — p95 ${t.p95.toFixed(0)}ms\n`);
+    for (const t of warn) out(`    ${t.name} - p95 ${t.p95.toFixed(0)}ms\n`);
   } else {
     out(`\n✓ Every operation answers in under 50ms at this size.\n`);
   }

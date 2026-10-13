@@ -61,7 +61,7 @@ purgeExpiredSessions();
 }
 startBackupSchedule();
 
-// A database can be damaged while the process is not running — a bad disk, a
+// A database can be damaged while the process is not running - a bad disk, a
 // half-finished copy, a machine losing power mid-write. Checking on the way up
 // catches that before the front desk writes a booking into it. It is skipped
 // when a check has already passed today, so a restart is never slow.
@@ -249,7 +249,7 @@ server.on('listening', () => {
     // exactly the failure this warning exists to prevent.
     + `  secrets: ${encryptionAvailable()
       ? 'encrypted at rest'
-      : 'NOT ENCRYPTED — set HELIO_SECRET_KEY to protect channel credentials'}\n`
+      : 'NOT ENCRYPTED - set HELIO_SECRET_KEY to protect channel credentials'}\n`
     + `  backups: ${backups.enabled
       ? `every ${backups.intervalHours}h → ${backups.directory} (${backups.health})`
       : 'disabled'}\n`
@@ -257,7 +257,7 @@ server.on('listening', () => {
     // setting while an installation is being checked and the wrong one to
     // discover a week later, wondering why the OTAs never got a rate change.
     + (readOnlyChannels()
-      ? '  channels: READ-ONLY — bookings import, but no rates or availability are sent\n'
+      ? '  channels: READ-ONLY - bookings import, but no rates or availability are sent\n'
       + '            (unset HELIO_CHANNEL_READONLY to publish from Helio)\n'
       : ''),
   );
@@ -267,14 +267,14 @@ server.on('listening', () => {
 // `--watch` restarts by killing this process and starting its successor, and
 // the two overlap: the new process asks for the port while the old one is still
 // letting go of it. Node emits that as an `error` event, and a server with no
-// `error` listener does not fail — it throws an unhandled 'error' event and
+// `error` listener does not fail - it throws an unhandled 'error' event and
 // takes the process down with a net.js stack trace that names neither the port
 // nor the cause. An ordinary file save then leaves no server running at all.
 //
 // So a bind conflict waits and asks again for a few seconds. That is long
 // enough to outlast a restart handover and far too short to hide a real
-// conflict: a port held by something else — an older `npm start` still running
-// in a forgotten terminal is overwhelmingly the usual one — is never going to
+// conflict: a port held by something else - an older `npm start` still running
+// in a forgotten terminal is overwhelmingly the usual one - is never going to
 // free itself, and a server that retried forever would be indistinguishable
 // from one that is merely slow to start. When the grace period runs out it says
 // which port, and how to find out what is holding it, and stops.
@@ -290,7 +290,7 @@ server.on('error', (e: NodeJS.ErrnoException) => {
 
   if (bindWaited < BIND_GRACE_MS) {
     if (bindWaited === 0) {
-      process.stdout.write(`port ${PORT} is busy — waiting for it to be released…\n`);
+      process.stdout.write(`port ${PORT} is busy - waiting for it to be released…\n`);
     }
     bindWaited += BIND_RETRY_MS;
     // Deliberately *not* unref'd. Every timer in this file is unref'd because
@@ -303,7 +303,7 @@ server.on('error', (e: NodeJS.ErrnoException) => {
   process.stderr.write(
     `\n*** PORT ${PORT} IS ALREADY IN USE ***\n`
     + `  Something else has held it for ${BIND_GRACE_MS / 1000}s, so it is not a restart handover.\n`
-    + `  Almost always another copy of this API — check for a stray 'npm start'.\n\n`
+    + `  Almost always another copy of this API - check for a stray 'npm start'.\n\n`
     + `  Find it:   ${process.platform === 'win32'
       ? `netstat -ano | findstr :${PORT}`
       : `lsof -i :${PORT}`}\n`
@@ -320,7 +320,7 @@ server.listen(PORT);
 // ─── Shutdown ────────────────────────────────────────────────
 // The other half of the same problem. A keep-alive socket from the front-end
 // outlives the last request on it, so `server.close()` waits for a browser that
-// has no intention of saying anything else — the process lingers, the port
+// has no intention of saying anything else - the process lingers, the port
 // stays bound, and the next `--watch` restart runs into the retry loop above
 // for no reason. Closing the idle sockets explicitly is what makes a restart
 // deterministic instead of lucky.
@@ -333,13 +333,13 @@ let shuttingDown = false;
 
 function shutdown(signal: string) {
   // A second Ctrl-C while the first is still draining means "I meant it", not
-  // "start a second shutdown" — take the fast path out.
+  // "start a second shutdown" - take the fast path out.
   if (shuttingDown) {
     server.closeAllConnections();
     process.exit(0);
   }
   shuttingDown = true;
-  process.stdout.write(`\n${signal} — releasing port ${PORT}…\n`);
+  process.stdout.write(`\n${signal} - releasing port ${PORT}…\n`);
 
   const giveUp = setTimeout(() => {
     process.stderr.write('  a request is still running; closing it anyway\n');
@@ -362,7 +362,7 @@ function closeDatabase() {
   try {
     database.close();
   } catch {
-    // Already closed, or mid-statement. Exiting regardless — a failure to close
+    // Already closed, or mid-statement. Exiting regardless - a failure to close
     // cleanly must not turn a restart into a hang.
   }
 }
@@ -375,7 +375,7 @@ setInterval(purgeExpiredSessions, 60 * 60 * 1000).unref();
 
 // ─── Channel push drain ──────────────────────────────────────
 // Closing a date in Helio has to reach Booking.com without anyone remembering
-// to press a button — otherwise the OTA keeps selling a room the property has
+// to press a button - otherwise the OTA keeps selling a room the property has
 // shut, which is an overbooking with a paper trail showing it was closed.
 //
 // The queue is still the mechanism: writes enqueue, this drains. That keeps the
@@ -391,7 +391,7 @@ const DRAIN_SECONDS = config.channelDrainSeconds;
  * The guard stops a slow run stacking up behind itself. It is released in a
  * `finally`, which is correct but not sufficient: a promise that never settles
  * never reaches its `finally`, and the flag then stays raised for the life of
- * the process — every later tick returns immediately and distribution stops
+ * the process - every later tick returns immediately and distribution stops
  * silently.
  *
  * Every outbound call now has a deadline, so that should not happen. This is
@@ -461,7 +461,7 @@ void bootstrapBeds24().then((r) => {
     process.stdout.write(`  beds24: ${r.message}\n`);
   }
 }).catch((e) => {
-  process.stderr.write(`  beds24: bootstrap failed — ${e instanceof Error ? e.message : e}\n`);
+  process.stderr.write(`  beds24: bootstrap failed - ${e instanceof Error ? e.message : e}\n`);
 });
 
 if (DRAIN_SECONDS > 0) {
@@ -474,7 +474,7 @@ if (DRAIN_SECONDS > 0) {
 // forty requests and causes one call.
 //
 // The timer above stays exactly as it was. This only ever makes the queue drain
-// *sooner* — if the nudge is lost, dropped or arrives during a drain already in
+// *sooner* - if the nudge is lost, dropped or arrives during a drain already in
 // flight, the tick still picks the work up.
 let nudge: NodeJS.Timeout | null = null;
 setQueueNudge(() => {
@@ -491,7 +491,7 @@ setQueueNudge(() => {
 // The one loop this system cannot do without.
 //
 // Everything else here is about latency; this is about a hole. Bookings were
-// never fetched on a schedule at all — a guest booked on an OTA, Beds24 had it
+// never fetched on a schedule at all - a guest booked on an OTA, Beds24 had it
 // in seconds, and Helio did not know until somebody opened the Channel Manager
 // and pressed Import. Between those two moments the front desk works from an
 // inventory that is wrong and the tape chart shows a bed that is sold as free,
@@ -510,7 +510,7 @@ async function pollBookings() {
     // A failed import marks the channel `error`. Polling only connected
     // channels therefore means one transient network blip stops booking sync
     // permanently: the next tick finds nothing to do, so nothing ever succeeds,
-    // so the status never returns to connected. Observed doing exactly that —
+    // so the status never returns to connected. Observed doing exactly that -
     // three good polls a minute apart, one "fetch failed", then fifty-three
     // minutes of silence with the API up and Beds24 reachable.
     //
@@ -529,7 +529,7 @@ async function pollBookings() {
         await importBookings(r.propertyId, actor, r.channelId);
       } catch (e) {
         // Logged and carried on. One channel refusing must not stop the others,
-        // and `importBookings` records the failure in the sync log — which is
+        // and `importBookings` records the failure in the sync log - which is
         // also what keeps the watermark from moving, so nothing is skipped.
         process.stderr.write(
           `[${new Date().toISOString()}] booking poll failed for ${r.propertyId}: `
@@ -594,7 +594,7 @@ if (MESSAGE_POLL_SECONDS > 0) {
 // A booking taken by the property's own booking page holds its bed until the
 // property accepts it or the hold runs out. The availability engine already
 // stops counting an expired hold the instant the clock passes it, so this
-// timer is not what frees the bed — it is what tidies up after: the booking is
+// timer is not what frees the bed - it is what tidies up after: the booking is
 // cancelled, the audit trail says why, the bell says it happened, and the
 // dates are pushed back open on the channels.
 //
@@ -631,7 +631,7 @@ setTimeout(sweepExpiredHolds, 3_000).unref();
 // Nothing moved it.
 //
 // `runNightAudit` is the only thing that advances a property's business date,
-// and it was reachable only through `POST /api/night-audit/run` — a button. Miss
+// and it was reachable only through `POST /api/night-audit/run` - a button. Miss
 // a few days and the date simply stops, silently, while the calendar carries on.
 // Found seven days behind on a live installation, which is not a cosmetic drift:
 //
@@ -644,7 +644,7 @@ setTimeout(sweepExpiredHolds, 3_000).unref();
 //     night audit; a price set to change on a date the system never reaches is
 //     never applied, and therefore never pushed to the channels either.
 //
-// The roll happens in the **property's** timezone, not the server's — a hostel
+// The roll happens in the **property's** timezone, not the server's - a hostel
 // in Asia/Colombo closes its day on Colombo's clock wherever this is hosted.
 // Until the local time passes the roll hour the target stays on yesterday, so a
 // day that is still trading is never closed early.

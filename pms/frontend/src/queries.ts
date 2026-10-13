@@ -141,15 +141,15 @@ const FINANCIAL = ['folio', 'folios', 'reservation-folios', 'outstanding', 'cash
 /**
  * Invalidate every query under the given key prefixes.
  *
- * `property` needs a second step. The property — and with it the **business
- * date** — is mirrored in the auth store, which is where nineteen screens read
+ * `property` needs a second step. The property - and with it the **business
+ * date** - is mirrored in the auth store, which is where nineteen screens read
  * it from, and React Query cannot invalidate a Zustand store. So the mutations
  * that declare `'property'` refetched the query and left the store holding
  * whatever was loaded at sign-in, until the page was reloaded.
  *
  * The night audit is where that showed: closing a day advanced the date on the
  * server, the audit card refreshed to the new one, and the header chip beside it
- * went on displaying the old one — the same screen stating two different
+ * went on displaying the old one - the same screen stating two different
  * business dates at once. Check-in is the version that matters more, because it
  * decides whether to warn about an early arrival by comparing against this
  * value, and a stale date makes that warning wrong in both directions.
@@ -189,7 +189,7 @@ export function useSettings() {
  * What the property accepts. One list, from the server.
  *
  * There were four hardcoded copies of this in the front end and they had
- * already drifted — the cashier offered Voucher, check-in offered OTA prepaid,
+ * already drifted - the cashier offered Voucher, check-in offered OTA prepaid,
  * the guest dashboard offered neither. Long staleTime because it changes about
  * once a year, in Configuration.
  */
@@ -220,7 +220,7 @@ export function useCashbox() {
  * Everything that moved money, newest first.
  *
  * Payments and cash-box events in one list, on the same short clock as the
- * drawer itself — a desk watching this is watching money change hands.
+ * drawer itself - a desk watching this is watching money change hands.
  */
 export function useCashLedger(date?: string, limit = 60) {
   return useQuery({
@@ -377,7 +377,7 @@ export function useTapeChart(from: string, to: string) {
  *   · the endpoint refuses a range over 400 days, and should;
  *   · a chunk already fetched is served from cache, so scrolling back over
  *     ground you have covered costs nothing;
- *   · a slow month does not hold up the months either side of it — each chunk
+ *   · a slow month does not hold up the months either side of it - each chunk
  *     paints as it lands.
  *
  * Chunk starts come from `chunkStart()`, which aligns them to a fixed grid, so
@@ -417,7 +417,7 @@ export function useSetInventory() {
     { roomTypeId: string; rooms: number; bedsPerRoom?: number }) =>
       api.put<any>(`/api/inventory/${roomTypeId}`, { rooms, bedsPerRoom }),
     onSuccess: () => {
-      // Rooms, beds and availability all move together — anything showing a
+      // Rooms, beds and availability all move together - anything showing a
       // count is now stale.
       for (const k of ['inventory', 'room-types', 'rooms', 'availability', 'tape']) {
         void qc.invalidateQueries({ queryKey: [k] });
@@ -912,7 +912,7 @@ export interface StayChangePreview {
 /**
  * What a date change would do, without doing it.
  *
- * Enabled only once a date is chosen, and kept out of the cache for long — the
+ * Enabled only once a date is chosen, and kept out of the cache for long - the
  * answer depends on what every other booking is doing, so a stale preview is a
  * quote for a room somebody else has since taken.
  */
@@ -1014,8 +1014,8 @@ export function useBookingConfirmation(id?: string, enabled = true) {
 /**
  * The state of the QR handed to the guest, polled while it is live.
  *
- * Polling rather than pushing because the desk is watching for one event —
- * "they have sent it" — and a five-second poll on one reservation is cheaper to
+ * Polling rather than pushing because the desk is watching for one event -
+ * "they have sent it" - and a five-second poll on one reservation is cheaper to
  * reason about than a socket that has to survive the receptionist's wifi.
  */
 export function useRegistrationLink(reservationId?: string, enabled = true) {
@@ -1345,7 +1345,7 @@ export interface NotificationFeed {
  *
  * Polled every 15 seconds rather than every 60. A booking that landed four
  * minutes ago is not "live", and the bell is the one thing in the shell whose
- * whole job is to be current — the payload is small and the query is indexed,
+ * whole job is to be current - the payload is small and the query is indexed,
  * so the cost of asking often is low.
  */
 export function useNotifications(filters: { source?: string; unreadOnly?: boolean } = {}) {
@@ -1599,7 +1599,7 @@ export interface ReservationDocument {
   uploadedBy: string | null;
 }
 
-/** Metadata only — the images are fetched one at a time, and audited. */
+/** Metadata only - the images are fetched one at a time, and audited. */
 export function useDocuments(reservationId?: string) {
   return useQuery({
     queryKey: keys.documents(reservationId),
@@ -1772,8 +1772,8 @@ export const useUpdateRestriction = mutation<{ id: string; body: Record<string, 
 export const useDeleteRestriction = mutation<{ id: string }>(
   ({ id }) => api.delete(`/api/restrictions/${id}`), ['restrictions', 'rate-calendar', 'ari']);
 
-// Closing a date changes what every screen shows about that date — the
-// calendar, the close-out list, the ARI preview and the channel queue — so all
+// Closing a date changes what every screen shows about that date - the
+// calendar, the close-out list, the ARI preview and the channel queue - so all
 // of them are invalidated together.
 const CLOSEOUT_KEYS = ['closeouts', 'restrictions', 'rate-calendar', 'ari', 'channels'];
 

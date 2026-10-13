@@ -54,10 +54,10 @@ export const BLOG_POSTS: BlogPost[] = [
       {
         type: 'ul',
         items: [
-          'Weligama Bay — on your doorstep, the best learning wave in the country.',
-          'Lazy Left & Lazy Right — mellow reef points at Midigama, about 10 minutes by tuk-tuk.',
-          'Coconut Point — a playful right-hander, around 12 minutes away.',
-          'Mirissa — fun beach and point waves 15 minutes east.',
+          'Weligama Bay - on your doorstep, the best learning wave in the country.',
+          'Lazy Left & Lazy Right - mellow reef points at Midigama, about 10 minutes by tuk-tuk.',
+          'Coconut Point - a playful right-hander, around 12 minutes away.',
+          'Mirissa - fun beach and point waves 15 minutes east.',
         ],
       },
       {

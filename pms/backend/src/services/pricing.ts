@@ -273,7 +273,7 @@ export interface TaxRow {
   /**
    * CSV of tax codes this one compounds on. NULL means "everything before me in
    * sort order", which is the behaviour every existing property already has and
-   * must keep — silently changing how tax is calculated is its own incident.
+   * must keep - silently changing how tax is calculated is its own incident.
    */
   compound_on: string | null;
 }
@@ -299,7 +299,7 @@ export function activeTaxes(propertyId: string, appliesTo: 'room' | 'fnb' | 'all
  * Compute tax lines over a taxable base.
  *
  * **Compounding.** A tax may name the codes it applies on top of, in
- * `compound_on` — a service charge that is itself subject to VAT, say. When it
+ * `compound_on` - a service charge that is itself subject to VAT, say. When it
  * names nothing, it compounds on everything that came before it in `sort_order`,
  * which is what this function has always done and what every existing property
  * is already configured around. That default is load-bearing: changing the way
@@ -336,7 +336,7 @@ export function computeTaxes(
       case 'flat':             amount = t.value; break;
       default: amount = 0;
     }
-    if (t.inclusive === 1) continue;      // already inside the rate — not added
+    if (t.inclusive === 1) continue;      // already inside the rate - not added
     if (amount === 0) continue;
     lines.push({ code: t.code, name: t.name, amountMinor: amount, mode: t.mode });
     charged.set(t.code.toUpperCase(), amount);
@@ -371,7 +371,7 @@ export function quoteStay(propertyId: string, opts: {
   const nights = dates.length;
   const bookedOn = opts.bookedOn ?? new Date().toISOString().slice(0, 10);
 
-  // Channel multiplier (commission / FX uplift) — applied last.
+  // Channel multiplier (commission / FX uplift) - applied last.
   let channelMultiplierBp = 10_000;
   if (opts.channelCode) {
     const ch = get<{ price_multiplier_bp: number }>(

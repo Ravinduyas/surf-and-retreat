@@ -4,7 +4,7 @@
 //   node scripts/staydates-ui.ts    (API, app and Chrome with --remote-debugging-port must be up)
 //
 // staydates-check.ts proves the arithmetic. This proves the screen reaches it,
-// and — the part that matters most — that the price is shown *before* the
+// and - the part that matters most - that the price is shown *before* the
 // operator commits, not after.
 import { config } from '../src/config.ts';
 
@@ -260,7 +260,7 @@ async function main() {
   const realErrors = consoleErrors.filter((e) => !/favicon|DevTools|Download the React/i.test(e));
   check('no console errors during the run', realErrors.length === 0, realErrors.join(' | '));
 
-  // Clean up after ourselves — this runs against the live database.
+  // Clean up after ourselves - this runs against the live database.
   await fetch(`${API}/api/reservations/${created.id}/cancel`, {
     method: 'POST', headers: auth, body: JSON.stringify({ reason: 'UI check cleanup' }),
   });

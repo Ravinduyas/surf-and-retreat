@@ -1,4 +1,4 @@
-# Helio PMS — Technology Stack
+# Helio PMS - Technology Stack
 
 What this system is built on, and why. Every figure below was read from the
 running system on 2 August 2026, not from memory.
@@ -11,7 +11,7 @@ running system on 2 August 2026, not from memory.
 |---|---|---|
 | Runtime | Node.js | 24.12.0 (requires ≥ 22.6) |
 | Language | TypeScript | 5.8, `strict` on both sides |
-| Backend | Node stdlib HTTP — no framework | — |
+| Backend | Node stdlib HTTP - no framework | - |
 | Database | SQLite via `node:sqlite` | built into Node |
 | Frontend | React | 19.0 |
 | Build | Vite | 6.4 |
@@ -56,7 +56,7 @@ ORM and no container requirement.
 
 ---
 
-## 3. Backend — `apps/pms-api`
+## 3. Backend - `apps/pms-api`
 
 **9,540 lines across 27 TypeScript files**, plus a 966-line SQL schema and
 1,877 lines of verification scripts.
@@ -65,10 +65,10 @@ ORM and no container requirement.
 
 Node 22.6+ for two built-ins that removed whole dependency categories:
 
-- **`node:sqlite`** — a database with no server to install, no driver to
+- **`node:sqlite`** - a database with no server to install, no driver to
   compile and no native build step. The entire property is one file you can
   copy.
-- **Native TypeScript type-stripping** — `.ts` files run directly. No build
+- **Native TypeScript type-stripping** - `.ts` files run directly. No build
   step, no `tsx`, no `ts-node`, no `dist/` to keep in sync. Code that runs is
   code you can read.
 
@@ -87,7 +87,7 @@ audit.
 ### Layering
 
 ```
-routes/     HTTP shape only — parse, coerce, authorise, delegate
+routes/     HTTP shape only - parse, coerce, authorise, delegate
 services/   the business rules; no knowledge of HTTP
 lib/        ids, dates, money, errors, coercion
 db.ts       prepared-statement cache, transactions, migrations
@@ -105,13 +105,13 @@ drive a fortnight of trading through the same code the UI uses.
 |---|---|
 | Money | Integer **minor units** (cents). Never a float, anywhere. |
 | Percentages | **Basis points** (1% = 100 bp). Never a float. |
-| Business dates | `YYYY-MM-DD` strings, UTC arithmetic — a date never shifts with the server's timezone |
+| Business dates | `YYYY-MM-DD` strings, UTC arithmetic - a date never shifts with the server's timezone |
 | Timestamps | ISO-8601 UTC |
 | Booleans | `0`/`1`, normalised at the binding layer |
 | Tenancy | `property_id` on every operational row |
 
 Money as integers is the single most consequential choice here. A folio balance
-is `SUM(amount_minor)` over non-voided lines — reconstructed from the ledger,
+is `SUM(amount_minor)` over non-voided lines - reconstructed from the ledger,
 never stored as a mutable total that could drift.
 
 ### Transactions
@@ -132,7 +132,7 @@ lines without a rebuild.
 
 ---
 
-## 4. Frontend — `apps/pms-frontend`
+## 4. Frontend - `apps/pms-frontend`
 
 **16,799 lines across 41 files · 27 screens.**
 
@@ -146,7 +146,7 @@ Output: 1.36 MB JS (365 kB gzipped), 46 kB CSS (8 kB gzipped).
 - **TanStack Query** owns everything the server knows. Each mutation declares
   which query-key prefixes it invalidates, so a check-in refreshes the arrivals
   list, the room board, availability and the dashboard without any manual
-  plumbing. Retries are suppressed on 4xx — a rejection the user must act on is
+  plumbing. Retries are suppressed on 4xx - a rejection the user must act on is
   not a transient failure.
 - **Zustand** owns only what the server does not know: sidebar collapsed,
   language, and the session/auth phase.
@@ -158,7 +158,7 @@ server data.
 
 Tailwind CSS 4 through its Vite plugin, with a small set of component classes
 (`.panel`, `.glass-pill`) in `index.css`. One caveat worth knowing: a component
-class that sets `background` beats a `bg-*` utility placed alongside it — which
+class that sets `background` beats a `bg-*` utility placed alongside it - which
 is why dark panels use an explicit `.panel-dark` rather than `panel bg-black`.
 
 ### Money at the boundary
@@ -184,26 +184,26 @@ so the app says it is offline rather than accepting work it cannot honour.
 | Passwords | scrypt (`node:crypto`), per-user 16-byte salt, 64-byte key |
 | Sessions | Opaque random token; only its SHA-256 hash is stored |
 | Session life | 12 hours, or 14 days with "keep me signed in" |
-| Two-factor | TOTP — RFC 6238, HMAC-SHA1, 6 digits, 30s, ±1 window |
+| Two-factor | TOTP - RFC 6238, HMAC-SHA1, 6 digits, 30s, ±1 window |
 | Recovery codes | 10 single-use, stored as SHA-256 hashes |
 | Reset links | Single-use, 1-hour expiry, hash-stored |
 | Lockout | 8 failures → 15 minutes |
 | Comparison | `timingSafeEqual` on codes and password hashes |
 
-TOTP is ~90 lines on `node:crypto` — base32, HMAC-SHA1, dynamic truncation.
+TOTP is ~90 lines on `node:crypto` - base32, HMAC-SHA1, dynamic truncation.
 It works with Google Authenticator, 1Password, Authy and Microsoft
 Authenticator. The QR is rendered **in the browser** from the `otpauth://` URI,
 so the shared secret is never sent anywhere to be turned into an image.
 
 Roles: `admin · manager · front_office · reservations · housekeeping ·
 accounts · revenue · readonly`. Permissions are enforced server-side on every
-route. The UI hides what a role cannot do, but the server is the authority —
+route. The UI hides what a role cannot do, but the server is the authority -
 `auth-check.ts` proves a housekeeper cannot change rates even by calling the
 API directly.
 
 ---
 
-## 6. Integration — Beds24
+## 6. Integration - Beds24
 
 Distribution runs through Beds24 API v2 (`src/channels/beds24.ts`):
 invite-code exchange for a refresh token, automatic access-token renewal,
@@ -231,7 +231,7 @@ Four suites, all against a running server, all in the same TypeScript:
 | `smoke.ts` | 83 | A complete business day: configure, quote, book, gate on availability and restrictions, check in, post, void, night audit, check out, invoice, report |
 | `screens.ts` | 64 | Every endpoint the UI depends on returns usable data; folio totals reconcile with both their own lines and their stored balance |
 | `auth-check.ts` | 52 | Wrong passwords, lockout, 2FA enrolment and challenge, recovery-code replay, password rules, reset links, session revocation |
-| `ui-check.ts` | 23 | The built app in headless Chrome via the DevTools Protocol — every screen renders inside the authenticated shell, no console errors |
+| `ui-check.ts` | 23 | The built app in headless Chrome via the DevTools Protocol - every screen renders inside the authenticated shell, no console errors |
 
 `ui-check.ts` drives Chrome over CDP using Node's built-in `WebSocket`, so
 browser testing needs no Playwright or Puppeteer install.
@@ -249,7 +249,7 @@ logged without a user id.
 | Not used | Why |
 |---|---|
 | Express / Fastify / Nest | ~90 lines of routing does the job; fewer dependencies to audit |
-| Prisma / Drizzle / TypeORM | The queries are the interesting part — availability, pricing and the audit are hand-written SQL that an ORM would obscure |
+| Prisma / Drizzle / TypeORM | The queries are the interesting part - availability, pricing and the audit are hand-written SQL that an ORM would obscure |
 | Postgres / MySQL | A single property fits comfortably in SQLite. One file to back up, nothing to operate |
 | Redis | No cache to invalidate; SQLite reads are microseconds away |
 | Docker (required) | `npm start` is the whole deployment. It containerises fine if you want |
@@ -289,12 +289,12 @@ every six hours and after every night audit, verifies each snapshot by
 reopening it (`integrity_check`, `foreign_key_check`, row counts), prunes on a
 4/7/4/6 schedule, and surfaces status in Administration → Backups. Restore is
 CLI-only (`npm run restore`) because the file has to be swapped with the API
-stopped. `npm run verify:backup` exercises all of it — snapshot, tamper
-detection, retention, restore round-trip — against a throwaway database.
+stopped. `npm run verify:backup` exercises all of it - snapshot, tamper
+detection, retention, restore round-trip - against a throwaway database.
 Current demo database: 1.5 MB.
 
 **Scaling.** SQLite in WAL mode handles a single property's concurrency
-comfortably — the write path is one process and reads do not block it. A
+comfortably - the write path is one process and reads do not block it. A
 portfolio large enough to need Postgres would change `db.ts` and the SQL
 dialect; the service layer above it is unaffected because no ORM assumptions
 are baked in.

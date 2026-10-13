@@ -1,11 +1,11 @@
 -- ══════════════════════════════════════════════════════════════════════════
--- Helio PMS — operational database schema
+-- Helio PMS - operational database schema
 --
 -- Conventions
 --   · All money is stored in INTEGER MINOR UNITS (cents). Never floats.
 --   · All percentages are stored in BASIS POINTS (1% = 100 bp). Never floats.
 --   · Dates are 'YYYY-MM-DD' (business dates). Timestamps are ISO-8601 UTC.
---   · Every operational row carries property_id — the system is multi-property.
+--   · Every operational row carries property_id - the system is multi-property.
 --   · Nothing here is seeded with demo content. The database starts empty and
 --     is populated through the setup wizard / configuration screens.
 -- ══════════════════════════════════════════════════════════════════════════
@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS room_types (
   sort_order      INTEGER NOT NULL DEFAULT 0,
   active          INTEGER NOT NULL DEFAULT 1,
   -- Rooms held back from the channels so the last one cannot be sold twice by
-  -- two OTAs racing each other. Zero sells everything, which is the default —
+  -- two OTAs racing each other. Zero sells everything, which is the default -
   -- the protection costs occupancy, and that trade is the property's to make.
   protect_last_rooms INTEGER NOT NULL DEFAULT 0,
   created_at      TEXT NOT NULL,
@@ -179,7 +179,7 @@ CREATE TABLE IF NOT EXISTS beds (
 );
 
 -- Out-of-order (not sellable, not countable) / out-of-service (not sellable,
--- still counted in inventory) periods — kept as dated rows so availability and
+-- still counted in inventory) periods - kept as dated rows so availability and
 -- statistics are correct historically, not just "right now".
 CREATE TABLE IF NOT EXISTS room_blocks (
   id          TEXT PRIMARY KEY,
@@ -525,7 +525,7 @@ CREATE TABLE IF NOT EXISTS reservations (
 CREATE INDEX IF NOT EXISTS ix_res_dates  ON reservations(property_id, arrival, departure);
 -- The two trailing columns are the list's sort order, so a status-filtered page
 -- is walked rather than sorted. Widening this again means updating the matching
--- ensureIndex() call in db.ts — otherwise existing databases keep the old one.
+-- ensureIndex() call in db.ts - otherwise existing databases keep the old one.
 CREATE INDEX IF NOT EXISTS ix_res_status ON reservations(property_id, status, arrival, guest_name);
 CREATE INDEX IF NOT EXISTS ix_res_room   ON reservations(room_id);
 CREATE INDEX IF NOT EXISTS ix_res_profile ON reservations(profile_id);
@@ -536,7 +536,7 @@ CREATE INDEX IF NOT EXISTS ix_res_rtype  ON reservations(room_type_id);
 -- The reservation list sorts by (arrival, guest_name). Without guest_name in an
 -- index SQLite cannot satisfy that ordering by walking, so it materialised every
 -- reservation for the property into a temp b-tree, sorted it, and threw away all
--- but the fifty rows the page asked for — and because it had to sort anyway it
+-- but the fifty rows the page asked for - and because it had to sort anyway it
 -- was free to drive the join from `rate_plans`, scanning reservations once per
 -- rate plan. This index makes the ordering walkable, so the planner starts at
 -- `reservations` and stops after the page is full. See `npm run bench -- --profile`.
@@ -585,7 +585,7 @@ CREATE TABLE IF NOT EXISTS reservation_guests (
 -- from it, is not a folder of readable passport photographs.
 --
 -- Rows are deleted automatically once the reservation has departed and the
--- retention window has passed — see services/documents.ts. Holding a passport
+-- retention window has passed - see services/documents.ts. Holding a passport
 -- scan for ever is a liability rather than an asset.
 CREATE TABLE IF NOT EXISTS reservation_documents (
   id             TEXT PRIMARY KEY,
@@ -617,7 +617,7 @@ CREATE INDEX IF NOT EXISTS ix_resdoc_reservation
 --     code photographed off the screen an hour ago stops working.
 --   * It dies with the check-in. `valid_until_checked_in` is what bounds it:
 --     the moment the guest is checked in, cancelled or departed, the link is
---     spent — there is no window left over afterwards.
+--     spent - there is no window left over afterwards.
 --
 -- `payload` is what the guest sent and nobody has accepted yet. It holds a
 -- passport number and a photograph of the document, so it is encrypted at rest
@@ -711,8 +711,8 @@ CREATE TABLE IF NOT EXISTS folio_lines (
   tendered_minor INTEGER,
   change_minor   INTEGER,
   -- Foreign money, when the guest did not pay in the property's currency.
-  -- The note kept here is what actually crossed the counter — fifty dollars in,
-  -- eleven dollars back — beside the rate each was converted at. Without the
+  -- The note kept here is what actually crossed the counter - fifty dollars in,
+  -- eleven dollars back - beside the rate each was converted at. Without the
   -- rate, a drawer counted in dollars can never be reconciled against a folio
   -- kept in euro, and "we used today's rate" is not something a ledger can
   -- check a year later. Rates are stored as property-currency units per one
@@ -812,10 +812,10 @@ CREATE TABLE IF NOT EXISTS cashier_shifts (
 -- currencies taken at one moment reads as one act rather than four.
 --
 -- `kind`:
---   opening_count — a cashier declaring what is there at the start of the day
---   close_count   — the same at the end of a shift
---   withdrawal    — an administrator taking money out of the box
---   deposit       — money put back in
+--   opening_count - a cashier declaring what is there at the start of the day
+--   close_count   - the same at the end of a shift
+--   withdrawal    - an administrator taking money out of the box
+--   deposit       - money put back in
 --
 -- `expected_minor` and `variance_minor` are filled on counts only: what the
 -- system believed was in the box, and what the count disagreed by. That
@@ -1094,7 +1094,7 @@ CREATE TABLE IF NOT EXISTS messages (
 );
 CREATE INDEX IF NOT EXISTS ix_msg_res ON messages(reservation_id, ts);
 -- The inbox reads `WHERE property_id = ? ORDER BY ts DESC LIMIT 200`. Without
--- this it scanned every message and sorted the lot to show the newest page —
+-- this it scanned every message and sorted the lot to show the newest page -
 -- harmless at today's volume, and not harmless at all once OTA conversations
 -- are flowing through here. SQLite walks the index backwards for DESC, so the
 -- ordinary ascending form is enough.
@@ -1210,7 +1210,7 @@ CREATE INDEX IF NOT EXISTS ix_alert_feed ON alert_events(property_id, ts);
 
 -- ─── Price planning ──────────────────────────────────────────
 
--- A named, reusable date range that rates hang off — High, Shoulder, Low.
+-- A named, reusable date range that rates hang off - High, Shoulder, Low.
 -- Seasons do not price anything by themselves; they are the vocabulary a
 -- property already thinks in, so a rate change can say "High season" instead of
 -- a date range retyped from memory every time.
@@ -1296,7 +1296,7 @@ CREATE TABLE IF NOT EXISTS password_resets (
 );
 CREATE INDEX IF NOT EXISTS ix_reset_user ON password_resets(user_id);
 
--- Every sign-in attempt, successful or not — the security log.
+-- Every sign-in attempt, successful or not - the security log.
 CREATE TABLE IF NOT EXISTS login_attempts (
   id         TEXT PRIMARY KEY,
   email      TEXT NOT NULL,

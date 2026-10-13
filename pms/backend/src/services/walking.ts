@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-// Walking a guest — sending somebody to another hotel because there is no room.
+// Walking a guest - sending somebody to another hotel because there is no room.
 //
 // This is the last resort, and the worst thing a property does to a person. The
 // software's job is not to make it easy; it is to make it *considered*: suggest
@@ -7,7 +7,7 @@
 // can see the true price of overbooking rather than remembering it as "rare".
 //
 // The ranking below is the one experienced duty managers use. It is offered as
-// a suggestion with its reasoning shown, never as an automatic decision — who
+// a suggestion with its reasoning shown, never as an automatic decision - who
 // gets walked is a judgement about people, and it stays with the human.
 // ─────────────────────────────────────────────────────────────
 import { all, get, run, scalar, tx } from '../db.ts';
@@ -57,7 +57,7 @@ export interface WalkCandidate {
  * four of seven loses a great deal.
  *
  * The scores are deliberately coarse. They exist to put the least-harmed guest
- * at the top of a list a person then reads — precision here would imply a
+ * at the top of a list a person then reads - precision here would imply a
  * confidence the reasoning does not have.
  */
 export function walkCandidates(
@@ -87,21 +87,21 @@ export function walkCandidates(
 
     // ── Absolute protections ──────────────────────────────────
     if (res.status === 'Checked-in') {
-      protectedFrom = 'Already checked in — they are in the room tonight';
+      protectedFrom = 'Already checked in - they are in the room tonight';
     } else if (res.vip === 1) {
       protectedFrom = 'VIP guest';
     } else if (res.group_id) {
-      protectedFrom = 'Part of a group — walking one splits the booking';
+      protectedFrom = 'Part of a group - walking one splits the booking';
     } else if (res.nights >= 4) {
-      protectedFrom = `${res.nights}-night stay — walking a long stay means moving them back again`;
+      protectedFrom = `${res.nights}-night stay - walking a long stay means moving them back again`;
     } else if (res.previous_stays >= 3) {
-      protectedFrom = `Returning guest — ${res.previous_stays} previous stays`;
+      protectedFrom = `Returning guest - ${res.previous_stays} previous stays`;
     }
 
     // ── Preferences, least harm first ─────────────────────────
     if (res.nights === 1) {
       score += 40;
-      reasons.push('One night only — the least disruption');
+      reasons.push('One night only - the least disruption');
     } else {
       score += Math.max(0, 30 - res.nights * 8);
       reasons.push(`${res.nights}-night stay`);
@@ -109,7 +109,7 @@ export function walkCandidates(
 
     if (res.previous_stays === 0) {
       score += 15;
-      reasons.push('First stay — no relationship to damage');
+      reasons.push('First stay - no relationship to damage');
     } else {
       score -= res.previous_stays * 10;
       reasons.push(`${res.previous_stays} previous stay(s)`);
@@ -242,7 +242,7 @@ export function walkGuest(propertyId: string, actor: Actor, input: WalkInput) {
       'SELECT count(*) AS n FROM reservation_nights WHERE reservation_id = ?', input.reservationId);
 
     if (remaining === 0 || !input.returnsLater) {
-      // Nothing left of the stay — the booking is over, and saying so is more
+      // Nothing left of the stay - the booking is over, and saying so is more
       // honest than leaving a zero-night reservation on the arrivals list.
       run(
         `UPDATE reservations SET status = 'Cancelled', cancelled_at = ?, cancel_reason = ?,
@@ -278,7 +278,7 @@ export function walkGuest(propertyId: string, actor: Actor, input: WalkInput) {
       postCharge(propertyId, actor, {
         folioId: folio.id,
         code: 'ADJ',
-        description: `Walked to ${input.hotelName.trim()} — room, transport and compensation`,
+        description: `Walked to ${input.hotelName.trim()} - room, transport and compensation`,
         unitMinor: -owed,
         businessDate,
         reservationId: input.reservationId,
@@ -313,7 +313,7 @@ export function walkGuest(propertyId: string, actor: Actor, input: WalkInput) {
   });
 }
 
-/** What overbooking actually cost — the number that should decide the allowance. */
+/** What overbooking actually cost - the number that should decide the allowance. */
 export function walkCosts(propertyId: string, from: string, to: string) {
   const rows = all<any>(
     `SELECT w.*, r.confirmation, r.guest_name, r.source, r.channel_code

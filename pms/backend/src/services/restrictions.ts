@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-// Restrictions engine — min/max stay, stay-through, CTA/CTD, stop-sell,
+// Restrictions engine - min/max stay, stay-through, CTA/CTD, stop-sell,
 // advance-booking windows and release deadlines.
 //
 // Rules are stored as dated ranges (inclusive) and may be scoped to a room
@@ -14,7 +14,7 @@ export interface RestrictionRow {
   room_type_id: string | null; rate_plan_id: string | null; channel_code: string | null;
   date_from: string; date_to: string; type: string; value: number | null;
   note: string | null; active: number;
-  /** channels | all | direct — see `matches`. Older rows have none and mean `all`. */
+  /** channels | all | direct - see `matches`. Older rows have none and mean `all`. */
   applies_to?: string | null;
 }
 
@@ -55,7 +55,7 @@ function matches(r: RestrictionRow, ctx: StayContext): boolean {
   // This is the difference between "stop the OTAs selling this" and "nobody
   // sells this at all". Without it, a property closing rooms on Hostelworld
   // also stopped its own reception serving the guest standing in front of them
-  // — precisely backwards, since the desk is the one seller who can see the
+  // - precisely backwards, since the desk is the one seller who can see the
   // room, knows it is free, and has the guest in the building.
   //
   // `all` is the default, and is what every rule written before this meant.
@@ -116,14 +116,14 @@ export function validateStay(propertyId: string, ctx: StayContext): RestrictionV
       case 'min-stay':
         if (coversDate(r, ctx.arrival) && r.value && nights < r.value) {
           out.push({ type: r.type, date: ctx.arrival, value: r.value,
-            message: `Minimum stay on ${ctx.arrival} is ${r.value} night(s) — this stay is ${nights}` });
+            message: `Minimum stay on ${ctx.arrival} is ${r.value} night(s) - this stay is ${nights}` });
         }
         break;
 
       case 'max-stay':
         if (coversDate(r, ctx.arrival) && r.value && nights > r.value) {
           out.push({ type: r.type, date: ctx.arrival, value: r.value,
-            message: `Maximum stay on ${ctx.arrival} is ${r.value} night(s) — this stay is ${nights}` });
+            message: `Maximum stay on ${ctx.arrival} is ${r.value} night(s) - this stay is ${nights}` });
         }
         break;
 
@@ -198,7 +198,7 @@ export function validateStay(propertyId: string, ctx: StayContext): RestrictionV
 }
 
 /**
- * Per-date restriction summary — what the rates calendar and the channel
+ * Per-date restriction summary - what the rates calendar and the channel
  * manager push out.
  */
 export interface RestrictionSummary {
@@ -228,7 +228,7 @@ export function restrictionGrid(
     if (r.rate_plan_id && ratePlanId && r.rate_plan_id !== ratePlanId) return false;
     if (r.channel_code && r.channel_code !== (channelCode ?? null)) return false;
     // This grid is what gets sent *out*. A rule aimed only at the desk has no
-    // business closing dates on an OTA — that would be the mirror image of the
+    // business closing dates on an OTA - that would be the mirror image of the
     // bug this scoping exists to fix.
     if ((r.applies_to ?? 'all') === 'direct') return false;
     return true;
@@ -244,7 +244,7 @@ export function restrictionGrid(
     return {
       date,
       stopSell: closures.length > 0,
-      // With several closures on one date, the first that gives a reason wins —
+      // With several closures on one date, the first that gives a reason wins -
       // any of them is a true answer to "why is this shut?".
       closeReason: closures.find((r) => r.note)?.note ?? null,
       cta: active.some((r) => r.type === 'cta'),

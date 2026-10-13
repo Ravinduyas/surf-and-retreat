@@ -170,13 +170,13 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     success: (title: string, body?: string) => push({ kind: 'ok', title, body }),
     fail: (error: unknown, fallback = 'Action failed') => {
       // A change that was safely queued is not a failure, and calling it one
-      // teaches people to distrust the queue. It is also not a success — the
+      // teaches people to distrust the queue. It is also not a success - the
       // wording says exactly where it is: on this device, not on the server.
       if (error instanceof QueuedOffline) {
         push({
           kind: 'warn',
           title: 'Saved on this device',
-          body: `${error.description} — it will sync when you are back online.`,
+          body: `${error.description} - it will sync when you are back online.`,
         });
         return;
       }
@@ -279,7 +279,7 @@ export function ConfirmDialog({
           <h3 className="font-bold tracking-tight mb-2">{title}</h3>
           {body && <div className="text-[12px] text-dash-muted leading-relaxed">{body}</div>}
         </div>
-        {/* `flex-wrap` because a long confirm label — "Post and close the day" —
+        {/* `flex-wrap` because a long confirm label - "Post and close the day" -
             beside Cancel is wider than a phone, and a Confirm button that has
             slid off the edge is a dialog you cannot answer. */}
         <div className="px-5 sm:px-6 py-4 border-t subtle-divider flex flex-wrap justify-end gap-2 shrink-0">
@@ -410,7 +410,7 @@ export function passwordProblems(password: string): string[] {
   return problems;
 }
 
-/** Advisory strength on top of the hard rules — length and variety. */
+/** Advisory strength on top of the hard rules - length and variety. */
 function passwordScore(password: string): number {
   if (!password) return 0;
   let score = 0;

@@ -56,7 +56,7 @@ export function dateRange(from: string, to: string): string[] {
   return out;
 }
 
-/** Inclusive range — for restriction rules which are stored inclusive. */
+/** Inclusive range - for restriction rules which are stored inclusive. */
 export function dateRangeInclusive(from: string, to: string): string[] {
   return dateRange(from, addDays(to, 1));
 }

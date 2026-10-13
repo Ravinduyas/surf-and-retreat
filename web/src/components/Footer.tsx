@@ -113,7 +113,7 @@ export const Footer: React.FC = () => {
               <div className="col-span-2 md:col-span-4 space-y-4">
                 <Logo light />
                 <p className="text-[13px] text-[#A8BCA9] max-w-xs leading-relaxed">
-                  Surf at sunrise, work by the bay, and find your people — a coliving
+                  Surf at sunrise, work by the bay, and find your people - a coliving
                   &amp; coworking surf hostel five minutes from Weligama Bay, Sri Lanka.
                 </p>
                 <ul className="space-y-2 pt-1 text-[13px] text-[#C4D3C4]">

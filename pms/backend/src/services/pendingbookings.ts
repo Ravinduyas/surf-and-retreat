@@ -24,7 +24,7 @@
 // free; Booking.com sells it. Two guests, one bed, and the property finds out
 // at the front desk.
 //
-// The bed is now held from the moment the booking is taken — which is what
+// The bed is now held from the moment the booking is taken - which is what
 // every booking engine in the world does, and what a guest who has just read
 // "we have your request" reasonably assumes. Nothing about the property's
 // decision changed: they still accept or decline it. What changed is that the
@@ -36,8 +36,8 @@
 // cancels it and re-opens the dates to the channels.
 //
 // This module is the single definition of that state. It imports nothing, so
-// every layer — availability, overbooking, the front-desk lists, the tape
-// chart, check-in — asks the same question and cannot drift into disagreeing
+// every layer - availability, overbooking, the front-desk lists, the tape
+// chart, check-in - asks the same question and cannot drift into disagreeing
 // about it.
 // ─────────────────────────────────────────────────────────────
 
@@ -47,7 +47,7 @@
  * `Tentative` already exists throughout the schema and already means "on the
  * books, not committed", so it is reused rather than a new status invented.
  * What separates these from a Tentative booking a person made by hand is the
- * origin below — a hand-made Tentative booking still holds its inventory.
+ * origin below - a hand-made Tentative booking still holds its inventory.
  */
 export const PENDING_STATUS = 'Tentative';
 
@@ -59,7 +59,7 @@ export const PENDING_ORIGIN = 'booking_engine';
  * surrounding query has aliased `r`.
  *
  * Written as a predicate rather than a status list because the state is the
- * pair — status *and* origin. Matching on status alone would quietly strip the
+ * pair - status *and* origin. Matching on status alone would quietly strip the
  * inventory from every hand-made Tentative booking in the database.
  */
 export const PENDING_SQL = `(r.status = '${PENDING_STATUS}' AND r.origin = '${PENDING_ORIGIN}')`;
@@ -68,7 +68,7 @@ export const PENDING_SQL = `(r.status = '${PENDING_STATUS}' AND r.origin = '${PE
 export const NOT_PENDING_SQL = `NOT ${PENDING_SQL}`;
 
 /**
- * Statuses that consume inventory, as SQL — *before* pending bookings are
+ * Statuses that consume inventory, as SQL - *before* pending bookings are
  * taken back out again. Kept next to the predicate so the two are read together.
  */
 export const LIVE_STATUS_SQL = `('Tentative','Confirmed','Guaranteed','Checked-in')`;
@@ -76,7 +76,7 @@ export const LIVE_STATUS_SQL = `('Tentative','Confirmed','Guaranteed','Checked-i
 /**
  * "Now", in exactly the format the rest of the system stores a timestamp in.
  *
- * Deliberately not `datetime('now')`. That returns `2026-09-21 00:01:50` — a
+ * Deliberately not `datetime('now')`. That returns `2026-09-21 00:01:50` - a
  * space where every timestamp written by this codebase has a `T`, because they
  * all come from JavaScript's `toISOString()`. These columns are TEXT and SQLite
  * compares TEXT byte by byte, and `'T'` (0x54) sorts *after* `' '` (0x20), so
@@ -112,7 +112,7 @@ export const HOLD_EXPIRED_SQL =
  * availability and overbooking query uses this and nothing else.
  *
  * Note what is *not* subtracted here any more: a pending booking inside its
- * hold window counts, exactly like a confirmed one. See the header — that is
+ * hold window counts, exactly like a confirmed one. See the header - that is
  * the whole point.
  */
 export const HOLDS_INVENTORY_SQL =

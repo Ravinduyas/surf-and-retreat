@@ -7,12 +7,12 @@ import { money, longDate } from './format';
  *
  * Issuing an invoice already worked; there was simply nothing to hand over. The
  * number, the totals and the receivable all existed as a database row, and the
- * only way to see what was behind the figure was the live folio — which keeps
+ * only way to see what was behind the figure was the live folio - which keeps
  * moving after the invoice is cut. This is the paper.
  *
  * **Why print rather than a PDF library.** "Save as PDF" in the browser's own
  * print dialog produces a real, selectable, A4 PDF with correct fonts and page
- * breaks, and costs nothing in bundle size — a client-side PDF generator is
+ * breaks, and costs nothing in bundle size - a client-side PDF generator is
  * roughly 300 KB and renders worse. It also prints straight to the desk's
  * printer, which is what a guest at check-out actually wants. The trade is that
  * the operator picks "Save as PDF" in the dialog; every browser offers it.
@@ -29,7 +29,7 @@ import { money, longDate } from './format';
  * They live here rather than in index.css because they only ever apply while an
  * invoice is on screen, and because they are meaningless apart from the markup
  * directly below. `#invoice-print-root` is hoisted to fill the printed page and
- * everything else on the page is hidden — that is what stops a print picking up
+ * everything else on the page is hidden - that is what stops a print picking up
  * the navigation, the modal chrome and the rest of the app around it.
  */
 const PRINT_CSS = `
@@ -70,11 +70,11 @@ const line = (v: string | null | undefined) => (v && v.trim() ? v : null);
 
 /**
  * `longDate` parses a bare `YYYY-MM-DD`, but `issuedAt` and `dueAt` arrive as
- * full ISO timestamps — handing one straight over yields an Invalid Date and
+ * full ISO timestamps - handing one straight over yields an Invalid Date and
  * the raw string is printed on the invoice. Folio line dates are already
  * date-only, so trimming is harmless for them.
  */
-const fmtDate = (v: string | null | undefined) => (v ? longDate(String(v).slice(0, 10)) : '—');
+const fmtDate = (v: string | null | undefined) => (v ? longDate(String(v).slice(0, 10)) : '-');
 
 /** Address blocks arrive as free text with newlines; keep the operator's breaks. */
 function Multiline({ text, className = '' }: { text: string | null; className?: string }) {
@@ -182,7 +182,7 @@ export function InvoicePaper({ doc }: { doc: InvoiceDocument }) {
                   <tr>
                     <td className="pr-3 text-black/60">Dates</td>
                     <td className="font-medium">
-                      {fmtDate(stay.arrival)} — {stay.departure ? fmtDate(stay.departure) : ''}
+                      {fmtDate(stay.arrival)} - {stay.departure ? fmtDate(stay.departure) : ''}
                       {stay.nights ? ` · ${stay.nights} night${stay.nights > 1 ? 's' : ''}` : ''}
                     </td>
                   </tr>
@@ -298,7 +298,7 @@ export function InvoicePaper({ doc }: { doc: InvoiceDocument }) {
 /**
  * Hands the page to the browser's print dialog, where "Save as PDF" lives.
  *
- * A plain `window.print()` — no timers, no hidden iframe. The print stylesheet
+ * A plain `window.print()` - no timers, no hidden iframe. The print stylesheet
  * above has already reduced the page to the invoice, so what the operator
  * previews is what comes out.
  */

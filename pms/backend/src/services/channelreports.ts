@@ -33,7 +33,7 @@ export type ReportKind = 'no_show' | 'cancelled_at_property' | 'invalid_card';
  * 🔌 Unconfirmed. Beds24's booking status enum has no dedicated no-show value,
  * so a cancellation carrying a sub-status and a reason is the documented way to
  * express it. If a live account shows a different field is required, this table
- * is the only thing that changes — everything else works off it.
+ * is the only thing that changes - everything else works off it.
  */
 const REPORT_ACTIONS: Record<ReportKind, {
   label: string;
@@ -97,7 +97,7 @@ function channelFor(propertyId: string, channelCode: string | null) {
  * Can this booking's outcome be reported, and if not, why not?
  *
  * Answered before anything is attempted so the screen can offer the action only
- * when it means something — and can say plainly why it is unavailable when it
+ * when it means something - and can say plainly why it is unavailable when it
  * does not.
  */
 export function reportEligibility(
@@ -110,7 +110,7 @@ export function reportEligibility(
   if (!res.channel_code || !res.ota_reference) {
     return {
       ...base, reportable: false,
-      reason: 'This booking did not come from a channel — there is nobody to report it to.',
+      reason: 'This booking did not come from a channel - there is nobody to report it to.',
     };
   }
   const channel = channelFor(propertyId, res.channel_code);
@@ -157,7 +157,7 @@ export function reportEligibility(
     // as a warning and the attempt is allowed.
     reason: windowPassed
       ? `${channel.name} is understood to stop accepting a ${action.label.toLowerCase()} `
-        + `report ${action.windowDays} day(s) after arrival — that was ${closesOn}. `
+        + `report ${action.windowDays} day(s) after arrival - that was ${closesOn}. `
         + 'The report will still be attempted, and the channel\'s answer recorded.'
       : undefined,
   };
@@ -169,7 +169,7 @@ export interface ReportResult {
   reportedAt: string | null;
   error?: string;
   attempts: number;
-  /** What was sent and what came back — kept for both outcomes. */
+  /** What was sent and what came back - kept for both outcomes. */
   request: unknown;
   response: unknown;
 }
@@ -197,13 +197,13 @@ export async function reportToChannel(
   // Both the client and the guard below used to read `settings.credentials`
   // directly. Encrypted at rest that field is a string, so `.refreshToken` was
   // undefined and this refused to report a no-show on a channel that was
-  // connected and pushing rates fine — "no stored credentials" about a
+  // connected and pushing rates fine - "no stored credentials" about a
   // credential sitting right there. `beds24ClientFor` decrypts it; `configured`
   // is then the honest answer to the same question.
   const client = beds24ClientFor(channel);
   if (!client.configured) {
     throw new HttpError(409,
-      `${channel.name} has no stored credentials — connect it before reporting.`);
+      `${channel.name} has no stored credentials - connect it before reporting.`);
   }
 
   const request = { id: res.ota_reference, ...action.patch };

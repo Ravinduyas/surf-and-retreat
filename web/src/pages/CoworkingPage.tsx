@@ -30,7 +30,7 @@ export default function CoworkingPage() {
               with <span className="text-[#2C573A]">300 Mbps Fiber.</span>
             </>
           }
-          subtitle="Desks, call booths and an AC focus room in a Sri Lanka surf hostel — book a day, a week or a month, and surf before work."
+          subtitle="Desks, call booths and an AC focus room in a Sri Lanka surf hostel - book a day, a week or a month, and surf before work."
           image={workspace?.src}
           imageAlt={workspace?.alt}
         >

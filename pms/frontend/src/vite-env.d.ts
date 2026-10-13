@@ -7,7 +7,7 @@
  *
  * Declaring them turns `import.meta.env.VITE_API_URL` into a typed property
  * and retires the `(import.meta as any).env?.…` casts that were needed before.
- * The cast was not just untidy — it meant a misspelled variable name was a
+ * The cast was not just untidy - it meant a misspelled variable name was a
  * valid expression that evaluated to `undefined`, so the fallback beside it ran
  * and nothing anywhere said why.
  *
@@ -16,7 +16,7 @@
  * private value in a browser build.
  *
  * Adding one? Add it here, add it to src/config.ts, and add it to
- * .env.example — the Vite plugin in vite.config.ts checks the last of those.
+ * .env.example - the Vite plugin in vite.config.ts checks the last of those.
  */
 interface ImportMetaEnv {
   /** Base URL of the Helio API. Required for a production build. */

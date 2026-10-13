@@ -39,7 +39,7 @@ export const DatesStep: React.FC<DatesStepProps> = ({ checkIn, checkOut, onChang
   const hint = !checkIn
     ? 'Tap a start date, then an end date.'
     : !checkOut
-      ? 'Now tap your check-out day — or the same day again for a single day.'
+      ? 'Now tap your check-out day - or the same day again for a single day.'
       : 'Tap any day to start over.';
 
   return (

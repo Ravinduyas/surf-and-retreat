@@ -3,7 +3,7 @@
 //
 // The reason this screen exists is that answering a Booking.com guest should
 // not mean logging in to Booking.com. The reason it is careful is that not
-// every channel can carry a reply — so the compose box says what will happen to
+// every channel can carry a reply - so the compose box says what will happen to
 // what you type *before* you type it, and a message that did not get through is
 // shown on the thread as failed rather than quietly dropped.
 import { useState } from 'react';
@@ -25,7 +25,7 @@ import { CHANNEL_HUB } from '../branding';
 
 const CHANNELS_CAVEAT =
   `Which channels relay guest messages is set from the documented ${CHANNEL_HUB} integrations and has not `
-  + 'been confirmed against a live account. A reply is never shown as delivered — only as accepted '
+  + 'been confirmed against a live account. A reply is never shown as delivered - only as accepted '
   + 'by the channel.';
 
 export function InboxScreen() {
@@ -113,7 +113,7 @@ export function InboxScreen() {
                     {uncarried.map((c) => c.name).join(', ')}{' '}
                     {uncarried.length === 1 ? 'does' : 'do'} not relay guest messages through {CHANNEL_HUB}.
                     Conversations on {uncarried.length === 1 ? 'that channel' : 'those channels'} have
-                    to be answered by email or phone — replies typed here stay as internal notes.
+                    to be answered by email or phone - replies typed here stay as internal notes.
                   </InfoNote>
                 </div>
               )}
@@ -264,7 +264,7 @@ function Conversation({ reservationId, thread, today, onOpenBooking }: {
         <WarnNote>
           {thread.channelCode
             ? `${thread.channelCode} does not relay replies through ${CHANNEL_HUB}. Anything typed here is `
-              + 'kept as an internal note — reach the guest by email or phone.'
+              + 'kept as an internal note - reach the guest by email or phone.'
             : 'This booking did not come from a channel, so there is nowhere to send a reply. '
               + 'Anything typed here is kept as an internal note.'}
         </WarnNote>
@@ -343,7 +343,7 @@ function Bubble({ message, onRetry }: { message: ThreadMessage; onRetry: () => v
           <div className="mt-1.5 pt-1.5 border-t border-white/20">
             <p className="text-[10px] text-status-bad flex items-start gap-1">
               <TriangleAlert className="w-3 h-3 shrink-0 mt-px" />
-              Not delivered — {message.error}
+              Not delivered - {message.error}
             </p>
             <button onClick={onRetry}
               className="text-[10px] font-bold underline mt-1">

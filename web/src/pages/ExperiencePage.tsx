@@ -22,12 +22,12 @@ export default function ExperiencePage() {
           eyebrowIcon={Sparkles}
           title={
             <>
-              Sleep, Surf &amp; Work —
+              Sleep, Surf &amp; Work -
               <br />
               All Under <span className="text-[#2C573A]">One Roof.</span>
             </>
           }
-          subtitle="Curtain-pod dorms and private rooms, morning surf lessons on Weligama Bay and a real workspace with 300 Mbps fiber — one booking covers it all."
+          subtitle="Curtain-pod dorms and private rooms, morning surf lessons on Weligama Bay and a real workspace with 300 Mbps fiber - one booking covers it all."
           image={ROOMS[0].image}
           imageAlt="Hostel dorm room with bunk beds"
         >

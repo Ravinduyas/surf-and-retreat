@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-// The alert feed — what the app polls, and what the alarms fire from.
+// The alert feed - what the app polls, and what the alarms fire from.
 //
 // Three things are worth raising a noise about: an overbooking, a booking
 // arriving, and a booking being cancelled. Everything else belongs in the
@@ -97,7 +97,7 @@ export function saveAlertSettings(
 /**
  * Is the clock inside the quiet window?
  *
- * Handles a window that crosses midnight, which is the normal case — 22:00 to
+ * Handles a window that crosses midnight, which is the normal case - 22:00 to
  * 07:00 is two ranges, not one.
  */
 export function inQuietHours(settings: AlertSettings, at = new Date()): boolean {
@@ -112,7 +112,7 @@ export function inQuietHours(settings: AlertSettings, at = new Date()): boolean 
 /**
  * Record an alert. Always stored, whatever the settings say.
  *
- * Muting an alert silences the *sound*, not the record — a property that turned
+ * Muting an alert silences the *sound*, not the record - a property that turned
  * the cancellation chime off still needs the cancellation in the feed. What the
  * settings control is what the browser does when it sees it.
  */
@@ -163,7 +163,7 @@ function shape(r: any): AlertRow {
  * Everything since `since`, oldest first.
  *
  * Without `since` this returns the recent feed for display but marks it
- * `replay: true` — the browser shows those and stays silent. That distinction
+ * `replay: true` - the browser shows those and stays silent. That distinction
  * is the whole reason a refresh does not set off the alarm.
  */
 export function feed(propertyId: string, opts: { since?: string; limit?: number } = {}) {

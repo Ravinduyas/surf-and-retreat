@@ -85,7 +85,7 @@ export function ProfileDetailScreen({ profileId }: { profileId?: string }) {
                         vip: p.vip, marketingConsent: p.marketingConsent,
                         preferences: (p.preferences ?? []).join(', '),
                         dob: p.dob ?? '', idExpiry: p.idExpiry ?? '', language: p.language ?? '',
-                        // Flattened for editing and rebuilt on save — the column
+                        // Flattened for editing and rebuilt on save - the column
                         // holds one JSON object, but five nested inputs bound to
                         // it is how a half-typed address ends up half-saved.
                         addressLine1: p.address?.line1 ?? '',
@@ -243,7 +243,7 @@ export function ProfileDetailScreen({ profileId }: { profileId?: string }) {
                                 preferences: String(draft.preferences ?? '')
                                   .split(',').map((s) => s.trim()).filter(Boolean),
                                 // An address nobody filled in is stored as
-                                // nothing, not as an object of empty strings —
+                                // nothing, not as an object of empty strings -
                                 // otherwise every profile grows a blank address.
                                 address: Object.values(parts).some((v) => String(v ?? '').trim())
                                   ? parts : null,
@@ -260,14 +260,14 @@ export function ProfileDetailScreen({ profileId }: { profileId?: string }) {
                   </div>
                 ) : (
                   <div className="grid md:grid-cols-3 gap-x-6 gap-y-4">
-                    <Detail label="Email" value={p.email || '—'} />
-                    <Detail label="Phone" value={p.phone || '—'} />
-                    <Detail label="Nationality" value={p.nationality || '—'} />
-                    <Detail label="Date of birth" value={p.dob ? longDate(p.dob) : '—'} />
-                    <Detail label="ID" value={p.idNumber ? `${p.idType ?? 'ID'} · ${p.idNumber}` : '—'} />
-                    <Detail label="ID expires" value={p.idExpiry ? longDate(p.idExpiry) : '—'} />
-                    <Detail label="Address" value={addressLine(p.address) || '—'} />
-                    <Detail label="Language" value={p.language || '—'} />
+                    <Detail label="Email" value={p.email || '-'} />
+                    <Detail label="Phone" value={p.phone || '-'} />
+                    <Detail label="Nationality" value={p.nationality || '-'} />
+                    <Detail label="Date of birth" value={p.dob ? longDate(p.dob) : '-'} />
+                    <Detail label="ID" value={p.idNumber ? `${p.idType ?? 'ID'} · ${p.idNumber}` : '-'} />
+                    <Detail label="ID expires" value={p.idExpiry ? longDate(p.idExpiry) : '-'} />
+                    <Detail label="Address" value={addressLine(p.address) || '-'} />
+                    <Detail label="Language" value={p.language || '-'} />
                     <Detail label="Loyalty" value={`${p.loyalty}${p.loyaltyPoints ? ` · ${p.loyaltyPoints} points` : ''}`} />
                     <Detail label="Marketing consent"
                       value={p.marketingConsent ? `Given ${p.consentAt ? timestamp(p.consentAt) : ''}` : 'Not given'} />
@@ -364,7 +364,7 @@ export function ProfileDetailScreen({ profileId }: { profileId?: string }) {
                     <InfoNote>
                       These belong to the bookings, not to the profile. Each one is stored
                       encrypted and deleted automatically {d.retentionDays} days after the guest
-                      departs, so this list empties itself — it is a window onto the stays, not an
+                      departs, so this list empties itself - it is a window onto the stays, not an
                       archive of passports. Opening one is recorded in the audit trail.
                     </InfoNote>
 
@@ -373,7 +373,7 @@ export function ProfileDetailScreen({ profileId }: { profileId?: string }) {
                         <p className="text-[12px] text-dash-muted py-8 text-center">
                           Nothing on file. A passport photograph and signature are captured at
                           check-in, or by the guest on their own phone through the check-in QR
-                          code — and are removed again once the retention window passes.
+                          code - and are removed again once the retention window passes.
                         </p>
                       </Card>
                     ) : (

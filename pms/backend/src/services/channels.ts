@@ -78,10 +78,10 @@ export function listChannels(propertyId: string) {
       pulledToday: pulled,
       failuresToday: failures,
       queued,
-      // Redacted, always. This blob is where the Beds24 refresh token lives —
-      // a working key to the property's whole OTA distribution — and this
+      // Redacted, always. This blob is where the Beds24 refresh token lives -
+      // a working key to the property's whole OTA distribution - and this
       // endpoint is readable by seven of the eight roles. A screen needs to know
-      // whether a credential exists — `configured`, above — never what it is.
+      // whether a credential exists - `configured`, above - never what it is.
       settings: redactSecrets(parseJson<Record<string, unknown>>(c.settings, {})),
     };
   });
@@ -154,7 +154,7 @@ export function upsertChannel(propertyId: string, actor: Actor, input: {
  *
  * The only place credentials are ever in the clear is inside the process, on
  * the way to the connector. Nothing that reaches an API response goes through
- * here — see `listChannels`, which reads the redacted form.
+ * here - see `listChannels`, which reads the redacted form.
  */
 /** The part of a channel row needed to build a connector for it. */
 type ChannelCredentialSource = Pick<ChannelRow, 'id' | 'settings'>;
@@ -169,8 +169,8 @@ export function settingsWithCredentials(channel: ChannelCredentialSource): {
     try {
       return { settings, credentials: JSON.parse(decryptSecret(stored)) as Beds24Credentials };
     } catch (e) {
-      // Retyped, not reworded. `decryptSecret` already says the useful thing —
-      // the key has changed, restore it or re-enter the credential — but as a
+      // Retyped, not reworded. `decryptSecret` already says the useful thing -
+      // the key has changed, restore it or re-enter the credential - but as a
       // bare Error it reached the callers as an unhandled fault: the channel
       // row kept saying `connected`, nothing was written to the sync log, and
       // the only trace was one stderr line per poll, forever. As a
@@ -200,7 +200,7 @@ function storeCredentials(
  *
  * Three other modules used to construct `Beds24Client` themselves, straight from
  * `parseJson(channel.settings).credentials`. That field is not an object once a
- * `HELIO_SECRET_KEY` is configured — it is the opaque `enc.v1.…` string written
+ * `HELIO_SECRET_KEY` is configured - it is the opaque `enc.v1.…` string written
  * by `storeCredentials`. Handing that string over as the credentials object gave
  * a client whose `refreshToken` was `undefined`, so `configured` was false and
  * every call died with "Beds24 credentials are not configured".
@@ -244,7 +244,7 @@ export async function connectBeds24(
 
   // Reading the existing credential must not stop a *new* one being entered.
   // A credential encrypted under a key that has since changed cannot be read,
-  // and if that threw here the channel could never be reconnected — the one
+  // and if that threw here the channel could never be reconnected - the one
   // moment somebody is trying to fix exactly that problem.
   let settings: Record<string, unknown>;
   let credentials: Beds24Credentials;
@@ -268,7 +268,7 @@ export async function connectBeds24(
     // A multi-property Beds24 account is the ordinary case for anyone who has
     // ever run two places, and picking the wrong one on the way in writes one
     // property's rates onto the other's listing. Fixing that used to mean
-    // issuing a fresh invite code purely to change a number — so people left
+    // issuing a fresh invite code purely to change a number - so people left
     // it wrong. The credential is untouched here; only the property it points
     // at moves, and the verification below still has to pass.
     creds = credentials;
@@ -279,7 +279,7 @@ export async function connectBeds24(
   // The credential has to be stored before it can be tested, because the client
   // reads it back from the row. But a token Beds24 rejects must not be left
   // behind: it would sit there looking configured, poison the next attempt, and
-  // — if it were encrypted under a key that later changed — be unreadable.
+  // - if it were encrypted under a key that later changed - be unreadable.
   storeCredentials(channelId, settings, creds);
 
   let verified: Awaited<ReturnType<typeof testConnection>>;
@@ -298,8 +298,8 @@ export async function connectBeds24(
   // that was just proved: `testConnection` lists the properties the token can
   // see, and when there is exactly one there is nothing to guess.
   //
-  // Leaving it null looks harmless — reads work without it, because the token
-  // already scopes them — and then the first *write* that needs to name a
+  // Leaving it null looks harmless - reads work without it, because the token
+  // already scopes them - and then the first *write* that needs to name a
   // property fails with "this channel has no property id", long after anyone
   // would connect the two events. Several rooms is a different matter and is
   // left for a person, since picking the wrong one writes inventory to somebody
@@ -322,7 +322,7 @@ export async function testConnection(propertyId: string, actor: Actor, channelId
   const started = Date.now();
   try {
     // Built inside the try. Constructing it above meant an unreadable
-    // credential threw past this catch — so the one screen an operator opens to
+    // credential threw past this catch - so the one screen an operator opens to
     // find out what is wrong answered with a 500 instead of the reason.
     const client = clientFor(propertyId, channel);
     const res = await client.listProperties();
@@ -375,7 +375,7 @@ export function syncLog(propertyId: string, limit = 100, channelId?: string) {
       ORDER BY l.ts DESC LIMIT ?`,
     ...(channelId ? [propertyId, channelId, limit] : [propertyId, limit]),
   ).map((l) => ({
-    id: l.id, ts: l.ts, direction: l.direction, channel: l.channel_name ?? l.channel_code ?? '—',
+    id: l.id, ts: l.ts, direction: l.direction, channel: l.channel_name ?? l.channel_code ?? '-',
     channelCode: l.channel_code, action: l.action, status: l.status,
     payloadBytes: l.payload_bytes, durationMs: l.duration_ms, attempt: l.attempt, error: l.error,
   }));
@@ -480,7 +480,7 @@ export function deleteMapping(propertyId: string, actor: Actor, mappingId: strin
  * Refresh what is known about the OTAs behind this channel.
  *
  * Two sources, kept apart on purpose: what Beds24 says about itself, and what
- * bookings prove. The booking side runs even when the Beds24 read fails —
+ * bookings prove. The booking side runs even when the Beds24 read fails -
  * losing the network is no reason to forget which OTAs have sent business.
  */
 export async function refreshOtas(propertyId: string, channelId: string) {
@@ -507,7 +507,7 @@ export async function refreshOtas(propertyId: string, channelId: string) {
  * misprice a night, it invents beds.
  *
  * Honours the read-only switch, is read per item, and records the outcome
- * either way — a refusal has to look like a refusal.
+ * either way - a refusal has to look like a refusal.
  */
 export async function pushRoomQuantity(
   propertyId: string, actor: Actor, channelId: string, roomTypeId: string, qty: number,
@@ -517,7 +517,7 @@ export async function pushRoomQuantity(
   if (readOnlyChannels()) {
     logSync(propertyId, channel, {
       direction: 'push', action: `quantity ${qty}`, status: 'skipped',
-      error: 'HELIO_CHANNEL_READONLY is set — outbound pushes are disabled',
+      error: 'HELIO_CHANNEL_READONLY is set - outbound pushes are disabled',
     });
     throw new HttpError(409,
       'Outbound channel pushes are switched off (HELIO_CHANNEL_READONLY). '
@@ -533,7 +533,7 @@ export async function pushRoomQuantity(
       'no_mapping');
   }
   if (!channel.external_property_id) {
-    throw new HttpError(409, 'This channel has no property id — reconnect it first.');
+    throw new HttpError(409, 'This channel has no property id - reconnect it first.');
   }
 
   const started = Date.now();
@@ -603,8 +603,8 @@ export async function discoverUnits(propertyId: string, actor: Actor, channelId:
   // Exact name, and nothing else.
   //
   // This used to fall back to "the Beds24 name contains the PMS type's code",
-  // which on a real hostel matched three different rooms — an 8-bed mixed dorm,
-  // a 6-bed female dorm and a female bunk room — to the single type whose code
+  // which on a real hostel matched three different rooms - an 8-bed mixed dorm,
+  // a 6-bed female dorm and a female bunk room - to the single type whose code
   // was `DORM`. Mapping several Beds24 rooms onto one PMS type means their
   // availability is pushed from one pool: the property oversells threefold and
   // sells female beds to anyone. A guess that confident has to be right, and a
@@ -628,7 +628,7 @@ export async function discoverUnits(propertyId: string, actor: Actor, channelId:
     return {
       externalId,
       name: String(r.name ?? ''),
-      // Beds24 says so itself. The old test — "maxPeople > 6" — got every real
+      // Beds24 says so itself. The old test - "maxPeople > 6" - got every real
       // dorm wrong, because a dorm bed is sold as a one-person unit with
       // `qty` set to the number of beds: an eight-bed dorm arrives as
       // maxPeople 1, qty 16, and looked like a private single room.
@@ -650,7 +650,7 @@ export async function discoverUnits(propertyId: string, actor: Actor, channelId:
 /**
  * Ask for the push queue to be drained soon.
  *
- * The server owns the timer, and this service must not import it — so the
+ * The server owns the timer, and this service must not import it - so the
  * server hands in a callback instead. Nothing here depends on it being set: the
  * queue is drained on a schedule regardless, and this only makes it happen
  * sooner. A price change waiting a full minute to reach an OTA is a poor
@@ -667,7 +667,7 @@ export function nudgeQueue() {
  * True when this installation must not write anything to a channel.
  *
  * Read per call rather than cached, so it can be turned on for a running
- * process without a restart — the moment it is needed is usually the moment
+ * process without a restart - the moment it is needed is usually the moment
  * something is already going out wrong.
  */
 export function readOnlyChannels(): boolean {
@@ -761,14 +761,14 @@ export async function pushToChannel(
   // facing: taking one booking enqueues an ARI push, and the background drain
   // sends it to the OTAs within seconds. That is right in production and wrong
   // while a property is still checking that its imported inventory and rates
-  // look correct — the first mistake is published before anyone has seen it.
+  // look correct - the first mistake is published before anyone has seen it.
   //
   // Reads are unaffected: bookings still import, so the PMS can be verified
   // against live data without touching what guests can see or pay.
   if (readOnlyChannels()) {
     logSync(propertyId, channel, {
       direction: 'push', action: 'ARI push', status: 'skipped',
-      error: 'HELIO_CHANNEL_READONLY is set — outbound pushes are disabled',
+      error: 'HELIO_CHANNEL_READONLY is set - outbound pushes are disabled',
     });
     throw new HttpError(409,
       'Outbound channel pushes are switched off (HELIO_CHANNEL_READONLY). '
@@ -777,19 +777,19 @@ export async function pushToChannel(
   }
 
   if (channel.active !== 1) {
-    // Record the refusal — an operator pushing a paused channel needs to see
+    // Record the refusal - an operator pushing a paused channel needs to see
     // why nothing happened, not just an error toast that disappears.
     logSync(propertyId, channel, {
       direction: 'push', action: 'ARI push', status: 'skipped',
       error: 'Channel is paused',
     });
-    throw new HttpError(409, `Channel ${channel.name} is paused — activate it before pushing`);
+    throw new HttpError(409, `Channel ${channel.name} is paused - activate it before pushing`);
   }
   const mappings = listMappings(propertyId, channelId)
     .filter((m) => m.active && m.externalRoomId
       && (!opts.roomTypeId || m.roomTypeId === opts.roomTypeId));
   if (!mappings.length) {
-    const message = 'No active room mappings — map PMS room types to Beds24 rooms first';
+    const message = 'No active room mappings - map PMS room types to Beds24 rooms first';
     logSync(propertyId, channel, { direction: 'push', action: 'ARI push', status: 'skipped', error: message });
     throw new HttpError(409, message, 'no_mappings');
   }
@@ -830,14 +830,14 @@ export async function pushToChannel(
     // rather than escaping a push that then looks like it never happened.
     const client = clientFor(propertyId, channel);
     const res = await client.setCalendar(entries);
-    // Envelope *and* per-item — see `readWriteResult`. Checking only the
+    // Envelope *and* per-item - see `readWriteResult`. Checking only the
     // envelope marked this channel healthy while individual rooms were being
     // rejected, which is an overbooking with a paper trail saying all was well.
     const { ok, errors, failedItems } = readWriteResult(res);
     const detail = errors.length ? JSON.stringify(errors).slice(0, 500) : null;
 
     // A rejected push must not claim the channel is connected, and must not
-    // wipe an earlier error — the next drain has to know something is wrong.
+    // wipe an earlier error - the next drain has to know something is wrong.
     if (ok) {
       run(`UPDATE channels SET status = 'connected', last_sync_at = ?, last_error = NULL WHERE id = ?`,
         nowIso(), channelId);
@@ -891,8 +891,8 @@ const RETRY_MAX_MINUTES = 6 * 60;
 /**
  * Put parked pushes back in the queue once they have cooled off.
  *
- * A failed row used to be the end of the line. Five attempts — five transient
- * `fetch failed`s, or five minutes of an expired token — flipped it to `failed`,
+ * A failed row used to be the end of the line. Five attempts - five transient
+ * `fetch failed`s, or five minutes of an expired token - flipped it to `failed`,
  * and `processQueue` only ever selects `queued`. Nothing anywhere moved it back.
  *
  * So the change was not delayed, it was **abandoned**: Helio held one price and
@@ -901,7 +901,7 @@ const RETRY_MAX_MINUTES = 6 * 60;
  * anybody happened to edit that same date it would correct itself, which is what
  * makes it look intermittent rather than broken.
  *
- * Parked rows now come back with a widening delay — 15 minutes, then 30, then an
+ * Parked rows now come back with a widening delay - 15 minutes, then 30, then an
  * hour, capped at six. A channel that is down for a morning catches up by itself
  * when it returns, and one that is genuinely misconfigured is not hammered while
  * it stays that way. There is deliberately no give-up point: an unsent price is
@@ -935,8 +935,8 @@ function reviveParkedPushes(propertyId: string): number {
 /**
  * Record a push failure against every row in the batch.
  *
- * Shared by both failure paths — a rejection reported in the response body and
- * an exception thrown on the way — because they were drifting apart and only one
+ * Shared by both failure paths - a rejection reported in the response body and
+ * an exception thrown on the way - because they were drifting apart and only one
  * of them stamped the retry clock.
  */
 function recordPushFailure(propertyId: string, ids: string[], detail: string) {
@@ -949,7 +949,7 @@ function recordPushFailure(propertyId: string, ids: string[], detail: string) {
     );
   }
   // Announce the parking once, on the row that crosses the line. Retries after
-  // this are quiet by design — the operator has already been told.
+  // this are quiet by design - the operator has already been told.
   const justParked = scalar<number>(
     `SELECT count(*) AS n FROM channel_queue
       WHERE property_id = ? AND status = 'failed' AND attempts = ?`,
@@ -1030,7 +1030,7 @@ export async function processQueue(propertyId: string, actor: Actor, maxBatches 
         roomTypeId: g.roomTypeId ?? undefined, from: g.from, to: g.to,
       });
       // Only a push the channel actually accepted clears the queue. A rejected
-      // one previously landed here as 'sent' — the rows were dropped, nothing
+      // one previously landed here as 'sent' - the rows were dropped, nothing
       // retried, and the dates stayed stale on the OTA for good.
       if (r.ok) {
         for (const qid of g.ids) {
@@ -1089,7 +1089,7 @@ export async function importBookings(
   //
   // The watermark must come from successful *booking imports* and nothing else.
   // It used to be the newest successful pull of any kind, which includes
-  // connection tests, unit discovery and message polls — so testing the
+  // connection tests, unit discovery and message polls - so testing the
   // connection at 14:00 moved the mark to 14:00, and the next import asked for
   // bookings changed since then. Anything modified between the last real import
   // and that test was never asked for again: a silent, permanent gap, and the
@@ -1114,7 +1114,7 @@ export async function importBookings(
       modifiedFrom: since.slice(0, 10),
       propertyId: channel.external_property_id ?? undefined,
       // The invoice lines carry what the OTA collected at booking time when
-      // the `deposit` field does not — see `depositOf` in the connector.
+      // the `deposit` field does not - see `depositOf` in the connector.
       includeInvoiceItems: 'true',
       // The info lines say who collects what ("HOTELCOLLECT · Guest pays …").
       includeInfoItems: 'true',
@@ -1218,7 +1218,7 @@ export async function importBookings(
         commissionMinor: Math.round(b.commissionMajor * 100),
         ...otaMoneyFor(b, channel.code, hw, detail),
         origin: 'channel',
-        // An OTA booking already sold the room — inventory must not block it.
+        // An OTA booking already sold the room - inventory must not block it.
         force: true,
       });
       syncCollectedCredit(propertyId, actor, created_.id, hw);
@@ -1243,7 +1243,7 @@ export async function importBookings(
   //
   // `since` above is the newest *successful* booking import, so recording a
   // truncated page walk as a success would advance the mark past pages that
-  // were never fetched — the same silent, permanent gap that comment warns
+  // were never fetched - the same silent, permanent gap that comment warns
   // about, arriving through a different door. Logged as skipped, the mark stays
   // put and the next poll asks from the same place. The rows already written
   // are kept, so the retry recognises most of what it re-reads and converges
@@ -1267,7 +1267,7 @@ export async function importBookings(
  * the Hostelworld split is switched on and this is a Hostelworld booking:
  * the total the guest agreed to becomes the stay total, and what Hostelworld
  * collected is worked out from the deposit, the commission, or the
- * configured percentage — in that order.
+ * configured percentage - in that order.
  */
 function otaMoneyFor(
   b: NormalisedBooking, channelCode: string, hw: HostelworldPolicy, detail: HostelworldDetail | null = null,
@@ -1285,7 +1285,7 @@ function otaMoneyFor(
     : channelNightRates(detail, dateRange(b.arrival, b.departure), totalOverrideMinor);
   // Without a channel total there is nothing to take a percentage of until
   // the stay has been priced, so the collected figure is settled afterwards
-  // by `backfillOtaMoney` on the next pass — or by hand.
+  // by `backfillOtaMoney` on the next pass - or by hand.
   const otaCollectedMinor = otaTotalMinor === null ? null
     : resolveCollected(hw, otaTotalMinor, {
       depositMinor: Math.round(b.depositMajor * 100),
@@ -1328,7 +1328,7 @@ async function channelSellPrices(
  * Hostelworld's statement for a booking, or null for any other channel.
  *
  * The channel's calendar is asked only for nights that have no sell price on
- * record yet — the first read, in practice — so a booking re-read every poll
+ * record yet - the first read, in practice - so a booking re-read every poll
  * costs nothing extra, and a price change on the channel after the guest
  * booked does not rewrite what the promotion was.
  */
@@ -1351,13 +1351,13 @@ async function hostelworldDetailFor(
  *
  *   · The channel's total is recorded as a raw fact if it was never stored.
  *   · For a Hostelworld booking with the split on and "use the channel total"
- *     set, the stay is re-priced to Hostelworld's total — the nights are
- *     re-spread so they add up to it — but **only while no night has been
+ *     set, the stay is re-priced to Hostelworld's total - the nights are
+ *     re-spread so they add up to it - but **only while no night has been
  *     posted**. Once the night audit has charged a night, the folio and the
  *     stay must keep agreeing, and a re-price would break that.
  *   · The collected amount is written when the channel reported a deposit,
- *     or when nothing was recorded yet. A figure the channel did not send —
- *     one typed in by hand — is left alone.
+ *     or when nothing was recorded yet. A figure the channel did not send -
+ *     one typed in by hand - is left alone.
  *
  * This is what a poll does for bookings it re-reads and what "Refresh from
  * Beds24" does for every open booking, so the two never disagree.
@@ -1379,7 +1379,7 @@ export function backfillOtaMoney(
   }
 
   // The statement is a raw fact, kept whether or not the split is on, and
-  // rewritten only when something in it moved — not because it was re-read.
+  // rewritten only when something in it moved - not because it was re-read.
   if (detail && hostelworld && !sameHostelworldDetail(detail, parseHostelworldDetail(existing.ota_detail))) {
     sets.push('ota_detail = ?');
     params.push(jsonCol(detail));
@@ -1441,7 +1441,7 @@ export function backfillOtaMoney(
  *
  * The poll only asks Beds24 for bookings *modified* since the last import, so
  * a Hostelworld booking imported before the split was switched on is never
- * re-read — its total stays whatever the rate plan said, and its collected
+ * re-read - its total stays whatever the rate plan said, and its collected
  * amount stays empty. This asks for everything arriving from a month back and
  * runs the same backfill on each, which is how a property turns the feature
  * on and has it reach the bookings already on the books with Hostelworld's
@@ -1534,7 +1534,7 @@ export function resolveConflict(
           arrival: b.arrival, departure: b.departure, adults: b.adults, children: b.children,
           roomTypeId: input.roomTypeId, ratePlanId: input.ratePlanId,
           status: 'Confirmed', source: 'OTA', channelCode: c.channel_code,
-          // The same OTA name the ordinary import keeps — a booking that came
+          // The same OTA name the ordinary import keeps - a booking that came
           // through the conflict queue is no less a Hostelworld booking.
           otaChannel: b.channel || null,
           otaReference: b.externalId, commissionMinor: Math.round(b.commissionMajor * 100),
@@ -1641,7 +1641,7 @@ export function channelHealth(propertyId: string) {
     // three dorm rate changes queued behind it, and every indicator in the app
     // still read "connected · healthy" because nothing had *failed*. Nothing
     // had been attempted either. A green tick over work that will never be sent
-    // is worse than a red one — it is the reason the prices on the OTA were
+    // is worse than a red one - it is the reason the prices on the OTA were
     // wrong for hours without anybody having a reason to look.
     else if (!publishing && c.queued > 0) health = 'degraded';
 

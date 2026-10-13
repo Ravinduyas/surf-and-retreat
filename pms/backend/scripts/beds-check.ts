@@ -4,8 +4,8 @@
 //   node --experimental-sqlite scripts/beds-check.ts
 //
 // The number that matters is **sleeps**. Get it wrong and the property either
-// sells a room to more people than it can hold — a family arriving to find one
-// bed short — or refuses a booking it could have taken. The single most common
+// sells a room to more people than it can hold - a family arriving to find one
+// bed short - or refuses a booking it could have taken. The single most common
 // way to get it wrong is counting a bunk as one bed, so that case is checked
 // from several directions.
 //
@@ -68,7 +68,7 @@ async function main() {
   check('a room of only extras has no standing bed',
     beds.sleeps(cfg(['extra_bed', 2])) === 0);
 
-  section('3 · Berths — what a dorm sells');
+  section('3 · Berths - what a dorm sells');
   check('a bunk is two berths', beds.berths(cfg(['bunk', 1])) === 2);
   check('six bunks are twelve berths', beds.berths(cfg(['bunk', 6])) === 12,
     beds.berths(cfg(['bunk', 6])));

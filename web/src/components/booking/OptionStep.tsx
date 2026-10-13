@@ -32,7 +32,7 @@ export const OptionStep: React.FC<OptionStepProps> = ({ guests, nights, value, o
             image={room.image}
             active={value === room.id}
             disabled={!fits || nights < 1}
-            disabledReason={!fits ? `Sleeps ${room.maxGuests} max — too small for ${guests} guests` : 'Needs at least one night'}
+            disabledReason={!fits ? `Sleeps ${room.maxGuests} max - too small for ${guests} guests` : 'Needs at least one night'}
             onClick={() => onSelect(room.id)}
           />
         );

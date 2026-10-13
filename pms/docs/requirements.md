@@ -1,4 +1,4 @@
-# Development requirements — round 2
+# Development requirements - round 2
 
 Seven areas, written before any code is changed, so progress can be measured
 against something. Each item states **what exists today**, **what is missing**,
@@ -13,7 +13,7 @@ Every claim about the current system below was read from the code, not assumed.
 | Mark | Meaning |
 |---|---|
 | ✅ | Already built and verified |
-| ⚠️ | Partly built — works, but has a named gap |
+| ⚠️ | Partly built - works, but has a named gap |
 | ❌ | Not built |
 | 🔌 | Needs a funded Beds24 account to confirm against the live channel |
 
@@ -29,11 +29,11 @@ cache, 26 explicit indexes, and a proven no-overbooking guarantee
 **Missing**
 - ⚠️ Indexes were written by hand, never checked against the queries that
   actually run. Some hot paths may be doing table scans.
-- ❌ No `PRAGMA integrity_check` / `foreign_key_check` ever runs — silent
+- ❌ No `PRAGMA integrity_check` / `foreign_key_check` ever runs - silent
   corruption would go unnoticed until it caused a wrong number.
 - ❌ No `ANALYZE`, so the query planner works without statistics.
 - ❌ No maintenance path: WAL grows, free pages are never reclaimed.
-- ❌ No visibility — nobody can see database size, WAL size, or table counts
+- ❌ No visibility - nobody can see database size, WAL size, or table counts
   without opening a shell.
 
 **Done when**
@@ -55,16 +55,16 @@ cache, 26 explicit indexes, and a proven no-overbooking guarantee
 **Today** ❌ Nothing. The README says a backup is "the highest-value hour of
 work available on this system" and that is still true.
 
-**Missing** — all of it.
+**Missing** - all of it.
 
 **Done when**
 1. Automatic snapshots on a schedule (default: after every night audit, plus a
    configurable interval) using SQLite's online `.backup` API, so a backup can
    be taken **while the system is running** without blocking writes.
-2. Retention policy — keep N daily, N weekly, N monthly; prune the rest.
+2. Retention policy - keep N daily, N weekly, N monthly; prune the rest.
 3. Every snapshot is **verified after writing** (`integrity_check` on the copy).
    An unverified backup is not a backup.
-4. Restore is a documented, tested command — not a guess in an emergency.
+4. Restore is a documented, tested command - not a guess in an emergency.
 5. Backup status visible in Administration: last run, size, age, verification
    result, and a loud warning when the last good backup is stale.
 6. A manual "Back up now" button.
@@ -83,7 +83,7 @@ does this automatically for arrivals that never checked in.
 - ❌ The channel is never told. Booking.com still believes the guest is
   arriving, so the commission stands and the guest is not flagged.
 - ❌ No record of *whether* a no-show was reported, when, or whether it failed.
-- ❌ No awareness of the reporting window — Booking.com will not accept a
+- ❌ No awareness of the reporting window - Booking.com will not accept a
   no-show report indefinitely.
 - ❌ No way to report a credit-card-invalid or an "at-property" cancellation,
   which are the neighbouring channel actions front desks need.
@@ -91,10 +91,10 @@ does this automatically for arrivals that never checked in.
 **Done when**
 1. Marking an OTA booking as a no-show offers to report it to the channel.
 2. The report goes through Beds24 (`POST /bookings`, status change) and the
-   outcome — success or the exact error — is stored on the reservation and shown
+   outcome - success or the exact error - is stored on the reservation and shown
    in the sync log.
 3. A reservation carries `channel_reported_at` / `channel_report_status`, so the
-   UI can show "reported", "not reported", or "failed — retry".
+   UI can show "reported", "not reported", or "failed - retry".
 4. Reporting is retryable, and the window is surfaced ("report within N days").
 5. Never claims success it did not get. 🔌 The exact Beds24 payload and the
    Booking.com acceptance window must be confirmed against a live account before
@@ -106,7 +106,7 @@ does this automatically for arrivals that never checked in.
 
 This is the largest item, and the one you described most precisely: *read and
 reply to Booking.com guest messages inside Helio, without logging in to the
-Booking.com extranet* — and the same for other OTAs.
+Booking.com extranet* - and the same for other OTAs.
 
 **Today** ⚠️ There is a `messages` table, a thread on the guest dashboard, and
 `GET/POST /api/messages`. But messages are local drafts only: nothing is ever
@@ -114,8 +114,8 @@ fetched from or sent to a channel. The connector has `getBookingMessages()`
 written and **never called**.
 
 **Missing**
-- ❌ No inbound sync — OTA messages never arrive.
-- ❌ No outbound send — replies never leave Helio.
+- ❌ No inbound sync - OTA messages never arrive.
+- ❌ No outbound send - replies never leave Helio.
 - ❌ No unified inbox screen; messages are only visible per reservation.
 - ❌ No unread state, no assignment, no response-time visibility.
 - ❌ No templates or canned replies for the messages a front desk sends fifty
@@ -129,7 +129,7 @@ written and **never called**.
    by unread / in-house / arriving, with the reservation context beside the
    thread.
 4. Unread counts in the app shell, so a message is not missed.
-5. Delivery state is honest per message — `queued`, `sent`, `delivered`,
+5. Delivery state is honest per message - `queued`, `sent`, `delivered`,
    `failed` with the reason. A message that could not be delivered says so.
 6. Templates with merge fields (guest name, room, arrival, check-in time).
 7. 🔌 **Channel support varies and must be verified.** Booking.com and Airbnb
@@ -148,7 +148,7 @@ change to channels. Arrival is correctly frozen after check-in. Early departure
 is handled at check-out.
 
 **Missing**
-- ❌ No dedicated "extend stay" action — the front desk has to open the full
+- ❌ No dedicated "extend stay" action - the front desk has to open the full
   amend form and edit a date field, which is the most common in-house request
   and the most error-prone path.
 - ❌ No preview: the user cannot see what the extra nights will cost, or that
@@ -173,23 +173,23 @@ is handled at check-out.
 
 **Today** ⚠️ `/api/rates/bulk` applies a fixed price, a percentage adjustment or
 an amount adjustment across a date range, filtered by room type, rate plan and
-day of week — and queues a channel push. Derived rate plans recalculate from
+day of week - and queues a channel push. Derived rate plans recalculate from
 their parent automatically. Yield rules adjust prices by occupancy, lead time,
 day of week and length of stay.
 
 **Missing**
 - ❌ **No preview.** A bulk edit is applied blind; there is no "this will change
   N cells, from X to Y" before committing, and no undo.
-- ❌ No **seasons** — a named, reusable date range (High, Shoulder, Low) that
+- ❌ No **seasons** - a named, reusable date range (High, Shoulder, Low) that
   rates hang off. Every change is an ad-hoc date range typed by hand.
-- ❌ No **scheduled** changes — you cannot set a price to take effect next month
+- ❌ No **scheduled** changes - you cannot set a price to take effect next month
   and walk away.
-- ❌ No **copy period** — "take last December and apply it to this December".
+- ❌ No **copy period** - "take last December and apply it to this December".
 - ❌ No change history on a rate cell: who changed this price, when, from what.
 
 **Done when**
-1. Every bulk edit shows an exact preview — cells affected, current → new, with
-   the biggest movers listed — before it is applied.
+1. Every bulk edit shows an exact preview - cells affected, current → new, with
+   the biggest movers listed - before it is applied.
 2. Named seasons, editable, with rates set per season and applied to a date span.
 3. Scheduled rate changes with an effective date, visible in a queue, applied
    automatically, cancellable before they fire.
@@ -201,7 +201,7 @@ day of week and length of stay.
 ## R7 · Opening and closing rooms
 
 **Today** ⚠️ The restrictions engine supports `stop-sell`, `cta`, `ctd`,
-min/max stay, stay-through and advance windows — scoped to a room type, a rate
+min/max stay, stay-through and advance windows - scoped to a room type, a rate
 plan and/or a single channel. Physical rooms can be taken out of order or out of
 service for a date range. Both are enforced at booking time and pushed to
 channels.
@@ -209,7 +209,7 @@ channels.
 **Missing**
 - ❌ Closing dates takes six form fields in a modal. There is no quick "close
   these dates" from the rate calendar, which is where the decision is made.
-- ❌ No **open** action — reopening means finding and deleting the right
+- ❌ No **open** action - reopening means finding and deleting the right
   restriction row.
 - ❌ No visible **close-out summary**: which dates are closed, why, on which
   channels, expiring when.
@@ -242,7 +242,7 @@ Value first, and dependencies before dependents.
 
 ### What R1 actually found
 
-Measured against a purpose-built database of three years' trading — 15,330
+Measured against a purpose-built database of three years' trading - 15,330
 reservations, 60 rooms, 58 MB (`npm run bench`):
 
 | Operation | Before | After |
@@ -257,7 +257,7 @@ Three defects, none of which the existing checks caught:
 1. **The list sorted every reservation for the property in memory.** `ORDER BY
    arrival, guest_name` matched no index, so SQLite materialised the whole
    history into a temp b-tree, sorted it, and handed back fifty rows. Having to
-   sort anyway, it also chose to drive the join from `rate_plans` — scanning
+   sort anyway, it also chose to drive the join from `rate_plans` - scanning
    reservations once per rate plan. Fixed by `ix_res_list`, and by widening
    `ix_res_status` so a status-filtered page is walked rather than sorted.
 2. **A balance query per row.** A fifty-row page issued fifty-one queries. Now
@@ -267,7 +267,7 @@ Three defects, none of which the existing checks caught:
 
 The query-plan review had been reporting "every hot path uses an index"
 throughout all of this. It looked only for table scans, and it never examined
-the list query at all — that one is assembled from a shared `RES_SELECT`
+the list query at all - that one is assembled from a shared `RES_SELECT`
 fragment, so it did not begin with a SQL verb and the extractor skipped it
 without saying so. Both are fixed: fragments are resolved (285 statements
 reviewed, up from 260), a sort feeding a LIMIT is now flagged, and anything
@@ -281,13 +281,13 @@ once R4 puts OTA conversations through it. Fixed by `ix_msg_inbox`.
 Index changes reach existing databases through `ensureIndex()` (schema v3).
 `CREATE INDEX IF NOT EXISTS` does nothing when the name already exists even if
 the columns have changed, so a widened index would otherwise reach new
-installations only — fast on a fresh database, slow on the one with three years
+installations only - fast on a fresh database, slow on the one with three years
 of real bookings in it.
 
 ### What R7 delivered
 
 The restrictions engine was already right; what was missing was the operator's
-side of it. `services/closeouts.ts` adds the verbs — close, open, list — on top
+side of it. `services/closeouts.ts` adds the verbs - close, open, list - on top
 of the same `stop-sell` row the engine already enforces.
 
 - **Close from the calendar.** Drag across dates in a row and a bar rises with
@@ -301,7 +301,7 @@ of the same `stop-sell` row the engine already enforces.
   closure would mean exploding that row into one per type. It is refused and the
   blocking closure is named, rather than appearing to succeed while the dates
   stay shut.
-- **Per-channel closing** is reachable from the same control — close
+- **Per-channel closing** is reachable from the same control - close
   Booking.com and leave the desk selling.
 - **Closed cells are unmistakable** on the calendar and say why on hover.
 - **A close-out list** shows every closure with its scope, reason, who set it,
@@ -315,9 +315,9 @@ with a connected channel, keeping the queue's retry and failure accounting. The
 close-out screen states plainly when pushes are queued or have failed rather
 than implying a closure is live everywhere the moment it is saved.
 
-Verified by `npm run verify:closeouts` — 61 checks against the booking engine
-itself, so every case asserts what the system will actually refuse to sell — and
-`npm run closeout-ui` — 19 checks driving the real screen in a browser.
+Verified by `npm run verify:closeouts` - 61 checks against the booking engine
+itself, so every case asserts what the system will actually refuse to sell - and
+`npm run closeout-ui` - 19 checks driving the real screen in a browser.
 
 ### What R5 delivered
 
@@ -331,7 +331,7 @@ from the general amend form. Three things it does that the amend path did not:
   number expects to pay it.
 - **The room is never dropped silently.** If the current room is not free for
   the new dates, the change is refused and the rooms that *are* free are offered
-  — or the room can be released, but only when that is asked for explicitly.
+  - or the room can be released, but only when that is asked for explicitly.
 - **A posted night cannot be dropped.** Shortening past a night the night audit
   has already posted would unwind a closed business day. It is refused, the
   dates are named, and the message says to void the charges first.
@@ -339,7 +339,7 @@ from the general amend form. Three things it does that the amend path did not:
 `previewStayChange` answers everything `changeStayDates` will act on without
 writing anything: the nights added or removed with their prices, the delta, the
 new total, whether the room survives, and every selling rule the new dates break
-— in words, not as a status code. It is a GET, so the screen can call it freely
+- in words, not as a status code. It is a GET, so the screen can call it freely
 as the operator types.
 
 Reachable in one click from the guest dashboard and the in-house list, with
@@ -348,8 +348,8 @@ Reachable in one click from the guest dashboard and the in-house list, with
 the whole affected span, so nights released by a shortening are re-opened on the
 OTAs as well as nights taken by an extension.
 
-Verified by `npm run verify:staydates` — 57 checks — and `npm run staydates-ui`
-— 23 checks driving the real dialog in a browser, including that previewing
+Verified by `npm run verify:staydates` - 57 checks - and `npm run staydates-ui`
+- 23 checks driving the real dialog in a browser, including that previewing
 writes nothing.
 
 ### What R6 delivered
@@ -358,7 +358,7 @@ The organising idea in `services/rateplanning.ts` is that **planning and
 applying are the same code path**. `planChange` works out every cell a change
 would touch and what each goes from and to; `applyChange` takes that plan and
 writes it. The preview endpoint runs step one and stops. A preview can therefore
-never disagree with what happens — which is the only thing that makes a preview
+never disagree with what happens - which is the only thing that makes a preview
 worth showing, and it is asserted directly: the check applies a change and then
 compares every written cell against what the plan promised.
 
@@ -367,7 +367,7 @@ compares every written cell against what the plan promised.
   ranges, and the twelve biggest movers. It warns when a change would zero a
   price, more than double one, or is aimed at a derived plan that will be
   recalculated away. `Apply now` sits next to `Schedule for later`.
-- **Seasons** — named, coloured, prioritised date ranges. Where two overlap the
+- **Seasons** - named, coloured, prioritised date ranges. Where two overlap the
   higher priority wins. A season is a label, not a rate: deleting one changes no
   prices.
 - **Scheduled changes** with an effective date, a queue showing what each will
@@ -377,8 +377,8 @@ compares every written cell against what the plan promised.
   change that fails on the day is recorded as failed with its reason and does
   not stop the audit.
 - **Copy a period** onto another, day for day, with a multiplier. It warns when
-  the periods start on different weekdays — weekend prices landing on weekdays
-  is the classic way this goes wrong — and when source and target overlap.
+  the periods start on different weekdays - weekend prices landing on weekdays
+  is the classic way this goes wrong - and when source and target overlap.
 - **Rate history per cell**: what it moved from and to, by what means (bulk,
   scheduled, copy), why, who and when. A first write onto an inherited cell
   records `from` as null rather than inventing a number.
@@ -386,16 +386,16 @@ compares every written cell against what the plan promised.
 Cells that would not move are not written, so the history stays free of noise
 and the channels are not told about changes that did not happen.
 
-Verified by `npm run verify:rates` — 76 checks — and `npm run rateplanning-ui` —
+Verified by `npm run verify:rates` - 76 checks - and `npm run rateplanning-ui` -
 32 checks driving the real screen, including reading the promised number off the
 page and holding the server to it.
 
-### What R3 delivered — and what is still unconfirmed
+### What R3 delivered - and what is still unconfirmed
 
 Marking a guest as a no-show was only the property's half. Until Booking.com is
 told, it still believes the guest arrived: the commission stands and the guest
 is not flagged. `services/channelreports.ts` closes that loop, along with the
-two neighbouring actions a desk needs — a booking cancelled at the property and
+two neighbouring actions a desk needs - a booking cancelled at the property and
 a card that could not be charged.
 
 The rule the whole file is built around: **it must never claim a success it did
@@ -409,7 +409,7 @@ failure can be diagnosed rather than guessed at.
   leaving it to be remembered.
 - The reservation carries `channel_report_status`, `channel_reported_at`,
   the error, the attempt count and the raw exchange (schema v4).
-- Reporting is retryable — calling it again *is* the retry — and a later success
+- Reporting is retryable - calling it again *is* the retry - and a later success
   clears the error while keeping the attempt count.
 - The window is surfaced ("about 2 days left to report this"), and a passed
   window is a warning, not a refusal: the exact limit is one of the unconfirmed
@@ -430,12 +430,12 @@ Both live in one table (`REPORT_ACTIONS`) so a correction is a one-place change.
 The uncertainty is stated on the screen, in those words, rather than left for
 someone to discover during an argument about commission.
 
-Verified by `npm run verify:reports` — 64 checks against a stub channel that can
+Verified by `npm run verify:reports` - 64 checks against a stub channel that can
 answer cleanly, reject inside a 200, reject at the envelope, return an HTTP
 error, refuse the token, or say nothing at all. Every one of those asserts the
 failure is recorded as a failure.
 
-### What R4 delivered — and what is still unconfirmed
+### What R4 delivered - and what is still unconfirmed
 
 The thing you asked for most precisely: read and answer a Booking.com guest
 inside Helio, without logging in to the extranet. `services/messaging.ts` polls
@@ -443,23 +443,23 @@ conversations in through Beds24 and sends replies back out through the same
 connector.
 
 - **Inbound.** A poll every five minutes (`HELIO_MESSAGE_POLL_SECONDS`) pulls
-  messages for bookings that are still live — arriving, in-house, or departed
-  within a fortnight — and files them against the right reservation. The window
+  messages for bookings that are still live - arriving, in-house, or departed
+  within a fortnight - and files them against the right reservation. The window
   overlaps itself deliberately, so a message arriving twice is the normal case;
   the channel's own message id is the dedup key.
 - **Outbound.** A reply goes out through the originating channel, is retryable,
   and carries the channel's own words when it is refused.
-- **A unified inbox** — every conversation, every channel, filtered by unread /
+- **A unified inbox** - every conversation, every channel, filtered by unread /
   in-house / arriving today / channel, searchable, with the booking beside the
   thread and one click through to it.
 - **Unread counts** on the thread and in the filter.
-- **Templates with merge fields** — `{{firstName}}`, `{{room}}`, `{{roomType}}`,
+- **Templates with merge fields** - `{{firstName}}`, `{{room}}`, `{{roomType}}`,
   `{{arrival}}`, `{{checkInTime}}` and the rest, seeded with five the demo
   property can use immediately. An *unknown* field is left visible rather than
   blanked: "see you on {{arrivalDate}}" is obviously broken and gets fixed;
   "see you on " looks fine and goes out.
 
-**The two honesty rules.** First, a message is never marked *delivered* —
+**The two honesty rules.** First, a message is never marked *delivered* -
 `accepted by the channel` is the strongest claim available, because Beds24
 taking a message is not the guest receiving it. Second, a reply that could not
 be sent is **kept on the thread and labelled**, never dropped: losing a typed
@@ -468,18 +468,18 @@ attempted.
 
 **🔌 What still needs a live account.** Which channels relay guest messages is
 set from the documented integrations (Booking.com and Airbnb yes; Hostelworld
-and others no). It is used only to *withhold* a claim — a channel not on the
+and others no). It is used only to *withhold* a claim - a channel not on the
 list gets no reply box, just an explanation and an internal note. The list lives
 in one constant (`MESSAGE_CAPABLE`) so a correction is a one-line change. The
 inbox states the uncertainty in those words.
 
-Verified by `npm run verify:messaging` — 75 checks, including a channel that
+Verified by `npm run verify:messaging` - 75 checks, including a channel that
 cannot carry messages, a rejection inside a 200, a transport failure, a booking
 with no channel at all, and polling the same conversation repeatedly.
 
 One bug worth recording because no test could have caught it: the outgoing
 message bubbles used a Tailwind colour that does not exist (`dash-ink` rather
-than `dash-text`), so they rendered as white text on a white card — invisible.
+than `dash-text`), so they rendered as white text on a white card - invisible.
 It was found by looking at a screenshot of the finished screen. The same
 mistake was in the close-out selection highlight.
 
@@ -494,7 +494,7 @@ Booking.com property. That limitation will be stated in the UI, not hidden.
 
 Every item ships with:
 
-- Server-side enforcement — the UI may guide, but the API decides.
+- Server-side enforcement - the UI may guide, but the API decides.
 - An audit entry for anything that changes money, inventory or availability.
 - An automated check added to a verification suite, so it cannot regress.
-- Honest failure states — no green tick for something that did not happen.
+- Honest failure states - no green tick for something that did not happen.

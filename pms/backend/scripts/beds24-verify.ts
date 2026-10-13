@@ -33,7 +33,7 @@ function check(name: string, ok: boolean, detail?: unknown) {
   checks++;
   if (ok) { out(`   ✓ ${name}`); return; }
   failures++;
-  out(`   ✗ ${name}${detail === undefined ? '' : ` — ${JSON.stringify(detail)}`}`);
+  out(`   ✗ ${name}${detail === undefined ? '' : ` - ${JSON.stringify(detail)}`}`);
 }
 
 const { config } = await import('../src/config.ts');
@@ -90,7 +90,7 @@ async function main() {
   check('Beds24 answers', test.ok === true, test);
   check('the property id is known', !!channel.external_property_id, channel.external_property_id);
   check('outbound pushes are switched on', channels.readOnlyChannels() === false,
-    'HELIO_CHANNEL_READONLY is set — nothing can reach the OTAs');
+    'HELIO_CHANNEL_READONLY is set - nothing can reach the OTAs');
   if (failures) fail('The connection is not usable; the rest would tell you nothing.');
 
   const mapping = get<any>(
@@ -114,7 +114,7 @@ async function main() {
 
   const token = await beds24Token();
   const before = await readBeds24(token, mapping.external_room_id, from, to);
-  out(`   · Beds24 today: price ${before.price ?? '—'}, availability ${before.avail ?? '—'}`);
+  out(`   · Beds24 today: price ${before.price ?? '-'}, availability ${before.avail ?? '-'}`);
 
   const ratePlan = get<any>(
     `SELECT id FROM rate_plans WHERE property_id = ? AND active = 1 ORDER BY sort_order LIMIT 1`,
@@ -145,7 +145,7 @@ async function main() {
   check('the change is queued', (queued?.n ?? 0) > 0, queued);
 
   const drain: any = await channels.processQueue(property.id, actor, 5);
-  // The server's own nudged drain may have taken it already, which is a pass —
+  // The server's own nudged drain may have taken it already, which is a pass -
   // what matters is that nothing is left queued, not who sent it.
   check('the queue drains',
     (drain.sent ?? drain.batches ?? 0) > 0 || (drain.stillQueued ?? drain.remaining ?? 0) === 0,

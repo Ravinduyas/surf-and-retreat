@@ -24,7 +24,7 @@ export default function ContactPage() {
               <span className="text-[#2C573A]">Fast.</span>
             </>
           }
-          subtitle="Drop us a message about beds, boards or desks — we answer within 24 hours. Or just show up; the kettle's always on."
+          subtitle="Drop us a message about beds, boards or desks - we answer within 24 hours. Or just show up; the kettle's always on."
         />
       </PageHeader>
 

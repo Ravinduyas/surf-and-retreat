@@ -3,8 +3,8 @@
 //
 // Time runs sideways and does not end: scroll right and the next months load
 // and stitch on, scroll left and the previous ones do the same. That is worth
-// the machinery because the alternative — a fixed 14-day window paged with two
-// arrows — cuts long stays in half and loses your place every time you look
+// the machinery because the alternative - a fixed 14-day window paged with two
+// arrows - cuts long stays in half and loses your place every time you look
 // forward.
 //
 // Three things here are load-bearing and easy to break:
@@ -14,7 +14,7 @@
 //   · **Growing leftward corrects the scroll position in the same frame.**
 //     Prepending a chunk shifts every pixel right by its width, and without the
 //     correction the chart lurches away from whatever the user was reading.
-//   · **A stay crossing a chunk seam is one bar, not two** — see `mergeChunks`.
+//   · **A stay crossing a chunk seam is one bar, not two** - see `mergeChunks`.
 // ─────────────────────────────────────────────────────────────
 import { useState, useMemo, useRef, useEffect, useLayoutEffect, useCallback } from 'react';
 import { ChevronLeft, ChevronRight, Plus, Ban, Users, Search, X, SlidersHorizontal } from 'lucide-react';
@@ -34,7 +34,7 @@ import {
 /**
  * The room-name column.
  *
- * Wide enough for a dorm bed's full description — "bed 3/8 · top · room 2" —
+ * Wide enough for a dorm bed's full description - "bed 3/8 · top · room 2" -
  * because truncating it to "bed 3/8 · to…" costs the reader the one thing the
  * line was labelled with.
  */
@@ -53,8 +53,8 @@ const DENSITIES = [
  * The room-name column, pinned to the left edge while time scrolls past it.
  *
  * This is not decoration. The column used to sit inside the scrolling area, so
- * scrolling to January took the room numbers with it — measured at 1,864px off
- * the left of the screen — and the chart read as *empty* rather than as scrolled.
+ * scrolling to January took the room numbers with it - measured at 1,864px off
+ * the left of the screen - and the chart read as *empty* rather than as scrolled.
  * A fixed fortnight had almost nothing to scroll and hid it; unlimited
  * scrolling does not.
  */
@@ -171,7 +171,7 @@ export function CalendarScreen() {
 
   useLayoutEffect(() => {
     // Prepending a chunk moves all existing content right by exactly its width.
-    // Correcting scrollLeft here — before the browser paints — is what keeps
+    // Correcting scrollLeft here - before the browser paints - is what keeps
     // the day under the user's eye from sliding away.
     if (pendingShift.current && scroller.current) {
       scroller.current.scrollLeft += pendingShift.current;
@@ -266,7 +266,7 @@ export function CalendarScreen() {
   }, [loadedCount, rangeStart, today, CELL_W]);
 
   // Shift+wheel and trackpad gestures pan time; arrows and T do too, but only
-  // when focus is not in a text field — a receptionist typing a guest name in
+  // when focus is not in a text field - a receptionist typing a guest name in
   // the search box must not scroll the chart with every arrow key.
   useEffect(() => {
     const el = scroller.current;
@@ -332,7 +332,7 @@ export function CalendarScreen() {
       const s = a.status.localeCompare(b.status);
       if (s) return s;
     }
-    // Room numbers are text but read as numbers — "10" belongs after "9".
+    // Room numbers are text but read as numbers - "10" belongs after "9".
     return a.number.localeCompare(b.number, undefined, { numeric: true });
   });
 
@@ -347,7 +347,7 @@ export function CalendarScreen() {
         // line of a single-room dorm is noise where the space is scarce.
         const ofType = unsorted.filter((r) => r.roomTypeId === room.roomTypeId)
           .sort((a, b) => a.number.localeCompare(b.number, undefined, { numeric: true }));
-        // "room 2 of 2", not the room's code — the code is already the first
+        // "room 2 of 2", not the room's code - the code is already the first
         // half of the bed's own label, so repeating it says nothing.
         const roomOrdinal = ofType.findIndex((r) => r.id === room.id) + 1;
         room.beds.forEach((bed, i) => {
@@ -373,7 +373,7 @@ export function CalendarScreen() {
 
   // Counted from *every* room, not the filtered set. The "N hidden" warning
   // exists to stop the chart quietly showing half a property, and computing it
-  // from rooms that survived the filter makes it permanently zero — which is
+  // from rooms that survived the filter makes it permanently zero - which is
   // exactly the silence it was added to prevent.
   const allLanes = lanesOf(rooms);
   const lanes = lanesOf(visibleRooms);
@@ -382,7 +382,7 @@ export function CalendarScreen() {
     : lanes;
 
   // How many units each group holds, and how many are sold tonight. Counted
-  // before collapsing, so a collapsed section still reports what is inside it —
+  // before collapsing, so a collapsed section still reports what is inside it -
   // a folded group that says nothing is just a hidden part of the property.
   const groupStats = new Map<string, { total: number; sold: number }>();
   for (const l of filteredLanes) {
@@ -451,7 +451,7 @@ export function CalendarScreen() {
   }, [merged.blocks]);
 
   // What the viewport is actually showing. Scrolled months out, the day numbers
-  // alone say nothing about where you are — and the tiny month under each
+  // alone say nothing about where you are - and the tiny month under each
   // number is not what the eye reads first.
   const monthSpan = useMemo(() => {
     if (!visibleDates.length) return '';
@@ -480,7 +480,7 @@ export function CalendarScreen() {
     () => [...new Set(merged.spans.map((s) => s.otaChannel ?? s.channel ?? '').filter(Boolean))].sort(),
     [merged.spans]);
   // Whether Hostelworld bookings show total / collected / business price.
-  // The badge itself does not depend on this — a Hostelworld bar is marked
+  // The badge itself does not depend on this - a Hostelworld bar is marked
   // whatever Configuration says, so the desk can always see where it came from.
   const hwSplitOn = useHostelworldSettings().data?.enabled === true;
 
@@ -516,7 +516,7 @@ export function CalendarScreen() {
               onClick={() => { const el = scroller.current; if (el) el.scrollLeft += 14 * CELL_W; }}>
               <ChevronRight className="w-3.5 h-3.5" />
             </Button>
-            {/* These two are a pair — column width and row height — and at
+            {/* These two are a pair - column width and row height - and at
                 110 + 140 they still sit side by side on a phone. Stretching
                 either to full width would split the pair across two lines. */}
             <div className="w-[110px]">
@@ -581,7 +581,7 @@ export function CalendarScreen() {
 
         <p className="text-[11px] text-dash-muted">
           {shownLanes.length} sellable unit{shownLanes.length === 1 ? '' : 's'}
-          {/* Never let a filter hide part of the property silently — that is how
+          {/* Never let a filter hide part of the property silently - that is how
               a room gets sold twice. */}
           {hiddenLanes > 0 && (
             <>
@@ -759,7 +759,7 @@ export function CalendarScreen() {
                 <p className="text-[12px] text-dash-muted py-10 text-center">
                   {allLanes.length
                     ? 'Every room is hidden by the current filters.'
-                    : 'No rooms configured — add them in Configuration.'}
+                    : 'No rooms configured - add them in Configuration.'}
                 </p>
               )}
 
@@ -769,7 +769,7 @@ export function CalendarScreen() {
                 const st = groupStats.get(group) ?? { total: 0, sold: 0 };
                 const isCollapsed = collapsed.has(group);
                 const kind = kindOf(group);
-                // A banner each time the kind changes — so "Dormitory beds" and
+                // A banner each time the kind changes - so "Dormitory beds" and
                 // "Private rooms" are two visibly separate parts of the chart,
                 // not one undifferentiated list of lines.
                 const newKind = gi === 0 || kindOf(groupOrder[gi - 1]) !== kind;
@@ -876,7 +876,7 @@ export function CalendarScreen() {
    * One line of the chart: a room, or a bed in a dorm.
    *
    * A closure rather than a component so it keeps the parent's scroll window
-   * and filters without threading a dozen props through — and because a lane is
+   * and filters without threading a dozen props through - and because a lane is
    * cheap: the expensive part, the day columns, is already virtualised.
    */
   function renderLane(lane: Lane) {
@@ -943,7 +943,7 @@ export function CalendarScreen() {
                                 : s.status === 'Checked-out' ? 'bg-dash-grey border-black/10'
                                   : 'bg-dash-sky border-sky-200';
                           // A search dims what does not match rather than
-                          // removing it — "which room is she in?" needs the
+                          // removing it - "which room is she in?" needs the
                           // rooms around the answer to still be there.
                           const dim = searching && !spanMatchesSearch(s, filters.search);
                           const hit = searching && !dim;

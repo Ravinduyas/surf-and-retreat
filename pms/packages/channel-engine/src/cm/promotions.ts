@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-// PROMOTIONS — with the critical Beds24 OTA rule baked in.
+// PROMOTIONS - with the critical Beds24 OTA rule baked in.
 //
 // Beds24 (and OTAs generally) will NOT accept an arbitrary "discount
 // rule" and apply it channel-side. Only specific promo types map to a

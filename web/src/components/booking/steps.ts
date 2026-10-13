@@ -47,7 +47,7 @@ const ADDONS: StepDef = {
   label: 'Add-ons',
   icon: Sparkles,
   title: 'Any Add-ons?',
-  subtitle: "Optional — tick surfing, skating, yoga or co-working to see the options.",
+  subtitle: "Optional - tick surfing, skating, yoga or co-working to see the options.",
 };
 
 const DETAILS: StepDef = {
@@ -74,7 +74,7 @@ export const buildSteps = (mode: BookingMode): StepDef[] =>
   mode === 'coworking'
     ? [
         { ...GUESTS, subtitle: 'Count everyone who needs a desk, including you.' },
-        { ...DATES, subtitle: 'Pick the days you want to work here — a single day is fine.' },
+        { ...DATES, subtitle: 'Pick the days you want to work here - a single day is fine.' },
         {
           kind: 'coworking',
           label: 'Desk',

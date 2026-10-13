@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-// Availability engine — the single arbiter of "can we sell this?".
+// Availability engine - the single arbiter of "can we sell this?".
 //
 // For each room type and date:
 //   physical  = active rooms (or beds, for dorms) of that type
@@ -81,7 +81,7 @@ export function physicalCounts(propertyId: string): Map<string, number> {
   );
   for (const b of beds) out.set(b.room_type_id, b.n);
 
-  // Dorm room types with no beds configured yet still exist — report 0 rather
+  // Dorm room types with no beds configured yet still exist - report 0 rather
   // than silently omitting them.
   for (const rt of roomTypes(propertyId)) if (!out.has(rt.id)) out.set(rt.id, 0);
   return out;
@@ -91,7 +91,7 @@ function key(rt: string, date: string) { return `${rt}|${date}`; }
 
 /**
  * Availability grid for [from, to) across every active room type.
- * One query per dimension — the grid is assembled in memory.
+ * One query per dimension - the grid is assembled in memory.
  */
 export function availabilityGrid(
   propertyId: string,
@@ -241,7 +241,7 @@ export function checkAvailability(
 }
 
 /**
- * Rooms of a type that are free for the whole stay — used by room assignment
+ * Rooms of a type that are free for the whole stay - used by room assignment
  * and room moves. Excludes rooms blocked (OOO/OOS) or already assigned.
  */
 export function freeRooms(

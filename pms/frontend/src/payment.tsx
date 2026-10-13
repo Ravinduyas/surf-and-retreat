@@ -1,8 +1,8 @@
 // ─────────────────────────────────────────────────────────────
 // Taking money, as one control used by every screen that does it.
 //
-// Four screens each had their own copy of this — the cashier, check-in,
-// check-out and the guest dashboard — with four hardcoded lists of methods that
+// Four screens each had their own copy of this - the cashier, check-in,
+// check-out and the guest dashboard - with four hardcoded lists of methods that
 // had already drifted apart. What a receptionist could record depended on which
 // screen they happened to be standing on, which is not a preference, it is a
 // bug that reaches the accounts.
@@ -11,7 +11,7 @@
 //
 //   **Cash.** The desk types what the guest handed over and the change is
 //   worked out here, big enough to read at arm's length. The payment recorded
-//   is still what was owed — the drawer keeps that, and the change goes back.
+//   is still what was owed - the drawer keeps that, and the change goes back.
 //
 //   **Card.** The property may add a percentage. The fee is quoted by the
 //   server, not computed here, because a fee worked out twice is a fee that
@@ -21,7 +21,7 @@
 //   **Foreign money.** A guest settling forty euro with a fifty-dollar note is
 //   an ordinary evening. The desk says which currency it was handed, and the
 //   panel converts at the live rate, works out the change, and shows it back in
-//   that same currency — because change is counted out of a drawer in notes,
+//   that same currency - because change is counted out of a drawer in notes,
 //   not in the property's accounting currency. When the drawer has no dollars,
 //   the change currency is switched and the figure follows. What is recorded is
 //   all of it: the note, the change, both currencies, and the rate each was
@@ -48,7 +48,7 @@ export interface PaymentDraft {
    * Whether this settles the lot or part of it.
    *
    * Asked before anything else because it is the question the guest is
-   * answering — "all of it?" — and because it decides the amount, which
+   * answering - "all of it?" - and because it decides the amount, which
    * decides the change. `full` keeps the amount pinned to the balance, so a
    * bill that moves while the panel is open cannot leave the desk taking
    * yesterday's number.
@@ -61,7 +61,7 @@ export interface PaymentDraft {
    *
    * A guest hands over two thousand rupees for a bill of eleven dollars and
    * says "take fifteen hundred". What comes back is then five hundred rupees
-   * exactly — their own money, subtracted — rather than a figure arrived at by
+   * exactly - their own money, subtracted - rather than a figure arrived at by
    * converting into the property's currency and back out again. Null means
    * "keep whatever settles the bill", which is the ordinary case.
    */
@@ -93,8 +93,8 @@ export const emptyPayment = (amountMinor = 0, currency = ''): PaymentDraft => ({
 /**
  * What the desk needs to know about the money in front of it.
  *
- * `fx` is how a currency turns into the property's own. Left out — by a screen
- * that only takes the house currency — everything is at a rate of one, which is
+ * `fx` is how a currency turns into the property's own. Left out - by a screen
+ * that only takes the house currency - everything is at a rate of one, which is
  * exactly what it was before any of this existed.
  */
 export interface FxHelper {
@@ -178,7 +178,7 @@ export function paymentTotals(
   /**
    * The part of the note being kept, in the guest's own money.
    *
-   * Whatever settles the bill unless the desk said otherwise — and when it did,
+   * Whatever settles the bill unless the desk said otherwise - and when it did,
    * the change is exact subtraction rather than a round trip through the
    * property's currency, which is what turns five hundred rupees into 499.04.
    */
@@ -231,7 +231,7 @@ export function PaymentFields({
   /**
    * What that figure is, when it is not simply what the folio owes.
    *
-   * At check-in the room has not been posted yet — the night audit does that —
+   * At check-in the room has not been posted yet - the night audit does that -
    * so the folio reads zero while the guest is standing there expecting to pay
    * for their stay. The screen that knows which figure it is passing says so.
    */
@@ -263,7 +263,7 @@ export function PaymentFields({
   }, [base, draft.currency]);
 
   // "All of it" means all of it now, not what the bill said when the panel
-  // opened — a charge posted while it is on screen must not be quietly dropped.
+  // opened - a charge posted while it is on screen must not be quietly dropped.
   useEffect(() => {
     if (draft.settle !== 'full' || balanceMinor === undefined) return;
     // Cash decides its own amount from the note on the counter.
@@ -286,7 +286,7 @@ export function PaymentFields({
   useEffect(() => {
     const rate = draft.rate ?? fx.rateFor(draft.currency);
     if (method?.kind !== 'cash' || draft.tenderedMinor === null || rate === null) return;
-    // What is being taken: the desk's figure, else whatever settles the bill —
+    // What is being taken: the desk's figure, else whatever settles the bill -
     // and never more than the guest actually handed over. A guest paying half
     // their bill in cash is paying half their bill, not being refused.
     const due = balanceMinor === undefined ? null : fromBase(Math.max(0, balanceMinor), rate);
@@ -320,7 +320,7 @@ export function PaymentFields({
   const foreign = !!base && currency !== base;
   const short = t.changeMinor !== null && t.changeMinor < 0;
   const inCurrency = (minor: number | null, code: string) =>
-    (minor === null ? '—' : `${money(minor, { currency: code })}`);
+    (minor === null ? '-' : `${money(minor, { currency: code })}`);
 
   return (
     <div className={compact ? 'space-y-3' : 'space-y-4'}>
@@ -474,15 +474,15 @@ export function PaymentFields({
               <TriangleAlert className="w-3.5 h-3.5 mt-px shrink-0" />
               {t.tenderRate === null
                 ? 'Type today\'s rate to take this payment.'
-                : 'These rates are more than two days old — check them before taking money.'}
+                : 'These rates are more than two days old - check them before taking money.'}
             </p>
           )}
         </div>
       )}
 
       {/* Cash is counted in the money the guest is holding, so its amount is
-          asked for inside the cash panel below — "how much did they hand you,
-          and how much of it are you taking" — rather than here in a currency
+          asked for inside the cash panel below - "how much did they hand you,
+          and how much of it are you taking" - rather than here in a currency
           they never produced. Everything else is charged for an amount, and
           that is what this asks. */}
       {!isCash && (
@@ -595,7 +595,7 @@ export function PaymentFields({
             </Field>
           )}
 
-          {/* Round notes, because that is what people hand over — in the
+          {/* Round notes, because that is what people hand over - in the
               currency they are handing over, not the one we keep books in. */}
           <div className="flex flex-wrap gap-1.5">
             {quickNotes(t.totalInTenderMinor ?? t.totalMinor).map((n) => (
@@ -700,7 +700,7 @@ export function PaymentFields({
       {list.isError && (
         <p className="flex items-start gap-1.5 text-[11px] text-status-warn">
           <Info className="w-3.5 h-3.5 mt-0.5 shrink-0" />
-          Could not load the payment methods — check the connection before taking money.
+          Could not load the payment methods - check the connection before taking money.
         </p>
       )}
     </div>
@@ -764,7 +764,7 @@ export function paymentBody(draft: PaymentDraft, fx?: FxHelper) {
 /**
  * Whether the button should be live.
  *
- * A cash payment that is short is the one case worth blocking outright — it is
+ * A cash payment that is short is the one case worth blocking outright - it is
  * always a typo or a misunderstanding at the counter, and posting it leaves a
  * folio that says paid and a drawer that disagrees.
  */

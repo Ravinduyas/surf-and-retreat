@@ -39,11 +39,11 @@ export function ProfilesScreen() {
         </div>
       ),
     },
-    { key: 'nationality', header: 'Nationality', render: (p) => <span>{p.nationality || '—'}</span> },
+    { key: 'nationality', header: 'Nationality', render: (p) => <span>{p.nationality || '-'}</span> },
     {
       key: 'loyalty', header: 'Loyalty',
       render: (p) => p.loyalty === 'None'
-        ? <span className="text-dash-muted">—</span>
+        ? <span className="text-dash-muted">-</span>
         : <Pill tone={p.loyalty === 'Platinum' ? 'purple' : p.loyalty === 'Gold' ? 'yellow' : 'grey'}>{p.loyalty}</Pill>,
     },
     { key: 'stays', header: 'Stays', align: 'center', render: (p) => <span className="font-semibold">{p.stays ?? 0}</span> },

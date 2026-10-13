@@ -1,4 +1,4 @@
-// Configuration — where a property is made operational. Nothing in Helio is
+// Configuration - where a property is made operational. Nothing in Helio is
 // pre-filled: room types, rooms, taxes and transaction codes are defined here.
 import { useState } from 'react';
 import { Building2, Bed, Layers, Percent, Receipt, FileText, Plus, Save, Trash2 } from 'lucide-react';
@@ -70,7 +70,7 @@ export function ConfigurationScreen() {
  *
  * Picked from a list rather than typed: the code is not a label, it is what
  * every screen, folio, invoice and channel push formats money with, and a
- * mistyped one — LRK, EURO, usd — reaches all of them before anybody notices.
+ * mistyped one - LRK, EURO, usd - reaches all of them before anybody notices.
  * The list is the codes properties on this system actually use; a property
  * already set to something else keeps it, at the top, rather than being
  * silently moved to a currency nobody chose.
@@ -198,7 +198,7 @@ function PropertyTab() {
               <Card>
                 <InfoNote>
                   The business date only moves when the night audit runs. That keeps postings, statistics and
-                  the ledger in step — it cannot be edited here.
+                  the ledger in step - it cannot be edited here.
                 </InfoNote>
               </Card>
             </div>
@@ -230,7 +230,7 @@ function RoomTypesTab() {
     maxChildren: 0, defaultRateMinor: 0, extraAdultMinor: 0, extraChildMinor: 0,
     genderPolicy: '', amenities: '',
     // How much of it exists. Part of the same form because it is part of the
-    // same question — "what is this room type?" is not answered without it, and
+    // same question - "what is this room type?" is not answered without it, and
     // splitting it into a second dialog is why the list could show 2 × 8 while
     // the edit screen had no way to change it.
     rooms: 1, bedsPerRoom: 1,
@@ -265,7 +265,7 @@ function RoomTypesTab() {
 
       <QueryState query={roomTypes} loadingRows={4}
         empty="No room types yet"
-        emptyHint="A room type is what you sell — a Deluxe King, or a 6-bed mixed dorm.">
+        emptyHint="A room type is what you sell - a Deluxe King, or a 6-bed mixed dorm.">
         {(rows) => (
           <div className="space-y-2">
             {rows.map((rt) => (
@@ -325,8 +325,8 @@ function RoomTypesTab() {
                 try {
                   // Attributes first, then how many of them there are. Two
                   // calls because they are two different things to get wrong,
-                  // and the second can be refused — a booked bed cannot be
-                  // deleted — without that invalidating the first.
+                  // and the second can be refused - a booked bed cannot be
+                  // deleted - without that invalidating the first.
                   const rt = editing
                     ? await update.mutateAsync({ id: editing.id, body })
                     : await create.mutateAsync(body);
@@ -347,7 +347,7 @@ function RoomTypesTab() {
                     rooms: Number(rooms),
                     bedsPerRoom: Number(bedsPerRoom),
                   });
-                  const saved = `${form.name} — ${res.line.sellable} `
+                  const saved = `${form.name} - ${res.line.sellable} `
                     + `${form.kind === 'dorm' ? 'beds' : 'rooms'} for sale`;
 
                   // Three outcomes, said as three. Folding a refused channel
@@ -358,7 +358,7 @@ function RoomTypesTab() {
                   } else if (res.push?.attempted) {
                     toast.push({
                       kind: 'warn',
-                      title: `${saved} — but the channel was not updated`,
+                      title: `${saved} - but the channel was not updated`,
                       body: res.push.error,
                     });
                   } else {
@@ -494,12 +494,12 @@ function RoomTypesTab() {
         open={!!deleteId}
         title="Delete this room type?"
         body={
-          // Deleting here does not delete anything on the channel — the
+          // Deleting here does not delete anything on the channel - the
           // connector pushes rates and availability, never room definitions. So
           // the OTA carries on selling a room Helio no longer has, and stops
           // being told how many are left. Say that before, not after.
           'If it has reservations it will be deactivated instead of deleted, so history stays intact.'
-          + '\n\nIf it is mapped to a channel, the channel keeps the room and keeps selling it — '
+          + '\n\nIf it is mapped to a channel, the channel keeps the room and keeps selling it - '
           + 'Helio just stops sending it availability. Remove it on the channel too, or the two '
           + 'will drift.'
         }
@@ -729,7 +729,7 @@ function TaxesTab() {
   return (
     <>
       <InfoNote>
-        Taxes are applied in sort order, and percentage taxes compound on the ones above them — so a
+        Taxes are applied in sort order, and percentage taxes compound on the ones above them - so a
         10% service charge listed first, then 8% VAT, produces VAT on the service charge, which is how
         most jurisdictions expect it.
       </InfoNote>
@@ -897,7 +897,7 @@ function CodesTab() {
                       <td className="py-2.5 font-semibold">{c.name}</td>
                       <td className="py-2.5"><Pill tone="grey">{c.category}</Pill></td>
                       <td className="py-2.5 text-right tabular-nums">
-                        {c.defaultPriceMinor ? money(c.defaultPriceMinor) : '—'}
+                        {c.defaultPriceMinor ? money(c.defaultPriceMinor) : '-'}
                       </td>
                       <td className="py-2.5">
                         <div className="flex justify-center">
@@ -1080,7 +1080,7 @@ function DarkRow({ label, value }: { label: string; value: string }) {
  * What this room type holds, against what the channel says it sells.
  *
  * Two numbers for one physical property. Until they were shown together nothing
- * compared them, and a change on either side drifted silently — which on this
+ * compared them, and a change on either side drifted silently - which on this
  * number is not a cosmetic bug: if the channel says 16 and eight beds exist,
  * the OTAs sell eight beds that are not there, and nobody finds out until eight
  * guests arrive.
@@ -1106,8 +1106,8 @@ function InventoryLine({ roomTypeId, onEdit }: { roomTypeId: string; onEdit: () 
       ) : drift === 0 ? (
         <Pill tone="mint">channel agrees · {line.externalQty}</Pill>
       ) : (
-        // Negative drift is the dangerous direction — the channel is selling
-        // more than exists — so it is called out as such rather than as a
+        // Negative drift is the dangerous direction - the channel is selling
+        // more than exists - so it is called out as such rather than as a
         // neutral difference.
         <Pill tone={drift! < 0 ? 'red' : 'peach'}>
           channel says {line.externalQty}

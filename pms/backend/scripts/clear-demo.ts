@@ -5,15 +5,15 @@
 //   node --experimental-sqlite scripts/clear-demo.ts --yes    # do it
 //
 // Before a property goes live on real Beds24 data, the demo property and its two weeks
-// of invented bookings have to go — otherwise real arrivals appear alongside
+// of invented bookings have to go - otherwise real arrivals appear alongside
 // fictional ones and nobody can tell which is which.
 //
 // This deletes a whole property. So it is built to refuse rather than to
 // destroy:
 //
 //   · It takes a backup first, always, even on a dry run of the real thing.
-//   · It refuses any property that shows signs of real use — a booking made
-//     from a channel, a real payment, a connected channel — unless you say
+//   · It refuses any property that shows signs of real use - a booking made
+//     from a channel, a real payment, a connected channel - unless you say
 //     --force and mean it.
 //   · It never touches users, so you do not lock yourself out.
 //
@@ -80,7 +80,7 @@ async function main() {
 
   const properties = all<{ id: string; code: string; name: string; business_date: string }>(
     'SELECT id, code, name, business_date FROM properties ORDER BY created_at');
-  if (!properties.length) fail('There are no properties — nothing to clear.');
+  if (!properties.length) fail('There are no properties - nothing to clear.');
 
   const target = CODE
     ? properties.find((p) => p.code.toLowerCase() === CODE.toLowerCase())
@@ -137,7 +137,7 @@ async function main() {
 
   // ── Delete ────────────────────────────────────────────────
   // Most tables cascade from `properties`, but the ones that reference it only
-  // by a plain column do not — those are cleared explicitly first.
+  // by a plain column do not - those are cleared explicitly first.
   tx(() => {
     for (const table of [
       'notifications', 'alert_events', 'audit_log', 'daily_stats', 'sequences',
@@ -149,7 +149,7 @@ async function main() {
   });
 
   const left = scalar<number>('SELECT count(*) AS n FROM properties WHERE id = ?', target.id);
-  if (left !== 0) fail('The property is still there — nothing was committed.');
+  if (left !== 0) fail('The property is still there - nothing was committed.');
 
   out(`✓ ${target.name} and everything belonging to it has been removed.`);
   out('  User accounts were left alone, so you can still sign in.\n');

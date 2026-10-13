@@ -140,7 +140,7 @@ async function main() {
   section('3 · A change is pushed to the channels');
   const pushes = all<any>(
     `SELECT * FROM channel_queue WHERE property_id = ? AND reason = 'reservation.extend'`, ctx.propertyId);
-  // No channel is connected in this fixture, so nothing should be queued —
+  // No channel is connected in this fixture, so nothing should be queued -
   // the point is that the call is made and does not throw.
   check('extending does not fail without a channel', Array.isArray(pushes));
 

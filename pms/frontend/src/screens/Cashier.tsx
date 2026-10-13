@@ -146,7 +146,7 @@ export function CashierScreen({ folioId: initialFolioId }: { folioId?: string })
         What is in hand goes first and takes the whole width: the cash box when
         nobody is being served, the folio itself the moment one is opened. Both
         are tables of money, and money in a column three fifths of a screen wide
-        wraps, scrolls sideways and gets misread — the drawer had six columns
+        wraps, scrolls sideways and gets misread - the drawer had six columns
         squeezed into a panel narrow enough to hide the change.
 
         The list of folios sits underneath, also full width, because it is how
@@ -158,7 +158,7 @@ export function CashierScreen({ folioId: initialFolioId }: { folioId?: string })
             /* The drawer, not an empty box telling somebody to click something.
                A cashier standing at this screen with no guest in front of them
                is doing the other half of the job: counting the money, seeing
-               what has come in, and — if they are an administrator — taking it
+               what has come in, and - if they are an administrator - taking it
                out. That is what this space is for. */
             <CashBoxPanel />
           ) : (
@@ -181,7 +181,7 @@ export function CashierScreen({ folioId: initialFolioId }: { folioId?: string })
                       </div>
                       <p className="text-[11px] text-dash-muted">
                         Folio {f.number} · window {f.windowNo}
-                        {f.reservation ? ` · ${f.reservation.confirmation} · room ${f.reservation.room ?? '—'}` : ''}
+                        {f.reservation ? ` · ${f.reservation.confirmation} · room ${f.reservation.room ?? '-'}` : ''}
                       </p>
                     </div>
                     <div className="text-right">
@@ -250,7 +250,7 @@ export function CashierScreen({ folioId: initialFolioId }: { folioId?: string })
                                       onClick={() => { setTransferTarget({ id: l.id, description: l.description }); setTransferTo(''); }} />
                                     <PermissionButton permission="folio.void" size="sm" variant="ghost"
                                       onClick={async () => {
-                                        const reason = window.prompt(`Void "${l.description}" — reason?`);
+                                        const reason = window.prompt(`Void "${l.description}" - reason?`);
                                         if (!reason) return;
                                         try {
                                           await voidLine.mutateAsync({ lineId: l.id, reason });
@@ -281,7 +281,7 @@ export function CashierScreen({ folioId: initialFolioId }: { folioId?: string })
           )}
       </div>
 
-      {/* `min-w-0` so this can shrink below the width of the table inside it —
+      {/* `min-w-0` so this can shrink below the width of the table inside it -
           a flex/grid child otherwise refuses to, and the table stretches the
           page instead of scrolling in its own box. */}
       <div className="mt-3 space-y-3 min-w-0">
@@ -361,8 +361,8 @@ export function CashierScreen({ folioId: initialFolioId }: { folioId?: string })
           </Card>
       </div>
 
-      {/* The drawer, last: it is the closing balance of everything above it —
-          the payments, the change given back, what the administrator took —
+      {/* The drawer, last: it is the closing balance of everything above it -
+          the payments, the change given back, what the administrator took -
           and a total belongs under the rows it totals. */}
       <div className="mt-3 min-w-0">
         <CashBoxCard />
@@ -550,8 +550,8 @@ export function CashierScreen({ folioId: initialFolioId }: { folioId?: string })
  * out at midnight; the morning count says what was found. Reading those in
  * three places is how a day fails to add up.
  *
- * Money is shown in the currency it actually moved in — the note the guest
- * held, the notes the administrator carried out — with the property's own
+ * Money is shown in the currency it actually moved in - the note the guest
+ * held, the notes the administrator carried out - with the property's own
  * figure beside it where they differ, because the folio is kept in one currency
  * and the drawer is filled in several.
  */
@@ -625,7 +625,7 @@ function MoneyLedger() {
                           </span>
                         </>
                       ) : (
-                        <span className="text-dash-muted">—</span>
+                        <span className="text-dash-muted">-</span>
                       )}
                     </td>
                     <td className="py-2 text-right tabular-nums">
@@ -633,14 +633,14 @@ function MoneyLedger() {
                         ? <span className="font-bold">
                           +{money(e.inMinor, { currency: e.inCurrency ?? e.currency })}
                         </span>
-                        : <span className="text-dash-muted">—</span>}
+                        : <span className="text-dash-muted">-</span>}
                     </td>
                     <td className="py-2 text-right tabular-nums">
                       {e.outMinor
                         ? <span className="font-bold text-status-warn">
                           −{money(e.outMinor, { currency: e.outCurrency ?? e.currency })}
                         </span>
-                        : <span className="text-dash-muted">—</span>}
+                        : <span className="text-dash-muted">-</span>}
                     </td>
                     <td className="py-2 text-right tabular-nums">
                       {e.kind === 'payment' && e.settledMinor != null ? (
@@ -662,9 +662,9 @@ function MoneyLedger() {
                             </span>
                           )}
                         </>
-                      ) : <span className="text-dash-muted">—</span>}
+                      ) : <span className="text-dash-muted">-</span>}
                     </td>
-                    <td className="py-2 text-[11px] text-dash-muted">{e.by ?? '—'}</td>
+                    <td className="py-2 text-[11px] text-dash-muted">{e.by ?? '-'}</td>
                   </tr>
                 ))}
               </tbody>
@@ -718,7 +718,7 @@ function CashBoxPanel() {
                           <tr key={x.id} className={`border-b border-black/[0.03] ${x.voided ? 'opacity-40 line-through' : ''}`}>
                             <td className="py-2 tabular-nums text-dash-muted">{clock(x.at)}</td>
                             <td className="py-2">
-                              <span className="font-semibold">{x.guest ?? '—'}</span>
+                              <span className="font-semibold">{x.guest ?? '-'}</span>
                               <span className="block text-[10px] text-dash-muted">{x.folio}</span>
                             </td>
                             <td className="py-2"><Pill tone="grey">{x.method}</Pill></td>
@@ -737,7 +737,7 @@ function CashBoxPanel() {
                                     )}
                                   </>
                                 )
-                                : '—'}
+                                : '-'}
                             </td>
                             <td className="py-2 text-right tabular-nums">
                               {x.changeAmountMinor
@@ -751,7 +751,7 @@ function CashBoxPanel() {
                                     )}
                                   </>
                                 )
-                                : '—'}
+                                : '-'}
                             </td>
                           </tr>
                         ))}
@@ -816,12 +816,12 @@ function CashBoxPanel() {
  * The cash box itself: what is in it, currency by currency, and the two things
  * a person can do to it.
  *
- * Last on the page on purpose. It is the closing balance of everything above —
- * the payments, the change, the withdrawals — and a total belongs under the
+ * Last on the page on purpose. It is the closing balance of everything above -
+ * the payments, the change, the withdrawals - and a total belongs under the
  * rows it totals, not on top of them.
  *
  * Money is shown in the currency it is actually held in. A drawer with dollars
- * and rupees in it does not hold "eight hundred and forty dollars' worth" — it
+ * and rupees in it does not hold "eight hundred and forty dollars' worth" - it
  * holds notes of two kinds, and somebody has to count each pile. Converting
  * them into one figure here would be the same mistake as converting them on the
  * way in.
@@ -877,7 +877,7 @@ function CashBoxCard() {
                     <p className="text-[10.5px] text-dash-muted">
                       {b.since
                         ? `Counted ${new Date(b.since).toLocaleString()}`
-                        : 'Never counted — the first count sets the baseline'}
+                        : 'Never counted - the first count sets the baseline'}
                     </p>
                   </div>
                 </div>
@@ -886,7 +886,7 @@ function CashBoxCard() {
                     icon={<ClipboardCheck className="w-3 h-3" />} onClick={() => open('count')}>
                     Count the box
                   </PermissionButton>
-                  {/* Only an administrator, and only when the server says so —
+                  {/* Only an administrator, and only when the server says so -
                       the button is not the control, the route is. */}
                   {b.canWithdraw && (
                     <PermissionButton permission="folio.payment" size="sm"
@@ -922,13 +922,13 @@ function CashBoxCard() {
                           {money(c.openingMinor, { currency: c.currency })}
                         </td>
                         <td className="py-2 text-right tabular-nums">
-                          {c.receivedMinor ? `+${money(c.receivedMinor, { currency: c.currency })}` : '—'}
+                          {c.receivedMinor ? `+${money(c.receivedMinor, { currency: c.currency })}` : '-'}
                         </td>
                         <td className="py-2 text-right tabular-nums">
-                          {c.changeMinor ? `−${money(c.changeMinor, { currency: c.currency })}` : '—'}
+                          {c.changeMinor ? `−${money(c.changeMinor, { currency: c.currency })}` : '-'}
                         </td>
                         <td className="py-2 text-right tabular-nums">
-                          {c.withdrawnMinor ? `−${money(c.withdrawnMinor, { currency: c.currency })}` : '—'}
+                          {c.withdrawnMinor ? `−${money(c.withdrawnMinor, { currency: c.currency })}` : '-'}
                           {c.depositedMinor ? ` +${money(c.depositedMinor, { currency: c.currency })}` : ''}
                         </td>
                         <td className="py-2 text-right tabular-nums font-black text-[13px]">
@@ -971,7 +971,7 @@ function CashBoxCard() {
                   if (r.warned) {
                     toast.push({
                       kind: 'warn',
-                      title: 'Counted — the administrator has been told',
+                      title: 'Counted - the administrator has been told',
                       body: 'What is in the box does not match what was left after money was taken out.',
                     });
                   } else if (off.length) {
@@ -996,7 +996,7 @@ function CashBoxCard() {
                 onChange={(v) => setAmounts((a) => ({ ...a, [c]: v }))} />
             </Field>
           ))}
-          <Field label="Note" hint="Optional — anything worth saying about this count">
+          <Field label="Note" hint="Optional - anything worth saying about this count">
             <TextInput value={note} onChange={setNote} placeholder="e.g. two 50s were damp" />
           </Field>
 
@@ -1028,7 +1028,7 @@ function CashBoxCard() {
         </div>
       </Modal>
 
-      {/* ── Taking money out — administrators only ── */}
+      {/* ── Taking money out - administrators only ── */}
       <Modal open={takeOpen} onClose={() => setTakeOpen(false)} title="Take money out of the cash box"
         footer={
           <div className="flex gap-2">
@@ -1057,7 +1057,7 @@ function CashBoxCard() {
                 onChange={(v) => setAmounts((a) => ({ ...a, [c.currency]: v }))} />
             </Field>
           ))}
-          <Field label="Note" hint="Where the money is going — the bank, the safe, a float">
+          <Field label="Note" hint="Where the money is going - the bank, the safe, a float">
             <TextInput value={note} onChange={setNote} placeholder="e.g. to the safe" />
           </Field>
         </div>

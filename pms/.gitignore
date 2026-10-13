@@ -6,7 +6,7 @@ dist/
 build/
 coverage/
 
-# Databases — the system of record is never committed
+# Databases - the system of record is never committed
 *.db
 *.db-journal
 *.db-wal

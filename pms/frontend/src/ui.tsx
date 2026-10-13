@@ -35,7 +35,7 @@ export function Card({
   padded?: boolean;
 }) {
   // `min-w-0` because a card is almost always a grid or flex child, and those
-  // default to `min-width: auto` — "never narrower than my content". A card
+  // default to `min-width: auto` - "never narrower than my content". A card
   // holding a 648px table therefore stayed 648px wide on a 390px phone and
   // stretched its whole column, so the table's own scroll wrapper never got the
   // chance to scroll. With this, the card shrinks and the table scrolls inside it.
@@ -333,7 +333,7 @@ export function SectionHeader({
    * Where the action sits against the title on a desktop.
    *
    * `end` (the default) puts a single button on the title's baseline, which is
-   * what most screens want. `top` lifts it to the top of the row instead —
+   * what most screens want. `top` lifts it to the top of the row instead -
    * for a tall action like a tab strip, sitting on the baseline drags it below
    * the title and it stops reading as the screen's own navigation.
    */
@@ -453,7 +453,7 @@ export function Modal({
   size?: 'sm' | 'md' | 'lg' | 'xl';
 }) {
   // Escape closes it. Clicking the backdrop already did, which serves a mouse
-  // and leaves a keyboard with nowhere to go but tabbing round to the × — and
+  // and leaves a keyboard with nowhere to go but tabbing round to the × - and
   // every other dialog on the machine has taught the operator that Escape
   // works. Declared before the early return because hooks cannot run
   // conditionally; the listener is only attached while the dialog is open.
@@ -484,7 +484,7 @@ export function Modal({
       >
         <div className="px-4 sm:px-6 py-4 sm:py-5 border-b subtle-divider flex items-center justify-between gap-3">
           <h3 className="font-bold tracking-tight min-w-0">{title}</h3>
-          {/* 44px of tappable area — a bare `×` glyph is about 14px, which is
+          {/* 44px of tappable area - a bare `×` glyph is about 14px, which is
               below what a thumb can reliably hit. */}
           <button
             onClick={onClose}

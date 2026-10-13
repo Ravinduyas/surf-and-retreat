@@ -1,4 +1,4 @@
-// Backup status and history. Restoring is deliberately not offered here — it
+// Backup status and history. Restoring is deliberately not offered here - it
 // has to happen with the API stopped, so it lives in a command-line script that
 // can enforce that.
 import { useState } from 'react';
@@ -44,13 +44,13 @@ export function BackupsTab() {
                     <p className="text-[15px] font-bold mb-1">{headline}</p>
                     <p className="text-[12px] text-dash-muted leading-relaxed max-w-xl">
                       {s.lastGood
-                        ? <>Last verified backup {relativeTime(s.lastGood.at)} — {bytes(s.lastGood.sizeBytes)},
+                        ? <>Last verified backup {relativeTime(s.lastGood.at)} - {bytes(s.lastGood.sizeBytes)},
                           taken in {s.lastGood.durationMs}ms. </>
                         : <>Nothing has been snapshotted yet. </>}
                       {s.scheduleEnabled
                         ? <>Automatic backups run every {s.intervalHours} hours and after every night audit.</>
                         : <span className="text-status-bad font-semibold">
-                          Automatic backups are switched off — only manual snapshots will be taken.
+                          Automatic backups are switched off - only manual snapshots will be taken.
                         </span>}
                     </p>
                   </div>
@@ -83,7 +83,7 @@ export function BackupsTab() {
                 <Stat label="Space used" value={bytes(s.totalBytes)} />
                 <Stat label="Database size" value={bytes(s.sourceBytes)} />
                 <Stat label="Age of newest"
-                  value={s.ageHours === null ? '—' : s.ageHours < 1 ? 'under an hour' : `${s.ageHours}h`} />
+                  value={s.ageHours === null ? '-' : s.ageHours < 1 ? 'under an hour' : `${s.ageHours}h`} />
               </div>
             </Card>
 
@@ -108,7 +108,7 @@ export function BackupsTab() {
               <p className="text-[11px] text-dash-muted mt-2 leading-relaxed">
                 Retention: the newest {s.retention.last} always, then one a day for {s.retention.daily} days,
                 one a week for {s.retention.weekly} weeks, one a month for {s.retention.monthly} months.
-                Copy this directory somewhere off this machine — a backup on the same disk does not survive
+                Copy this directory somewhere off this machine - a backup on the same disk does not survive
                 the disk failing.
               </p>
             </Card>
@@ -146,7 +146,7 @@ export function BackupsTab() {
                           <td className="py-2.5 text-[10px] text-dash-muted">
                             {b.rowChecks
                               ? `${b.rowChecks.reservations} res · ${b.rowChecks.folio_lines} lines`
-                              : '—'}
+                              : '-'}
                           </td>
                           <td className="py-2.5">
                             {b.status === 'verified'
@@ -162,7 +162,7 @@ export function BackupsTab() {
                               onClick={async () => {
                                 try {
                                   const r: any = await verify.mutateAsync({ id: b.id });
-                                  if (r.status === 'verified') toast.success('Backup re-verified — still good');
+                                  if (r.status === 'verified') toast.success('Backup re-verified - still good');
                                   else toast.push({ kind: 'error', title: 'Verification failed', body: r.error });
                                 } catch (e) { toast.fail(e); }
                               }} />
@@ -190,7 +190,7 @@ export function BackupsTab() {
               <div className="space-y-4">
                 <InfoNote>
                   Restoring cannot be done from this screen. The database file has to be swapped while the
-                  API is stopped — doing it under a running server corrupts both copies. The command below
+                  API is stopped - doing it under a running server corrupts both copies. The command below
                   enforces that.
                 </InfoNote>
                 <div>
@@ -213,7 +213,7 @@ export function BackupsTab() {
                 </div>
                 <p className="text-[11px] text-dash-muted leading-relaxed">
                   The command verifies the backup before touching anything, warns you if it holds less data
-                  than the live database, and saves a copy of the current database first — so a restore made
+                  than the live database, and saves a copy of the current database first - so a restore made
                   in error is itself reversible.
                 </p>
               </div>

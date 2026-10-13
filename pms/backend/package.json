@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "The Fun Bunk PMS backend — SQLite-backed API for hostel operations, with a built-in guest booking page. Zero runtime dependencies (Node 22.6+ stdlib only).",
+  "description": "The Fun Bunk PMS backend - SQLite-backed API for hostel operations, with a built-in guest booking page. Zero runtime dependencies (Node 22.6+ stdlib only).",
   "engines": {
     "node": ">=22.6"
   },

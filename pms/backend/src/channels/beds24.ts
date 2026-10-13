@@ -6,7 +6,7 @@
 // returns bookings.
 //
 // This connector makes real HTTP calls. With no credentials stored it reports
-// `not-configured` and refuses to run — it never invents a successful sync.
+// `not-configured` and refuses to run - it never invents a successful sync.
 //
 // Rate limiting: Beds24 publishes a five-minute credit budget and returns the
 // remaining allowance on every response. We read those headers and pause when
@@ -46,14 +46,14 @@ export class ChannelNotConfigured extends Error {
 }
 
 /**
- * The credential is there but cannot be read — a changed `HELIO_SECRET_KEY`, or
+ * The credential is there but cannot be read - a changed `HELIO_SECRET_KEY`, or
  * a database file restored beside a different one.
  *
  * A subclass of `ChannelNotConfigured` on purpose. Every caller that asks "is
  * there a usable credential here?" already tests for that type, and the answer
  * is no: a token nobody can decrypt buys exactly as much as a token that was
  * never entered. Inheriting the type means such a channel reports
- * `not-configured` in the UI and is skipped by the booking poll — which is the
+ * `not-configured` in the UI and is skipped by the booking poll - which is the
  * correct behaviour, because unlike a network blip this cannot come right on
  * its own. Only re-entering the credential fixes it.
  *
@@ -91,7 +91,7 @@ export interface Beds24Response<T> {
   /** How many pages were walked. List endpoints only; 1 for a single call. */
   pagesFetched?: number;
   /**
-   * The walk stopped before the channel ran out of pages — there is more on
+   * The walk stopped before the channel ran out of pages - there is more on
    * Beds24's side than `data` contains. Never silently true: every caller that
    * can act on a short read is expected to report it.
    */
@@ -110,7 +110,7 @@ export interface Beds24Response<T> {
  *
  * Beds24's published documentation is also wrong: it names these
  * `X-FiveMinCreditLimit-Remaining` and `X-RequestCost`. What the live API
- * actually sends — verified against the account on 2026-08-18 — is hyphenated
+ * actually sends - verified against the account on 2026-08-18 - is hyphenated
  * between every word:
  *
  *     X-Request-Cost: 1
@@ -119,7 +119,7 @@ export interface Beds24Response<T> {
  *
  * Both spellings are read below, the live one first, so this survives Beds24
  * settling on either. Note there is no header for the *limit* itself on an
- * ordinary response — only what is left of it — so `fiveMinLimit` stays null
+ * ordinary response - only what is left of it - so `fiveMinLimit` stays null
  * until one appears.
  */
 function readRateLimit(res: Response): RateLimitState {
@@ -147,8 +147,8 @@ type Query = Record<string, string | number | Array<string | number> | undefined
 /**
  * How far a paged read will walk before giving up and saying so.
  *
- * A cap is needed — a bug in the `nextPageExists` handling would otherwise loop
- * until the credit budget is gone — but a cap that truncates *quietly* is worse
+ * A cap is needed - a bug in the `nextPageExists` handling would otherwise loop
+ * until the credit budget is gone - but a cap that truncates *quietly* is worse
  * than no cap, so hitting it sets `truncated` and callers surface it.
  */
 const MAX_PAGES = 25;
@@ -160,7 +160,7 @@ const PAGE_WALK_CREDIT_FLOOR = 10;
  * Every status Beds24 will report on a booking.
  *
  * Spelled out because the API's default is not "all of them": omitting `status`
- * gets confirmed, request, new, black and inquiry — everything except the
+ * gets confirmed, request, new, black and inquiry - everything except the
  * cancellations. See `getBookings`.
  */
 export const ALL_BOOKING_STATUSES = [
@@ -215,7 +215,7 @@ export class Beds24Client {
     }
     const refreshToken = this.creds.refreshToken;
     if (!refreshToken) {
-      throw new ChannelNotConfigured('No refresh token — run the connection setup with an invite code');
+      throw new ChannelNotConfigured('No refresh token - run the connection setup with an invite code');
     }
     const res = await withTimeout(
       (signal) => fetch(`${BASE}/authentication/token`, {
@@ -242,7 +242,7 @@ export class Beds24Client {
     const url = new URL(`${BASE}${path}`);
     for (const [k, v] of Object.entries(query ?? {})) {
       if (v === undefined) continue;
-      // Beds24's array parameters — `status`, `roomId`, `propertyId` — are
+      // Beds24's array parameters - `status`, `roomId`, `propertyId` - are
       // repeated keys, not a comma-joined string. `set` would keep only the
       // last value and silently narrow the query to one element.
       if (Array.isArray(v)) {
@@ -283,8 +283,8 @@ export class Beds24Client {
    *
    *     {success, type, count, pages: {nextPageExists, nextPageLink}, data: [...]}
    *
-   * Nothing here read `pages` until now, so every list call — bookings, rooms,
-   * calendars, messages — returned the first page and stopped. That is invisible
+   * Nothing here read `pages` until now, so every list call - bookings, rooms,
+   * calendars, messages - returned the first page and stopped. That is invisible
    * on a quiet property and stays invisible: a short read looks exactly like a
    * complete one, and the bookings it drops are simply never imported. It only
    * starts hurting once the property is busy enough for a poll to exceed one
@@ -293,7 +293,7 @@ export class Beds24Client {
    * `nextPageLink` is returned as a bare example string rather than a usable
    * URL, so this walks by incrementing `page` instead of following it.
    *
-   * The walk stops early — flagging `truncated` — on the page cap or when the
+   * The walk stops early - flagging `truncated` - on the page cap or when the
    * five-minute credit budget runs low. Reporting a short read as short is the
    * whole point; being throttled mid-walk is otherwise indistinguishable from
    * reaching the last page.
@@ -320,7 +320,7 @@ export class Beds24Client {
       const body = res.data ?? {};
       if (Array.isArray(body.data)) rows.push(...body.data);
 
-      // Absent `pages` means an endpoint that does not paginate — one page is
+      // Absent `pages` means an endpoint that does not paginate - one page is
       // the whole answer, and treating that as "more to come" would loop.
       if (body.pages?.nextPageExists !== true) break;
 
@@ -358,7 +358,7 @@ export class Beds24Client {
    * A Beds24 invite code is created with a tick-list of scopes, and getting
    * that list wrong does not fail loudly. A token with `read:inventory` but not
    * `write:inventory` connects perfectly, lists the properties, imports
-   * bookings — and then silently cannot push a single rate. The property sees a
+   * bookings - and then silently cannot push a single rate. The property sees a
    * green "connected", watches the queue fill, and finds out weeks later that
    * the OTAs have been selling last month's prices.
    *
@@ -398,7 +398,7 @@ export class Beds24Client {
      *   { token: { ownerId, expiresIn, scopes: [...] }, validToken: true,
      *     diagnostics: { requestIp } }
      *
-     * — so reading `scopes` and `ownerId` off the top level, which is what
+     * - so reading `scopes` and `ownerId` off the top level, which is what
      * this did first, returned null for both against a perfectly good token.
      * The setup screen then said "permissions could not be determined" about a
      * token with every permission granted, which is the one thing that screen
@@ -439,7 +439,7 @@ export class Beds24Client {
    *
    * `priceFor` decides how many times a pushed price is charged. A rule set to
    * `upToPerson: 2` on a room that sleeps four bills **two** units of it, so a
-   * suite pushed at 74 is advertised at 148 — the price is transmitted
+   * suite pushed at 74 is advertised at 148 - the price is transmitted
    * perfectly and still comes out wrong at the far end.
    *
    * Nothing in the push path can see this, because the multiplication happens
@@ -475,7 +475,7 @@ export class Beds24Client {
    * The rooms Beds24 holds, flattened out of the property record.
    *
    * `/properties/rooms` is the obvious endpoint and it returns a bare 500 on at
-   * least some live accounts — no body, no explanation, with or without a
+   * least some live accounts - no body, no explanation, with or without a
    * `propertyId`. `/properties?includeAllRooms=true` returns the same rooms
    * nested under each property and works, so that is what is used.
    *
@@ -508,12 +508,12 @@ export class Beds24Client {
    *
    * The one place Beds24 does enumerate its channels is inside each room type's
    * price rules, where every supported channel appears as `{enable, rateCode}`.
-   * That yields the catalogue — 38 channels on this property — which is what
+   * That yields the catalogue - 38 channels on this property - which is what
    * makes the picker track Beds24 instead of a hardcoded list going stale.
    *
    * A **rate code** is the only per-channel signal in there worth anything: it
    * means a rate mapping exists on the Beds24 side. It is evidence a channel is
-   * linked, not proof it is live — it outlives the connection that created it —
+   * linked, not proof it is live - it outlives the connection that created it -
    * and callers report it as evidence, never as fact.
    *
    * `enable` is deliberately ignored: it is true for all 38 on an untouched
@@ -578,7 +578,7 @@ export class Beds24Client {
 
   /**
    * Write availability, prices and restrictions.
-   * Beds24 accepts an array of room calendars per call — batching by room
+   * Beds24 accepts an array of room calendars per call - batching by room
    * keeps a 30-day push inside a single request.
    */
   setCalendar(entries: Beds24CalendarEntry[]) {
@@ -589,7 +589,7 @@ export class Beds24Client {
   }
 
   /**
-   * Bookings that changed — **including the cancelled ones**.
+   * Bookings that changed - **including the cancelled ones**.
    *
    * `status` is not optional in practice. Left off, Beds24 defaults it to
    * confirmed, request, new, black and inquiry: every booking except the ones
@@ -598,7 +598,7 @@ export class Beds24Client {
    *
    * The consequence was not a missing row, it was a room that stays sold. A
    * guest cancels on Booking.com, Beds24 records it, and Helio keeps the nights
-   * blocked for ever — the front desk turns away a walk-in for a bed nobody is
+   * blocked for ever - the front desk turns away a walk-in for a bed nobody is
    * sleeping in, and nothing anywhere reports a fault.
    *
    * `importBookings` has always known what to do with a cancellation: flip the
@@ -621,12 +621,12 @@ export class Beds24Client {
   }
 
   /**
-   * Messages across many bookings in one call — the bulk alternative to asking
+   * Messages across many bookings in one call - the bulk alternative to asking
    * per booking.
    *
    * This used to take `modifiedFrom`, which is not a parameter of this endpoint.
    * Beds24 ignores query parameters it does not recognise rather than refusing
-   * them — `/bookings?thisParamDoesNotExist=xyz` answers 200 — so the filter was
+   * them - `/bookings?thisParamDoesNotExist=xyz` answers 200 - so the filter was
    * dropped on the floor and the call returned the property's entire message
    * history every time it ran. `maxAge`, in days, is the documented bound.
    *
@@ -645,7 +645,7 @@ export class Beds24Client {
    * Send a message to the guest through the channel the booking came from.
    *
    * 🔌 Not confirmed against a live account. Beds24 relays guest messages for
-   * the OTAs that support it — Booking.com and Airbnb among them — and silently
+   * the OTAs that support it - Booking.com and Airbnb among them - and silently
    * accepts them for those that do not, which is the failure mode that matters:
    * the write succeeds and the guest never hears anything. Nothing here reports
    * a message as *delivered*; the strongest claim made is that the channel
@@ -659,7 +659,7 @@ export class Beds24Client {
   }
 
   /**
-   * Change a booking's status at the channel — this is how a no-show is
+   * Change a booking's status at the channel - this is how a no-show is
    * reported back to Booking.com.
    *
    * 🔌 The shape below is written from the documented `POST /bookings`
@@ -670,7 +670,7 @@ export class Beds24Client {
    * the channel still accepts the report.
    *
    * Everything around this call is built so an unconfirmed guess cannot become
-   * a false claim — the raw request and response are stored, and a reservation
+   * a false claim - the raw request and response are stored, and a reservation
    * is only marked reported when the API says the write actually succeeded.
    */
   setBookingStatus(bookingId: string, patch: Beds24BookingPatch) {
@@ -726,16 +726,16 @@ export class ChannelTimeout extends Error {
  * for a DNS outage, a refused connection, a reset socket, a laptop that has
  * just woken up and a proxy intercepting TLS alike. Those have nothing in
  * common and are fixed in five different places, so that line is worse than
- * useless — it occupies the space where the answer should be and looks like
+ * useless - it occupies the space where the answer should be and looks like
  * information. This unwraps the chain and says which of them it was.
  */
 export class ChannelUnreachable extends Error {
   code = 'channel_unreachable';
   constructor(what: string, cause: unknown) {
-    // "for", because `what` is a noun phrase — "a token refresh", "a calendar
+    // "for", because `what` is a noun phrase - "a token refresh", "a calendar
     // write". Without it the sentence reads "could not reach the channel
     // manager a token refresh", which was true in the original too.
-    super(`Could not reach ${HUB} for ${what} — ${describeNetworkError(cause)}`, { cause });
+    super(`Could not reach ${HUB} for ${what} - ${describeNetworkError(cause)}`, { cause });
     this.name = 'ChannelUnreachable';
   }
 }
@@ -767,13 +767,13 @@ const NETWORK_CAUSES: Record<string, string> = {
  * Breadth-first over both `cause` and `errors`, because the reason is not
  * always one link down. A host that resolves to several addresses fails once
  * per address, and Node reports that as an `AggregateError` holding the real
- * errors in `errors` while carrying no code itself — which is exactly the shape
+ * errors in `errors` while carrying no code itself - which is exactly the shape
  * a plain `cause` walk falls straight through, ending back at "fetch failed".
  */
 function describeNetworkError(e: unknown): string {
   const seen = new Set<unknown>();
   const queue: unknown[] = [e];
-  // Not every transport failure carries a code — undici rejects a request to a
+  // Not every transport failure carries a code - undici rejects a request to a
   // blocked port with a bare "bad port", for one. The deepest message in the
   // chain is still worth far more than the outermost, which is always the same
   // "fetch failed" that sent us looking in the first place.
@@ -805,7 +805,7 @@ function describeNetworkError(e: unknown): string {
  * message poll each guard against overlapping runs, and although those guards
  * are released in a `finally`, a promise that never settles never reaches it.
  * One dead connection therefore stopped every future push and poll for the life
- * of the process — silently, because nothing had failed.
+ * of the process - silently, because nothing had failed.
  *
  * A deadline turns that into an ordinary error the existing retry and
  * sync-logging paths already know how to record.
@@ -818,11 +818,11 @@ async function withTimeout(
   try {
     return await run(controller.signal);
   } catch (e) {
-    // Distinguish "we gave up" from "the network refused" — the operator needs
+    // Distinguish "we gave up" from "the network refused" - the operator needs
     // to know which, and they call for different fixes.
     if (controller.signal.aborted) throw new ChannelTimeout(what, REQUEST_TIMEOUT_MS);
     // A transport failure, which arrives as an opaque `TypeError: fetch failed`.
-    // Anything else — a bug in the caller, say — is left exactly as it is.
+    // Anything else - a bug in the caller, say - is left exactly as it is.
     if (e instanceof TypeError) throw new ChannelUnreachable(what, e);
     throw e;
   } finally {
@@ -887,7 +887,7 @@ export interface Beds24CalendarEntry {
 }
 
 /**
- * Group consecutive dates that share identical values into ranges — Beds24
+ * Group consecutive dates that share identical values into ranges - Beds24
  * charges per request, and a flat month is one range rather than thirty.
  */
 export function compressCalendar(
@@ -951,7 +951,7 @@ export interface NormalisedBooking {
    * pays on arrival and `commission` = the deposit Hostelworld already took,
    * so the booking price is the two added together. The `rateDescription`
    * says as much in Hostelworld's own words ("Paid USD 19.32 / Due USD
-   * 45.07"), and its nightly lines add up to the same figure — the one the
+   * 45.07"), and its nightly lines add up to the same figure - the one the
    * confirmation email calls "Total Price". See `hostelworldTotal`.
    */
   totalMajor: number;
@@ -965,14 +965,14 @@ export interface NormalisedBooking {
    * guest pays the rest at the desk. Beds24 carries that as `deposit` on the
    * booking, as "Paid" in the `rateDescription`, and, when invoice items are
    * requested, as a payment line naming Hostelworld. Zero means Beds24 said
-   * nothing — not that nothing was taken.
+   * nothing - not that nothing was taken.
    */
   depositMajor: number;
   /** "Balance Due - On Arrival" as the channel stated it, or null when it did not. */
   dueMajor: number | null;
   /** The per-night prices the channel sold at, when it listed them. */
   nightly: ChannelNight[];
-  /** The OTA's own booking reference — Hostelworld's "336798-580229521". */
+  /** The OTA's own booking reference - Hostelworld's "336798-580229521". */
   otaBookingRef: string;
   /** When the guest booked, as the channel reported it. */
   bookedAt: string | null;
@@ -1054,14 +1054,14 @@ export function parseRateDescription(text: unknown): RateDescription {
  * Three readings, most trustworthy first, each cross-checked against the
  * next where both are present:
  *
- *   1. "Paid" + "Due" from the rate description — Hostelworld's own words.
+ *   1. "Paid" + "Due" from the rate description - Hostelworld's own words.
  *   2. The nightly lines added up (per-bed price × pax).
  *   3. `price` + `commission`, Beds24's convention for Hostelworld: the price
  *      is what the property collects, the commission is the deposit
  *      Hostelworld kept, and the guest agreed to both.
  *
  * When Beds24 carries an explicit `deposit` instead, `price` is already the
- * whole booking and is returned untouched — that is the shape every other
+ * whole booking and is returned untouched - that is the shape every other
  * channel uses, and the one the rest of the importer always expected.
  */
 export function hostelworldTotal(b: {
@@ -1117,7 +1117,7 @@ export function normaliseBooking(b: any): NormalisedBooking {
   const money = looksHostelworld(b)
     ? hostelworldTotal({ priceMajor, commissionMajor, depositMajor: depositOf(b), rate })
     : { totalMajor: priceMajor, depositMajor: depositOf(b), dueMajor: null };
-  // "HOTELCOLLECT · Guest pays 45.07 USD OTA pays 0.00 USD" — who collects
+  // "HOTELCOLLECT · Guest pays 45.07 USD OTA pays 0.00 USD" - who collects
   // what, in Beds24's words, when the call asked for info items.
   const collect = (Array.isArray(b.infoItems) ? b.infoItems : [])
     .find((it: any) => /collect/i.test(String(it?.code ?? '')));
@@ -1155,8 +1155,8 @@ export function normaliseBooking(b: any): NormalisedBooking {
 /**
  * The deposit the OTA took, read two ways.
  *
- * The `deposit` field is preferred. Failing that, the invoice items — present
- * only when the bookings call asked for them — are searched for a payment
+ * The `deposit` field is preferred. Failing that, the invoice items - present
+ * only when the bookings call asked for them - are searched for a payment
  * that names the OTA or calls itself a deposit or commission. A plain payment
  * line is left alone: it may be money the property itself recorded in Beds24,
  * which is not the OTA's to have taken.

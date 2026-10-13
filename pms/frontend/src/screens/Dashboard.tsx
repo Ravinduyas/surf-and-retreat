@@ -73,7 +73,7 @@ export function DashboardScreen() {
                 <Card tone="yellow" className="mb-3">
                   <p className="text-[13px] font-bold mb-1">This property has no rooms yet</p>
                   <p className="text-[11px] text-dash-muted mb-3">
-                    Add room types and rooms in Configuration before taking reservations —
+                    Add room types and rooms in Configuration before taking reservations -
                     availability, rates and the night audit all build on them.
                   </p>
                   <Button size="sm" onClick={() => navigate('config')}>Open configuration</Button>
@@ -268,7 +268,7 @@ export function DashboardScreen() {
                         className="w-full flex items-center gap-3 p-2.5 rounded-xl hover:bg-dash-bg text-left">
                         <div className="flex-1 min-w-0">
                           <p className="text-[12px] font-bold truncate">{r.guest}</p>
-                          <p className="text-[10px] text-dash-muted">Room {r.room ?? '—'} · {r.confirmation}</p>
+                          <p className="text-[10px] text-dash-muted">Room {r.room ?? '-'} · {r.confirmation}</p>
                         </div>
                         <div className="text-right">
                           <p className={`text-[12px] font-bold ${r.balanceMinor > 0 ? 'text-status-bad' : 'text-status-ok'}`}>

@@ -55,7 +55,7 @@ export function AlertSettingsPanel() {
               <WarnNote>
                 <span className="font-bold">Sound is not armed on this device.</span>{' '}
                 Browsers refuse to play audio until someone has interacted with the page. Press the
-                button below once per session — until then, alerts appear on screen but make no
+                button below once per session - until then, alerts appear on screen but make no
                 noise.
                 <div className="mt-2">
                   <Button size="sm" icon={<Volume2 className="w-3.5 h-3.5" />}
@@ -90,7 +90,7 @@ export function AlertSettingsPanel() {
                     This device
                   </p>
                   <p className="text-[11px] text-dash-muted mt-1 max-w-xl leading-relaxed">
-                    Muting here silences this machine only — the property's settings below are
+                    Muting here silences this machine only - the property's settings below are
                     untouched, and every other desk keeps hearing alerts. A back-office PC going
                     quiet must not silence reception.
                   </p>
@@ -110,7 +110,7 @@ export function AlertSettingsPanel() {
               </p>
               <p className="text-[11px] text-dash-muted mb-3">
                 Each one can be turned off on its own. Turning a sound off does not stop the event
-                being recorded — it only stops the noise.
+                being recorded - it only stops the noise.
               </p>
 
               <div className="space-y-2">
@@ -158,7 +158,7 @@ export function AlertSettingsPanel() {
                 </Field>
 
                 <Field label="When an overbooking is found"
-                  hint="A repeating alarm needs a person to stop it — that is the point">
+                  hint="A repeating alarm needs a person to stop it - that is the point">
                   <Select
                     value={s.overbooking.repeat}
                     onChange={(v) => patch({ overbooking: { ...s.overbooking, repeat: v } })}
@@ -182,7 +182,7 @@ export function AlertSettingsPanel() {
                   </p>
                   <p className="text-[11px] text-dash-muted mt-1 max-w-xl leading-relaxed">
                     A window in which alerts stay silent. Events are still recorded and still shown
-                    on screen — only the sound is suppressed.
+                    on screen - only the sound is suppressed.
                   </p>
                 </div>
                 <Toggle
@@ -232,7 +232,7 @@ export function AlertSettingsPanel() {
               <p className="text-[11px] text-dash-muted flex items-start gap-2 leading-relaxed">
                 <CircleAlert className="w-3.5 h-3.5 shrink-0 mt-px" />
                 Sounds are generated in the browser, so they work with no network and nothing to
-                download. Alerts appear the moment they happen — nothing is played for anything
+                download. Alerts appear the moment they happen - nothing is played for anything
                 that happened before this screen was opened, so a page refresh never sets the alarm
                 off.
               </p>

@@ -4,7 +4,7 @@
 // Two states matter and the panel is really only about telling them apart:
 // *waiting*, where a code is on screen and nobody has sent anything, and
 // *sent*, where there are answers on the desk's screen for a person to read and
-// accept. Accepting is a deliberate act — what a stranger typed on a phone does
+// accept. Accepting is a deliberate act - what a stranger typed on a phone does
 // not become the property's registration record on its own.
 //
 // This is a different thing from `CheckInQr` in registration.tsx, which sends a
@@ -179,7 +179,7 @@ export function GuestRegistrationPanel({ reservationId, guest }: {
               </PermissionButton>
               {state?.exists && state.live && (
                 <span className="text-[11px] text-dash-muted">
-                  A code is already live — showing it again replaces it with a new one.
+                  A code is already live - showing it again replaces it with a new one.
                 </span>
               )}
               {state?.exists && !state.live && state.endedBecause === 'accepted' && (
@@ -209,7 +209,7 @@ export function GuestRegistrationPanel({ reservationId, guest }: {
                       The code points at <span className="font-mono">{url.split('/register')[0]}</span>,
                       which on a guest&apos;s phone means the phone itself. Set
                       <span className="font-mono"> HELIO_BOOKING_SITE_URL</span> on the API to the
-                      address the booking site is actually served from — your machine&apos;s network
+                      address the booking site is actually served from - your machine&apos;s network
                       address for a test, the public one in production.
                     </p>
                   </div>
@@ -274,7 +274,7 @@ export function GuestRegistrationPanel({ reservationId, guest }: {
               {state?.submittedAt ? ` ${timestamp(state.submittedAt)}` : ''}.</span>{' '}
             Check it against the document in front of you, then accept it onto the booking.
             {(state?.submissions ?? 0) > 1
-              && ` They sent it ${state?.submissions} times — this is the latest.`}
+              && ` They sent it ${state?.submissions} times - this is the latest.`}
           </InfoNote>
 
           <Submission s={submission} />
@@ -301,7 +301,7 @@ export function GuestRegistrationPanel({ reservationId, guest }: {
               onClick={async () => {
                 try {
                   await discard.mutateAsync({ id: reservationId });
-                  toast.success('Discarded — the guest can send it again');
+                  toast.success('Discarded - the guest can send it again');
                 } catch (e) { toast.fail(e); }
               }}
             >

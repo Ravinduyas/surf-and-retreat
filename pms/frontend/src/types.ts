@@ -1,4 +1,4 @@
-// Domain types — these mirror the API response shapes exactly.
+// Domain types - these mirror the API response shapes exactly.
 // Money fields ending in `Minor` are integer minor units (cents).
 // Fields ending in `Bp` are basis points (10000 = 100%).
 
@@ -218,7 +218,7 @@ export interface Reservation {
   depositRequiredMinor: number;
   commissionMinor: number;
   /**
-   * Hostelworld money — see `hostelworld.tsx`.
+   * Hostelworld money - see `hostelworld.tsx`.
    *
    * `hostelworld` is true for any Hostelworld booking. The three figures are
    * only filled in when Configuration → Hostelworld is switched on and the
@@ -232,8 +232,8 @@ export interface Reservation {
   /** The Hostelworld credit already on the folio, as a positive number. */
   otaCreditMinor?: number;
   /**
-   * Hostelworld's full statement — nights, promotion, paid / due, reference,
-   * deadlines — shown whether or not the split is on. Null for other
+   * Hostelworld's full statement - nights, promotion, paid / due, reference,
+   * deadlines - shown whether or not the split is on. Null for other
    * channels and for bookings imported before it was kept.
    */
   hostelworldDetail?: HostelworldDetail | null;
@@ -260,7 +260,7 @@ export interface Reservation {
    * A website booking the property has not accepted yet.
    *
    * Decided by the server (`pendingbookings.ts`), never re-derived here from
-   * status and origin — one rule, one place.
+   * status and origin - one rule, one place.
    */
   awaitingConfirmation?: boolean;
   /** Set on the other beds of a dorm party; the lead booking has none. */
@@ -333,7 +333,7 @@ export interface RatePlan {
   flexible: boolean;
   kind: string;
   /**
-   * Which booking-engine package this plan prices — the site's own model key,
+   * Which booking-engine package this plan prices - the site's own model key,
    * e.g. 'rooms-surf'. Null on a plain room rate, which is every plan the
    * front desk sells from.
    */
@@ -850,7 +850,7 @@ export interface ProfileStay {
   channel?: string | null;
   totalMinor: number;
   /**
-   * What the guest chose when they booked — the package, coworking desks, surf
+   * What the guest chose when they booked - the package, coworking desks, surf
    * lessons, airport pickup. Machine tags; run them through
    * `bookingPreference()` before showing them to anybody.
    */
@@ -986,13 +986,13 @@ export interface PaymentMethod {
   surchargeBp: number | null;
 }
 
-/** `GET /api/payment-methods` — what every screen offers. */
+/** `GET /api/payment-methods` - what every screen offers. */
 export interface PaymentMethodList {
   methods: PaymentMethod[];
   cardSurchargeEnabled: boolean;
   cardSurchargeBp: number;
   cardSurchargeLabel: string;
-  /** The property's own currency — what the folio is kept in. */
+  /** The property's own currency - what the folio is kept in. */
   currency?: string;
   /** Everything the desk may be handed, the property's own money first. */
   currencies?: string[];
@@ -1010,7 +1010,7 @@ export interface CashBoxBalance {
   depositedMinor: number;
 }
 
-/** `GET /api/cashbox` — what is in the drawer and who may take it out. */
+/** `GET /api/cashbox` - what is in the drawer and who may take it out. */
 export interface CashBox {
   /** When the box was last counted. Null when it never has been. */
   since: string | null;
@@ -1021,12 +1021,12 @@ export interface CashBox {
     groupId: string; at: string; businessDate: string; userName: string;
     items: { currency: string; amountMinor: number }[];
   } | null;
-  /** True only for administrators — the one role that may empty the box. */
+  /** True only for administrators - the one role that may empty the box. */
   canWithdraw: boolean;
 }
 
 /**
- * One movement of money — a payment or something done to the cash box.
+ * One movement of money - a payment or something done to the cash box.
  *
  * Both are told in the same shape because a cashier reconciling a day does not
  * think in two tables: what came in, what went back out, whose stay it was for.
@@ -1109,7 +1109,7 @@ export interface CashCountResult {
   }[];
 }
 
-/** `GET /api/fx/rates` — today's rates for the currencies the desk accepts. */
+/** `GET /api/fx/rates` - today's rates for the currencies the desk accepts. */
 export interface FxRates {
   /** The property's own currency. Every rate converts into this. */
   base: string;
@@ -1126,7 +1126,7 @@ export interface FxRates {
   }[];
 }
 
-/** `GET /api/payment-settings` — the Configuration view, inactive ones included. */
+/** `GET /api/payment-settings` - the Configuration view, inactive ones included. */
 export interface PaymentSettings extends PaymentMethodList {
   /** Currencies accepted across the counter, besides the property's own. */
   currencies: string[];
@@ -1135,7 +1135,7 @@ export interface PaymentSettings extends PaymentMethodList {
 }
 
 /**
- * `GET /api/config/hostelworld` — how Hostelworld bookings are split into the
+ * `GET /api/config/hostelworld` - how Hostelworld bookings are split into the
  * total, what Hostelworld collected, and the business price. Off by default.
  */
 export interface HostelworldSettings {
@@ -1196,7 +1196,7 @@ export interface HostelworldPromotion {
 }
 
 /**
- * Hostelworld's statement for a booking, as read from Beds24 — the same
+ * Hostelworld's statement for a booking, as read from Beds24 - the same
  * figures the confirmation email carries, plus the nightly breakdown.
  */
 export interface HostelworldDetail {
@@ -1269,7 +1269,7 @@ export interface RegistrationLink {
   acceptedAt?: string | null;
   acceptedBy?: string | null;
   submission: GuestRegistrationSubmission | null;
-  /** Returned only when the link is minted — the token is never readable again. */
+  /** Returned only when the link is minted - the token is never readable again. */
   url?: string;
   token?: string;
 }
@@ -1427,7 +1427,7 @@ export interface ChannelHealth {
   /**
    * False when the server runs with `HELIO_CHANNEL_READONLY` set: bookings still
    * import, but nothing queued will ever be sent out. Distinct from `health`,
-   * because this is a deliberate setting rather than a fault — and distinct
+   * because this is a deliberate setting rather than a fault - and distinct
    * from `queued > 0`, because a backlog that is draining is normal.
    */
   publishing: boolean;

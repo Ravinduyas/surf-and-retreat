@@ -14,7 +14,7 @@ const priceOf = (text: string) => {
 };
 
 /**
- * Prices on the site read "$12", "from $12/night" or "$149 / week". Assumes USD — the site never
+ * Prices on the site read "$12", "from $12/night" or "$149 / week". Assumes USD - the site never
  * states a currency, so the owner should confirm this.
  */
 const offer = (name: string, priceText: string, unit?: string) => {

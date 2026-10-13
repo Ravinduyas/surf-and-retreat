@@ -6,8 +6,8 @@
 // The claim being tested is the strong one: **with protection on, the
 // simultaneous-OTA race has nothing to race for.** A property that holds back
 // its last room closes the date while a room is still unsold, so two OTAs
-// cannot both sell it. Everything else here — the latency figures, the verdict
-// — exists so that decision is made against real numbers rather than a feeling.
+// cannot both sell it. Everything else here - the latency figures, the verdict
+// - exists so that decision is made against real numbers rather than a feeling.
 //
 // It builds its own database in a temp directory; the live one is never opened.
 // ─────────────────────────────────────────────────────────────
@@ -119,7 +119,7 @@ async function main() {
   const WINDOW = { from: TODAY, to: addDays(TODAY, 60), today: TODAY };
 
   section('1 · Without protection, the door shuts only when the last room goes');
-  // Three rooms, two booked — one still on sale, and that is the one two OTAs
+  // Three rooms, two booked - one still on sale, and that is the one two OTAs
   // can both sell.
   book(ctx); book(ctx);
   ovb.scanAndRecord(P, ACTOR, WINDOW);
@@ -143,7 +143,7 @@ async function main() {
     ovb.lastRoomProtection(P).get(ctx.roomTypeId) === 1,
     [...ovb.lastRoomProtection(P)]);
 
-  book(ctx); book(ctx);       // two of three sold — one left
+  book(ctx); book(ctx);       // two of three sold - one left
   ovb.scanAndRecord(P, ACTOR, WINDOW);
   const early = ovb.listFindings(P, TODAY, { includeAtRisk: true })
     .find((f) => f.date === NIGHT && f.kind === 'at-risk');

@@ -73,7 +73,7 @@ async function main() {
 
   const roomTypes = (await api('GET', '/api/room-types')).body;
   const ratePlans = (await api('GET', '/api/rate-plans')).body;
-  // A private room type gives the tightest test — every unit is exclusive.
+  // A private room type gives the tightest test - every unit is exclusive.
   const roomType = roomTypes.find((r: any) => r.kind === 'room' && r.rooms > 0);
   const ratePlan = ratePlans.find((r: any) => r.active);
   if (!roomType || !ratePlan) {
@@ -134,12 +134,12 @@ async function main() {
 
   const after = await api('GET', `/api/availability?from=${arrival}&to=${departure}`);
   const cellAfter = after.body.cells.find((c: any) => c.roomTypeId === roomType.id);
-  check('availability lands on exactly zero — never negative',
+  check('availability lands on exactly zero - never negative',
     cellAfter.available === 0, cellAfter);
   check('rooms sold never exceeds physical inventory',
     cellAfter.sold <= cellAfter.physical - cellAfter.blocked, cellAfter);
 
-  // The ledger itself must agree — one night row per unit, no duplicates.
+  // The ledger itself must agree - one night row per unit, no duplicates.
   const inventory = await api('GET',
     `/api/reservations?arrivalOn=${arrival}&status=Confirmed,Guaranteed,Tentative`);
   const forType = inventory.body.filter((r: any) => r.roomTypeId === roomType.id);

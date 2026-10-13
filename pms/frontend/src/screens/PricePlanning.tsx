@@ -2,7 +2,7 @@
 // seasons, scheduled changes, copying a period and the history of a rate cell.
 //
 // The preview panel is the important piece. It is fed by the same endpoint the
-// apply call runs, so what it shows is what will happen — not an estimate made
+// apply call runs, so what it shows is what will happen - not an estimate made
 // on the client from a different set of assumptions.
 import { useState } from 'react';
 import {
@@ -250,7 +250,7 @@ function ScheduledPanel({ today }: { today: string }) {
                                 ? `${s.change.adjustPercentBp > 0 ? '+' : ''}${bpToPercent(s.change.adjustPercentBp)}%`
                                 : s.change.adjustMinor !== undefined
                                   ? `${s.change.adjustMinor > 0 ? '+' : ''}${money(s.change.adjustMinor)}`
-                                  : '—'}
+                                  : '-'}
                           </td>
                           <td className="py-2.5">
                             {s.status === 'applied'
@@ -281,7 +281,7 @@ function ScheduledPanel({ today }: { today: string }) {
             <ConfirmDialog
               open={!!cancelId}
               title="Cancel this scheduled change?"
-              body="It will never fire. Prices stay as they are — nothing that has already been applied is undone."
+              body="It will never fire. Prices stay as they are - nothing that has already been applied is undone."
               confirmLabel="Cancel it"
               danger
               busy={cancel.isPending}
@@ -324,7 +324,7 @@ function SeasonsPanel() {
                 </p>
                 <p className="text-[11px] text-dash-muted mt-0.5">
                   Named date ranges the property already thinks in. A season does not price
-                  anything by itself — it saves retyping the same dates every time rates move.
+                  anything by itself - it saves retyping the same dates every time rates move.
                 </p>
               </div>
               <PermissionButton permission="rates.write" size="sm"
@@ -370,7 +370,7 @@ function SeasonsPanel() {
                         </td>
                         <td className="py-2.5 tabular-nums text-dash-muted">{s.nights}</td>
                         <td className="py-2.5 tabular-nums text-dash-muted">{s.priority}</td>
-                        <td className="py-2.5 text-dash-muted">{s.note ?? '—'}</td>
+                        <td className="py-2.5 text-dash-muted">{s.note ?? '-'}</td>
                         <td className="py-2.5 text-right whitespace-nowrap">
                           <PermissionButton permission="rates.write" size="sm" variant="ghost"
                             onClick={() => setEditing(s)}>Edit</PermissionButton>
@@ -407,7 +407,7 @@ function SeasonsPanel() {
           <ConfirmDialog
             open={!!deleteId}
             title="Delete this season?"
-            body="Only the named date range goes. No prices change — a season is a label, not a rate."
+            body="Only the named date range goes. No prices change - a season is a label, not a rate."
             confirmLabel="Delete"
             danger
             busy={remove.isPending}
@@ -670,16 +670,16 @@ function HistoryPanel() {
                         <td className="py-2.5"><Pill tone="grey">{h.ratePlan}</Pill></td>
                         <td className="py-2.5 text-right tabular-nums text-dash-muted">
                           {h.fromMinor === null
-                            ? <span title="The cell had no explicit price — it was inherited">inherited</span>
+                            ? <span title="The cell had no explicit price - it was inherited">inherited</span>
                             : money(h.fromMinor)}
                         </td>
                         <td className="py-2.5 text-right tabular-nums font-bold">{money(h.toMinor)}</td>
                         <td className="py-2.5">
                           <Pill tone={SOURCE_TONE[h.source] ?? 'grey'}>{h.source}</Pill>
                         </td>
-                        <td className="py-2.5 text-dash-muted">{h.reason ?? '—'}</td>
+                        <td className="py-2.5 text-dash-muted">{h.reason ?? '-'}</td>
                         <td className="py-2.5 whitespace-nowrap">
-                          <span className="text-dash-muted">{h.changedBy ?? '—'}</span>
+                          <span className="text-dash-muted">{h.changedBy ?? '-'}</span>
                           <p className="text-[10px] text-dash-muted" title={timestamp(h.changedAt)}>
                             {relativeTime(h.changedAt)}
                           </p>

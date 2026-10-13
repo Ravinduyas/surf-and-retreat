@@ -4,7 +4,7 @@
 // The booking site used to ship its own hardcoded room list and price table.
 // Everything it shows now comes from here instead, so the rooms, rates,
 // occupancy limits, currency and availability a guest sees on /book are the
-// same rows the front desk works from — edit a rate in the PMS and the site
+// same rows the front desk works from - edit a rate in the PMS and the site
 // quotes it on the next page load.
 //
 // Deliberately read-only and deliberately narrow: no ids a guest could use to
@@ -38,7 +38,7 @@ const FROM_PRICE_WINDOW_DAYS = 90;
 /**
  * Which property a public request is for.
  *
- * Single-property installations — which is nearly all of them — need to say
+ * Single-property installations - which is nearly all of them - need to say
  * nothing at all. Anything with a second property has to be told, because
  * guessing would quote one property's rates and book the other's rooms.
  */
@@ -111,7 +111,7 @@ export function publicRatePlanId(propertyId: string): string {
  * difference between two room rates.
  *
  * Package plans keep their own rates in the PMS and are still sold, quoted and
- * pushed to channels like any other plan — they simply do not price the room
+ * pushed to channels like any other plan - they simply do not price the room
  * on the public site. `model` is kept in the signature because it is what the
  * caller has to hand and what this rule is about.
  */
@@ -144,7 +144,7 @@ export function publicRoomTypes(propertyId: string): PublicRoomTypeRow[] {
 /**
  * Descriptions the channel import wrote for its own benefit, e.g. "From Beds24
  * room 715747". They are provenance, not room copy, and putting them in front
- * of a guest reads as a leak — so they are dropped rather than published.
+ * of a guest reads as a leak - so they are dropped rather than published.
  */
 const IMPORT_PROVENANCE = /^from\s+beds24\s+room\s+\d+$/i;
 
@@ -164,7 +164,7 @@ function guestDescription(description: string | null): string | null {
 export function bookingKindFor(rt: { kind: string; code: string; name: string; max_occupancy: number }): BookingKind {
   if (rt.kind === 'dorm') return 'dorm';
   // "Ensuite" is a bathroom, not a suite, and it appears in the name of very
-  // nearly every hostel room there is — matching `suite` inside it turned a
+  // nearly every hostel room there is - matching `suite` inside it turned a
   // two-person double into a family room, which then answered a family search
   // and was offered to four guests it cannot hold. Taken out of the text
   // before the test rather than fought with in the pattern.
@@ -176,8 +176,8 @@ export function bookingKindFor(rt: { kind: string; code: string; name: string; m
 /**
  * The room type a public booking of `kind` lands on.
  *
- * Prefers an explicit id when the site sends one — it got that id from the
- * catalog, so it is naming a real room type rather than guessing — and falls
+ * Prefers an explicit id when the site sends one - it got that id from the
+ * catalog, so it is naming a real room type rather than guessing - and falls
  * back to matching on shape for older clients that only send a kind.
  */
 export function roomTypeForPublicBooking(
@@ -241,7 +241,7 @@ export function fromNightlyMinor(propertyId: string, ratePlanId: string, rt: Pub
  * Coworking, surf and airport pickup.
  *
  * These are sold alongside the room but are not hotel inventory, so the PMS
- * has no table for them — they live in the property's settings, editable from
+ * has no table for them - they live in the property's settings, editable from
  * the admin app like any other setting, and fall back to the figures the
  * booking site used to hardcode so a property that has not touched them still
  * quotes something sane.
@@ -414,7 +414,7 @@ export function publicCatalog(propertyId: string) {
      * What the property asks for up front.
      *
      * Published on the catalog as well as per-quote so the page can say
-     * "20% deposit to book" before a guest has picked dates — which is when
+     * "20% deposit to book" before a guest has picked dates - which is when
      * it matters, because it is part of deciding whether to book at all.
      */
     deposit: (() => {
@@ -451,12 +451,12 @@ export function publicCatalog(propertyId: string) {
  * What each room type actually costs, and whether it can be sold, for one set
  * of dates.
  *
- * The price here is the PMS's own — calendar rates, occupancy supplements,
- * length-of-stay pricing, yield rules and tax — so the figure on the site is
+ * The price here is the PMS's own - calendar rates, occupancy supplements,
+ * length-of-stay pricing, yield rules and tax - so the figure on the site is
  * the figure the reservation is written at rather than a browser's estimate.
  *
- * The room is quoted off the room rate plan for every model — see
- * `publicRatePlanIdForModel` — so the same room costs the same whether or not
+ * The room is quoted off the room rate plan for every model - see
+ * `publicRatePlanIdForModel` - so the same room costs the same whether or not
  * the guest is buying lessons with it, and the extras are itemised beside it.
  */
 export function publicAvailability(propertyId: string, opts: {
@@ -535,8 +535,8 @@ export function publicAvailability(propertyId: string, opts: {
     /**
      * What one unit costs at every party size it can hold.
      *
-     * The site lets a guest take a room without filling it — a solo traveller
-     * in a double — so it cannot price a room from one figure quoted for the
+     * The site lets a guest take a room without filling it - a solo traveller
+     * in a double - so it cannot price a room from one figure quoted for the
      * whole party. One row per occupancy, straight from the same engine the
      * reservation is written at, is what lets the browser add up an allocation
      * of part-filled rooms and still show the property's own price. A dorm
@@ -596,7 +596,7 @@ export function publicAvailability(propertyId: string, opts: {
      *
      * The amount depends on what the guest ends up choosing, so the page works
      * it out from the rule and its own running total rather than from a figure
-     * quoted per room type — a party across a double and two dorm beds has one
+     * quoted per room type - a party across a double and two dorm beds has one
      * deposit, not three.
      */
     deposit: {

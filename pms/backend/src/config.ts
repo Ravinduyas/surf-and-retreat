@@ -3,7 +3,7 @@
 //
 // One declaration per variable: its type, its default, what it changes, and
 // which environments have to supply it. Nothing else in the server reads
-// `process.env` — a value that is not declared here does not exist, and a
+// `process.env` - a value that is not declared here does not exist, and a
 // value that is declared here has already been checked by the time any code
 // can see it.
 //
@@ -32,7 +32,7 @@ export const MODE: Mode = modeFrom(process.env.NODE_ENV);
  * Where the `.env` cascade is read from. Defaults to `backend/`.
  *
  * Read straight from `process.env` rather than through the schema below,
- * because it decides where the schema's own values come from — it cannot be
+ * because it decides where the schema's own values come from - it cannot be
  * one of them. Set it when the files live somewhere other than the source
  * tree: a mounted secrets volume, `/etc/helio`, or a test fixture directory.
  */
@@ -45,8 +45,8 @@ const loaded = loadEnv(ENV_DIR, MODE);
 // on: `vite dev` (3000), `vite preview` (4173), Vite's own default (5173), and
 // the booking site (5174).
 //
-// Each also gets the port above it. Vite does not fail when its port is taken —
-// it silently moves up one — so a developer with anything else on 3000 gets an
+// Each also gets the port above it. Vite does not fail when its port is taken -
+// it silently moves up one - so a developer with anything else on 3000 gets an
 // app on 3001 that looks, from inside it, exactly like a dead server. Allowing
 // the +1 costs nothing and saves that hour.
 const DEFAULT_ORIGINS = [
@@ -94,7 +94,7 @@ const SCHEMA = {
     group: 'Server',
     doc: 'Public address of the guest booking site. The check-in QR code points '
       + 'at /register on this host, so it must be an address the guest\'s own '
-      + 'phone can open — a localhost address reaches the phone itself and the '
+      + 'phone can open - a localhost address reaches the phone itself and the '
       + 'check-in screen says so rather than printing a code that cannot work.',
     example: 'https://book.example.com',
   },
@@ -135,7 +135,7 @@ const SCHEMA = {
   databasePath: {
     env: 'HELIO_DB', kind: path_(ROOT), fallback: join(ROOT, 'data', 'helio.db'),
     group: 'Storage',
-    doc: 'SQLite file holding everything — reservations, folios, audit trail. '
+    doc: 'SQLite file holding everything - reservations, folios, audit trail. '
       + 'Relative paths resolve against the backend directory. The file and its '
       + 'directory are created on first boot.',
     example: './data/helio.db',
@@ -148,7 +148,7 @@ const SCHEMA = {
       + 'holding real bookings leaves the database as the only copy.',
     review(value: boolean, mode: Mode) {
       if (!value && mode === 'production') {
-        return 'backups are disabled in production — the database is the only copy of the ledger.';
+        return 'backups are disabled in production - the database is the only copy of the ledger.';
       }
     },
   },
@@ -158,7 +158,7 @@ const SCHEMA = {
     group: 'Storage',
     doc: 'Where snapshots are written. Defaults to a sibling of the database '
       + 'directory (so it follows HELIO_DB rather than staying put), which means '
-      + 'a backup survives losing the data directory but not the disk — point it '
+      + 'a backup survives losing the data directory but not the disk - point it '
       + 'at other storage for that.',
     example: './backups',
   },
@@ -210,8 +210,8 @@ const SCHEMA = {
     env: 'BEDS24_REFRESH_TOKEN', kind: secret({ min: 8 }),
     group: 'Channel manager', secret: true,
     doc: 'A long-lived refresh token connects the channel on startup with no UI '
-      + 'step. It controls your entire OTA distribution — rates, availability and '
-      + 'bookings — so treat it like a password. Only used when the installation '
+      + 'step. It controls your entire OTA distribution - rates, availability and '
+      + 'bookings - so treat it like a password. Only used when the installation '
       + 'has exactly one property; with several, connect from the channel manager '
       + 'screen so the right one is chosen.',
   },
@@ -232,7 +232,7 @@ const SCHEMA = {
       + 'property\'s inventory from a test machine.',
     review(value: boolean, mode: Mode) {
       if (value && mode === 'production') {
-        return 'channel pushes are disabled — rates and availability will not reach the OTAs.';
+        return 'channel pushes are disabled - rates and availability will not reach the OTAs.';
       }
     },
   },
@@ -315,7 +315,7 @@ const SCHEMA = {
     doc: 'How many days after a guest departs their scanned identity document and '
       + 'signature are kept, after which they are deleted automatically. A passport '
       + 'scan is sensitive personal data and most data-protection law requires that '
-      + 'it is not held longer than the purpose needs — check what your jurisdiction '
+      + 'it is not held longer than the purpose needs - check what your jurisdiction '
       + 'obliges you to keep and for how long before raising this.',
   },
 
@@ -426,7 +426,7 @@ export const configReport = {
 };
 
 // `CONFIG_NO_EXIT` lets the doctor import this module, print a full report and
-// decide for itself what to do — a tool whose whole job is explaining a broken
+// decide for itself what to do - a tool whose whole job is explaining a broken
 // configuration is no use if loading it kills the process first.
 if (errors.length && !process.env.CONFIG_NO_EXIT) {
   process.stderr.write(formatProblems(allProblems, MODE));
@@ -461,7 +461,7 @@ export { SCHEMA };
  * Almost nothing should use this. `HELIO_CHANNEL_READONLY` does, on purpose:
  * it is the switch that stops this installation writing to the OTAs, and the
  * moment you need it is usually the moment something is already going out
- * wrong — waiting for a restart to take effect is the wrong behaviour for a
+ * wrong - waiting for a restart to take effect is the wrong behaviour for a
  * kill switch.
  *
  * It still goes through the schema's parser, so a value the boot-time check

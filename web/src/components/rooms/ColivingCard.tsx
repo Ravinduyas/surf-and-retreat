@@ -16,14 +16,14 @@ export const ColivingCard: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-7 space-y-4">
             <span className="inline-block bg-white/80 text-[#16301F] text-[11px] font-bold px-3.5 py-1.5 rounded-full uppercase tracking-wider">
-              Coliving — Stay Longer, Pay Less
+              Coliving - Stay Longer, Pay Less
             </span>
             <h2 className="text-3xl sm:text-4xl font-bold text-[#193623] tracking-tight leading-tight">
               Make Weligama Your Base for a Month (or Three).
             </h2>
             <p className="text-[13px] sm:text-sm text-[#2F4A37] leading-relaxed max-w-xl">
               Our coliving bundle pairs a bed with a dedicated desk in the coworking
-              space — plus the little things that make a long stay feel like home.
+              space - plus the little things that make a long stay feel like home.
             </p>
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 pt-1">
               {PERKS.map((perk) => (

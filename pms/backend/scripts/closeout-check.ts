@@ -5,7 +5,7 @@
 //
 // The arithmetic here is the whole point. Reopening three days out of the
 // middle of a two-week closure has to leave two closures with a gap between
-// them — not delete the rule, and not leave the gap one day wide at the wrong
+// them - not delete the rule, and not leave the gap one day wide at the wrong
 // end. Every case below is checked against what the booking engine will
 // actually refuse, not just against the rows in the table, because a closure
 // that exists but does not block a sale is worse than no closure at all.
@@ -125,7 +125,7 @@ async function main() {
   check('an ARI push was queued', queued.length > 0, queued.length);
   check('one per room type, since the closure was property-wide',
     queued.length === roomTypes.length, { queued: queued.length, roomTypes: roomTypes.length });
-  // date_to is inclusive on a closure and exclusive on a push window — the last
+  // date_to is inclusive on a closure and exclusive on a push window - the last
   // closed night has to be inside the pushed range or it stays on sale.
   check('the pushed window includes the final closed night',
     queued.every((q: any) => q.date_to > '2026-07-12'),

@@ -69,7 +69,7 @@ router.get('/api/calendar/tape', (ctx: Ctx) => {
     pid(ctx),
   );
   // Dorm rooms hold several guests at once, so the chart needs a line per bed
-  // rather than per room — otherwise their stays draw on top of each other.
+  // rather than per room - otherwise their stays draw on top of each other.
   const beds = all<any>(
     `SELECT b.id, b.code, b.room_id, b.bunk
        FROM beds b JOIN rooms r ON r.id = b.room_id
@@ -151,7 +151,7 @@ function shapePlan(p: any) {
     offsetType: p.offset_type, offsetValue: p.offset_value,
     refundable: p.refundable === 1, flexible: p.flexible === 1, kind: p.kind,
     // Which booking-engine package this plan prices, if any. Null is a plain
-    // room rate — every plan the front desk sells from.
+    // room rate - every plan the front desk sells from.
     bookingModel: isBookingModel(p.booking_model) ? p.booking_model : null,
     marketSegment: p.market_segment, minLos: p.min_los, maxLos: p.max_los,
     minAdvance: p.min_advance, maxAdvance: p.max_advance,
@@ -271,7 +271,7 @@ router.patch('/api/rate-plans/:id', (ctx: Ctx) => tx(() => {
     assertModelFree(pid(ctx), model, ctx.params.id);
     sets.push('booking_model = ?');
     args.push(model);
-    // Taking a plan off its model leaves its kind alone — it may have been a
+    // Taking a plan off its model leaves its kind alone - it may have been a
     // package before the booking engine existed. An explicit `kind` in the same
     // request wins, so this cannot assign the column twice.
     if (model && ctx.body.kind === undefined) { sets.push('kind = ?'); args.push('package'); }
@@ -296,7 +296,7 @@ router.patch('/api/rate-plans/:id', (ctx: Ctx) => tx(() => {
 }), { perm: 'rates.write' });
 
 // ─── Rate calendar ───────────────────────────────────────────
-/** Resolved nightly prices for the grid — including derived and default rates. */
+/** Resolved nightly prices for the grid - including derived and default rates. */
 router.get('/api/rates/calendar', (ctx: Ctx) => {
   const { from, to } = range(ctx);
   const roomTypes = all<any>(
@@ -369,7 +369,7 @@ function readChange(ctx: Ctx): RateChangeInput {
     priceMinor: b.priceMinor === undefined ? undefined : money(b.priceMinor, 'priceMinor'),
     adjustPercentBp: b.adjustPercentBp === undefined ? undefined
       : int(b.adjustPercentBp, 'adjustPercentBp', { min: -9_900, max: 100_000 }),
-    // money() allows negatives, which is what an amount adjustment needs — a
+    // money() allows negatives, which is what an amount adjustment needs - a
     // rate can be moved down as well as up.
     adjustMinor: b.adjustMinor === undefined ? undefined : money(b.adjustMinor, 'adjustMinor'),
     occupancyPrices: b.occupancyPrices,
@@ -501,7 +501,7 @@ router.post('/api/inventory/adjust', (ctx: Ctx) => tx(() => {
     action: 'inventory.adjust', entity: 'ROOM_TYPE', entityId: roomTypeId,
     after: { from, to, overbook: b.overbook, hold: b.hold },
   }, ctx.ip);
-  // Tell the channels. A hold is not a note to ourselves — availability is
+  // Tell the channels. A hold is not a note to ourselves - availability is
   // `physical − blocked − sold − groupHeld − hold + overbook`, so withholding
   // two beds here makes Helio sell six while the OTA carries on selling eight.
   // That gap closes itself the moment somebody books the beds that Helio does
@@ -509,7 +509,7 @@ router.post('/api/inventory/adjust', (ctx: Ctx) => tx(() => {
   // allowance has the same problem pointing the other way: rooms deliberately
   // released for oversell never reach the channel that was meant to sell them.
   //
-  // `to` is inclusive here — `dateRangeInclusive` above writes a row for it —
+  // `to` is inclusive here - `dateRangeInclusive` above writes a row for it -
   // and the queue's end is exclusive, so the last adjusted night needs the +1.
   queueChannelPush(pid(ctx), roomTypeId, from, addDays(to, 1), 'inventory.adjust');
   return { updated: n };
@@ -517,7 +517,7 @@ router.post('/api/inventory/adjust', (ctx: Ctx) => tx(() => {
 
 // ─── Close-outs ──────────────────────────────────────────────
 // Closing and reopening dates for sale. These sit on top of the same
-// `stop-sell` restriction the engine already understands — what they add is
+// `stop-sell` restriction the engine already understands - what they add is
 // the operator's vocabulary: a date range, a reason, and one action.
 
 /** Scope is optional on every axis; omitting one means "all of them". */
@@ -559,7 +559,7 @@ router.post('/api/closeouts/close', (ctx: Ctx) =>
 router.post('/api/closeouts/open', (ctx: Ctx) =>
   openDates(pid(ctx), ctx.auth, closeScope(ctx)), { perm: 'rates.write' });
 
-/** Reopen exactly one closure, by id — the close-out list's one-click undo. */
+/** Reopen exactly one closure, by id - the close-out list's one-click undo. */
 router.post('/api/closeouts/:id/open', (ctx: Ctx) => {
   const row = get<any>(
     `SELECT * FROM restrictions WHERE id = ? AND property_id = ? AND type = 'stop-sell'`,
@@ -617,7 +617,7 @@ router.post('/api/restrictions', (ctx: Ctx) => {
   // Who the rule is aimed at.
   //
   // A stop-sell written from a calendar almost always means "take this off the
-  // OTAs", not "nobody may sell this" — so that is the default for a closure.
+  // OTAs", not "nobody may sell this" - so that is the default for a closure.
   // The worst outcome then is a room the desk can still sell; the alternative
   // is a guest turned away from a room standing empty.
   //
@@ -651,12 +651,12 @@ router.post('/api/restrictions', (ctx: Ctx) => {
  *
  * This was missing entirely, and it is the whole of "open/close does not work":
  * closing dates wrote a row in `restrictions`, Helio refused to sell them, and
- * **nothing was ever sent to Beds24** — so the OTAs carried on selling rooms the
+ * **nothing was ever sent to Beds24** - so the OTAs carried on selling rooms the
  * property had shut. The reverse was worse: reopening dates left them closed on
  * the OTAs, and the property silently lost the sales it had just reopened for.
  *
  * A rule with no room type applies to every room type, so every one of them has
- * to be pushed — the ARI grid is built per room type and there is no "all"
+ * to be pushed - the ARI grid is built per room type and there is no "all"
  * entry to send.
  */
 function pushRestriction(
@@ -692,7 +692,7 @@ router.patch('/api/restrictions/:id', (ctx: Ctx) => {
     before: { active: before.active === 1, value: before.value }, after: ctx.body,
   }, ctx.ip);
   // Both ranges. Moving a closure from next week to this one has to reopen the
-  // dates it left as well as close the ones it arrived on — pushing only the
+  // dates it left as well as close the ones it arrived on - pushing only the
   // new range leaves the old dates shut on the OTAs forever.
   pushRestriction(pid(ctx), before.room_type_id, before.date_from, before.date_to,
     'restriction.update');
@@ -705,7 +705,7 @@ router.patch('/api/restrictions/:id', (ctx: Ctx) => {
 }, { perm: 'rates.write' });
 
 router.delete('/api/restrictions/:id', (ctx: Ctx) => {
-  // Read it before it is gone — the dates being reopened are the whole point of
+  // Read it before it is gone - the dates being reopened are the whole point of
   // the push, and after the DELETE there is nothing left to say which they were.
   const before = get<any>('SELECT * FROM restrictions WHERE id = ? AND property_id = ?',
     ctx.params.id, pid(ctx));

@@ -86,7 +86,7 @@ export interface ProfileDocument extends DocumentSummary {
  * Every registration document belonging to one guest, newest stay first.
  *
  * Deliberately assembled here rather than stored against the profile. The
- * document belongs to the *stay* — that is what the retention rule is counted
+ * document belongs to the *stay* - that is what the retention rule is counted
  * from, and copying it onto a person would create a passport archive that
  * outlives the reason it was collected. This is a view, and it empties itself
  * as the sweep runs.
@@ -140,7 +140,7 @@ export function storeDocument(
     throw new HttpError(400, `${input.mime} is not an accepted document type`);
   }
 
-  // Measured on the decoded bytes, which is what the limit is actually about —
+  // Measured on the decoded bytes, which is what the limit is actually about -
   // base64 inflates by a third and nobody thinks in encoded kilobytes.
   const sizeBytes = Math.floor((input.dataBase64.length * 3) / 4);
   const maxBytes = config.documentMaxKb * 1024;
@@ -164,7 +164,7 @@ export function storeDocument(
   if (!encryptionAvailable()) {
     throw new HttpError(
       503,
-      'Identity documents cannot be stored without HELIO_SECRET_KEY set — refusing to '
+      'Identity documents cannot be stored without HELIO_SECRET_KEY set - refusing to '
       + 'write a passport scan in clear text. Set the key and restart the API.',
       'encryption_unavailable',
     );
@@ -200,7 +200,7 @@ export function storeDocument(
  * The image itself.
  *
  * Audited on every read. A passport scan is exactly the sort of thing that
- * should not be viewable without a trace of who viewed it — the audit entry is
+ * should not be viewable without a trace of who viewed it - the audit entry is
  * the difference between a record and a filing cabinet left unlocked.
  */
 export function readDocument(propertyId: string, actor: Actor, documentId: string): {
@@ -250,8 +250,8 @@ export function deleteDocument(propertyId: string, actor: Actor, documentId: str
  *
  * Counted from departure rather than from upload, because the purpose the
  * document was collected for lasts as long as the stay and the disputes that
- * can follow it. A reservation with no departure recorded — cancelled before
- * it began — is measured from when the document was uploaded instead, so
+ * can follow it. A reservation with no departure recorded - cancelled before
+ * it began - is measured from when the document was uploaded instead, so
  * nothing can sit in the table for ever by having no date to compare against.
  */
 export function purgeExpiredDocuments(): { deleted: number } {

@@ -4,7 +4,7 @@
 //
 // Both halves of this were missing. The front end had a complete Invoice
 // Branding screen and a complete invoice renderer, and neither had anything to
-// talk to — `GET /api/config/invoice-branding` and `GET /api/invoices/:id/document`
+// talk to - `GET /api/config/invoice-branding` and `GET /api/invoices/:id/document`
 // were never written. Opening Configuration → Invoice branding said "Not
 // found", and so did every attempt to view or print an invoice, which is a
 // larger hole: a property that cannot produce an invoice cannot bill a company.
@@ -12,7 +12,7 @@
 // Two rules shape what is here.
 //
 // A reprint must show the paper the guest was handed. The amounts therefore
-// come off the `invoices` row, which was frozen when the invoice was issued —
+// come off the `invoices` row, which was frozen when the invoice was issued -
 // never recomputed from the folio, which carries on moving afterwards. Only the
 // *lines* are read from the folio, because that is where they live, and they
 // are filtered to what existed when the invoice was cut.
@@ -102,7 +102,7 @@ export function invoiceBranding(propertyId: string): InvoiceBranding {
  * The other one: this value is stored by one authenticated user and rendered
  * in every other user's browser, which makes it stored input rather than a
  * private preference. SVG is on the allowed list because it is the right
- * format for a logo, and an SVG *can* carry script — so the shape is pinned
+ * format for a logo, and an SVG *can* carry script - so the shape is pinned
  * down here (a base64 image data URL, nothing else) rather than any string
  * beginning "data:". The renderer puts it in an `<img>`, where a browser will
  * not run script, and these two together are the belt and braces.
@@ -166,7 +166,7 @@ export function saveInvoiceBranding(
     propertyId, BRANDING_SETTING_KEY, JSON.stringify(next), nowIso(), actor.userId,
   );
 
-  // The logo itself is not written to the audit trail — half a megabyte of
+  // The logo itself is not written to the audit trail - half a megabyte of
   // base64 in an audit row helps nobody read it. Whether there is one, and
   // whether it changed, is the part somebody would ever ask about.
   const summarise = (b: InvoiceBranding) => ({
@@ -192,7 +192,7 @@ export function saveInvoiceBranding(
  * Everything printed on one invoice.
  *
  * The amounts are the ones frozen on the invoice row when it was issued. The
- * folio it came from keeps moving — a later charge, a payment, a void — and
+ * folio it came from keeps moving - a later charge, a payment, a void - and
  * recomputing from it would mean a reprint quietly disagreeing with the paper
  * the guest is holding.
  */
@@ -207,7 +207,7 @@ export function invoiceDocument(propertyId: string, invoiceId: string) {
   /*
    * The lines, as they stood when the invoice was cut.
    *
-   * Voided lines are excluded — they are not money and never were. Anything
+   * Voided lines are excluded - they are not money and never were. Anything
    * posted *after* the invoice was issued is excluded too, which is the part
    * that makes a reprint stable: a beer charged the morning after check-out
    * belongs on the next invoice, not retrospectively on this one.
@@ -303,7 +303,7 @@ export function invoiceDocument(propertyId: string, invoiceId: string) {
       // Payments are stored negative on a folio, because a folio is a ledger.
       // An invoice reads as a receipt, where a payment is a positive number in
       // a "paid" column, so the sign is flipped once here rather than in the
-      // renderer — which would have to know the ledger convention to do it.
+      // renderer - which would have to know the ledger convention to do it.
       amountMinor: Math.abs(l.amount_minor),
     })),
     branding: invoiceBranding(propertyId),

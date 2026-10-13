@@ -7,7 +7,7 @@
 //
 // A property that already sells on Booking.com has months of prices sitting in
 // its channel manager. Connecting a new PMS and pushing would replace all of
-// it with whatever the new PMS happens to hold — which, on the day of the
+// it with whatever the new PMS happens to hold - which, on the day of the
 // switch, is whatever somebody typed in while setting it up. Observed here:
 // the PMS held $8.30 for a dorm that was selling at $16.00, across 56 dates.
 // One drain would have halved the price of every dorm on every OTA within
@@ -53,7 +53,7 @@ export interface AdoptResult {
  * change.
  *
  * Only prices are adopted, not availability. Availability is computed by this
- * PMS from beds, bookings and blocks — it is not a number anybody stores, and
+ * PMS from beds, bookings and blocks - it is not a number anybody stores, and
  * taking the channel's idea of it would be adopting a stale copy of an answer
  * this system derives correctly.
  */
@@ -91,7 +91,7 @@ export async function adoptChannelRates(
      *
      * One entry can say "from 2026-09-23 to 2026-10-31, price1 = 14.00", and
      * the rate calendar here is one row per date. The range is expanded, with
-     * `to` inclusive — a range ending on the 31st includes the 31st, so the
+     * `to` inclusive - a range ending on the 31st includes the 31st, so the
      * expansion runs to the day after.
      */
     const byDate = new Map<string, number>();

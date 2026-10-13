@@ -162,7 +162,7 @@ export function CheckOutScreen({ reservationId }: { reservationId?: string }) {
                   <div className="rounded-2xl bg-dash-sky/40 border border-black/5 p-3 flex items-start gap-2.5">
                     <AlertTriangle className="w-3.5 h-3.5 text-status-info mt-0.5 shrink-0" />
                     <p className="text-[11px] leading-relaxed">
-                      This is an early departure — booked to {longDate(r.departure)}, leaving on{' '}
+                      This is an early departure - booked to {longDate(r.departure)}, leaving on{' '}
                       {longDate(property!.businessDate)}. The unstayed nights will be removed from the
                       reservation and released back to inventory.
                     </p>
@@ -258,7 +258,7 @@ export function CheckOutScreen({ reservationId }: { reservationId?: string }) {
                     </p>
                   ) : (
                     <p className="text-[11px] text-status-bad font-semibold mb-3">
-                      {money(balance)} outstanding — settle it, bill it to a company account, or check out with a
+                      {money(balance)} outstanding - settle it, bill it to a company account, or check out with a
                       balance if you have authority to do so.
                     </p>
                   )}
@@ -336,8 +336,8 @@ export function CheckOutScreen({ reservationId }: { reservationId?: string }) {
                   setInvoiceOpen(false);
                   // Straight into the printable copy. A guest standing at the
                   // desk wants the invoice in their hand, and making them ask
-                  // for it — or sending the operator to Accounts receivable to
-                  // find it — is the step that gets skipped.
+                  // for it - or sending the operator to Accounts receivable to
+                  // find it - is the step that gets skipped.
                   setIssuedInvoiceId(inv.id);
                 } catch (e) {
                   toast.fail(e, 'Could not issue the invoice');

@@ -4,7 +4,7 @@
 // oversold in two months, because tonight there is a guest in a taxi.
 //
 // Every finding leads with the likely cause, because the fix depends entirely
-// on it — a failing channel push keeps producing bookings until somebody fixes
+// on it - a failing channel push keeps producing bookings until somebody fixes
 // the connection, whereas a race is nobody's mistake and just needs a room
 // found. A list of problems without causes makes people guess.
 import { useState } from 'react';
@@ -278,7 +278,7 @@ function FindingCard({ finding, onOpenBooking, onFix, onResolve }: {
                         {r.nights}n · {shortDate(r.arrival)}
                         {r.eta && <p className="text-[10px] text-dash-muted">ETA {r.eta}</p>}
                       </td>
-                      <td className="py-2">{r.room ?? <span className="text-dash-muted">—</span>}</td>
+                      <td className="py-2">{r.room ?? <span className="text-dash-muted">-</span>}</td>
                       <td className="py-2 text-dash-muted">
                         {r.channelCode ?? r.source}
                       </td>
@@ -327,7 +327,7 @@ function FixModal({ finding, onClose }: {
   const options = useOverbookingOptions(finding?.id ?? null);
   const apply = useApplyOverbookingFix();
   // Keyed per guest. A single shared amount looks per-guest on screen but is
-  // not — typing 25 against one booking and clicking a room on another would
+  // not - typing 25 against one booking and clicking a room on another would
   // credit the wrong person.
   const [compensation, setCompensation] = useState<Record<string, number>>({});
 
@@ -353,7 +353,7 @@ function FixModal({ finding, onClose }: {
         toast.push({
           kind: 'warn',
           title: `${guest.guest} moved to ${room.number}`,
-          body: 'Still oversold — move another guest.',
+          body: 'Still oversold - move another guest.',
         });
       }
     } catch (e) { toast.fail(e, 'Could not move that guest'); }
@@ -372,7 +372,7 @@ function FixModal({ finding, onClose }: {
                 {o.spareRooms === 0
                   ? 'No room of any other type is free for these dates.'
                   : `Only ${o.spareRooms} spare room(s) for ${o.oversold} guest(s) over.`}{' '}
-                Someone will have to be walked — do that from the guest's booking, and record
+                Someone will have to be walked - do that from the guest's booking, and record
                 where they went and what it cost.
               </WarnNote>
             ) : (
@@ -400,7 +400,7 @@ function FixModal({ finding, onClose }: {
                   <p className="text-[11px] text-status-warn">{g.blockedReason}</p>
                 ) : (
                   <div className="space-y-2">
-                    <OptionRow label="Reassign" hint="Same room type — costs nothing"
+                    <OptionRow label="Reassign" hint="Same room type - costs nothing"
                       rooms={g.sameType} tone="mint"
                       onPick={(room) => run(g, room, 'reassign')} busy={apply.isPending} />
                     <OptionRow label="Upgrade" hint="Guest keeps their rate; the property absorbs the difference"
@@ -469,7 +469,7 @@ const RESOLUTIONS = [
   'A booking was cancelled',
   'Guest walked to another hotel',
   'Out-of-order block released',
-  'Deliberate oversell — leaving it',
+  'Deliberate oversell - leaving it',
   'Other',
 ];
 
@@ -506,7 +506,7 @@ function ResolveModal({ finding, onClose }: {
         <InfoNote>
           <span className="inline-flex items-start gap-1.5">
             <CircleAlert className="w-3.5 h-3.5 shrink-0 mt-px" />
-            Marking this resolved records what was done — it does not change any booking. If the
+            Marking this resolved records what was done - it does not change any booking. If the
             dates are still oversold, the next check puts it straight back on this list.
           </span>
         </InfoNote>

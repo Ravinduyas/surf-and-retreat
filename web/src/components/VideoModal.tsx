@@ -81,7 +81,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({ onClose }) => {
               ref={iframeRef}
               className="w-full h-full"
               src={`https://www.youtube-nocookie.com/embed/${VIDEO_ID}?autoplay=1&controls=0&rel=0&iv_load_policy=3&fs=0&disablekb=1&playsinline=1&enablejsapi=1&modestbranding=1`}
-              title="Weligama surfers — Sri Lanka surf video"
+              title="Weligama surfers - Sri Lanka surf video"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
             />
             {/* Our only control: click anywhere to toggle, icon shows on hover or pause */}
@@ -112,7 +112,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({ onClose }) => {
           <h4 className="text-base font-bold text-white">This Could Be Your Morning</h4>
           <p className="text-xs text-white/70 mt-0.5 max-w-lg">
             Gentle, sandy-bottom waves five minutes from your bed. Sunrise sessions, then
-            breakfast and a full day of work or play — every single day.
+            breakfast and a full day of work or play - every single day.
           </p>
         </div>
         <button

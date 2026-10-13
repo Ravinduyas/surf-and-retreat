@@ -20,7 +20,7 @@ export const SurfSpots: React.FC = () => {
             </h2>
             <p className="text-[#59695C] text-sm leading-relaxed">
               Weligama sits in the middle of Sri Lanka&apos;s south-coast surf strip.
-              Progress from the bay to reef points as your surfing grows — our
+              Progress from the bay to reef points as your surfing grows - our
               instructors will tell you when you&apos;re ready.
             </p>
             <BookLink

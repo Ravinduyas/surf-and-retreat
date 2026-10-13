@@ -1,5 +1,5 @@
 // Dashboard and reporting endpoints. Every number here is derived from the
-// ledger or the frozen night-audit statistics — none of it is stored twice.
+// ledger or the frozen night-audit statistics - none of it is stored twice.
 import { router, type Ctx } from '../lib/http.ts';
 import { all, get, scalar } from '../db.ts';
 import { addDays, assertDate, oneOf, HttpError, nightsBetween } from '../lib/util.ts';
@@ -116,7 +116,7 @@ router.get('/api/reports/occupancy-forecast', (ctx: Ctx) => {
   return { from, to, roomTypes: [...byType.values()] };
 }, { perm: 'reports.read' });
 
-/** Every closed day's frozen statistics — the manager's history table. */
+/** Every closed day's frozen statistics - the manager's history table. */
 router.get('/api/reports/daily-stats', (ctx: Ctx) => {
   const { from, to } = window(ctx, -30);
   return all<any>(
@@ -132,7 +132,7 @@ router.get('/api/reports/daily-stats', (ctx: Ctx) => {
   }));
 }, { perm: 'reports.read' });
 
-/** Guest ledger balances that are still open — the AR/credit watchlist. */
+/** Guest ledger balances that are still open - the AR/credit watchlist. */
 router.get('/api/reports/outstanding', (ctx: Ctx) => all<any>(
   `SELECT f.id, f.number, f.name, f.status, r.id AS reservation_id, r.confirmation,
           r.guest_name, r.status AS res_status, r.arrival, r.departure, rm.number AS room_number,

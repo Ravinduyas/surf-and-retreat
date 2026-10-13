@@ -5,10 +5,10 @@
 // This is the API surface the PMS front-end / booking engine calls
 // instead of talking to Beds24. Endpoints:
 //   GET  /health
-//   GET  /connectors              — connectors + certification state
-//   GET  /calendar?room=DLXK      — source-of-truth ARI
-//   POST /ari                     — set a BAR cell, auto-republish
-//   POST /webhooks/:channel       — inbound OTA booking notification
+//   GET  /connectors              - connectors + certification state
+//   GET  /calendar?room=DLXK      - source-of-truth ARI
+//   POST /ari                     - set a BAR cell, auto-republish
+//   POST /webhooks/:channel       - inbound OTA booking notification
 //   GET  /sync-log
 //   GET  /parity
 // ─────────────────────────────────────────────────────────────

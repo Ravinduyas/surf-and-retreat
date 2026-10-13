@@ -71,7 +71,7 @@ export const HomeHero: React.FC = () => {
 
         </div>
 
-        {/* Right Column: Split Image (Surf vs Work) & Floating Link Cards — bleeds to the card edge on desktop */}
+        {/* Right Column: Split Image (Surf vs Work) & Floating Link Cards - bleeds to the card edge on desktop */}
         {/* Pulled up by the navbar height and down by the card's bottom padding, so the photo runs edge to edge */}
         <div className="lg:col-span-8 relative lg:-mr-8 lg:-mt-[108px] lg:-mb-6 lg:self-stretch">
           {/* Rounds its own right-hand corners: the card no longer clips it */}

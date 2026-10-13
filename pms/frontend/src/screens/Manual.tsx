@@ -1,7 +1,7 @@
 // The user manual, inside the system.
 //
 // A PDF nobody opens is not documentation. This lives where the work happens,
-// searches, and links straight into the screen it is describing — so reading
+// searches, and links straight into the screen it is describing - so reading
 // about the night audit puts you one click from running it.
 //
 // The writing is in `manual/content.tsx` and the pictures are in
@@ -20,7 +20,7 @@ export function ManualScreen() {
   const bodyRef = useRef<HTMLDivElement>(null);
 
   /**
-   * Search over titles, summaries and keywords — not the body.
+   * Search over titles, summaries and keywords - not the body.
    *
    * Searching the body would mean flattening React elements to text on every
    * keystroke, and it would rank a topic that mentions "deposit" once above the
@@ -86,7 +86,7 @@ export function ManualScreen() {
           </p>
           {results.length === 0 ? (
             <p className="text-[13px] text-dash-muted">
-              Try a word from what you are trying to do — &ldquo;deposit&rdquo;,
+              Try a word from what you are trying to do - &ldquo;deposit&rdquo;,
               &ldquo;overbooking&rdquo;, &ldquo;night audit&rdquo;, &ldquo;dorm&rdquo;.
             </p>
           ) : (

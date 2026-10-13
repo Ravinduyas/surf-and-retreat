@@ -9,8 +9,8 @@
 //   · **A bad value is accepted.** `PORT=80a0` parses to `NaN` and the server
 //     binds something nobody asked for. `HELIO_NIGHT_AUDIT_HOUR=25` schedules a
 //     job for an hour that does not exist.
-//   · **A typo is silent.** `HELIO_BACKUP_ENABLE=false` — one letter short of
-//     `..._ENABLED` — leaves backups on while the operator believes they are
+//   · **A typo is silent.** `HELIO_BACKUP_ENABLE=false` - one letter short of
+//     `..._ENABLED` - leaves backups on while the operator believes they are
 //     off. Nothing reads the misspelled name, so nothing complains.
 //   · **A missing secret downgrades security quietly.** A `HELIO_SECRET_KEY`
 //     under sixteen characters turns off encryption at rest and the server
@@ -18,7 +18,7 @@
 //     the wrong one for a machine holding real card tokens.
 //
 // So: every variable is declared once, with a type, a default, documentation
-// and — where it matters — a rule about which environments must supply it.
+// and - where it matters - a rule about which environments must supply it.
 // Everything is checked on the way up, every problem is reported together
 // rather than one per restart, and a server that cannot be configured
 // correctly refuses to start instead of running in a shape nobody chose.
@@ -55,7 +55,7 @@ export interface Entry<T> {
   readonly fallback?: T;
   /** Default `'never'`: absent is fine everywhere. */
   readonly required?: Requirement;
-  /** Never printed, never logged — reported as a length and a fingerprint. */
+  /** Never printed, never logged - reported as a length and a fingerprint. */
   readonly secret?: boolean;
   /** Shown in `.env.example`. Must never be a real credential. */
   readonly example?: string;
@@ -133,7 +133,7 @@ export function parseEnvFile(text: string): Map<string, string> {
       value = value.slice(1, -1);
     } else {
       // An unquoted value ends at a ` #`. Requiring the space means a value
-      // that legitimately contains a hash — plenty of generated secrets do —
+      // that legitimately contains a hash - plenty of generated secrets do -
       // survives, while `PORT=5000 # the api` does not keep the comment.
       const hash = value.indexOf(' #');
       if (hash >= 0) value = value.slice(0, hash).trimEnd();
@@ -146,7 +146,7 @@ export function parseEnvFile(text: string): Map<string, string> {
 // ─── Loading ─────────────────────────────────────────────────
 
 /**
- * The file cascade, lowest priority first — the same order Vite uses, so the
+ * The file cascade, lowest priority first - the same order Vite uses, so the
  * front end and the API behave identically and nobody has to remember two sets
  * of rules.
  *
@@ -286,7 +286,7 @@ export function int(opts: { min?: number; max?: number } = {}): Kind<number> {
  * An interval that can also be switched off with `0`.
  *
  * Three of this server's timers are guarded by `if (SECONDS > 0)`, so zero has
- * always meant "do not schedule this at all" — the verification suite relies on
+ * always meant "do not schedule this at all" - the verification suite relies on
  * it to stop a background drain interfering with a test. A plain minimum would
  * make that documented, working value a startup error, which is how this type
  * came to exist: the schema has to describe the setting as it is used, not as
@@ -349,7 +349,7 @@ export function list<T>(inner: Kind<T>, opts: { min?: number } = {}): Kind<T[]> 
       }
       return parts.map((p, i) => {
         try { return inner.parse(p); } catch (e) {
-          throw new Error(`have every entry ${(e as Error).message} — item ${i + 1} (${JSON.stringify(p)}) does not`);
+          throw new Error(`have every entry ${(e as Error).message} - item ${i + 1} (${JSON.stringify(p)}) does not`);
         }
       });
     },
@@ -401,8 +401,8 @@ export function secret(opts: { min?: number; pattern?: RegExp; patternLabel?: st
  * What a secret looks like in a report.
  *
  * Never the value. A length and a short fingerprint answer the two questions
- * an operator actually has — "is one set?" and "is it the same one as on the
- * other machine?" — without putting the credential in a terminal, a screenshot
+ * an operator actually has - "is one set?" and "is it the same one as on the
+ * other machine?" - without putting the credential in a terminal, a screenshot
  * or a support ticket.
  */
 export function fingerprint(value: string): string {
@@ -583,7 +583,7 @@ export function formatProblems(problems: readonly Problem[], mode: Mode): string
  *   · Anything with a working default is **commented out**. An operator who
  *     uncomments it is making a decision; one who leaves it alone keeps
  *     tracking the default instead of freezing today's copy of it. That
- *     matters most for `HELIO_BACKUP_DIR`, whose default follows `HELIO_DB` —
+ *     matters most for `HELIO_BACKUP_DIR`, whose default follows `HELIO_DB` -
  *     writing it out would pin the backups to one place forever.
  *   · A required variable is left **uncommented and empty**, so it is
  *     obviously waiting for an answer.

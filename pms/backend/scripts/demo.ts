@@ -5,12 +5,12 @@
 //
 // Everything here is created by calling the real API in the same order an
 // operator would, then advancing the business date day by day with the night
-// audit. Nothing is written straight into tables — so the folios balance, the
+// audit. Nothing is written straight into tables - so the folios balance, the
 // statistics are computed from actual postings, and the audit trail is real.
 //
 // Property : The Fun Bunk
 // Rooms    : 4 × single, 1 × family (two double beds), 3 × dorm
-// Dorm beds: 24 in total (8 per dorm) — change DORM_BEDS_PER_ROOM for 24 each
+// Dorm beds: 24 in total (8 per dorm) - change DORM_BEDS_PER_ROOM for 24 each
 // ─────────────────────────────────────────────────────────────
 import { config } from '../src/config.ts';
 
@@ -78,7 +78,7 @@ const day = (offset: number) => addDays(TODAY, offset);
 
 const money = (minor: number) => `${CURRENCY} ${(minor / 100).toFixed(2)}`;
 function log(step: string, detail = '') {
-  process.stdout.write(`  · ${step}${detail ? ` — ${detail}` : ''}\n`);
+  process.stdout.write(`  · ${step}${detail ? ` - ${detail}` : ''}\n`);
 }
 function section(title: string) {
   process.stdout.write(`\n${title}\n${'─'.repeat(title.length)}\n`);
@@ -310,7 +310,7 @@ async function main() {
   if (!health.setupRequired) {
     process.stdout.write(
       '\nThis installation already has a property.\n'
-      + 'The demo builds a property from scratch — stop the API, delete\n'
+      + 'The demo builds a property from scratch - stop the API, delete\n'
       + 'backend/data/helio.db (and its -wal / -shm files), start it again, then re-run.\n\n');
     process.exitCode = 1;
     return;
@@ -467,7 +467,7 @@ async function main() {
     adjustType: 'percent', adjustValue: -800, roomTypeId: dorm.id, priority: 5,
   });
   await post('/api/promotions', {
-    code: 'EARLYBIRD', name: 'Early bird — 15% off', kind: 'early_bird',
+    code: 'EARLYBIRD', name: 'Early bird - 15% off', kind: 'early_bird',
     discountType: 'percent', discountValue: 1500, minAdvance: 30, usageLimit: 100, deliveryMode: 'price',
   });
   await post('/api/promotions', {
@@ -519,7 +519,7 @@ async function main() {
 
   // ── Group ─────────────────────────────────────────────────
   const group = await post('/api/groups', {
-    code: 'SURFCAMP', name: 'Fun Bunk Surf Camp — October intake',
+    code: 'SURFCAMP', name: 'Fun Bunk Surf Camp - October intake',
     arrival: day(14), departure: day(18), cutoffDate: day(7),
     ratePlanId: bar.id, contactName: 'Tharindu Alwis',
     contactEmail: 'tharindu@surfcamp.example', contactPhone: '+94 77 889 9001',
@@ -535,21 +535,21 @@ async function main() {
       { guestName: 'Tobias Nilsen', email: 'tobias.nilsen@example.no', adults: 1, roomTypeId: dorm.id },
     ],
   });
-  log('Group', 'Fun Bunk Surf Camp — 8 dorm beds held, 5 names on the rooming list');
+  log('Group', 'Fun Bunk Surf Camp - 8 dorm beds held, 5 names on the rooming list');
 
   await post('/api/waitlist', {
     guestName: 'Marta Kowalska', email: 'marta.kowalska@example.pl', phone: '+48 601 223 344',
     arrival: day(5), departure: day(9), roomTypeId: family.id, adults: 2, children: 2,
-    note: 'Wants the family room — call if a cancellation comes in',
+    note: 'Wants the family room - call if a cancellation comes in',
   });
 
   // ── Maintenance ───────────────────────────────────────────
   await post('/api/work-orders', {
-    title: 'Dorm D2 — bunk ladder loose', roomId: null, category: 'furniture', priority: 'high',
+    title: 'Dorm D2 - bunk ladder loose', roomId: null, category: 'furniture', priority: 'high',
     description: 'Ladder on bed D2-05 wobbles, guest reported it at the desk.',
   });
   await post('/api/work-orders', {
-    title: 'Room 103 — air conditioning noisy', category: 'hvac', priority: 'normal',
+    title: 'Room 103 - air conditioning noisy', category: 'hvac', priority: 'normal',
     description: 'Compressor rattles overnight; service due.',
   });
   await post('/api/lost-found', {
@@ -589,7 +589,7 @@ async function main() {
         });
         created.set(b.guest, res.id);
       } catch (e) {
-        // Usually the house is genuinely full for those dates — worth saying so
+        // Usually the house is genuinely full for those dates - worth saying so
         // rather than quietly ending up with fewer bookings than intended.
         rejected.push(`booking refused · ${b.guest} (${b.type} ${day(b.arrive)}→${day(b.depart)})`);
       }
@@ -601,7 +601,7 @@ async function main() {
       if (id) await tryPost(`/api/reservations/${id}/cancel`, { reason: b.cancel!.reason });
     }
 
-    // Departures settle and leave first — the day's real order of events.
+    // Departures settle and leave first - the day's real order of events.
     const frontDesk = await get('/api/front-desk');
     for (const dep of frontDesk.departures) {
       const detail = await get(`/api/reservations/${dep.id}`);
@@ -609,7 +609,7 @@ async function main() {
       if (folio) {
         if (detail.companyId) {
           // Corporate stays are invoiced to the company's account rather than
-          // settled at the desk — that is what puts a balance on the city ledger.
+          // settled at the desk - that is what puts a balance on the city ledger.
           await tryPost(`/api/folios/${folio.id}/invoice`, {
             billTo: detail.company ?? 'Corporate account',
             companyId: detail.companyId,
@@ -646,12 +646,12 @@ async function main() {
     }
     await tryPost('/api/housekeeping/tasks/generate', { date });
 
-    // Arrivals check in — except the ones that never turn up.
+    // Arrivals check in - except the ones that never turn up.
     const noShowNames = new Set(BOOKINGS.filter((b) => b.noShow).map((b) => b.guest));
     const arrivalsNow = (await get('/api/front-desk')).arrivals;
     for (const arr of arrivalsNow) {
       if (noShowNames.has(arr.guest)) continue;
-      // On the open day, guests with a late ETA have not turned up yet — they
+      // On the open day, guests with a late ETA have not turned up yet - they
       // are left on the arrivals list so the front desk has real work waiting.
       if (offset === 0 && arr.eta && arr.eta >= '17:00') continue;
       try {
@@ -694,7 +694,7 @@ async function main() {
       }
     }
 
-    // Close the day — except today, which stays open.
+    // Close the day - except today, which stays open.
     if (offset < 0) {
       const audit = await tryPost('/api/night-audit/run', { force: true });
       if (audit) {
@@ -715,7 +715,7 @@ async function main() {
   if (corporate && corporate.balanceMinor > 0) {
     await tryPost(`/api/ar/${corporate.companyId}/payment`, {
       amountMinor: Math.round(corporate.balanceMinor / 2),
-      reference: 'Bank transfer — part settlement',
+      reference: 'Bank transfer - part settlement',
       note: 'Remainder due on 30-day terms',
     });
     log('City ledger', `${money(corporate.balanceMinor)} invoiced to Lanka Tea Exports, half settled`);
@@ -735,7 +735,7 @@ async function main() {
     {
       name: 'Arrival details',
       body: 'Hello {{firstName}}, we are looking forward to seeing you on {{arrival}}. '
-        + 'Check-in opens at {{checkInTime}} — if you arrive earlier we can store your bags. '
+        + 'Check-in opens at {{checkInTime}} - if you arrive earlier we can store your bags. '
         + 'Is there anything you would like us to have ready?',
     },
     {
@@ -751,7 +751,7 @@ async function main() {
     {
       name: 'Thanks for staying',
       body: 'Thank you for staying with us, {{firstName}}. We hope the {{roomType}} was '
-        + 'comfortable. If anything was not right, please tell us — we would rather hear it '
+        + 'comfortable. If anything was not right, please tell us - we would rather hear it '
         + 'from you than read it later.',
     },
   ];

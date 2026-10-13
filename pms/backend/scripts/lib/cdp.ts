@@ -111,7 +111,7 @@ export async function openApp(opts: { email?: string; password?: string; path?: 
   `);
   if (opts.path) {
     // Reload first so the app boots with the token just written, *then* set the
-    // route. Navigating to the hash and reloading afterwards loses it — the
+    // route. Navigating to the hash and reloading afterwards loses it - the
     // reload re-runs the router against the app's own restored state and lands
     // on the dashboard, which is a very confusing way for a UI check to fail.
     await cdp.send('Page.reload');

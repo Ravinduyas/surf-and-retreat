@@ -31,7 +31,7 @@
   animation: modal-fade 200ms ease-out;
 }
 
-/* ── Loading & reveal motion — themed "surface from the water" system.
+/* ── Loading & reveal motion - themed "surface from the water" system.
    Everything lives inside the no-preference block so reduced-motion
    users get an instant, static page. ── */
 
@@ -255,7 +255,7 @@
   .preloader {
     display: none;
   }
-  /* No drifting for these users — let them swipe the logo strip instead. */
+  /* No drifting for these users - let them swipe the logo strip instead. */
   .marquee {
     overflow-x: auto;
   }

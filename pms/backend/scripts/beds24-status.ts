@@ -8,7 +8,7 @@
 // **Read-only on both sides.** This is the difference between it and
 // `beds24:verify`: that one proves the round trip by *making* a change 300 days
 // out and putting it back, which is the stronger proof and the reason you would
-// not run it casually against a trading property. This one only reads — a token
+// not run it casually against a trading property. This one only reads - a token
 // refresh (which returns an access token and does not rotate the refresh token),
 // then properties, rooms and the calendar. Nothing is written anywhere.
 //
@@ -18,7 +18,7 @@
 // A stored status is a memory; this asks.
 //
 // What it can prove: Helio ↔ Beds24. What it cannot: Beds24 → Hostelworld or
-// Booking.com. That hop belongs to Beds24 and only Beds24 can report it — but
+// Booking.com. That hop belongs to Beds24 and only Beds24 can report it - but
 // if the price is right here, the remaining hop is theirs, not yours.
 // ─────────────────────────────────────────────────────────────
 const { all, get } = await import('../src/db.ts');
@@ -32,7 +32,7 @@ const arg = (name: string): string | undefined => {
 };
 
 const out = (s = '') => process.stdout.write(`${s}\n`);
-const money = (m: number | null | undefined) => (m == null ? '—' : `${(m / 100).toFixed(2)}`);
+const money = (m: number | null | undefined) => (m == null ? '-' : `${(m / 100).toFixed(2)}`);
 
 let problems = 0;
 
@@ -62,7 +62,7 @@ const client = beds24ClientFor(channel);
 // The first real call is the authentication test. `listProperties` cannot
 // answer without exchanging the refresh token for an access token, so a
 // successful reply proves the credential and tells us which account it belongs
-// to in one round trip — and asking the token what it can see is a better
+// to in one round trip - and asking the token what it can see is a better
 // question than asking whether it exists.
 out('\n1 · Authentication and account');
 let propsRes: any;
@@ -71,7 +71,7 @@ try {
   out('   ✓ refresh token accepted');
 } catch (e) {
   problems++;
-  out(`   ✗ FAILED — ${(e as Error).message}`);
+  out(`   ✗ FAILED - ${(e as Error).message}`);
   out('');
   out('   Everything below depends on this, so nothing else was checked.');
   out('   Reconnect from Channel Manager with a fresh invite code, or set');
@@ -80,14 +80,14 @@ try {
 }
 
 const remoteProps: any[] = propsRes?.data?.data ?? [];
-for (const p of remoteProps) out(`   · ${p.name} — id ${p.id}, ${p.propertyType ?? 'property'}, ${p.currency ?? '?'}`);
+for (const p of remoteProps) out(`   · ${p.name} - id ${p.id}, ${p.propertyType ?? 'property'}, ${p.currency ?? '?'}`);
 if (!remoteProps.length) { problems++; out('   ✗ the token sees no properties'); }
 // A currency mismatch silently sells rooms at the wrong number, and nothing
 // downstream can detect it: 5.50 is a valid price in either currency.
 for (const p of remoteProps) {
   if (p.currency && property.currency && p.currency !== property.currency) {
     problems++;
-    out(`   ✗ currency mismatch — Helio is ${property.currency}, ${p.name} is ${p.currency}`);
+    out(`   ✗ currency mismatch - Helio is ${property.currency}, ${p.name} is ${p.currency}`);
   }
 }
 
@@ -103,7 +103,7 @@ const mappings = all<any>(`
   WHERE m.channel_id = ? AND m.active = 1
   ORDER BY rt.name`, channel.id);
 
-if (!mappings.length) { problems++; out('   ✗ no active mappings — nothing can be published'); }
+if (!mappings.length) { problems++; out('   ✗ no active mappings - nothing can be published'); }
 
 for (const m of mappings) {
   const r = byId.get(String(m.external_room_id));
@@ -125,7 +125,7 @@ for (const m of mappings) {
 // A rate rule carries `priceFor`. Set to "up to 2 persons" on a room that
 // sleeps four, Beds24 charges two units of whatever we send: a suite pushed at
 // 74 is advertised at 148. The number leaves here correct, arrives correct, and
-// is still wrong on the OTA — so a price comparison alone will never find it.
+// is still wrong on the OTA - so a price comparison alone will never find it.
 // This is the check that would have.
 out('\n   Price basis');
 try {
@@ -144,12 +144,12 @@ try {
       problems++;
       out(`   ✗ ${m.room_type}`);
       out(`       "${rule.name}" is priced for up to ${rule.upToPersonValue} guest(s) but the room`);
-      out(`       sleeps ${info.maxPeople}, so ${HUB} charges ${units}× — a price of X is advertised as ${units}X.`);
+      out(`       sleeps ${info.maxPeople}, so ${HUB} charges ${units}× - a price of X is advertised as ${units}X.`);
       out(`       Fix in ${HUB}: set this rate's "price for" to ${info.maxPeople} guests (one price per room).`);
     }
   }
 } catch (e) {
-  out(`   · could not read rate rules — ${(e as Error).message}`);
+  out(`   · could not read rate rules - ${(e as Error).message}`);
 }
 
 // ── 4 · Is the price the same on both sides? ─────────────────
@@ -163,7 +163,7 @@ for (const m of mappings) {
     cal = await client.getCalendar(String(m.external_room_id), FROM, TO);
   } catch (e) {
     problems++;
-    out(`   ✗ ${m.room_type}: calendar read failed — ${(e as Error).message}`);
+    out(`   ✗ ${m.room_type}: calendar read failed - ${(e as Error).message}`);
     continue;
   }
   const entries: any[] = cal?.data?.data ?? [];
@@ -222,13 +222,13 @@ const publishing = !readOnlyChannels();
 
 if (!publishing) {
   problems++;
-  out('   ✗ HELIO_CHANNEL_READONLY is set — nothing queued will ever be sent.');
+  out('   ✗ HELIO_CHANNEL_READONLY is set - nothing queued will ever be sent.');
   out('     Bookings still import. Remove it from .env and restart to publish.');
 } else {
   out('   ✓ publishing is enabled');
 }
 out(`   ${queued.n === 0 ? '✓' : '·'} ${queued.n} waiting${queued.oldest ? ` (oldest ${queued.oldest})` : ''}`);
-if (parked.n > 0) { problems++; out(`   ✗ ${parked.n} parked after repeated failures — see Channel Manager → Sync log`); }
+if (parked.n > 0) { problems++; out(`   ✗ ${parked.n} parked after repeated failures - see Channel Manager → Sync log`); }
 
 // ── Verdict ─────────────────────────────────────────────────
 out('');

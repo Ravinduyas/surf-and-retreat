@@ -1,8 +1,8 @@
 // What a guest bought on the website, written out for the people who have to
 // deliver it.
 //
-// The booking engine records the extras as short tags on the reservation —
-// `model:rooms-surf`, `airportPickup:UL309|2026-09-20|14:30` — because that is
+// The booking engine records the extras as short tags on the reservation -
+// `model:rooms-surf`, `airportPickup:UL309|2026-09-20|14:30` - because that is
 // also the shape a report or a search can group on. Nobody at a desk should
 // have to decode them: the driver needs a flight number and a time, the surf
 // school needs who is a beginner, and both of them are reading a screen with a
@@ -31,7 +31,7 @@ function flightDetail(raw: string): string {
     date ? longDate(date) : null,
     time || null,
   ].filter(Boolean);
-  return parts.length ? parts.join(' · ') : 'Requested — no flight details given';
+  return parts.length ? parts.join(' · ') : 'Requested - no flight details given';
 }
 
 /** One traveller's line in the surf table. */
@@ -43,7 +43,7 @@ export interface Extra {
   /**
    * The surf party, when there is one. A booking for four is four people with
    * four different levels, and reading that off one run-on line is how the
-   * wrong person ends up in the advanced group — so it is given a table of its
+   * wrong person ends up in the advanced group - so it is given a table of its
    * own, across the full width, rather than a value squeezed into half of it.
    */
   travellers?: SurfTraveller[];
@@ -66,9 +66,9 @@ export function describePreference(tag: string): Extra {
     // How the site wrote a pickup before it carried the flight with it.
     case 'addon':
       return rest === 'airportPickup'
-        ? { label: 'Airport pickup', value: 'Requested — no flight details given' }
+        ? { label: 'Airport pickup', value: 'Requested - no flight details given' }
         : rest === 'airportDrop'
-          ? { label: 'Airport drop-off', value: 'Requested — no flight details given' }
+          ? { label: 'Airport drop-off', value: 'Requested - no flight details given' }
           : { label: 'Extra', value: rest };
     case 'surf': {
       const travellers = rest.split(',').filter(Boolean).map((entry, i) => {
@@ -105,7 +105,7 @@ export function describePreference(tag: string): Extra {
 }
 
 /**
- * The block itself. One labelled row per tag — nothing is hidden, including a
+ * The block itself. One labelled row per tag - nothing is hidden, including a
  * tag this build does not recognise, which is shown as it was written.
  */
 export function BookingExtras({ preferences, className = '' }: {

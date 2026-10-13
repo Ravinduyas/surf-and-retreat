@@ -28,7 +28,7 @@ export class BookingComConnector implements Connector {
     reservationsPush: true, content: true, promotions: true,
     bedLevel: false, derivedRates: true,
   };
-  // Starts uncertified — this is exactly the state "go direct" flips.
+  // Starts uncertified - this is exactly the state "go direct" flips.
   certification: CertificationState = 'not-started';
   health: ConnectorHealth = 'disabled';
 
@@ -42,7 +42,7 @@ export class BookingComConnector implements Connector {
   async pushAri(update: AriUpdate): Promise<PushResult> {
     if (this.certification !== 'certified' || !this.creds) {
       return { ok: false, channel: this.channel, accepted: 0, rejected: update.cells.length,
-        detail: 'Booking.com connection not certified — see certification checklist', retryable: false };
+        detail: 'Booking.com connection not certified - see certification checklist', retryable: false };
     }
     const xml = toBookingAvailXml(this.creds.hotelId, update.cells);
     // TODO(cert): POST xml to ARI_HOST with Basic auth over TLS 1.2,
@@ -76,7 +76,7 @@ export class BookingComConnector implements Connector {
   }
 }
 
-// Minimal OTA_HotelAvailNotifRQ builder (illustrative — the real message
+// Minimal OTA_HotelAvailNotifRQ builder (illustrative - the real message
 // also carries rates via OTA_HotelRateAmountNotifRQ and restrictions).
 function toBookingAvailXml(hotelId: string, cells: AriCell[]): string {
   const items = cells.map((c) =>

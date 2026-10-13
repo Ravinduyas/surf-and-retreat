@@ -1,6 +1,6 @@
 // Configuration: property, room types, rooms, beds, rate plans, taxes,
 // transaction codes, policies and companies. This is where a new property is
-// made operational — the app ships with none of it pre-filled.
+// made operational - the app ships with none of it pre-filled.
 import { router, type Ctx } from '../lib/http.ts';
 import { all, get, run, tx, scalar, jsonCol, parseJson } from '../db.ts';
 import {
@@ -126,7 +126,7 @@ function shapeRoomType(rt: any) {
  */
 router.get('/api/bed-kinds', () => ({
   kinds: BED_KINDS,
-  note: 'A bunk is one piece of furniture and two berths — it sleeps two.',
+  note: 'A bunk is one piece of furniture and two berths - it sleeps two.',
 }), { perm: 'config.read' });
 
 router.get('/api/room-types', (ctx: Ctx) => all<any>(
@@ -208,7 +208,7 @@ router.patch('/api/room-types/:id', (ctx: Ctx) => {
   ) || (ctx.body.active !== undefined && (ctx.body.active ? 1 : 0) !== before.active);
 
   if (moved) {
-    // No date range comes with a room-type edit — it applies from now on. 180
+    // No date range comes with a room-type edit - it applies from now on. 180
     // days is the forward window the rest of the system works to.
     const today = get<{ business_date: string }>(
       'SELECT business_date FROM properties WHERE id = ?', pid(ctx))!.business_date;
@@ -221,7 +221,7 @@ router.delete('/api/room-types/:id', (ctx: Ctx) => {
   const used = scalar<number>('SELECT count(*) AS n FROM reservations WHERE room_type_id = ?', ctx.params.id);
   if (used > 0) {
     run('UPDATE room_types SET active = 0 WHERE id = ? AND property_id = ?', ctx.params.id, pid(ctx));
-    return { ok: true, deactivated: true, reason: 'Room type has reservations — deactivated instead of deleted' };
+    return { ok: true, deactivated: true, reason: 'Room type has reservations - deactivated instead of deleted' };
   }
   run('DELETE FROM room_types WHERE id = ? AND property_id = ?', ctx.params.id, pid(ctx));
   audit(ctx.auth, { action: 'roomtype.delete', entity: 'ROOM_TYPE', entityId: ctx.params.id }, ctx.ip);
@@ -289,7 +289,7 @@ router.post('/api/rooms', (ctx: Ctx) => tx(() => {
   return { id: roomId, number: b.number };
 }), { perm: 'config.write' });
 
-/** Bulk room creation — the fastest way to stand up a floor plan. */
+/** Bulk room creation - the fastest way to stand up a floor plan. */
 router.post('/api/rooms/bulk', (ctx: Ctx) => tx(() => {
   const b = ctx.body;
   const roomType = get<any>('SELECT * FROM room_types WHERE id = ? AND property_id = ?',
@@ -350,7 +350,7 @@ router.patch('/api/rooms/:id', (ctx: Ctx) => {
   if (ctx.body.features !== undefined) { sets.push('features = ?'); args.push(jsonCol(ctx.body.features)); }
   if (ctx.body.bedConfig !== undefined) {
     // Passing null clears the override and puts the room back on its type's
-    // configuration — otherwise a one-off change could never be undone.
+    // configuration - otherwise a one-off change could never be undone.
     sets.push('bed_config = ?');
     args.push(ctx.body.bedConfig === null ? null : jsonCol(parseBedConfig(ctx.body.bedConfig)));
   }
@@ -370,7 +370,7 @@ router.delete('/api/rooms/:id', (ctx: Ctx) => {
     `SELECT count(*) AS n FROM reservation_nights WHERE room_id = ?`, ctx.params.id);
   if (used > 0) {
     run('UPDATE rooms SET active = 0 WHERE id = ? AND property_id = ?', ctx.params.id, pid(ctx));
-    return { ok: true, deactivated: true, reason: 'Room has stay history — deactivated instead of deleted' };
+    return { ok: true, deactivated: true, reason: 'Room has stay history - deactivated instead of deleted' };
   }
   run('DELETE FROM rooms WHERE id = ? AND property_id = ?', ctx.params.id, pid(ctx));
   audit(ctx.auth, { action: 'room.delete', entity: 'ROOM', entityId: ctx.params.id }, ctx.ip);
@@ -646,7 +646,7 @@ router.get('/api/config/hostelworld', (ctx: Ctx) =>
 /**
  * Save, then bring every open Hostelworld booking in line: switching the
  * folio credit on posts the lines, switching it off strikes them. Bookings
- * with no collected figure are left alone here — filling those in is the
+ * with no collected figure are left alone here - filling those in is the
  * explicit "apply" below, because it invents a number from the percentage.
  */
 router.put('/api/config/hostelworld', (ctx: Ctx) => tx(() => {
@@ -659,7 +659,7 @@ router.put('/api/config/hostelworld', (ctx: Ctx) => tx(() => {
  * Re-read every open booking's money from Beds24: Hostelworld's own total
  * and deposit, applied to bookings imported before the split was switched
  * on. Async because it talks to the channel; not in a transaction for the
- * same reason — each booking is written on its own as the answers arrive.
+ * same reason - each booking is written on its own as the answers arrive.
  */
 router.post('/api/config/hostelworld/refresh', async (ctx: Ctx) => {
   const result = await refreshOtaMoney(pid(ctx), ctx.auth);

@@ -29,7 +29,7 @@ Probed on the live account:
 ```
 
 `url` is where Beds24 will POST when a booking changes. `customHeader` is a
-header it will send with every call — the shared secret that proves the caller
+header it will send with every call - the shared secret that proves the caller
 is Beds24 and not somebody who guessed the path. It is writable through the same
 `POST /properties` that already sets room quantity.
 
@@ -45,7 +45,7 @@ is what actually runs until this is deployed somewhere with a hostname.
 
 ## The checklist
 
-### Inbound — closing the hole
+### Inbound - closing the hole
 
 - [x] **S1 · Poll bookings on a schedule.** Every 60s by default, using
       `modifiedFrom` against the last successful poll so each call is small.
@@ -56,11 +56,11 @@ is what actually runs until this is deployed somewhere with a hostname.
       the configured secret is refused. An unauthenticated endpoint that creates
       reservations is not an endpoint, it is a way in.
 - [x] **S4 · Import exactly once.** A booking arriving by webhook and again by
-      the next poll must update, not duplicate — keyed on the OTA reference.
+      the next poll must update, not duplicate - keyed on the OTA reference.
 - [x] **S5 · Register the URL with Beds24** from a command, and show on the
       Channel Manager whether real-time is live or the system is polling.
 
-### Outbound — closing the gap
+### Outbound - closing the gap
 
 - [ ] **S6 · Drain the queue on demand.** A change queued now waits up to a
       minute for the next tick; nudging the drain right after a change makes it
@@ -68,7 +68,7 @@ is what actually runs until this is deployed somewhere with a hostname.
 
 ### Verification
 
-- [x] **S7 · `scripts/realtime-check.ts`** — a webhook without the secret is
+- [x] **S7 · `scripts/realtime-check.ts`** - a webhook without the secret is
       refused; with it, the booking lands; the same booking twice is one
       reservation; polling picks up what the webhook missed; and a failed poll
       does not move the watermark forward, so nothing is skipped.

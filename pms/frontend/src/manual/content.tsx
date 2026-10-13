@@ -122,10 +122,10 @@ export const MANUAL: Section[] = [
             <Terms items={[
               ['Business date', <>The day the property is trading, shown in the top bar. It is
                 <em> not</em> today&rsquo;s calendar date and only the night audit moves it. If
-                it is behind, check-ins start being refused — see <strong>The night audit</strong>.</>],
+                it is behind, check-ins start being refused - see <strong>The night audit</strong>.</>],
               ['Channels', <>Whether distribution is live. &ldquo;Not connected&rdquo; means your
                 rooms are sold only here and on your own booking page.</>],
-              ['⌘K / Ctrl-K', <>Search from anywhere — a guest name, a confirmation number, a
+              ['⌘K / Ctrl-K', <>Search from anywhere - a guest name, a confirmation number, a
                 room number or a company.</>],
               ['The bottom strip', <>The four things a receptionist does most, one tap away on a
                 phone or a tablet.</>],
@@ -145,7 +145,7 @@ export const MANUAL: Section[] = [
               ['1. Room types', <>What you sell: the two private rooms and the four dorms.
                 Configuration → Room types.</>],
               ['2. Rooms and beds', <>Your actual floor plan. A dorm&rsquo;s beds are created with
-                it — six beds is six things that can be sold.</>],
+                it - six beds is six things that can be sold.</>],
               ['3. Rates', <>A price per room type per night. Nothing can be quoted or sold on a
                 date with no rate. Rates &amp; Inventory.</>],
               ['4. Taxes', <>If you charge any. They compound in the order you set.</>],
@@ -188,7 +188,7 @@ export const MANUAL: Section[] = [
             </P>
             <Terms items={[
               ['Check-in', <>Turns a booking into a guest in a bed. Refused if the arrival date
-                is later than the business date — that is the system telling you the date has
+                is later than the business date - that is the system telling you the date has
                 not been rolled, not that the guest is early.</>],
               ['Check-out', <>Settles the folio and marks the room or bed dirty, which is what
                 puts it on the housekeeping list.</>],
@@ -217,7 +217,7 @@ export const MANUAL: Section[] = [
               'Quick actions → Walk-in, or New reservation.',
               'Pick the dates and the room type. The price comes from your rate plan automatically.',
               'Fill in the guest. A phone number is worth having even when it is optional.',
-              'Save, then check them in — a walk-in is a booking that happens to start now.',
+              'Save, then check them in - a walk-in is a booking that happens to start now.',
             ],
           },
         ],
@@ -236,7 +236,7 @@ export const MANUAL: Section[] = [
             <DormDiagram />
             <P>
               A bed is what gets priced, sold, assigned, cleaned and drawn on the tape chart. So
-              a group of four sharing a dorm is four reservations linked together — they share a
+              a group of four sharing a dorm is four reservations linked together - they share a
               confirmation and are handled as one party, but each one is a bed.
             </P>
             <Note>
@@ -264,7 +264,7 @@ export const MANUAL: Section[] = [
               ['Vacant Clean', 'Empty and ready. The only state a guest should be sent to.'],
               ['Vacant Dirty', 'Empty, needs cleaning. Usually the moment after a check-out.'],
               ['Occupied Clean / Dirty', 'Somebody is staying; whether it has been serviced today.'],
-              ['Out of order', <>Deliberately unsellable — a broken window, a repaint. This one
+              ['Out of order', <>Deliberately unsellable - a broken window, a repaint. This one
                 <em> does</em> remove the bed from availability, and therefore from what the OTAs
                 are told.</>],
             ]} />
@@ -300,7 +300,7 @@ export const MANUAL: Section[] = [
             <Note tone="warn">
               A booking is never deleted, only cancelled. The same is true of a folio posting,
               which is voided rather than removed. That is what makes the audit trail worth
-              anything — a system where records can vanish cannot be reconciled.
+              anything - a system where records can vanish cannot be reconciled.
             </Note>
           </>
         ),
@@ -314,7 +314,7 @@ export const MANUAL: Section[] = [
               'It becomes an ordinary confirmed booking and the hold countdown stops.',
             ],
             warning: <>If you do nothing, the hold expires and the booking cancels itself. That
-              is deliberate — but it means a booking you meant to keep can be lost by being
+              is deliberate - but it means a booking you meant to keep can be lost by being
               ignored. The hold window is yours to set on the Booking Page screen.</>,
           },
         ],
@@ -367,7 +367,7 @@ export const MANUAL: Section[] = [
             <FolioDiagram />
             <Terms items={[
               ['Folio', 'A guest’s running bill. A list of lines, nothing more.'],
-              ['Posting', 'One line on it — a room charge, a beer, a laundry, a tax.'],
+              ['Posting', 'One line on it - a room charge, a beer, a laundry, a tax.'],
               ['Void', <>Cancelling a posting. The line stays and is marked void, so the bill
                 still adds up and the history still shows what happened.</>],
               ['Balance', <>Always recomputed from the lines. It is never stored, so it cannot
@@ -388,7 +388,7 @@ export const MANUAL: Section[] = [
             steps: [
               'Cashier, or open the guest from In-House.',
               'Choose the method. Cash and card are there by default; add others in Configuration → Payments.',
-              'Enter the amount. For cash in another currency, enter what was actually handed over — the rate and the change are worked out and recorded in both currencies.',
+              'Enter the amount. For cash in another currency, enter what was actually handed over - the rate and the change are worked out and recorded in both currencies.',
               'Post it. The balance drops immediately.',
             ],
           },
@@ -396,7 +396,7 @@ export const MANUAL: Section[] = [
             title: 'Correct a mistake',
             steps: [
               'Find the posting on the folio.',
-              'Void it — do not try to post a negative amount.',
+              'Void it - do not try to post a negative amount.',
               'Post the correct line.',
               'Both the void and the correction are in the audit trail with your name on them.',
             ],
@@ -413,7 +413,7 @@ export const MANUAL: Section[] = [
           <>
             <P>
               A direct booking that asks for nothing costs nothing to abandon. That is most of
-              why no-show rates on direct and OTA bookings are not comparable — an OTA booking
+              why no-show rates on direct and OTA bookings are not comparable - an OTA booking
               carries a card, and until you set a deposit yours does not.
             </P>
             <Terms items={[
@@ -427,7 +427,7 @@ export const MANUAL: Section[] = [
             ]} />
             <Note tone="warn">
               This system does not process cards. It states the amount and records it; collecting
-              it is up to you — a payment link, a transfer, or on arrival. Do not set a deposit
+              it is up to you - a payment link, a transfer, or on arrival. Do not set a deposit
               you have no way to collect, because the page will promise the guest something you
               cannot follow through on.
             </Note>
@@ -448,7 +448,7 @@ export const MANUAL: Section[] = [
         body: (
           <>
             <P>
-              The property is kept in one currency — The Fun Bunk is in USD. Every rate, folio,
+              The property is kept in one currency - The Fun Bunk is in USD. Every rate, folio,
               report and statistic is in it, and it is set in Configuration → Property.
             </P>
             <Note tone="warn">
@@ -483,7 +483,7 @@ export const MANUAL: Section[] = [
           <>
             <PricingChainDiagram />
             <Terms items={[
-              ['Rate plan', <>A way of selling. The Fun Bunk has one, <code>BAR</code> — the
+              ['Rate plan', <>A way of selling. The Fun Bunk has one, <code>BAR</code> - the
                 standard rate. Most hostels never need a second.</>],
               ['Rate calendar', <>A price per room type, per plan, per date. This is what you
                 edit day to day, and what a season or a weekend uplift actually is.</>],
@@ -491,7 +491,7 @@ export const MANUAL: Section[] = [
                 arrivals on a date, stop-sell.</>],
             ]} />
             <Note tone="warn">
-              A date with no rate cannot be quoted or sold — not by the booking page, not by the
+              A date with no rate cannot be quoted or sold - not by the booking page, not by the
               OTAs, not at the desk. Rates are loaded a year ahead here; when that runs low, load
               more before a guest finds out for you.
             </Note>
@@ -533,7 +533,7 @@ export const MANUAL: Section[] = [
               ['The link', 'Share it, print it, put it in your email signature and on a card at the desk.'],
               ['Switched off', <>The page stays up but asks guests to contact you instead. Use it
                 while you are between seasons rather than letting the link break.</>],
-              ['Readiness', <>The three counts on the screen — room types, sellable beds, days
+              ['Readiness', <>The three counts on the screen - room types, sellable beds, days
                 priced ahead. If any is zero the page has nothing to sell.</>],
             ]} />
           </>
@@ -564,19 +564,19 @@ export const MANUAL: Section[] = [
               ['Invite code', <>Made in your channel manager account, single-use, and it expires
                 after 24 hours. It is the only thing you ever paste in here.</>],
               ['Refresh token', <>What this PMS stores, encrypted. It <em>is</em> the connection
-                — revoking it in the channel manager account stops distribution everywhere,
+                - revoking it in the channel manager account stops distribution everywhere,
                 immediately.</>],
               ['Access token', <>Short-lived, minted automatically from the refresh token for
                 each call. You never see it and never need to.</>],
               ['Permissions (scopes)', <>Ticked when you create the invite code. Getting them
-                wrong is the trap — see below.</>],
+                wrong is the trap - see below.</>],
               ['Room mapping', <>Pairing each room on their side with a room type here. An
                 unmatched room has nowhere to send its prices, so it silently sells nothing.</>],
             ]} />
             <Note tone="warn">
               <strong>The trap worth knowing about.</strong> An invite code created without write
               permission connects perfectly. It lists your properties, imports bookings, shows a
-              green tick — and cannot push a single rate. The queue fills and nothing leaves.
+              green tick - and cannot push a single rate. The queue fills and nothing leaves.
               The Connection screen checks the permissions for you and names any that are
               missing, which is the whole reason it exists.
             </Note>
@@ -586,7 +586,7 @@ export const MANUAL: Section[] = [
           {
             title: 'Connect the channel manager',
             steps: [
-              'Channel Manager → Connection. Read the permission list there — it is generated from what this PMS actually calls.',
+              'Channel Manager → Connection. Read the permission list there - it is generated from what this PMS actually calls.',
               'In your channel manager account: Settings → Apps & Integrations → API.',
               'Create an invite code with every listed permission ticked, restricted to this property.',
               'Paste it here within 24 hours and press Connect.',
@@ -600,7 +600,7 @@ export const MANUAL: Section[] = [
             steps: [
               'Channel Manager → Connection, press Re-check. Missing permissions are named there.',
               'Check the property: if it says the bound property can no longer be seen, every push is failing.',
-              'Check the room mappings — an unmatched room pushes nothing.',
+              'Check the room mappings - an unmatched room pushes nothing.',
               'Channel Manager → Sync log shows the real error from the last attempt, not a summary.',
             ],
           },
@@ -609,13 +609,13 @@ export const MANUAL: Section[] = [
       {
         id: 'ari',
         title: 'What gets sent, and when',
-        summary: 'Availability, rates and restrictions — the three things that go out.',
+        summary: 'Availability, rates and restrictions - the three things that go out.',
         screen: 'channel-manager',
         keywords: ['ari', 'push', 'queue', 'sync', 'drift'],
         body: (
           <>
             <Terms items={[
-              ['ARI', <>Availability, Rates and Inventory — the three things a channel manager
+              ['ARI', <>Availability, Rates and Inventory - the three things a channel manager
                 exists to distribute.</>],
               ['The queue', <>Anything that changes a price or a bed count queues a push. It
                 drains within seconds, so a rate changed at the desk is live on the OTAs almost
@@ -674,12 +674,12 @@ export const MANUAL: Section[] = [
           <>
             <Terms items={[
               ['Occupancy', 'Beds sold as a share of beds available.'],
-              ['ADR', <>Average daily rate — room revenue divided by beds sold. What the average
+              ['ADR', <>Average daily rate - room revenue divided by beds sold. What the average
                 bed actually went for.</>],
               ['RevPAR', <>Revenue per available bed. Occupancy and ADR in one number, and the
                 one worth watching: it falls if you discount too hard <em>and</em> if you price
                 too high.</>],
-              ['Manager’s report', 'One day on one page — sold, earned, arrived, departed, owed.'],
+              ['Manager’s report', 'One day on one page - sold, earned, arrived, departed, owed.'],
             ]} />
             <Note>
               Every figure is computed from actual postings, never typed in or stored as a
@@ -699,12 +699,12 @@ export const MANUAL: Section[] = [
           <>
             <P>
               Everything is one SQLite file on this machine. Backups are taken automatically
-              every six hours and after every night audit, verified, and kept on a schedule —
+              every six hours and after every night audit, verified, and kept on a schedule -
               the newest few always, then one a day, one a week, one a month.
             </P>
             <Note tone="warn">
               A backup on the same disk does not survive the disk failing. Copy the backups
-              folder somewhere else — another drive, or cloud storage — on a schedule you
+              folder somewhere else - another drive, or cloud storage - on a schedule you
               actually keep. This is the single most important thing in this manual that nobody
               does until it is too late.
             </Note>
@@ -732,9 +732,9 @@ export const MANUAL: Section[] = [
         body: (
           <>
             <Terms items={[
-              ['Room type', <>A thing you sell — &ldquo;Deluxe 6 Bed Female Dorm Ensuite&rdquo;.
+              ['Room type', <>A thing you sell - &ldquo;Deluxe 6 Bed Female Dorm Ensuite&rdquo;.
                 Prices, occupancy limits and channel mappings hang off it.</>],
-              ['Room', 'A physical room. Several rooms can share a type — the two 8-bed dorms here do.'],
+              ['Room', 'A physical room. Several rooms can share a type - the two 8-bed dorms here do.'],
               ['Bed', <>A berth in a dorm, created with the room. Only dorms have them, because
                 only dorms are sold by the bed.</>],
               ['Gender policy', <>Mixed or female-only. It is shown to guests and it stops the
@@ -757,7 +757,7 @@ export const MANUAL: Section[] = [
         body: (
           <>
             <P>
-              Each person gets their own login. Not for secrecy — for the audit trail. Every rate
+              Each person gets their own login. Not for secrecy - for the audit trail. Every rate
               override, void, folio reopen and security change is recorded with a name against
               it, and a shared account makes all of that say &ldquo;reception&rdquo;.
             </P>
@@ -780,6 +780,6 @@ export const MANUAL: Section[] = [
   },
 ];
 
-/** Every topic, flattened — for search and for deep links. */
+/** Every topic, flattened - for search and for deep links. */
 export const ALL_TOPICS: (Topic & { section: string })[] =
   MANUAL.flatMap((s) => s.topics.map((t) => ({ ...t, section: s.title })));

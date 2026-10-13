@@ -1,6 +1,6 @@
 // The offline status bar.
 //
-// Whether the desk is online is not a technical detail here — it changes what
+// Whether the desk is online is not a technical detail here - it changes what
 // the person in front of the screen is allowed to do. So it is stated plainly
 // and permanently rather than as a toast that disappears: what is cached, how
 // old it is, what is waiting to sync, and what failed and needs a human.
@@ -20,7 +20,7 @@ export function useOfflineState() {
   useEffect(() => onOfflineChange(() => setState(offlineState())), []);
 
   // The browser's own signal is a useful hint for coming *back*, even though it
-  // is unreliable for going offline — a hostel router that answers DHCP but
+  // is unreliable for going offline - a hostel router that answers DHCP but
   // routes nowhere still reports `online`.
   useEffect(() => {
     const onBack = () => { void flushOfflineQueue().then(() => setState(offlineState())); };

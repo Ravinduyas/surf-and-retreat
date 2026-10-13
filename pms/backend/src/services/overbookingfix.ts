@@ -5,19 +5,19 @@
 // duty manager already follows, and it is worth writing down because the
 // cheapest fix is also the one nobody notices:
 //
-//   1. **Reassign** — is a room of the same type actually free and just
+//   1. **Reassign** - is a room of the same type actually free and just
 //      unassigned? Nine times out of ten this is it, and no guest ever knows.
-//   2. **Upgrade** — a better room sitting empty costs the rate difference. A
+//   2. **Upgrade** - a better room sitting empty costs the rate difference. A
 //      walk costs a night at another hotel, the taxi, the refund and the
 //      review. The upgrade wins every time it is available.
-//   3. **Downgrade with compensation** — worth offering to the right guest
+//   3. **Downgrade with compensation** - worth offering to the right guest
 //      before anyone is walked, with the credit recorded rather than promised.
 //
 // Only when all three are exhausted does anybody get walked, and that is a
 // different file.
 //
 // Every option is offered per guest rather than per finding, because "which
-// room is free" is the wrong question — the right one is "who can I move, and
+// room is free" is the wrong question - the right one is "who can I move, and
 // where to, for the whole of their remaining stay".
 // ─────────────────────────────────────────────────────────────
 import { all, get, run, tx } from '../db.ts';
@@ -66,7 +66,7 @@ export interface GuestOptions {
  *
  * `default_rate_minor` is the honest proxy for "better": it is the property's
  * own statement of what each type is worth, kept current because it is what
- * gets charged. Anything else — occupancy, a name containing "Deluxe" — is a
+ * gets charged. Anything else - occupancy, a name containing "Deluxe" - is a
  * guess about somebody else's inventory.
  */
 function typeValue(propertyId: string): Map<string, { rate: number; name: string; kind: string }> {
@@ -82,7 +82,7 @@ function typeValue(propertyId: string): Map<string, { rate: number; name: string
  * What can be done about a finding, guest by guest.
  *
  * A room only counts as an option if it is free for the guest's **whole
- * remaining stay** — offering a room that is free tonight and sold tomorrow
+ * remaining stay** - offering a room that is free tonight and sold tomorrow
  * turns one problem into two.
  */
 export function resolutionOptions(propertyId: string, findingId: string, today: string) {
@@ -106,14 +106,14 @@ export function resolutionOptions(propertyId: string, findingId: string, today: 
     // A checked-in guest is asleep in the room. Moving them mid-stay is a
     // different, much bigger conversation than reassigning an arrival.
     const blocked = res.status === 'Checked-in'
-      ? 'Already checked in — moving them means moving their belongings'
+      ? 'Already checked in - moving them means moving their belongings'
       : undefined;
 
     const free = blocked ? [] : freeRooms(propertyId, null, finding.date, res.departure, res.id);
 
     // A physically empty room is not the same as a sellable one. A Deluxe with
     // no name on it is still spoken for if a Deluxe booking exists without a
-    // room assigned — moving somebody into it would solve this overbooking by
+    // room assigned - moving somebody into it would solve this overbooking by
     // creating another one next door. So the room type has to have real
     // capacity as well, for the whole of the remaining stay.
     const typeHasRoom = new Map<string, boolean>();
@@ -184,7 +184,7 @@ export function resolutionOptions(propertyId: string, findingId: string, today: 
     oversold: finding.oversold,
     guests,
     spareRooms: spareRooms.size,
-    /** Nowhere left to put the guests who are over — a walk is now on the table. */
+    /** Nowhere left to put the guests who are over - a walk is now on the table. */
     walkLikely: spareRooms.size < finding.oversold,
     today,
   };
@@ -205,7 +205,7 @@ export function applyFix(propertyId: string, actor: Actor, input: {
   reservationId: string;
   roomId: string;
   kind: FixKind;
-  /** Downgrades only — posted as a credit on the folio. */
+  /** Downgrades only - posted as a credit on the folio. */
   compensationMinor?: number;
   note?: string;
 }) {
@@ -226,12 +226,12 @@ export function applyFix(propertyId: string, actor: Actor, input: {
     throw new HttpError(400, `${room.number} is not an upgrade on ${before?.name ?? 'this room type'}`);
   }
   if (input.kind === 'downgrade' && diff > 0) {
-    throw new HttpError(400, `${room.number} is dearer — that is an upgrade, not a downgrade`);
+    throw new HttpError(400, `${room.number} is dearer - that is an upgrade, not a downgrade`);
   }
 
   const result = tx(() => {
     // An upgrade keeps the rate the guest agreed. That is what makes it a
-    // courtesy rather than a surprise bill — the property absorbs the
+    // courtesy rather than a surprise bill - the property absorbs the
     // difference, which is still far cheaper than walking them.
     const keepRate = input.kind !== 'downgrade';
     moveRoom(propertyId, actor, input.reservationId, {
@@ -286,7 +286,7 @@ export function applyFix(propertyId: string, actor: Actor, input: {
   });
 
   // Re-scan the affected date. If the move actually fixed it the finding
-  // auto-resolves; if it did not, it stays — which is the honest outcome, and
+  // auto-resolves; if it did not, it stays - which is the honest outcome, and
   // the reason the screen can say "fixed" rather than "we did the thing you
   // asked for".
   //

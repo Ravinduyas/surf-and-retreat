@@ -37,7 +37,7 @@ router.get('/api/setup/status', () => ({
 
 /**
  * Create the first property and its administrator. Only callable while the
- * installation is empty — afterwards properties and users are managed from
+ * installation is empty - afterwards properties and users are managed from
  * Configuration / Administration by an authenticated admin.
  */
 router.post('/api/setup/bootstrap', ({ body, ip }: Ctx) => {
@@ -99,7 +99,7 @@ router.post('/api/setup/bootstrap', ({ body, ip }: Ctx) => {
 
 /**
  * Chart of accounts a hotel cannot operate without. These are configuration,
- * not sample data — every one is editable in Configuration → Transaction codes.
+ * not sample data - every one is editable in Configuration → Transaction codes.
  */
 export function seedOperationalDefaults(propertyId: string) {
   const codes: [string, string, string, number][] = [
@@ -149,8 +149,8 @@ function sessionPayload(user: any, session: { token: string; expiresAt: string }
 }
 
 /**
- * Step one. Returns a finished session, or — when the account has two-factor
- * authentication switched on — a short-lived challenge that only the code can
+ * Step one. Returns a finished session, or - when the account has two-factor
+ * authentication switched on - a short-lived challenge that only the code can
  * complete.
  */
 router.post('/api/auth/login', ({ body, ip, req }: Ctx) => {
@@ -203,7 +203,7 @@ router.post('/api/auth/mfa/verify', ({ body, ip, req }: Ctx) => {
   const pending = resolvePendingSession(challengeToken);
   if (!pending) {
     throw new HttpError(401,
-      'That sign-in has expired — enter your email and password again', 'challenge_expired');
+      'That sign-in has expired - enter your email and password again', 'challenge_expired');
   }
 
   const usedRecovery = !verifyTotp(pending.mfa_secret, code)
@@ -283,7 +283,7 @@ router.post('/api/auth/change-password', ({ auth, body, ip }: Ctx) => {
          password_changed_at = ? WHERE id = ?`,
     hash, salt, nowIso(), auth.userId);
 
-  // Changing a password signs out everywhere else — that is the point of it.
+  // Changing a password signs out everywhere else - that is the point of it.
   if (body.signOutOthers !== false) revokeOtherSessions(auth.userId, auth.sessionId);
 
   audit(auth, {
@@ -359,7 +359,7 @@ router.post('/api/auth/mfa/recovery-codes', ({ auth, body, ip }: Ctx) => {
 /**
  * Requesting a reset always answers the same way, so the form cannot be used
  * to discover which email addresses have accounts. There is no mail provider
- * wired up, so the live request is surfaced to administrators to action —
+ * wired up, so the live request is surfaced to administrators to action -
  * rather than claiming an email was sent.
  */
 router.post('/api/auth/forgot-password', ({ body, ip }: Ctx) => {
@@ -383,7 +383,7 @@ router.post('/api/auth/reset-links/:userId', ({ auth, params, ip }: Ctx) => {
   const user = get<any>('SELECT id, name, email, role FROM users WHERE id = ?', params.userId);
   if (!user) throw new HttpError(404, 'User not found');
   // A reset link is a working key to the account. Issuing one for an admin is
-  // the same takeover as promoting yourself — the redeeming route is
+  // the same takeover as promoting yourself - the redeeming route is
   // unauthenticated and clears the lockout on the way through.
   assertMayGrantRole(auth, user.role);
   const reset = createPasswordReset(user.id, ip, auth.userName);
@@ -452,7 +452,7 @@ router.get('/api/users', ({ auth }: Ctx) => all<any>(
 /**
  * Nobody hands out authority they do not hold.
  *
- * `admin.users` lets a manager run the staff list — create a receptionist, reset
+ * `admin.users` lets a manager run the staff list - create a receptionist, reset
  * a forgotten password, deactivate a leaver. It must not let them mint an
  * administrator. Without this, the role hierarchy is decoration: a manager
  * creates an admin account, or simply promotes themselves, and owns the system
@@ -465,7 +465,7 @@ function assertMayGrantRole(auth: Ctx['auth'], role: string) {
   }
 }
 
-/** Guard the account you are signed in as — the one you can always reach. */
+/** Guard the account you are signed in as - the one you can always reach. */
 function assertNotSelf(auth: Ctx['auth'], targetUserId: string, what: string) {
   if (targetUserId === auth.userId) {
     throw new HttpError(400, `You cannot ${what} on your own account`);
@@ -508,7 +508,7 @@ router.patch('/api/users/:id', ({ auth, params, body, ip }: Ctx) => {
   if (body.role !== undefined) {
     if (!ROLES.includes(body.role)) throw new HttpError(400, `Unknown role "${body.role}"`);
     assertMayGrantRole(auth, body.role);
-    // Changing your own role is never legitimate administration — it is either
+    // Changing your own role is never legitimate administration - it is either
     // a mistake or an escalation, and both are better refused.
     assertNotSelf(auth, params.id, 'change the role');
     // A demotion has to reach an existing admin's own account too.

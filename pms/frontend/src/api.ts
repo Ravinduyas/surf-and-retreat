@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 // HTTP client for the Helio PMS API.
 //
-// Every screen reads and writes through here — there is no local sample data
+// Every screen reads and writes through here - there is no local sample data
 // anywhere in the app. The session token and the selected property travel on
 // each request; a rejected session drops the user back to sign-in.
 // ─────────────────────────────────────────────────────────────
@@ -81,7 +81,7 @@ function emit(event: 'unauthenticated' | 'setup-required') {
  * Thrown when a write cannot be done offline and must not be queued.
  *
  * Carries the reason as a sentence rather than a status code, because a
- * receptionist needs to know what to do instead — not that the network failed.
+ * receptionist needs to know what to do instead - not that the network failed.
  */
 export class OfflineRefusal extends ApiError {
   constructor(reason: string) {
@@ -94,7 +94,7 @@ export class OfflineRefusal extends ApiError {
 export class QueuedOffline extends Error {
   readonly queued = true;
   constructor(public description: string) {
-    super(`${description} — saved, and will sync when you are back online`);
+    super(`${description} - saved, and will sync when you are back online`);
     this.name = 'QueuedOffline';
   }
 }
@@ -122,7 +122,7 @@ async function request<T>(method: string, path: string, body?: unknown): Promise
       const cached = cachedRead<T>(path, property);
       if (cached) {
         // Answering from cache is only acceptable because the caller is told
-        // how old it is — see `lastReadAge`, which the screens render.
+        // how old it is - see `lastReadAge`, which the screens render.
         lastAge.set(path, cached.ageSeconds);
         return cached.body;
       }
@@ -136,7 +136,7 @@ async function request<T>(method: string, path: string, body?: unknown): Promise
       // Not explicitly safe, so not queued. Anything new defaults to refusing
       // rather than to guessing that it is harmless.
       throw new OfflineRefusal(
-        'This change needs a connection to the server. It has not been saved — '
+        'This change needs a connection to the server. It has not been saved - '
         + 'try again once you are back online.');
     }
 
@@ -168,7 +168,7 @@ async function request<T>(method: string, path: string, body?: unknown): Promise
 }
 
 /**
- * How stale the last answer for a path was, in seconds — or 0 if it came live
+ * How stale the last answer for a path was, in seconds - or 0 if it came live
  * from the server.
  *
  * Kept beside the data rather than inside it so the cached body is byte-for-byte

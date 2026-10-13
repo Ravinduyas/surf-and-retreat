@@ -10,7 +10,7 @@
 //
 //   · **Not every channel carries messages.** Booking.com and Airbnb do;
 //     several do not, and Beds24 will accept a message for a channel that
-//     cannot deliver it. A message is therefore never marked `delivered` —
+//     cannot deliver it. A message is therefore never marked `delivered` -
 //     `accepted` is the strongest claim available, and the screen says which
 //     channels can carry a reply at all.
 //
@@ -35,7 +35,7 @@ import { type Actor } from './reservations.ts';
  * rather than offering a reply box that quietly goes nowhere.
  */
 const MESSAGE_CAPABLE = new Set([
-  // Codes the channel catalogue actually issues — see CATALOGUE in
+  // Codes the channel catalogue actually issues - see CATALOGUE in
   // routes/channels.ts. `AIR` was previously written as `AIRBNB`, which matched
   // nothing the UI can create, so every Airbnb conversation was silently
   // unreplyable while the screen told the operator Airbnb "does not carry guest
@@ -165,7 +165,7 @@ interface RawMessage {
 /**
  * Pull recent guest messages from the channel and file them against bookings.
  *
- * Scoped to bookings that are still live — arriving, in-house, or departed in
+ * Scoped to bookings that are still live - arriving, in-house, or departed in
  * the last fortnight. A property with years of history has no reason to ask the
  * channel about a conversation from 2019 every few minutes.
  */
@@ -277,7 +277,7 @@ export interface SendResult {
   id: string;
   status: MessageStatus;
   error?: string;
-  /** True when the reply only exists in Helio — nobody outside has seen it. */
+  /** True when the reply only exists in Helio - nobody outside has seen it. */
   localOnly: boolean;
 }
 
@@ -299,7 +299,7 @@ export async function sendGuestMessage(
     && channelCarriesMessages(channel.code);
 
   // Written first, whatever happens next. A reply that was typed and then failed
-  // to send must still be on the thread — losing it is worse than failing to
+  // to send must still be on the thread - losing it is worse than failing to
   // deliver it, because nobody knows it was ever attempted.
   const messageId = id('msg');
   run(
@@ -322,7 +322,7 @@ export async function sendGuestMessage(
         : !channel
           ? `${res.channel_code} is not set up here.`
           : !channelCarriesMessages(channel.code)
-            ? `${channel.name} does not carry guest messages — reach the guest by email or phone.`
+            ? `${channel.name} does not carry guest messages - reach the guest by email or phone.`
             : `${channel.name} is not connected.`,
     };
   }
@@ -347,7 +347,7 @@ export async function deliverMessage(
     throw new HttpError(409, 'This message has no channel booking to go to');
   }
 
-  // Same trap as the poll above — the credentials field is encrypted at rest.
+  // Same trap as the poll above - the credentials field is encrypted at rest.
   const client = beds24ClientFor(channel);
 
   const attempts = (msg.attempts ?? 0) + 1;

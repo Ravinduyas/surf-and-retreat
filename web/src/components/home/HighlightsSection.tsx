@@ -48,7 +48,7 @@ export const HighlightsSection: React.FC = () => {
           <div className="lg:col-span-5 space-y-6">
             <p className="text-[#59695C] text-sm sm:text-base leading-relaxed max-w-md">
               One home for your whole trip: comfy beds, sunrise surf sessions and a
-              coworking space that actually works. Pick your rhythm — we&apos;ll handle
+              coworking space that actually works. Pick your rhythm - we&apos;ll handle
               the rest.
             </p>
 

@@ -94,7 +94,7 @@ export function FirstRunPwaPill() {
   return (
     <Pill tone="mint" solid>
       <span className="w-1.5 h-1.5 rounded-full bg-status-ok pulse-dot" />
-      Service worker active — works offline
+      Service worker active - works offline
     </Pill>
   );
 }

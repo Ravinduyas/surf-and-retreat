@@ -246,7 +246,7 @@ export function NewReservationScreen({ reservationId }: { reservationId?: string
                 <Field label="Children">
                   <NumberInput value={children} onChange={setChildren} min={0} max={20} />
                 </Field>
-                <Field label="Promotion code" hint="Optional — validated against the rules you configured">
+                <Field label="Promotion code" hint="Optional - validated against the rules you configured">
                   <TextInput value={promoCode} onChange={(v) => setPromoCode(v.toUpperCase())} placeholder="EARLYBIRD" />
                 </Field>
               </div>
@@ -442,7 +442,7 @@ export function NewReservationScreen({ reservationId }: { reservationId?: string
                 </div>
                 {profileId && (
                   <p className="text-[11px] text-dash-muted mt-3">
-                    Linked to an existing guest profile — this stay will join their history.
+                    Linked to an existing guest profile - this stay will join their history.
                   </p>
                 )}
               </Card>
@@ -531,8 +531,8 @@ export function NewReservationScreen({ reservationId }: { reservationId?: string
             <Card>
               <p className="text-[10px] font-bold uppercase tracking-widest text-dash-muted mb-4">Review</p>
               <div className="grid md:grid-cols-2 gap-x-6 gap-y-3 mb-5">
-                <Detail label="Guest" value={guestName || '—'} />
-                <Detail label="Contact" value={[email, phone].filter(Boolean).join(' · ') || '—'} />
+                <Detail label="Guest" value={guestName || '-'} />
+                <Detail label="Contact" value={[email, phone].filter(Boolean).join(' · ') || '-'} />
                 <Detail label="Arrival" value={longDate(arrival)} />
                 <Detail label="Departure" value={longDate(departure)} />
                 <Detail label="Nights" value={String(nights)} />
@@ -567,7 +567,7 @@ export function NewReservationScreen({ reservationId }: { reservationId?: string
                 <div className="mt-3 rounded-xl bg-dash-peach/50 p-3 flex items-start gap-2.5">
                   <AlertTriangle className="w-3.5 h-3.5 text-status-warn mt-0.5 shrink-0" />
                   <p className="text-[11px]">
-                    Rate overridden to {money(overrideMinor)} per night — {overrideReason || 'no reason given'}.
+                    Rate overridden to {money(overrideMinor)} per night - {overrideReason || 'no reason given'}.
                     This is recorded against your user in the audit trail.
                   </p>
                 </div>
@@ -613,13 +613,13 @@ export function NewReservationScreen({ reservationId }: { reservationId?: string
               <SummaryRow label="Nights" value={String(nights)} />
               <SummaryRow label="Guests" value={`${adults}A${children ? ` ${children}C` : ''}`} />
               <SummaryRow label="Room type" value={selected?.roomType ?? 'not chosen'} />
-              <SummaryRow label="Rate plan" value={selected?.ratePlanCode ?? '—'} />
+              <SummaryRow label="Rate plan" value={selected?.ratePlanCode ?? '-'} />
               <div className="border-t border-white/10 pt-2 mt-2">
                 <SummaryRow
                   label="Total"
                   value={selected
                     ? money(overrideRate ? overrideMinor * nights + selected.taxTotalMinor : selected.grandTotalMinor)
-                    : '—'}
+                    : '-'}
                   strong
                 />
               </div>

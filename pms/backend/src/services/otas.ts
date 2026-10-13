@@ -1,8 +1,8 @@
 // ─────────────────────────────────────────────────────────────
 // The OTAs behind the hub.
 //
-// Beds24 is one connection and many shopfronts. Nobody sells on Beds24 — guests
-// book on Hostelworld, Booking.com, Airbnb — and every question a property
+// Beds24 is one connection and many shopfronts. Nobody sells on Beds24 - guests
+// book on Hostelworld, Booking.com, Airbnb - and every question a property
 // actually asks is per-shopfront: which one produces, which cancels, which has
 // gone quiet, which is worth its commission.
 //
@@ -12,8 +12,8 @@
 // literally `null`, and `/properties/channels` returns 500. The routes exist,
 // the scope is there, and nothing comes back.
 //
-// So this module assembles the answer from what *is* knowable, and — this is
-// the part that matters — records **how** each answer was reached, because a
+// So this module assembles the answer from what *is* knowable, and - this is
+// the part that matters - records **how** each answer was reached, because a
 // screen that says "connected" without saying how it knows is exactly the green
 // tick this codebase keeps taking out:
 //
@@ -38,7 +38,7 @@ export type OtaState = 'available' | 'declared' | 'evidence' | 'confirmed';
  *
  * Beds24 hands back keys like `bedandbreakfasteu`, which is not a name anybody
  * would recognise on a screen. Anything not listed is title-cased, so a channel
- * added by Beds24 tomorrow still appears — merely less prettily — rather than
+ * added by Beds24 tomorrow still appears - merely less prettily - rather than
  * being dropped for not being in a list.
  */
 const DISPLAY: Record<string, string> = {
@@ -121,7 +121,7 @@ export interface OtaRow {
  * What Beds24 said, folded into the OTA table.
  *
  * `catalogue` is every channel key Beds24 knows for this property, read live
- * from `roomTypes[].priceRules[].channels` — not a hardcoded list, so a channel
+ * from `roomTypes[].priceRules[].channels` - not a hardcoded list, so a channel
  * Beds24 adds appears without a release here. `rateCodes` maps the few that
  * carry one.
  */
@@ -152,7 +152,7 @@ export function recordCatalogue(
       //
       // Everything below `confirmed` is a statement about how things stand
       // *now*, and is recomputed rather than latched. `evidence` in particular
-      // means "Beds24 currently holds a rate code" — keeping it after the rate
+      // means "Beds24 currently holds a rate code" - keeping it after the rate
       // code is gone would leave the screen explaining itself with a code that
       // no longer exists, which is worse than saying nothing.
       const next: OtaState = existing.state === 'confirmed'
@@ -173,7 +173,7 @@ export function recordCatalogue(
  * Recount bookings per OTA and promote anything that has produced one.
  *
  * Driven off the reservations themselves rather than a counter kept in step by
- * hand — a counter drifts the first time a booking is imported by a path that
+ * hand - a counter drifts the first time a booking is imported by a path that
  * forgot to bump it, and then the screen is wrong in the one direction that
  * matters.
  */
@@ -190,7 +190,7 @@ export function refreshFromBookings(propertyId: string) {
   const now = nowIso();
   tx(() => {
     // Zero the counts first, so an OTA whose bookings were all deleted stops
-    // claiming them — while keeping its state, which is a record of what did
+    // claiming them - while keeping its state, which is a record of what did
     // once happen.
     run('UPDATE channel_otas SET bookings = 0 WHERE property_id = ?', propertyId);
 
@@ -206,7 +206,7 @@ export function refreshFromBookings(propertyId: string) {
           r.n, r.last, now, existing.id);
       } else {
         // A booking from a channel Beds24 never listed. It happened, so it is
-        // recorded — the catalogue being incomplete is not a reason to lose it.
+        // recorded - the catalogue being incomplete is not a reason to lose it.
         run(
           `INSERT INTO channel_otas(id, property_id, code, name, state, bookings,
                                     last_booking_at, declared, first_seen_at, updated_at)
@@ -222,9 +222,9 @@ function because(row: any): string {
     case 'confirmed':
       return `${row.bookings} booking${row.bookings === 1 ? '' : 's'} received`;
     case 'evidence':
-      return `Beds24 holds a rate code (${row.rate_code}) — likely live, not confirmed`;
+      return `Beds24 holds a rate code (${row.rate_code}) - likely live, not confirmed`;
     case 'declared':
-      return 'Marked as live by staff — Beds24 cannot confirm it';
+      return 'Marked as live by staff - Beds24 cannot confirm it';
     default:
       return 'Supported by Beds24, nothing suggests it is in use';
   }
@@ -244,7 +244,7 @@ export function listOtas(propertyId: string): OtaRow[] {
   }));
 }
 
-/** Totals for the header — confirmed and merely believed are counted apart. */
+/** Totals for the header - confirmed and merely believed are counted apart. */
 export function otaSummary(propertyId: string) {
   const rows = listOtas(propertyId);
   return {
@@ -258,7 +258,7 @@ export function otaSummary(propertyId: string) {
 /**
  * The operator's own switch, for what the API cannot see.
  *
- * Turning one off never touches its bookings or its history — an OTA that has
+ * Turning one off never touches its bookings or its history - an OTA that has
  * sent business stays `confirmed`, because it did.
  */
 export function declareOta(

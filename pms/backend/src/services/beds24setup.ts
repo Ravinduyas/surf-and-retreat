@@ -2,8 +2,8 @@
 // Connecting a Beds24 account, as a guided sequence rather than a text box.
 //
 // Connecting a channel manager is the highest-consequence thing a small
-// property ever does in a PMS — it is the moment their inventory stops being
-// private — and the old screen for it was one field labelled "invite code" and
+// property ever does in a PMS - it is the moment their inventory stops being
+// private - and the old screen for it was one field labelled "invite code" and
 // a Connect button. Everything that actually goes wrong went wrong silently:
 //
 //   · The invite code is made in Beds24 with a tick-list of permissions, and a
@@ -32,7 +32,7 @@ import { Beds24Client, HUB, type Beds24Credentials } from '../channels/beds24.ts
  * `HUB` defaults to the lower-case "the channel manager", which reads correctly
  * mid-sentence and produced "Sign in to your The channel manager account" at
  * the start of one. Only the default carries an article, so only the default
- * needs fixing — a real name like "Beds24" is already title-case.
+ * needs fixing - a real name like "Beds24" is already title-case.
  */
 const HUB_TITLE = HUB === 'the channel manager' ? 'The channel manager' : HUB;
 
@@ -108,7 +108,7 @@ function granted(scopes: string[], need: string): boolean {
 }
 
 export interface ScopeReport {
-  /** Null when the token could not be asked — not the same as "none granted". */
+  /** Null when the token could not be asked - not the same as "none granted". */
   known: boolean;
   granted: string[];
   missing: ScopeNeed[];
@@ -144,7 +144,7 @@ export function reviewScopes(scopes: string[] | null): ScopeReport {
  * Where to click in Beds24, in the order somebody actually clicks.
  *
  * Kept on the server rather than in the React screen so the wording, the scope
- * list and the code that checks the scopes cannot drift apart — the list below
+ * list and the code that checks the scopes cannot drift apart - the list below
  * is generated from `REQUIRED_SCOPES`, so adding a scope updates the
  * instructions automatically.
  */
@@ -164,7 +164,7 @@ export function connectionGuide() {
       },
       {
         title: 'Create an invite code',
-        detail: 'Tick the permissions listed below — all of them. A code created with '
+        detail: 'Tick the permissions listed below - all of them. A code created with '
           + 'fewer connects successfully and then fails at the first push, which is '
           + 'much harder to diagnose than a refusal now.',
       },
@@ -177,19 +177,19 @@ export function connectionGuide() {
       {
         title: 'Paste the code here, within 24 hours',
         detail: 'An invite code is single-use and short-lived. This PMS exchanges it '
-          + 'once for a long-lived token and stores only that — the code itself is '
+          + 'once for a long-lived token and stores only that - the code itself is '
           + 'never kept.',
       },
     ],
     scopes: REQUIRED_SCOPES,
     /**
-     * The two tokens, explained — because the words appear in the Beds24 UI and
+     * The two tokens, explained - because the words appear in the Beds24 UI and
      * in every support thread about it, and nobody says which is which.
      */
     tokens: [
       {
         name: 'Refresh token',
-        lifetime: 'Long-lived — until you revoke it',
+        lifetime: 'Long-lived - until you revoke it',
         role: `What this PMS stores, encrypted. It is the connection: revoke it in ${HUB} `
           + 'and the connection stops, everywhere, immediately.',
       },
@@ -230,7 +230,7 @@ export interface ConnectionDiagnosis {
  * round trip.
  *
  * Deliberately returns a diagnosis rather than throwing. "Not connected" is a
- * normal state for this screen — it is the state everybody arrives in — and an
+ * normal state for this screen - it is the state everybody arrives in - and an
  * exception would leave the page with nothing to show but a stack trace.
  */
 export async function diagnose(
@@ -327,7 +327,7 @@ export interface RoomSuggestion {
   alreadyMapped: boolean;
 }
 
-/** Lower-case, letters and digits only — so "6-Bed Female" meets "6 bed female". */
+/** Lower-case, letters and digits only - so "6-Bed Female" meets "6 bed female". */
 const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '');
 
 /**
@@ -349,7 +349,7 @@ function maleOnly(s: string): boolean { return /\bmale\b(?!\s*\/)|\bmen\b/i.test
 /**
  * Match the channel's rooms against this property's room types.
  *
- * Suggestions only — nothing is written. A wrong mapping sends one room's
+ * Suggestions only - nothing is written. A wrong mapping sends one room's
  * availability to another and is close to invisible afterwards, so the last
  * word belongs to a person looking at both names side by side. What this does
  * is make the obvious ones obvious and refuse to guess at the rest.
@@ -435,7 +435,7 @@ export function suggestRoomMappings(
     // 3. Give up out loud. A guess at this point is worse than a blank.
     return {
       ...base, roomTypeId: null, roomTypeName: null, confidence: 'none',
-      reason: 'No clear match — choose the room type this is.',
+      reason: 'No clear match - choose the room type this is.',
     };
   });
 }

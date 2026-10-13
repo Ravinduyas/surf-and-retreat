@@ -69,7 +69,7 @@ export function PasswordChangeScreen() {
           <h1 className="text-[22px] font-bold tracking-tight mb-2">Choose your own password</h1>
           <p className="text-[12px] text-dash-muted mb-6">
             You are signed in with a temporary password set by an administrator. Replace it before
-            you carry on — they cannot see the one you choose.
+            you carry on - they cannot see the one you choose.
           </p>
 
           <form onSubmit={submit} className="space-y-4">

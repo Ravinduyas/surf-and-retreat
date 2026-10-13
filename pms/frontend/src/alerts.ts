@@ -2,7 +2,7 @@
 // Audible alerts.
 //
 // The sounds are synthesised with the Web Audio API rather than loaded as
-// files. That keeps the app self-contained — it works offline, there is nothing
+// files. That keeps the app self-contained - it works offline, there is nothing
 // to 404, and no audio asset has to be shipped, cached or versioned.
 //
 // Three rules are load-bearing:
@@ -41,8 +41,8 @@ export function audioReady(): boolean {
 }
 
 /**
- * Unlock audio. Must be called from a real user gesture — a click or a key
- * press — or the browser will leave the context suspended.
+ * Unlock audio. Must be called from a real user gesture - a click or a key
+ * press - or the browser will leave the context suspended.
  */
 export async function enableAudio(): Promise<boolean> {
   const audio = context();
@@ -58,7 +58,7 @@ export async function enableAudio(): Promise<boolean> {
 interface Note {
   /** Hz at the start of the note. */
   from: number;
-  /** Hz at the end — equal to `from` for a flat tone. */
+  /** Hz at the end - equal to `from` for a flat tone. */
   to?: number;
   /** Seconds from the start of the sound. */
   at: number;
@@ -72,7 +72,7 @@ function play(notes: Note[], volume: number) {
   if (!audio || audio.state !== 'running' || volume <= 0) return;
   const master = audio.createGain();
   // Squared so the slider behaves the way ears do rather than the way numbers
-  // do — halfway should sound halfway, not three-quarters.
+  // do - halfway should sound halfway, not three-quarters.
   master.gain.value = (volume / 100) ** 2 * 0.5;
   master.connect(audio.destination);
 
@@ -105,7 +105,7 @@ function play(notes: Note[], volume: number) {
 /**
  * The three sounds.
  *
- * Overbooking is a two-tone alternation with a hard edge — the shape every
+ * Overbooking is a two-tone alternation with a hard edge - the shape every
  * alarm in the world uses, because it is the one people react to. The other two
  * are single soft gestures that go in opposite directions, so "something
  * arrived" and "something went away" are told apart by contour rather than by
@@ -217,7 +217,7 @@ export function useAlertWatcher(
   const shouldSound = useCallback((kind: AlertKind, feed: AlertFeed): boolean => {
     if (muted) return false;
     if (!feed.settings[kind]?.enabled) return false;
-    // Quiet hours silence everything except, optionally, an overbooking — which
+    // Quiet hours silence everything except, optionally, an overbooking - which
     // is the one worth waking somebody for.
     if (feed.quiet && !(kind === 'overbooking' && feed.settings.quietHours.allowOverbooking)) {
       return false;
@@ -256,7 +256,7 @@ export function useAlertWatcher(
             playAlert(kind, feed.settings.volume);
           }
         }
-      } catch { /* offline — the next poll will catch up */ }
+      } catch { /* offline - the next poll will catch up */ }
     }
 
     void poll();
@@ -265,7 +265,7 @@ export function useAlertWatcher(
   }, [fetchFeed, opts.enabled, shouldSound]);
 
   // The repeating alarm. Runs only while something is unacknowledged, and stops
-  // the instant it is — which is what makes acknowledging worth doing.
+  // the instant it is - which is what makes acknowledging worth doing.
   useEffect(() => {
     const repeat = settings?.overbooking.repeat ?? 'until-acknowledged';
     const wanted = repeat === 'until-acknowledged'

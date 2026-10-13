@@ -18,7 +18,7 @@ interface PageHeroProps {
 }
 
 /**
- * Compact hero for inner pages — rendered inside PageHeader.
+ * Compact hero for inner pages - rendered inside PageHeader.
  */
 export const PageHero: React.FC<PageHeroProps> = ({
   eyebrow,

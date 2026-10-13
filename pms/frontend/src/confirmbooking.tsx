@@ -8,7 +8,7 @@
 // Until it happens the booking sits on the reservations list holding nothing,
 // so the bed it wants can still be sold to somebody else. That is why the free
 // list is re-read every time this opens rather than cached, and why confirming
-// can legitimately fail — the honest answer when the bed has gone is to say so,
+// can legitimately fail - the honest answer when the bed has gone is to say so,
 // not to double-book the room.
 // ─────────────────────────────────────────────────────────────
 import { useEffect, useMemo, useState } from 'react';
@@ -52,8 +52,8 @@ export function ConfirmBookingModal({
    * What one part of the booking may be given.
    *
    * Read from that member's own room type, not the booking's first one. A party
-   * can span room types — the website lets three guests take a double and a
-   * dorm bed, and each is its own reservation in the group — and offering the
+   * can span room types - the website lets three guests take a double and a
+   * dorm bed, and each is its own reservation in the group - and offering the
    * lead's rooms to all of them is how a bunk bed in a female dorm came to be
    * confirmed by picking a deluxe double.
    */

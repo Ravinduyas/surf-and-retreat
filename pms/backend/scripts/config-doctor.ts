@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-// `npm run config` — what this installation is actually configured to do.
+// `npm run config` - what this installation is actually configured to do.
 //
 // The question an operator has at three in the morning is never "what does the
 // documentation say the default is". It is "what is this machine using, and
@@ -7,13 +7,13 @@
 // value and its source: the shell, a named file, or the built-in default.
 //
 // Secrets are never printed. A length and a short fingerprint answer both
-// questions worth asking — "is one set?" and "is it the same one as on the
-// other machine?" — without putting a credential in a terminal, a screenshot
+// questions worth asking - "is one set?" and "is it the same one as on the
+// other machine?" - without putting a credential in a terminal, a screenshot
 // or a support ticket.
 //
 //   npm run config           the report
 //   npm run config:check     the same checks, no output unless something is
-//                            wrong, non-zero exit — for CI and deploy scripts
+//                            wrong, non-zero exit - for CI and deploy scripts
 //   npm run config:example   regenerate .env.example from the schema
 // ─────────────────────────────────────────────────────────────
 
@@ -49,11 +49,11 @@ const paint = (code: string, s: string) => (tty ? code + s + RESET : s);
 if (writeExample) {
   const { writeFileSync } = await import('node:fs');
   const { join } = await import('node:path');
-  const header = `# Helio PMS — API configuration
+  const header = `# Helio PMS - API configuration
 #
 #   cp .env.example .env      then edit
 #
-# GENERATED FROM src/config.ts — do not edit by hand.
+# GENERATED FROM src/config.ts - do not edit by hand.
 # Run \`npm run config:example\` after changing the schema.
 #
 # Every variable here has a working default except HELIO_SECRET_KEY, which has
@@ -150,7 +150,7 @@ if (configReport.problems.length) {
 
 if (errors.length) {
   process.stderr.write(
-    `${paint(RED, `${errors.length} error(s)`)} — the server will not start with this configuration.\n\n`,
+    `${paint(RED, `${errors.length} error(s)`)} - the server will not start with this configuration.\n\n`,
   );
   process.exit(78); // EX_CONFIG
 }

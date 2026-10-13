@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-// Helio Channel Engine — domain types
+// Helio Channel Engine - domain types
 //
 // The PMS is the SINGLE SOURCE OF TRUTH. Everything here models the
 // master record of rates, availability and inventory (ARI), plus the
@@ -7,7 +7,7 @@
 // channel (no Beds24 / aggregator hop in the middle).
 //
 // Written in "erasable" TypeScript so it runs directly on Node 22+
-// via `node --experimental-strip-types` — no build step, no deps.
+// via `node --experimental-strip-types` - no build step, no deps.
 // ─────────────────────────────────────────────────────────────
 
 // ─── Channels / OTAs ─────────────────────────────────────────
@@ -44,7 +44,7 @@ export type CertificationState =
 export type ConnectorHealth = 'connected' | 'degraded' | 'error' | 'disabled';
 
 // Which capabilities a given OTA actually exposes over its API. Not all
-// OTAs support everything — the engine must degrade gracefully.
+// OTAs support everything - the engine must degrade gracefully.
 export interface ConnectorCapabilities {
   ariPush: boolean;        // push availability + rates + inventory
   restrictions: boolean;   // min/max-LOS, CTA, CTD, stop-sell

@@ -2,7 +2,7 @@
 //
 // One modal serves both. The point of it is the preview: the operator sees the
 // nights being added or dropped, what they cost, and whether the room survives
-// — before anything is committed. Every refusal the server can give is rendered
+// - before anything is committed. Every refusal the server can give is rendered
 // as a sentence, because "409 Conflict" is not something you can read out to a
 // guest standing at the desk.
 import { useState } from 'react';
@@ -219,7 +219,7 @@ export function StayDatesModal({
                     Room {p.roomNumber} is not free for the new dates.
                   </span>
                   {p.alternativeRooms.length === 0 && (
-                    <> No other room of this type is free either — the guest would have no room
+                    <> No other room of this type is free either - the guest would have no room
                     assigned until one is found.</>
                   )}
                 </WarnNote>

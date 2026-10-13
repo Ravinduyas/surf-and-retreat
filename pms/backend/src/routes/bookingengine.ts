@@ -36,7 +36,7 @@ router.get('/api/public/booking-engine/catalog', (ctx: Ctx) => publicCatalog(pro
  *
  * `model` is what the guest chose off the first step. It decides which rate
  * plan answers, because a package is priced by its own plan rather than by the
- * room rate — so the totals here move when the guest switches between "rooms"
+ * room rate - so the totals here move when the guest switches between "rooms"
  * and "rooms + surf" without a single date changing.
  */
 router.get('/api/public/booking-engine/availability', (ctx: Ctx) => publicAvailability(
@@ -86,7 +86,7 @@ router.patch('/api/booking-engine/website-addons', (ctx: Ctx) => {
  * Setting up rooms is the whole of setting up a booking engine: this address
  * works the moment a property has room types, because the page reads them
  * rather than carrying a copy. There is no build, no deploy and no second
- * service — the link below is live as soon as the API is.
+ * service - the link below is live as soon as the API is.
  *
  *   /book                   the property, when there is only one
  *   /book?propertyCode=X    named, for an installation with several
@@ -102,7 +102,7 @@ router.get('/book', (ctx: Ctx) => {
  *
  * The readiness checks are the point. A link that opens onto "no rooms are on
  * sale yet" is worse than no link, and the property has no way of knowing
- * without opening it — so the PMS says what is missing instead.
+ * without opening it - so the PMS says what is missing instead.
  */
 router.get('/api/booking-engine/link', (ctx: Ctx) => {
   const propertyId = pid(ctx);

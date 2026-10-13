@@ -8,7 +8,7 @@
 // be queued on a device and replayed later, and which must refuse.
 //
 // Getting it wrong is not a cosmetic bug. Queueing a booking offline would
-// destroy the no-overbooking guarantee the whole system is built on — two
+// destroy the no-overbooking guarantee the whole system is built on - two
 // devices each take "the last room", both replay, and the property is oversold
 // with a clean sync log. So the assertions below are mostly about what must
 // **not** be queueable, and they are written to fail if somebody widens the
@@ -53,7 +53,7 @@ async function main() {
   section('1 · The dangerous writes refuse');
   // Each of these, if queued, produces a specific real-world failure.
   const mustRefuse: Array<[string, string]> = [
-    ['/api/reservations', 'a booking — two devices could sell the same room'],
+    ['/api/reservations', 'a booking - two devices could sell the same room'],
     ['/api/reservations/res_1/cancel', 'a cancellation'],
     ['/api/folios/fol_1/payment', 'a payment'],
     ['/api/rates/bulk', 'a rate change that goes to the OTAs'],
@@ -82,7 +82,7 @@ async function main() {
     offline.isQueueable('PATCH', '/api/rooms/rm_1') === true);
   check('a housekeeping task update queues',
     offline.isQueueable('POST', '/api/housekeeping/tasks/t1/complete') === true);
-  // The list is a allowlist, not a denylist — anything unrecognised refuses.
+  // The list is a allowlist, not a denylist - anything unrecognised refuses.
   check('an unlisted write does not queue',
     offline.isQueueable('POST', '/api/groups') === false);
   check('reading a room is not a queueable write',
@@ -194,7 +194,7 @@ async function main() {
   // decision that needs a person to think, not a convenient edit.
   const source = readFileSync(SRC, 'utf8');
   const queueable = source.match(/const QUEUEABLE[\s\S]*?\n\];/)?.[0] ?? '';
-  // Counting `pattern: /` rather than `pattern:` — the type annotation on the
+  // Counting `pattern: /` rather than `pattern:` - the type annotation on the
   // declaration line carries the word too, and counting it made this read 3.
   const patterns = (queueable.match(/pattern: \//g) ?? []).length;
   check('only two operations are queueable', patterns === 2, patterns);

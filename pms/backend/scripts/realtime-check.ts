@@ -11,7 +11,7 @@
 //     write bookings into the property.
 //   · **A silent gap in the poll.** The import asks for bookings changed since
 //     its own last success. If that watermark is advanced by something that did
-//     not read bookings — a connection test, a discover — every booking
+//     not read bookings - a connection test, a discover - every booking
 //     modified in between is never asked for again. Nothing errors. The
 //     bookings simply are not there.
 //
@@ -35,7 +35,7 @@ const asked: string[] = [];
  *
  * Repointing `BEDS24_API` mid-run does not work: the connector reads it once
  * when its module loads, so a later change is ignored and the "failed" call
- * quietly succeeds — which is how this check first passed for the wrong reason.
+ * quietly succeeds - which is how this check first passed for the wrong reason.
  */
 let failBookings = false;
 
@@ -85,7 +85,7 @@ function check(name: string, ok: boolean, detail?: unknown) {
   checks++;
   if (ok) { process.stdout.write(`  ✓ ${name}\n`); return; }
   failures++;
-  process.stdout.write(`  ✗ ${name}${detail === undefined ? '' : ` — ${JSON.stringify(detail)}`}\n`);
+  process.stdout.write(`  ✗ ${name}${detail === undefined ? '' : ` - ${JSON.stringify(detail)}`}\n`);
 }
 function section(t: string) { process.stdout.write(`\n${t}\n${'─'.repeat(t.length)}\n`); }
 
@@ -208,7 +208,7 @@ async function main() {
 
   section('3 · The same booking twice is one reservation');
   // A booking arriving by webhook and again on the next poll must update, not
-  // duplicate — otherwise real-time doubles the book.
+  // duplicate - otherwise real-time doubles the book.
   r = await callRoute('POST', '/api/webhooks/beds24', {
     headers: { 'x-helio-secret': process.env.HELIO_WEBHOOK_SECRET! },
     body: { propertyId: '346677' },
@@ -277,7 +277,7 @@ async function main() {
   // The fault this exists for, observed live: three good polls a minute apart,
   // one "fetch failed", then fifty-three minutes of silence with the API up and
   // Beds24 reachable. The loops selected `status = 'connected'`, so the failure
-  // that set `error` also removed the channel from every future tick — nothing
+  // that set `error` also removed the channel from every future tick - nothing
   // succeeded, so nothing ever cleared the error. One blip, sync dead until
   // somebody noticed.
   //

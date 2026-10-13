@@ -4,9 +4,9 @@
 // A property that has set up its rooms has a working booking page, at
 // http://<this api>/book, with no second step. There is nothing to build, no
 // bundle to deploy, no site to brand and no separate service to keep running:
-// the page is one HTML document served by this API, and everything on it —
+// the page is one HTML document served by this API, and everything on it -
 // the property's name, its rooms, its prices, its currency, what is free
-// tonight — is read at request time from the same tables the front desk works
+// tonight - is read at request time from the same tables the front desk works
 // from. Change a rate in the PMS and the next guest to open the page is quoted
 // the new one.
 //
@@ -32,7 +32,7 @@ export interface BookingPageSettings {
 const DEFAULTS: BookingPageSettings = {
   enabled: true,
   tagline: 'Beds and private rooms, booked direct.',
-  intro: 'Book straight with us — the same rooms the big sites list, without their commission.',
+  intro: 'Book straight with us - the same rooms the big sites list, without their commission.',
 };
 
 function setting<T>(propertyId: string, key: string, fallback: T): T {
@@ -59,7 +59,7 @@ export function bookingPageSettings(propertyId: string): BookingPageSettings {
  * Text going into HTML.
  *
  * The property's own name and copy pass through here on the way into the page.
- * They are typed by a person in the PMS, so they are not hostile — but they
+ * They are typed by a person in the PMS, so they are not hostile - but they
  * are also not HTML, and a hostel called "Ben & Jerry's" should not break its
  * own page.
  */
@@ -123,7 +123,7 @@ export function bookingPageHtml(propertyId: string): string {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Book — ${esc(property.name)}</title>
+<title>Book - ${esc(property.name)}</title>
 <meta name="description" content="${esc(settings.tagline)}">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%9B%8F%EF%B8%8F%3C/text%3E%3C/svg%3E">
 <style>
@@ -330,7 +330,7 @@ export function bookingPageHtml(propertyId: string): string {
   </section>
 
   <section class="card done" id="done" hidden aria-live="polite">
-    <h2 style="margin:0">Thank you — we have your request</h2>
+    <h2 style="margin:0">Thank you - we have your request</h2>
     <p class="ref" id="ref"></p>
     <p id="doneDetail" class="note"></p>
     <p class="note" id="doneNext"></p>
@@ -431,7 +431,7 @@ export function bookingPageHtml(propertyId: string): string {
    * The same rule the API applies when it writes the reservation: every unit
    * takes one guest first, then the rest fill up to occupancy in order. Doing
    * it identically here is what makes the total on screen the total that gets
-   * booked — otherwise two doubles for two guests would be priced as one full
+   * booked - otherwise two doubles for two guests would be priced as one full
    * room and one empty one.
    */
   function distribute() {
@@ -510,7 +510,7 @@ export function bookingPageHtml(propertyId: string): string {
 
       // The gender badge is drawn from the room type's own policy, so an
       // amenity that says the same thing is dropped rather than printed
-      // beside it — a female dorm listed "Female only" twice, once in the
+      // beside it - a female dorm listed "Female only" twice, once in the
       // accent colour and once in grey, which reads as a mistake.
       var tags = [];
       var seen = [];
@@ -611,7 +611,7 @@ export function bookingPageHtml(propertyId: string): string {
       var word = row.rt.kind === 'dorm' ? 'bed' : 'room';
       html += '<div class="line"><span>' + row.rt.name +
               ' <span class="muted">\\u00d7 ' + plural(row.units, word, word + 's') + '</span></span>' +
-              '<span>' + (row.priced ? money(row.totalMinor) : '\\u2014') + '</span></div>';
+              '<span>' + (row.priced ? money(row.totalMinor) : '\-') + '</span></div>';
     });
 
     var nights = offer ? offer.nights : nightsBetween($('checkIn').value, $('checkOut').value);
@@ -627,7 +627,7 @@ export function bookingPageHtml(propertyId: string): string {
     }
 
     $('lines').innerHTML = html;
-    $('grand').textContent = priced ? money(grand) : '\\u2014';
+    $('grand').textContent = priced ? money(grand) : '\-';
     $('taxNote').textContent = (catalog.taxes && catalog.taxes.length) ? 'incl. tax' : '';
     $('toCheckout').disabled = plan.unseated > 0 || !priced;
 
@@ -749,7 +749,7 @@ export function bookingPageHtml(propertyId: string): string {
      *
      * The API itemises this for us only when the party spans more than one
      * room type. A booking of three beds in the same dorm therefore came back
-     * with no breakdown at all and the page said "3 rooms and beds" — the
+     * with no breakdown at all and the page said "3 rooms and beds" - the
      * vaguest possible wording for the single most common booking a hostel
      * takes, on the one screen the guest is most likely to screenshot. The
      * page already knows what they picked, so it falls back to its own
@@ -779,7 +779,7 @@ export function bookingPageHtml(propertyId: string): string {
      * booking page must never do.
      *
      * And deliberately not "you will get an email" either. This system sends
-     * no email at all — there is no mail transport in it — so that sentence
+     * no email at all - there is no mail transport in it - so that sentence
      * was a promise nothing could keep, on the one screen a guest screenshots.
      * It says what is actually true: the property has the request and the
      * contact details, and a person will be in touch.
@@ -802,7 +802,7 @@ export function bookingPageHtml(propertyId: string): string {
       return;
     }
     $('name').textContent = catalog.property.name || BOOT.name;
-    document.title = 'Book — ' + (catalog.property.name || BOOT.name);
+    document.title = 'Book - ' + (catalog.property.name || BOOT.name);
 
     var plan = catalog.ratePlan || {};
     // Only promise "nothing is charged" when nothing is in fact asked for.
@@ -812,7 +812,7 @@ export function bookingPageHtml(propertyId: string): string {
     $('policy').textContent = [
       plan.refundable ? 'Free cancellation, as per our policy.' : 'This rate is non-refundable.',
       rule.mode === 'none'
-        ? 'Nothing is charged now — we will confirm your booking by email first.'
+        ? 'Nothing is charged now - we will confirm your booking by email first.'
         : (rule.message || 'We will confirm your booking by email and tell you how to pay.'),
       rule.methods && rule.methods.length ? 'We accept: ' + rule.methods.join(', ') + '.' : ''
     ].filter(Boolean).join(' ');

@@ -33,7 +33,7 @@
   /*
    * A pointer over anything that can be clicked.
    *
-   * Browsers give `<a href>` a pointer and `<button>` an arrow — a default from
+   * Browsers give `<a href>` a pointer and `<button>` an arrow - a default from
    * the era when buttons were beveled and obviously pressable, and wrong for an
    * interface where a tab, a toolbar icon and a table row are all buttons that
    * look flat. This app has 447 click handlers and had nine `cursor-pointer`
@@ -70,7 +70,7 @@
    * speed without touching the mouse.
    *
    * `:focus-visible` rather than `:focus` so the ring appears for the keyboard
-   * and not on every mouse click — which is why it was turned off in the first
+   * and not on every mouse click - which is why it was turned off in the first
    * place.
    */
   input, select, textarea {
@@ -133,7 +133,7 @@
 /*
  * A dialog must not grow taller than what the phone is actually showing.
  * `vh` on a mobile browser measures the viewport with the address bar hidden,
- * so a 90vh dialog has its footer — the Confirm button — under the chrome until
+ * so a 90vh dialog has its footer - the Confirm button - under the chrome until
  * you scroll. `dvh` measures what is on screen now. The two declarations are a
  * cascade fallback: a browser without `dvh` drops the second and keeps `vh`.
  */
