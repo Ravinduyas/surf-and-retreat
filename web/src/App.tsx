@@ -52,9 +52,9 @@ export default function App() {
   return (
     <Suspense fallback={null}>
       <Routes>
+        <Route path="book" element={<BookingPage />} />
         <Route element={<Layout />}>
           <Route index element={<HomePage />} />
-          <Route path="book" element={<BookingPage />} />
           <Route path="experience" element={<ExperiencePage />} />
           <Route path="rooms" element={<RoomsPage />} />
           <Route path="rooms/:id" element={<DetailPage kind="room" />} />
