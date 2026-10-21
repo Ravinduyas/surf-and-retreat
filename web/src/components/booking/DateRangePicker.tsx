@@ -9,6 +9,8 @@ interface DateRangePickerProps {
   min: string;
   /** When true a one-day range (start === end) is allowed, e.g. a coworking day pass. */
   allowSameDay: boolean;
+  /** One month at every width, or two side by side from tablet up (the default). */
+  months?: 1 | 2;
   onChange: (start: string, end: string) => void;
 }
 
@@ -118,7 +120,7 @@ const Month: React.FC<MonthProps> = ({ year, month, start, rangeEnd, end, min, o
  * Two months side by side from tablet width up, one on phones. Pill-shaped days: the ends of the range
  * are solid, the days between are tinted.
  */
-export const DateRangePicker: React.FC<DateRangePickerProps> = ({ start, end, min, allowSameDay, onChange }) => {
+export const DateRangePicker: React.FC<DateRangePickerProps> = ({ start, end, min, allowSameDay, months = 2, onChange }) => {
   const [view, setView] = useState(() => parseKey(start || min));
   const [hover, setHover] = useState('');
 
@@ -164,16 +166,20 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({ start, end, mi
         year={view.y}
         month={view.m}
         prev={navButton(-1, atMin, 'Previous month')}
-        // On phones this is the only month, so it carries the "next" arrow too.
-        next={<span className="sm:hidden">{navButton(1, false, 'Next month')}</span>}
+        // When it is the only month showing, it carries the "next" arrow too.
+        next={
+          months === 1 ? navButton(1, false, 'Next month') : <span className="sm:hidden">{navButton(1, false, 'Next month')}</span>
+        }
       />
-      <Month
-        {...shared}
-        year={second.y}
-        month={second.m}
-        className="hidden sm:block"
-        next={navButton(1, false, 'Next month')}
-      />
+      {months === 2 && (
+        <Month
+          {...shared}
+          year={second.y}
+          month={second.m}
+          className="hidden sm:block"
+          next={navButton(1, false, 'Next month')}
+        />
+      )}
     </div>
   );
 };

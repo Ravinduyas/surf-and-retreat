@@ -1,88 +1,32 @@
-import { BedDouble, CalendarDays, ClipboardCheck, Laptop, LucideIcon, Sparkles, UserRound, Users } from 'lucide-react';
+import { BedDouble, CalendarDays, LayoutGrid, Laptop, LucideIcon, Send, Sparkles, Waves } from 'lucide-react';
+import { BookingType } from '../../types';
 
-export type StepKind = 'guests' | 'dates' | 'room' | 'addons' | 'coworking' | 'details' | 'review';
-
-/** A stay (bed plus optional add-ons) or co-working only (a desk pass, no bed). */
-export type BookingMode = 'stay' | 'coworking';
+export type StepKind = 'type' | 'dates' | 'room' | 'surf' | 'desk' | 'extras' | 'send';
 
 export interface StepDef {
   kind: StepKind;
-  /** Short name for the bottom step navigator. */
+  /** Accessible name for the step's icon in the step bar. */
   label: string;
   icon: LucideIcon;
+  /** Heading of the step's card. */
   title: string;
-  subtitle: string;
 }
 
-export type ExtraKind = Extract<StepKind, 'addons' | 'coworking'>;
+const TYPE: StepDef = { kind: 'type', label: 'Booking type', icon: LayoutGrid, title: 'What are you booking' };
+const DATES: StepDef = { kind: 'dates', label: 'Dates', icon: CalendarDays, title: 'Your dates' };
+const ROOM: StepDef = { kind: 'room', label: 'Room', icon: BedDouble, title: 'Choose your room' };
+const SURF: StepDef = { kind: 'surf', label: 'Surf', icon: Waves, title: 'Surf package' };
+const DESK: StepDef = { kind: 'desk', label: 'Desk', icon: Laptop, title: 'Coworking desk' };
+const EXTRAS: StepDef = { kind: 'extras', label: 'Extras', icon: Sparkles, title: 'Extras' };
+const SEND: StepDef = { kind: 'send', label: 'Review and send', icon: Send, title: 'Review and send' };
 
-export const isExtraStep = (kind: StepKind): kind is ExtraKind => kind === 'addons' || kind === 'coworking';
-
-const GUESTS: StepDef = {
-  kind: 'guests',
-  label: 'Guests',
-  icon: Users,
-  title: "Who's Coming?",
-  subtitle: "Room choices depend on your group size, so we'll ask this first.",
-};
-
-const DATES: StepDef = {
-  kind: 'dates',
-  label: 'Dates',
-  icon: CalendarDays,
-  title: 'Select Your Dates',
-  subtitle: "Pick your arrival and departure and we'll check availability.",
-};
-
-const ROOM: StepDef = {
-  kind: 'room',
-  label: 'Room',
-  icon: BedDouble,
-  title: 'Choose Your Room',
-  subtitle: 'Select the bed that fits you best.',
-};
-
-const ADDONS: StepDef = {
-  kind: 'addons',
-  label: 'Add-ons',
-  icon: Sparkles,
-  title: 'Any Add-ons?',
-  subtitle: "Optional - tick surfing, skating, yoga or co-working to see the options.",
-};
-
-const DETAILS: StepDef = {
-  kind: 'details',
-  label: 'Details',
-  icon: UserRound,
-  title: 'Your Details',
-  subtitle: "We'll use this to confirm your booking.",
-};
-
-const REVIEW: StepDef = {
-  kind: 'review',
-  label: 'Review',
-  icon: ClipboardCheck,
-  title: 'Review & Send',
-  subtitle: 'Double-check everything, then send the request to us.',
-};
-
-/**
- * Stay: group size and dates first, then the room (the main booking), then optional add-ons (surf,
- * skate, yoga, co-working). Co-working only skips the bed and the add-ons and makes the desk the booking.
- */
-export const buildSteps = (mode: BookingMode): StepDef[] =>
-  mode === 'coworking'
-    ? [
-        { ...GUESTS, subtitle: 'Count everyone who needs a desk, including you.' },
-        { ...DATES, subtitle: 'Pick the days you want to work here - a single day is fine.' },
-        {
-          kind: 'coworking',
-          label: 'Desk',
-          icon: Laptop,
-          title: 'Choose a Desk Pass',
-          subtitle: 'A desk on 300 Mbps fiber, by the day, week or month.',
-        },
-        DETAILS,
-        REVIEW,
-      ]
-    : [GUESTS, DATES, ROOM, ADDONS, DETAILS, REVIEW];
+/** Every booking has a room; surf packages and coworking each add their own step after it. */
+export const buildSteps = (type: BookingType): StepDef[] => [
+  TYPE,
+  DATES,
+  ROOM,
+  ...(type === 'surf' ? [SURF] : []),
+  ...(type === 'coworking' ? [DESK] : []),
+  EXTRAS,
+  SEND,
+];

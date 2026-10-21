@@ -1,11 +1,13 @@
 import { CONTACT_INFO } from '../../data';
 import { BookingFormState } from '../../types';
-import { findOption } from './options';
-import { hasRoom } from './validation';
+import { formatMoney } from '../../pms';
+import { findSurf } from './options';
+import { buildQuote, travellerRooms, travellerSurf } from './quote';
 
 export const formatDate = (value: string) =>
   value
     ? new Date(`${value}T00:00:00`).toLocaleDateString('en-US', {
+        weekday: 'short',
         month: 'short',
         day: 'numeric',
         year: 'numeric',
@@ -23,48 +25,51 @@ export interface BookingRequest {
 
 /**
  * The site is static, so there is no server to post the form to. Instead the request is handed to the
- * guest's own WhatsApp or email, addressed to the hostel, with everything they chose already written out.
+ * guest's own WhatsApp or email, addressed to the hostel, with the whole quote already written out.
  */
 export const buildBookingRequest = (form: BookingFormState): BookingRequest => {
-  const room = hasRoom(form) ? findOption('stay', form.roomId) : undefined;
-  const surf = findOption('surf', form.surfId);
-  const skate = findOption('skate', form.skateId);
-  const yoga = findOption('yoga', form.yogaId);
-  const coworking = findOption('coworking', form.coworkingId);
-  const coworkingOnly = !room && !surf && !skate && !yoga && Boolean(coworking);
+  const { lines, total } = buildQuote(form);
+  const dates = `${formatDate(form.checkIn)} to ${formatDate(form.checkOut)}`;
+  const rooms = travellerRooms(form);
 
-  const dates =
-    form.checkOut && form.checkOut !== form.checkIn
-      ? `${formatDate(form.checkIn)} to ${formatDate(form.checkOut)}`
-      : formatDate(form.checkIn);
-  const guests = `${form.guests} ${form.guests === 1 ? 'guest' : 'guests'}`;
+  const surfLines =
+    form.type === 'surf'
+      ? Array.from({ length: form.guests }, (_, i) => {
+          const pick = travellerSurf(form, i);
+          const pkg = findSurf(pick.packageId);
+          return `  Traveller ${i + 1}${rooms[i] ? ` (${rooms[i]})` : ''}: ${pkg ? `${pkg.title}, ${pick.level}` : 'no surf'}`;
+        })
+      : [];
 
-  const lines = [
-    coworkingOnly ? "Hi Surf & Retreat! I'd like to book co-working only (no room):" : "Hi Surf & Retreat! I'd like to book:",
+  const text = [
+    "Hi Surf & Retreat! I'd like to book:",
     '',
-    room && `- Room: ${room.title} (${room.price})`,
-    surf && `- Surf: ${surf.title} (${surf.price})`,
-    skate && `- Skate: ${skate.title} (${skate.price})`,
-    yoga && `- Yoga: ${yoga.title} (${yoga.price})`,
-    coworking && `- Coworking: ${coworking.title} (${coworking.price})`,
     `- Dates: ${dates}`,
-    `- Guests: ${guests}`,
+    `- Guests: ${form.guests}`,
+    ...lines.map(
+      (line) =>
+        `- ${line.title} (${line.detail}): ${line.amount === null ? (line.note ?? 'priced at the desk') : formatMoney(line.amount)}`,
+    ),
+    ...(surfLines.length ? ['- Surf per traveller:', ...surfLines] : []),
+    `- Estimated total: ${formatMoney(total)}`,
     '',
     `Name: ${form.name.trim()}`,
     `Email: ${form.email.trim()}`,
-    form.phone.trim() && `Phone: ${form.phone.trim()}`,
-    form.message.trim() && `Note: ${form.message.trim()}`,
+    `Country: ${form.country}`,
+    `Phone: ${form.dialCode} ${form.phone.trim()}`,
+    form.message.trim() ? `Note: ${form.message.trim()}` : null,
     '',
     'Sent from the website booking form.',
-  ].filter((line): line is string => typeof line === 'string');
+  ]
+    .filter((line): line is string => typeof line === 'string')
+    .join('\n');
 
-  const text = lines.join('\n');
-  const phoneDigits = CONTACT_INFO.phone.replace(/\D/g, '');
-  const subject = `Booking request: ${[room?.title, surf?.title, skate?.title, yoga?.title, coworking?.title].filter(Boolean).join(' + ')} · ${dates}`;
+  const phone = CONTACT_INFO.phone.replace(/\D/g, '');
+  const subject = `Booking request · ${dates} · ${form.guests} ${form.guests === 1 ? 'guest' : 'guests'}`;
 
   return {
     text,
-    whatsappHref: `https://wa.me/${phoneDigits}?text=${encodeURIComponent(text)}`,
+    whatsappHref: `https://wa.me/${phone}?text=${encodeURIComponent(text)}`,
     mailtoHref: `mailto:${CONTACT_INFO.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(text)}`,
   };
 };

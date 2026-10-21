@@ -141,38 +141,36 @@ export interface ValueItem {
   iconType: 'wave' | 'community' | 'leaf';
 }
 
-/** Where a booking starts. 'coworking' is the co-working-only flow, with no bed. */
+/** Where a "Book" link points the booking flow: a room, a surf package or a coworking pass. */
 export type BookingTab = 'stay' | 'surf' | 'coworking';
 
-/** A room, add-on or coworking plan, normalized for the booking flow. */
-export interface BookingOption {
-  id: string;
-  title: string;
-  /** Display price, live from the PMS when it has sent one. */
-  price: string;
-  meta: string;
-  description: string;
-  image?: string;
-  /** Only rooms are capacity-limited; undefined means any party size fits. */
-  maxGuests?: number;
+/** What the guest is booking, picked on the first step. Every type includes a room. */
+export type BookingType = 'rooms' | 'surf' | 'coworking';
+
+/** One traveller's surf choice. An empty packageId means that traveller skips surfing. */
+export interface TravellerSurf {
+  packageId: string;
+  level: string;
 }
 
 export interface BookingFormState {
-  /** The bed for the stay. NO_ROOM when the guest only wants lessons or a desk; '' until chosen. */
-  roomId: string;
-  /** Optional surf package added to the stay. */
-  surfId: string;
-  /** Optional skate session added to the stay. */
-  skateId: string;
-  /** Optional yoga class or pack added to the stay. */
-  yogaId: string;
-  /** Optional coworking pass added to the stay. */
-  coworkingId: string;
+  type: BookingType;
   checkIn: string;
   checkOut: string;
   guests: number;
+  /** Room id → how many are booked (beds for dorms, whole rooms for privates). */
+  rooms: Record<string, number>;
+  /** One entry per traveller, in the order they fill the chosen rooms. */
+  surf: TravellerSurf[];
+  /** Coworking pass, how many people need a desk, and how many days/weeks/months. */
+  desk: { planId: string; people: number; periods: number };
+  /** Skate and yoga add-on id → quantity. */
+  extras: Record<string, number>;
   name: string;
   email: string;
+  emailConfirm: string;
+  country: string;
+  dialCode: string;
   phone: string;
   message: string;
 }

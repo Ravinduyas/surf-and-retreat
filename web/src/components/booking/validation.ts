@@ -1,18 +1,14 @@
-import { BookingFormState, BookingOption } from '../../types';
+import { ROOMS } from '../../data';
+import { BookingFormState } from '../../types';
+import { unitSleeps } from './options';
 
-/** The biggest rooms (the 6-bed dorms) cap how many guests one booking can cover. */
+/** Three private doubles or six dorm beds: the most one online booking covers. */
 export const MAX_GUESTS = 6;
 
-/** roomId value for a guest who only wants add-ons or a desk, with no bed. */
-export const NO_ROOM = 'none';
+/** Private rooms one booking can hold. Dorm beds are capped by the guest count instead. */
+export const MAX_ROOMS = 3;
 
 export const isValidEmail = (value: string) => /\S+@\S+\.\S+/.test(value);
-
-export const roomFitsGuests = (room: BookingOption, guests: number) =>
-  room.maxGuests === undefined || guests <= room.maxGuests;
-
-/** True when the booking includes a bed, so it needs a check-out date. */
-export const hasRoom = (form: Pick<BookingFormState, 'roomId'>) => form.roomId !== '' && form.roomId !== NO_ROOM;
 
 /** Local YYYY-MM-DD (toISOString would shift the day for users ahead of UTC). */
 export const todayString = () => {
@@ -21,19 +17,29 @@ export const todayString = () => {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 };
 
-/** Whole nights between two YYYY-MM-DD days (0 for a single-day visit). */
+/** Whole nights between two YYYY-MM-DD days. */
 export const nightsBetween = (from: string, to: string) =>
   from && to ? Math.round((new Date(`${to}T00:00:00`).getTime() - new Date(`${from}T00:00:00`).getTime()) / 86_400_000) : 0;
 
-/**
- * Dates come before the room is chosen, so a single day (check-out = check-in) is allowed here: it suits a
- * desk day pass or a lesson. Picking a bed later needs at least one night, which the room step enforces.
- */
-export const getDateError = (checkIn: string, checkOut: string): string | null => {
-  if (checkIn && checkIn < todayString()) return "Check-in can't be in the past.";
-  if (checkIn && checkOut && checkOut < checkIn) return "Check-out can't be before check-in.";
+export const isDatesValid = (checkIn: string, checkOut: string) =>
+  Boolean(checkIn) && checkIn >= todayString() && nightsBetween(checkIn, checkOut) >= 1;
+
+/** How many guests the chosen beds and rooms sleep. */
+export const coveredGuests = (rooms: BookingFormState['rooms']) =>
+  ROOMS.reduce((sum, room) => sum + (rooms[room.id] ?? 0) * unitSleeps(room), 0);
+
+/** Private rooms in the booking (dorm beds don't count toward MAX_ROOMS). */
+export const privateRoomCount = (rooms: BookingFormState['rooms']) =>
+  ROOMS.reduce((sum, room) => sum + (unitSleeps(room) > 1 ? (rooms[room.id] ?? 0) : 0), 0);
+
+export const phoneDigits = (value: string) => value.replace(/\D/g, '');
+
+/** What the send step still needs, or null when it can go. */
+export const contactProblem = (form: BookingFormState): string | null => {
+  if (form.name.trim().length < 2) return 'name';
+  if (!isValidEmail(form.email)) return 'email';
+  if (form.emailConfirm.trim().toLowerCase() !== form.email.trim().toLowerCase()) return 'emailConfirm';
+  if (!form.country) return 'country';
+  if (!form.dialCode || phoneDigits(form.phone).length < 6) return 'phone';
   return null;
 };
-
-export const isDatesStepValid = (checkIn: string, checkOut: string) =>
-  Boolean(checkIn) && Boolean(checkOut) && getDateError(checkIn, checkOut) === null;

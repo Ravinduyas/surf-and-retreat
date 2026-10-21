@@ -1,8 +1,7 @@
 import React from 'react';
-import { CalendarDays, Zap } from 'lucide-react';
+import { CalendarDays } from 'lucide-react';
 import { DateRangePicker } from './DateRangePicker';
-import { Panel } from './Panel';
-import { getDateError, nightsBetween, todayString } from './validation';
+import { nightsBetween, todayString } from './validation';
 
 interface DatesStepProps {
   checkIn: string;
@@ -10,45 +9,28 @@ interface DatesStepProps {
   onChange: (checkIn: string, checkOut: string) => void;
 }
 
-const QUICK_PICKS = [
-  { label: '1 Week', nights: 7 },
-  { label: '2 Weeks', nights: 14 },
-  { label: '3 Weeks', nights: 21 },
-];
+const short = (key: string) =>
+  new Date(`${key}T00:00:00`).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
 
-const addDays = (key: string, days: number) => {
-  const d = new Date(`${key}T00:00:00`);
-  d.setDate(d.getDate() + days);
-  const pad = (n: number) => String(n).padStart(2, '0');
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-};
-
-const LegendDot: React.FC<{ className: string; label: string }> = ({ className, label }) => (
-  <span className="inline-flex items-center gap-1.5">
-    <span className={`w-2.5 h-2.5 rounded-full ${className}`} aria-hidden="true" />
-    {label}
-  </span>
-);
-
+/** A one-month calendar in a bordered box, with the picked range and night count under it. */
 export const DatesStep: React.FC<DatesStepProps> = ({ checkIn, checkOut, onChange }) => {
-  const today = todayString();
-  const error = getDateError(checkIn, checkOut);
   const nights = nightsBetween(checkIn, checkOut);
-  const base = checkIn || today;
-
-  const hint = !checkIn
-    ? 'Tap a start date, then an end date.'
-    : !checkOut
-      ? 'Now tap your check-out day - or the same day again for a single day.'
-      : 'Tap any day to start over.';
 
   return (
-    <Panel
-      icon={CalendarDays}
-      title="Choose your stay"
-      hint={hint}
-      aside={
-        checkIn && (
+    <div className="rounded-2xl border border-[#DCE2D8] p-4 sm:p-5">
+      <div className="flex items-start justify-between gap-3 pb-4 mb-4 border-b border-[#E5ECE2]">
+        <div className="flex items-center gap-3 min-w-0">
+          <span className="w-10 h-10 rounded-xl bg-[#2A4E38] text-[#D8E95E] flex items-center justify-center shrink-0">
+            <CalendarDays className="w-[18px] h-[18px]" />
+          </span>
+          <div className="min-w-0">
+            <p className="text-[15px] font-bold text-[#18271E] leading-tight">Choose your stay</p>
+            <p className="text-xs text-[#637265] mt-0.5">
+              {!checkIn ? 'Tap a start date, then an end date.' : !checkOut ? 'Now tap your check-out day.' : 'Tap any day to start over.'}
+            </p>
+          </div>
+        </div>
+        {checkIn && (
           <button
             type="button"
             onClick={() => onChange('', '')}
@@ -56,49 +38,25 @@ export const DatesStep: React.FC<DatesStepProps> = ({ checkIn, checkOut, onChang
           >
             Clear
           </button>
-        )
-      }
-    >
-      <div className="rounded-2xl border border-[#E5ECE2] bg-[#FAFBF9] p-3 sm:p-4">
-        <DateRangePicker start={checkIn} end={checkOut} min={today} allowSameDay onChange={onChange} />
+        )}
       </div>
 
-      {error && (
-        <p className="text-xs font-medium text-[#A0522D] mt-3" role="alert">
-          {error}
-        </p>
-      )}
+      <DateRangePicker start={checkIn} end={checkOut} min={todayString()} allowSameDay={false} months={1} onChange={onChange} />
 
-      <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
-        <span className="inline-flex items-center gap-1 text-[10px] font-bold uppercase tracking-[0.14em] text-[#7FA35B] mr-1">
-          <Zap className="w-3.5 h-3.5 fill-current" aria-hidden="true" />
-          Quick pick
-        </span>
-        {QUICK_PICKS.map((pick) => {
-          const active = checkIn === base && nights === pick.nights;
-          return (
-            <button
-              key={pick.label}
-              type="button"
-              onClick={() => onChange(base, addDays(base, pick.nights))}
-              aria-pressed={active}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold border transition-colors cursor-pointer ${
-                active
-                  ? 'bg-[#2A4E38] text-white border-[#2A4E38]'
-                  : 'bg-white text-[#243F2D] border-[#DCE2D8] hover:border-[#B9C8B7]'
-              }`}
-            >
-              {pick.label}
-            </button>
-          );
-        })}
+      <div className="flex items-center justify-between gap-3 pt-4 mt-4 border-t border-[#E5ECE2] text-xs">
+        {checkIn && checkOut ? (
+          <>
+            <span className="font-semibold text-[#18271E]">
+              {short(checkIn)} → {short(checkOut)}
+            </span>
+            <span className="rounded-full bg-[#F2F6F0] px-2.5 py-1 font-semibold text-[#2A4E38]">
+              {nights} {nights === 1 ? 'night' : 'nights'}
+            </span>
+          </>
+        ) : (
+          <span className="text-[#637265]">{checkIn ? `Check-in ${short(checkIn)}, pick a check-out day` : 'No dates picked yet'}</span>
+        )}
       </div>
-
-      <div className="mt-3 flex items-center justify-center gap-4 text-[11px] text-[#7A897C]">
-        <LegendDot className="bg-[#2A4E38]" label="Selected" />
-        <LegendDot className="bg-[#E3EDD2]" label="In range" />
-        <LegendDot className="bg-[#7FA35B] scale-50" label="Today" />
-      </div>
-    </Panel>
+    </div>
   );
 };

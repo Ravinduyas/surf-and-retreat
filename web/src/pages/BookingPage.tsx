@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+import { CalendarCheck } from 'lucide-react';
+import { PageHeader } from '../components/layout/PageHeader';
+import { PageHero } from '../components/layout/PageHero';
 import { BookingFlow } from '../components/booking/BookingFlow';
-import { BookingTopBar } from '../components/booking/BookingTopBar';
 import { usePageMeta } from '../hooks/usePageMeta';
 import { BookingTab } from '../types';
 
 const TABS: BookingTab[] = ['stay', 'surf', 'coworking'];
 
-/** Standalone booking flow, opened in a new browser tab from the "Book" links. */
+/** The booking page, opened in a new browser tab from the "Book" links. */
 export default function BookingPage() {
   usePageMeta();
   const [params] = useSearchParams();
-  const navigate = useNavigate();
 
   // The flow's starting point comes from the query string, which the prerendered HTML can't know,
   // so it only renders on the client. That keeps hydration consistent.
@@ -22,20 +23,22 @@ export default function BookingPage() {
   const tab = tabParam && TABS.includes(tabParam) ? tabParam : undefined;
   const itemId = params.get('item') ?? undefined;
 
-  const handleClose = () => {
-    window.close();
-    // window.close() does nothing when the tab wasn't opened from the site (e.g. a direct visit).
-    navigate('/', { replace: true });
-  };
-
   return (
-    <div className="h-dvh flex flex-col bg-[#F6F7F4]">
-      {/* The flow brings its own top bar with the step title; this one only shows until it mounts. */}
-      {mounted ? (
-        <BookingFlow initialTab={tab ?? 'stay'} initialItemId={itemId} onClose={handleClose} />
-      ) : (
-        <BookingTopBar />
-      )}
-    </div>
+    <>
+      <PageHeader>
+        <PageHero
+          eyebrow="Booking"
+          eyebrowIcon={CalendarCheck}
+          title="Build your stay"
+          subtitle="Pick a bed, add surf lessons or a desk, and see the price as you go. Nothing is charged here: you send us a quote and we come back within 24 hours to confirm."
+          image={`${import.meta.env.BASE_URL}images/surf-walk-in.webp`}
+          imageAlt="Guests walking into the surf at Weligama Bay"
+        />
+      </PageHeader>
+
+      <section className="mt-6 sm:mt-10 min-h-[560px]">
+        {mounted && <BookingFlow initialTab={tab ?? 'stay'} initialItemId={itemId} />}
+      </section>
+    </>
   );
 }
