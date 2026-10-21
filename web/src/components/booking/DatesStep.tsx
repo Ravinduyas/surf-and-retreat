@@ -1,5 +1,5 @@
 import React from 'react';
-import { CalendarDays } from 'lucide-react';
+import { ArrowRight, Moon } from 'lucide-react';
 import { DateRangePicker } from './DateRangePicker';
 import { nightsBetween, todayString } from './validation';
 
@@ -9,53 +9,83 @@ interface DatesStepProps {
   onChange: (checkIn: string, checkOut: string) => void;
 }
 
-const short = (key: string) =>
+const QUICK = [
+  { label: '1 week', nights: 7 },
+  { label: '2 weeks', nights: 14 },
+  { label: '1 month', nights: 30 },
+];
+
+const addDays = (key: string, days: number) => {
+  const d = new Date(`${key}T00:00:00`);
+  d.setDate(d.getDate() + days);
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+};
+
+const long = (key: string) =>
   new Date(`${key}T00:00:00`).toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
 
-/** A one-month calendar in a bordered box, with the picked range and night count under it. */
+/** Check-in and check-out tiles that light up as they're picked, quick lengths, then the calendar. */
 export const DatesStep: React.FC<DatesStepProps> = ({ checkIn, checkOut, onChange }) => {
   const nights = nightsBetween(checkIn, checkOut);
+  const picking = checkIn && !checkOut ? 'out' : !checkIn ? 'in' : null;
+
+  const tile = (label: string, value: string, focus: boolean) => (
+    <div
+      className={`flex-1 min-w-0 rounded-2xl border px-3.5 py-2.5 transition-colors ${
+        focus ? 'border-[#2A4E38] bg-[#F7FAF5] ring-2 ring-[#2A4E38]/15' : 'border-[#DCE2D8] bg-white'
+      }`}
+    >
+      <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#7FA35B]">{label}</p>
+      <p className={`text-sm font-bold mt-0.5 truncate ${value ? 'text-[#18271E]' : 'text-[#B3BEB2]'}`}>
+        {value ? long(value) : 'Select a day'}
+      </p>
+    </div>
+  );
 
   return (
-    <div className="rounded-2xl border border-[#DCE2D8] p-4 sm:p-5">
-      <div className="flex items-start justify-between gap-3 pb-4 mb-4 border-b border-[#E5ECE2]">
-        <div className="flex items-center gap-3 min-w-0">
-          <span className="w-10 h-10 rounded-xl bg-[#2A4E38] text-[#D8E95E] flex items-center justify-center shrink-0">
-            <CalendarDays className="w-[18px] h-[18px]" />
-          </span>
-          <div className="min-w-0">
-            <p className="text-[15px] font-bold text-[#18271E] leading-tight">Choose your stay</p>
-            <p className="text-xs text-[#637265] mt-0.5">
-              {!checkIn ? 'Tap a start date, then an end date.' : !checkOut ? 'Now tap your check-out day.' : 'Tap any day to start over.'}
-            </p>
-          </div>
+    <div className="space-y-3">
+      <div className="flex items-stretch gap-2 sm:gap-3">
+        {tile('Check-in', checkIn, picking === 'in')}
+        <span className="self-center shrink-0 w-8 h-8 rounded-full bg-[#F2F6F0] text-[#2A4E38] flex items-center justify-center">
+          <ArrowRight className="w-4 h-4" />
+        </span>
+        {tile('Check-out', checkOut, picking === 'out')}
+        <div className="hidden sm:flex shrink-0 items-center gap-2 rounded-2xl bg-[#1F3A2A] text-white px-4">
+          <Moon className="w-4 h-4 text-[#D8E95E]" />
+          <span className="text-lg font-bold leading-none tabular-nums">{nights || '-'}</span>
+          <span className="text-[10px] uppercase tracking-[0.14em] text-white/60">{nights === 1 ? 'night' : 'nights'}</span>
         </div>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#8B9A8D] mr-1">Quick pick</span>
+        {QUICK.map((q) => {
+          const base = checkIn || todayString();
+          const active = Boolean(checkIn) && nights === q.nights;
+          return (
+            <button
+              key={q.label}
+              type="button"
+              aria-pressed={active}
+              onClick={() => onChange(base, addDays(base, q.nights))}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-semibold border transition-colors cursor-pointer ${
+                active ? 'bg-[#2A4E38] text-white border-[#2A4E38]' : 'bg-white text-[#243F2D] border-[#DCE2D8] hover:border-[#9DB09A]'
+              }`}
+            >
+              {q.label}
+            </button>
+          );
+        })}
         {checkIn && (
-          <button
-            type="button"
-            onClick={() => onChange('', '')}
-            className="text-xs font-semibold text-[#2A4E38] hover:underline cursor-pointer shrink-0 py-1"
-          >
-            Clear
+          <button type="button" onClick={() => onChange('', '')} className="ml-auto text-xs font-semibold text-[#2A4E38] hover:underline cursor-pointer py-1.5">
+            Clear dates
           </button>
         )}
       </div>
 
-      <DateRangePicker start={checkIn} end={checkOut} min={todayString()} allowSameDay={false} months={1} onChange={onChange} />
-
-      <div className="flex items-center justify-between gap-3 pt-4 mt-4 border-t border-[#E5ECE2] text-xs">
-        {checkIn && checkOut ? (
-          <>
-            <span className="font-semibold text-[#18271E]">
-              {short(checkIn)} → {short(checkOut)}
-            </span>
-            <span className="rounded-full bg-[#F2F6F0] px-2.5 py-1 font-semibold text-[#2A4E38]">
-              {nights} {nights === 1 ? 'night' : 'nights'}
-            </span>
-          </>
-        ) : (
-          <span className="text-[#637265]">{checkIn ? `Check-in ${short(checkIn)}, pick a check-out day` : 'No dates picked yet'}</span>
-        )}
+      <div className="rounded-2xl border border-[#E5ECE2] bg-[#FAFBF9] p-2.5 sm:p-4">
+        <DateRangePicker start={checkIn} end={checkOut} min={todayString()} allowSameDay={false} onChange={onChange} />
       </div>
     </div>
   );

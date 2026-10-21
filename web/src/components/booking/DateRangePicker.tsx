@@ -55,7 +55,7 @@ const Month: React.FC<MonthProps> = ({ year, month, start, rangeEnd, end, min, o
 
   return (
     <div className={`flex-1 min-w-0 ${className}`}>
-      <div className="flex items-center justify-between pb-3 mb-2 border-b border-[#E5ECE2]">
+      <div className="flex items-center justify-between pb-2 mb-1 border-b border-[#E5ECE2]">
         <span className="w-9">{prev}</span>
         <span className="text-sm font-bold text-[#18271E]">
           {new Date(year, month, 1).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
@@ -65,7 +65,7 @@ const Month: React.FC<MonthProps> = ({ year, month, start, rangeEnd, end, min, o
 
       <div className="grid grid-cols-7 gap-x-1 sm:gap-x-1.5 mb-1">
         {WEEKDAYS.map((d) => (
-          <span key={d} className="text-center text-[10px] font-bold uppercase tracking-wider text-[#8B9A8D] py-2">
+          <span key={d} className="text-center text-[10px] font-bold uppercase tracking-wider text-[#8B9A8D] py-1">
             {d}
           </span>
         ))}
@@ -73,7 +73,7 @@ const Month: React.FC<MonthProps> = ({ year, month, start, rangeEnd, end, min, o
 
       <div className="grid grid-cols-7 gap-x-1 sm:gap-x-1.5 gap-y-1">
         {cells.map((day, i) => {
-          if (day === null) return <span key={`e${i}`} className="h-10 lg:h-9" aria-hidden="true" />;
+          if (day === null) return <span key={`e${i}`} className="h-9 lg:h-8" aria-hidden="true" />;
           const key = toKey(year, month, day);
           const disabled = key < min;
           const selected = key === start || key === end;
@@ -94,7 +94,7 @@ const Month: React.FC<MonthProps> = ({ year, month, start, rangeEnd, end, min, o
                 year: 'numeric',
               })}
               aria-pressed={selected}
-              className={`relative h-10 lg:h-9 rounded-full text-[13px] font-medium transition-colors ${
+              className={`relative h-9 lg:h-8 rounded-full text-[13px] font-medium transition-colors ${
                 selected
                   ? 'bg-[#2A4E38] text-white font-bold shadow-sm'
                   : inRange

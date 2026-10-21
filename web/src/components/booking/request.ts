@@ -1,6 +1,7 @@
 import { CONTACT_INFO } from '../../data';
 import { BookingFormState } from '../../types';
 import { formatMoney } from '../../pms';
+import { countryName, dialCode } from './countries';
 import { findSurf } from './options';
 import { buildQuote, travellerRooms, travellerSurf } from './quote';
 
@@ -55,8 +56,8 @@ export const buildBookingRequest = (form: BookingFormState): BookingRequest => {
     '',
     `Name: ${form.name.trim()}`,
     `Email: ${form.email.trim()}`,
-    `Country: ${form.country}`,
-    `Phone: ${form.dialCode} ${form.phone.trim()}`,
+    `Country: ${countryName(form.country)}`,
+    `Phone: ${dialCode(form.phoneCountry)} ${form.phone.trim()}`,
     form.message.trim() ? `Note: ${form.message.trim()}` : null,
     '',
     'Sent from the website booking form.',

@@ -168,9 +168,10 @@ export interface BookingFormState {
   extras: Record<string, number>;
   name: string;
   email: string;
-  emailConfirm: string;
+  /** ISO alpha-2 code of the guest's country (see booking/countries.ts). */
   country: string;
-  dialCode: string;
+  /** ISO alpha-2 code of the country whose dialling code the phone number uses. */
+  phoneCountry: string;
   phone: string;
   message: string;
 }

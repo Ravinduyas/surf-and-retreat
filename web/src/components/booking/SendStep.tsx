@@ -1,145 +1,120 @@
 import React from 'react';
+import { Pencil } from 'lucide-react';
 import { BookingFormState } from '../../types';
+import { CountryPicker } from './CountryPicker';
 import { isValidEmail } from './validation';
 
-/** Where most guests come from, each with its dialling code. Picking a country fills in the code. */
-const COUNTRIES: [name: string, code: string][] = [
-  ['Germany', '+49'],
-  ['United Kingdom', '+44'],
-  ['Netherlands', '+31'],
-  ['France', '+33'],
-  ['Switzerland', '+41'],
-  ['Austria', '+43'],
-  ['Belgium', '+32'],
-  ['Sweden', '+46'],
-  ['Denmark', '+45'],
-  ['Norway', '+47'],
-  ['Finland', '+358'],
-  ['Spain', '+34'],
-  ['Italy', '+39'],
-  ['Portugal', '+351'],
-  ['Ireland', '+353'],
-  ['Poland', '+48'],
-  ['Czechia', '+420'],
-  ['United States', '+1'],
-  ['Canada', '+1'],
-  ['Australia', '+61'],
-  ['New Zealand', '+64'],
-  ['Sri Lanka', '+94'],
-  ['India', '+91'],
-  ['Israel', '+972'],
-  ['Russia', '+7'],
-  ['South Africa', '+27'],
-  ['Brazil', '+55'],
-  ['Japan', '+81'],
-  ['Other', ''],
-];
+type ContactField = 'name' | 'email' | 'country' | 'phoneCountry' | 'phone' | 'message';
 
-const CODES = [...new Set(COUNTRIES.map(([, code]) => code).filter(Boolean))];
-
-type ContactField = 'name' | 'email' | 'emailConfirm' | 'country' | 'dialCode' | 'phone' | 'message';
+export interface SummaryItem {
+  label: string;
+  value: string;
+  onEdit: () => void;
+}
 
 interface SendStepProps {
   form: Pick<BookingFormState, ContactField>;
+  /** The stay so far, each part with a way back to its step. */
+  summary: SummaryItem[];
   onChange: (field: ContactField, value: string) => void;
 }
 
-const label = 'block text-[10px] font-bold uppercase tracking-[0.14em] text-[#8B9A8D] mb-1.5';
+const label = 'block text-[10px] font-bold uppercase tracking-[0.14em] text-[#637265] mb-1';
 const field =
-  'w-full bg-white border border-[#DCE2D8] rounded-xl px-3.5 py-3 text-base sm:text-sm text-[#18271E] focus:outline-hidden focus:ring-2 focus:ring-[#2C573A]/20';
+  'w-full h-11 bg-[#FAFBF9] border border-[#DCE2D8] rounded-xl px-3.5 text-base sm:text-sm text-[#18271E] placeholder:text-[#A7B3A6] transition-colors hover:border-[#B9C8B7] focus:bg-white focus:border-[#2A4E38] focus:outline-hidden focus:ring-4 focus:ring-[#2A4E38]/10';
+const bad = 'border-[#C0522D] focus:border-[#C0522D] focus:ring-[#C0522D]/10';
 
-/** Contact details, checked before the request can go: a name, matching emails, a country and a phone. */
-export const SendStep: React.FC<SendStepProps> = ({ form, onChange }) => {
+/** The stay at a glance with edit links, then contact details: a name, an email, a country and a phone. */
+export const SendStep: React.FC<SendStepProps> = ({ form, summary, onChange }) => {
   const badEmail = Boolean(form.email) && !isValidEmail(form.email);
-  const mismatch = Boolean(form.emailConfirm) && form.emailConfirm.trim().toLowerCase() !== form.email.trim().toLowerCase();
 
   return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div className="space-y-5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+        {summary.map((item) => (
+          <div key={item.label} className="flex items-start justify-between gap-2 rounded-2xl bg-[#F4F7F1] px-3.5 py-2.5">
+            <div className="min-w-0">
+              <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#7FA35B]">{item.label}</p>
+              <p className="text-[13px] font-semibold text-[#18271E] mt-0.5 leading-snug">{item.value}</p>
+            </div>
+            <button
+              type="button"
+              onClick={item.onEdit}
+              aria-label={`Change ${item.label.toLowerCase()}`}
+              className="shrink-0 w-7 h-7 rounded-full text-[#637265] hover:text-[#18271E] hover:bg-white flex items-center justify-center transition-colors cursor-pointer"
+            >
+              <Pencil className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        ))}
+      </div>
+
+      <div className="space-y-3">
+        <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#2A4E38]">Your details</p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <label className="block">
+            <span className={label}>Your name</span>
+            <input className={field} type="text" autoComplete="name" placeholder="Jane Doe" value={form.name} onChange={(e) => onChange('name', e.target.value)} />
+          </label>
+          <label className="block">
+            <span className={label}>Email</span>
+            <input
+              className={`${field} ${badEmail ? bad : ''}`}
+              type="email"
+              autoComplete="email"
+              placeholder="jane@example.com"
+              value={form.email}
+              onChange={(e) => onChange('email', e.target.value)}
+            />
+            {badEmail && <span className="block text-xs font-medium text-[#A0522D] mt-1">Enter a valid email address.</span>}
+          </label>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <span className={label}>Country</span>
+            <CountryPicker
+              mode="country"
+              value={form.country}
+              placeholder="Select country"
+              onChange={(iso) => {
+                // The phone code follows the country; the guest can still change the code on its own afterwards.
+                onChange('country', iso);
+                onChange('phoneCountry', iso);
+              }}
+            />
+          </div>
+          <div>
+            <span className={label}>Phone / WhatsApp</span>
+          <div className="flex gap-2">
+            <CountryPicker mode="code" value={form.phoneCountry} placeholder="Code" className="w-[124px] shrink-0" onChange={(iso) => onChange('phoneCountry', iso)} />
+            <input
+              className={field}
+              type="tel"
+              autoComplete="tel-national"
+              placeholder="712345678"
+              aria-label="Phone number"
+              value={form.phone}
+              onChange={(e) => onChange('phone', e.target.value)}
+              />
+            </div>
+          </div>
+        </div>
+
         <label className="block">
-          <span className={label}>Your name</span>
-          <input className={field} type="text" autoComplete="name" value={form.name} onChange={(e) => onChange('name', e.target.value)} />
-        </label>
-        <label className="block">
-          <span className={label}>Email</span>
-          <input
-            className={`${field} ${badEmail ? 'border-[#C0522D]' : ''}`}
-            type="email"
-            autoComplete="email"
-            value={form.email}
-            onChange={(e) => onChange('email', e.target.value)}
+          <span className={label}>
+            Anything else <span className="normal-case tracking-normal font-normal text-[#8B9A8D]">(optional)</span>
+          </span>
+          <textarea
+            className={`${field} h-auto py-2.5 resize-none`}
+            rows={2}
+            value={form.message}
+            onChange={(e) => onChange('message', e.target.value)}
+            placeholder="Arrival time, dietary needs, airport pickup..."
           />
         </label>
       </div>
-
-      <label className="block">
-        <span className={label}>Confirm email</span>
-        <input
-          className={`${field} ${mismatch ? 'border-[#C0522D]' : ''}`}
-          type="email"
-          autoComplete="email"
-          value={form.emailConfirm}
-          onChange={(e) => onChange('emailConfirm', e.target.value)}
-        />
-        {mismatch && <span className="block text-xs font-medium text-[#A0522D] mt-1">The two emails don&apos;t match.</span>}
-      </label>
-
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-        <label className="block col-span-2 sm:col-span-1">
-          <span className={label}>Country</span>
-          <select
-            className={`${field} cursor-pointer`}
-            autoComplete="country-name"
-            value={form.country}
-            onChange={(e) => {
-              onChange('country', e.target.value);
-              const code = COUNTRIES.find(([name]) => name === e.target.value)?.[1];
-              if (code) onChange('dialCode', code);
-            }}
-          >
-            <option value="">Select country</option>
-            {COUNTRIES.map(([name]) => (
-              <option key={name} value={name}>
-                {name}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className="block">
-          <span className={label}>Code</span>
-          <select className={`${field} cursor-pointer`} value={form.dialCode} onChange={(e) => onChange('dialCode', e.target.value)}>
-            <option value="">Code</option>
-            {CODES.map((code) => (
-              <option key={code} value={code}>
-                {code}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className="block">
-          <span className={label}>Phone</span>
-          <input
-            className={field}
-            type="tel"
-            autoComplete="tel-national"
-            placeholder="712345678"
-            value={form.phone}
-            onChange={(e) => onChange('phone', e.target.value)}
-          />
-        </label>
-      </div>
-
-      <label className="block">
-        <span className={label}>Anything else</span>
-        <textarea
-          className={`${field} resize-none`}
-          rows={3}
-          value={form.message}
-          onChange={(e) => onChange('message', e.target.value)}
-          placeholder="Arrival time, dietary needs, airport pickup..."
-        />
-        <span className="block text-xs text-[#8B9A8D] mt-1">Optional</span>
-      </label>
     </div>
   );
 };

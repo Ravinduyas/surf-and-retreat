@@ -510,66 +510,67 @@ export const GALLERY_IMAGES: GalleryImage[] = [
   { id: 'g40', src: img('guest-portrait.webp'), alt: 'Golden hour in the garden', category: 'around' },
 ];
 
+// Real 5-star Google reviews (names as shown on Google, dates are the month they were posted).
 export const REVIEWS: Review[] = [
   {
     id: 'r1',
-    name: 'Jonas W.',
-    origin: 'Hamburg, Germany',
+    name: 'Maggie Meyer',
+    origin: 'Google review',
     rating: 5,
-    stayType: 'Surf Camp',
-    date: 'August 2026',
+    stayType: 'Coworking',
+    date: 'March 2026',
     quote:
-      'Stood up on day two thanks to the instructors. Boards, lessons and beach transport all sorted by the hostel - zero hassle, all fun.',
+      'This hostel is beautifully located in a quiet and peaceful area. It’s very clean, social, and at the same time perfect for coworking. The atmosphere is amazing – relaxed but welcoming. The hosts are lovely and caring, and there is always someone around who is happy to help with anything. I truly felt comfortable and supported during my stay. Highly recommended!',
   },
   {
     id: 'r2',
-    name: 'Amelia R.',
-    origin: 'Bristol, UK',
+    name: 'Noémi Bartók',
+    origin: 'Google review',
     rating: 5,
-    stayType: 'Coliving',
-    date: 'July 2026',
+    stayType: 'Social stay',
+    date: 'February 2026',
     quote:
-      'Worked remotely here for six weeks. The focus room is genuinely quiet, calls from the booths were flawless, and I surfed every single morning.',
+      'Really great hostel! Close to the beach, clean, and has big communal and working spaces and a really well equipped kitchen. The beds are super big and comfy! The host and workers are all super kind, hospitable and fun, and you always have the chance to go out or have a calm night as well. I had the most fun in this hostel, felt welcomed and understood at all times and could only recommend it!',
   },
   {
     id: 'r3',
-    name: 'Lucas M.',
-    origin: 'São Paulo, Brazil',
+    name: 'Marina Izquierdo',
+    origin: 'Google review',
     rating: 5,
-    stayType: 'Dorm Stay',
-    date: 'June 2026',
+    stayType: 'Social stay',
+    date: 'March 2026',
     quote:
-      'Cleanest dorm I have stayed in across Asia. Big lockers, curtains on every bunk and the best rooftop sunsets in Weligama.',
+      'Best hostel ever! The volunteers were simply amazing – kind, professional and inspiring people. The beds were so comfortable and the AC made it perfect to sleep there. The best social hostel in the world: we did yoga together, had family breakfast, dinner, played games… if you go to Weligama, stay there!',
   },
   {
     id: 'r4',
-    name: 'Sofia L.',
-    origin: 'Stockholm, Sweden',
+    name: 'Dilan Shashen',
+    origin: 'Google review',
     rating: 5,
-    stayType: 'Private Room',
-    date: 'August 2026',
+    stayType: 'Coworking',
+    date: 'January 2026',
     quote:
-      'Booked three nights, stayed ten. The garden room was spotless and the family dinners made travelling solo feel anything but solo.',
+      'Surf & Retreat Weligama is one of the best hostels I’ve stayed in. The place is spotless, the beds are super comfy, and the coworking area is perfect for getting work done. Great location close to everything. I felt completely safe during my stay. Relax, sip my drink, and enjoy the easy-going, chill surfer vibe. Loved it!',
   },
   {
     id: 'r5',
-    name: 'Ethan C.',
-    origin: 'Toronto, Canada',
-    rating: 4,
-    stayType: 'Surf Camp',
-    date: 'May 2026',
+    name: 'Anjejoline Stevens',
+    origin: 'Google review',
+    rating: 5,
+    stayType: 'Relaxed stay',
+    date: 'December 2025',
     quote:
-      'Great value surf package and honest coaching with video review. Wish I had booked longer - the intermediate spots trips are worth it alone.',
+      'Really lovely place to stay: calm vibe, super clean and very welcoming. The beds are comfortable, and the free co-working space is a plus. A truly relaxing and refreshing stay!',
   },
   {
     id: 'r6',
-    name: 'Hana T.',
-    origin: 'Osaka, Japan',
+    name: 'Palika Withana',
+    origin: 'Google review',
     rating: 5,
-    stayType: 'Coliving',
-    date: 'April 2026',
+    stayType: 'Friends trip',
+    date: 'November 2025',
     quote:
-      'The 300 Mbps wifi is real - I uploaded video projects daily with no drama. Weligama Bay at sunrise before work never got old.',
+      'We had a lovely experience staying at Surf and Retreat. The staff was amazing and the owners were so nice and accommodating. The rooms were so clean and nice too. Easy access to the beach and other main areas of Weligama, it’s a prime location. We would definitely come again! Highly recommend!',
   },
 ];
 

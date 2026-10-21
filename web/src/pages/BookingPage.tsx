@@ -28,7 +28,7 @@ export default function BookingPage() {
   return (
     <div className="min-h-dvh bg-[#F6F7F4] text-[#1E2721] antialiased">
       <header className="sticky top-0 z-20 bg-white/90 backdrop-blur border-b border-[#E4EAE0]">
-        <div className="max-w-6xl mx-auto h-14 sm:h-16 px-4 sm:px-8 flex items-center justify-between gap-3">
+        <div className="max-w-7xl mx-auto h-14 px-4 sm:px-8 flex items-center justify-between gap-3">
           <Logo />
           <Link to="/" className="inline-flex items-center gap-1.5 text-xs sm:text-[13px] font-semibold text-[#2A4E38] hover:underline py-2">
             <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
@@ -37,8 +37,8 @@ export default function BookingPage() {
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-8 pt-6 sm:pt-10 pb-12">
-        <h1 className="text-2xl sm:text-3xl font-bold text-[#18261E] tracking-tight mb-6 sm:mb-8">Book your stay</h1>
+      <main className="max-w-7xl mx-auto px-4 sm:px-8 pt-4 sm:pt-5 pb-10">
+        <h1 className="sr-only">Book your stay</h1>
         <div className="min-h-[560px]">
           {mounted && <BookingFlow initialTab={tab ?? 'stay'} initialItemId={itemId} />}
         </div>
