@@ -56,7 +56,7 @@ export const buildBookingRequest = (form: BookingFormState): BookingRequest => {
     '',
     `Name: ${form.name.trim()}`,
     `Email: ${form.email.trim()}`,
-    `Country: ${countryName(form.country)}`,
+    form.country || form.phoneCountry ? `Country: ${countryName(form.country || form.phoneCountry)}` : null,
     `Phone: ${dialCode(form.phoneCountry)} ${form.phone.trim()}`,
     form.message.trim() ? `Note: ${form.message.trim()}` : null,
     '',

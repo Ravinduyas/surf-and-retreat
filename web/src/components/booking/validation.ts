@@ -38,7 +38,6 @@ export const phoneDigits = (value: string) => value.replace(/\D/g, '');
 export const contactProblem = (form: BookingFormState): string | null => {
   if (form.name.trim().length < 2) return 'name';
   if (!isValidEmail(form.email)) return 'email';
-  if (!form.country) return 'country';
   if (!form.phoneCountry || phoneDigits(form.phone).length < 6) return 'phone';
   return null;
 };

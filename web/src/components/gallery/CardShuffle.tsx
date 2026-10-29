@@ -18,7 +18,7 @@ const EASE = 'cubic-bezier(0.2, 0.8, 0.2, 1)';
  * shift, so the full-width front card never pushes the stack past its column.
  */
 const depthStyle = (depth: number): React.CSSProperties => ({
-  transform: `translate(${depth * 12}px, ${-depth * 16}px) rotate(${depth * 1.5}deg) scale(${1 - depth * 0.05})`,
+  transform: `translate(${depth * 10}px, ${-depth * 14}px) rotate(${depth * 1.5}deg) scale(${1 - depth * 0.05})`,
   opacity: depth < VISIBLE ? 1 : 0,
   zIndex: 10 - depth,
 });
@@ -72,7 +72,7 @@ export const CardShuffle: React.FC = () => {
     >
       {/* The stack - cards fan out to the right, so inset them to stay in bounds */}
       <div
-        className="relative h-[296px] sm:h-[376px] select-none cursor-pointer"
+        className="relative w-full h-[260px] sm:h-[320px] lg:h-[340px] select-none cursor-pointer"
         aria-live="polite"
         role="button"
         tabIndex={0}
@@ -94,7 +94,7 @@ export const CardShuffle: React.FC = () => {
             return (
               <figure
                 key={img.id}
-                className="absolute left-0 bottom-0 m-0 w-[calc(100%-28px)] h-[260px] sm:h-[340px] rounded-[28px] overflow-hidden bg-[#E9EEE5] ring-1 ring-black/5 shadow-[0_1px_2px_rgba(16,24,20,0.06),0_22px_44px_-16px_rgba(16,24,20,0.38)]"
+                className="absolute left-0 bottom-0 m-0 w-[calc(100%-24px)] h-[230px] sm:h-[290px] lg:h-[305px] rounded-[28px] overflow-hidden bg-[#E9EEE5] ring-1 ring-black/5 shadow-[0_1px_2px_rgba(16,24,20,0.06),0_22px_44px_-16px_rgba(16,24,20,0.38)]"
                 style={{
                   ...(isFront && flicking ? FLICKED : depthStyle(depth)),
                   transformOrigin: 'center bottom',

@@ -49,28 +49,34 @@ export const ReviewsSection: React.FC = () => {
           </div>
         </div>
 
-        <div ref={gridRef} className="stagger grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+        <div
+          ref={gridRef}
+          className="stagger flex gap-3 lg:gap-4 overflow-x-auto snap-x snap-mandatory -mx-6 px-6 sm:-mx-10 sm:px-10 lg:mx-0 lg:px-0 pt-1 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:grid lg:grid-cols-5 lg:overflow-visible"
+        >
           {REVIEWS.map((r, idx) => (
             <div
               key={r.id}
               id={`review-${r.id}`}
-              className="bg-[#F4F6F2]/90 hover:bg-white border border-[#E1E7DE] rounded-3xl p-6 sm:p-7 transition-all duration-200 shadow-xs hover:shadow-sm flex flex-col gap-4"
+              className={`shrink-0 w-[82%] sm:w-[46%] md:w-[32%] lg:w-auto snap-start bg-[#F4F6F2]/90 hover:bg-white border border-[#E1E7DE] rounded-3xl p-5 lg:p-4.5 xl:p-6 transition-all duration-200 shadow-xs hover:shadow-sm flex flex-col justify-between gap-4 h-full ${
+                idx >= 5 ? 'hidden' : ''
+              }`}
               style={{ '--i': idx } as React.CSSProperties}
+              {...(idx >= 5 ? { 'aria-hidden': 'true' } : {})}
             >
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between gap-1 flex-wrap sm:flex-nowrap">
                 <StarRow rating={r.rating} />
-                <span className="inline-block bg-white text-[#1D3624] text-[11px] font-semibold px-3 py-1 rounded-full border border-[#E1E7DE]">
+                <span className="inline-block bg-white text-[#1D3624] text-[10px] xl:text-[11px] font-semibold px-2.5 py-0.5 rounded-full border border-[#E1E7DE] shrink-0">
                   {r.stayType}
                 </span>
               </div>
-              <p className="text-[14px] text-[#3D4F42] leading-relaxed flex-1">
+              <p className="text-[13px] xl:text-[14px] text-[#3D4F42] leading-relaxed flex-1">
                 &ldquo;{r.quote}&rdquo;
               </p>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2.5 sm:gap-3 pt-1">
                 <InitialsBadge name={r.name} />
-                <div>
-                  <div className="text-[13px] font-bold text-[#18271E]">{r.name}</div>
-                  <div className="text-[11px] text-[#637265] font-medium">
+                <div className="min-w-0">
+                  <div className="text-[12px] xl:text-[13px] font-bold text-[#18271E] truncate">{r.name}</div>
+                  <div className="text-[10px] xl:text-[11px] text-[#637265] font-medium truncate">
                     {r.origin} · {r.date}
                   </div>
                 </div>

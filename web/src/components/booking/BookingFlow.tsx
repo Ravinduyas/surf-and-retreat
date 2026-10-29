@@ -52,12 +52,11 @@ const initialForm = (tab: BookingTab, itemId = ''): BookingFormState => {
 const CONTACT_HINT: Record<string, string> = {
   name: 'Add your name to send this',
   email: 'Add a valid email address',
-  country: 'Pick the country you live in',
   phone: 'Add your phone or WhatsApp number',
 };
 
 const primaryBtn =
-  'h-11 inline-flex items-center justify-center gap-2 rounded-full bg-[#2A4E38] hover:bg-[#1E3A28] text-white text-sm font-semibold px-5 sm:px-7 shadow-[0_10px_24px_-12px_rgba(42,78,56,0.9)] transition-all cursor-pointer active:scale-[0.97] disabled:bg-[#C9D2C7] disabled:shadow-none disabled:cursor-not-allowed disabled:active:scale-100';
+  'h-9.5 sm:h-10 inline-flex items-center justify-center gap-1.5 sm:gap-2 rounded-full bg-[#2A4E38] hover:bg-[#1E3A28] text-white text-xs sm:text-sm font-semibold px-4 sm:px-6 shadow-[0_8px_20px_-10px_rgba(42,78,56,0.9)] transition-all cursor-pointer active:scale-[0.97] disabled:bg-[#C9D2C7] disabled:shadow-none disabled:cursor-not-allowed disabled:active:scale-100';
 
 /**
  * The booking page's step-by-step flow: what you're booking, dates, room, then surf or a desk when
@@ -273,17 +272,17 @@ export const BookingFlow: React.FC<BookingFlowProps> = ({ initialTab = 'stay', i
 
   return (
     <>
-      <div ref={topRef} className="scroll-mt-20 space-y-4 sm:space-y-5 pb-28 sm:pb-32">
+      <div ref={topRef} className="scroll-mt-16 space-y-3 sm:space-y-3.5 pb-16 sm:pb-20">
         <StepBar steps={steps} current={stepIndex} onJump={setStepIndex} />
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-4 items-start">
           <section
             key={step.kind}
-            className="lg:col-span-8 step-in bg-white rounded-[24px] border border-[#E4EAE0] shadow-[0_20px_50px_-36px_rgba(24,39,30,0.4)] p-4 sm:p-6"
+            className="lg:col-span-8 step-in bg-white rounded-[20px] sm:rounded-[24px] border border-[#E4EAE0] shadow-[0_16px_40px_-32px_rgba(24,39,30,0.35)] p-3 sm:p-5"
           >
-            <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 mb-4 sm:mb-5">
-              <h2 className="text-xl sm:text-2xl font-bold text-[#18271E] tracking-tight leading-tight">{step.title}</h2>
-              <p className="text-xs sm:text-sm text-[#637265]">{step.subtitle}</p>
+            <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5 mb-2.5 sm:mb-3.5">
+              <h2 className="text-lg sm:text-xl font-bold text-[#18271E] tracking-tight leading-tight">{step.title}</h2>
+              <p className="text-xs text-[#637265]">{step.subtitle}</p>
             </div>
 
             {step.kind === 'type' && <TypeStep value={form.type} onChange={(type) => set('type', type)} />}
@@ -299,7 +298,7 @@ export const BookingFlow: React.FC<BookingFlowProps> = ({ initialTab = 'stay', i
             {step.kind === 'send' && (
               <>
                 <SendStep form={form} summary={summary} onChange={(key, value) => set(key, value)} />
-                <p className="flex flex-wrap items-center gap-x-1.5 text-xs text-[#637265] mt-5 pt-4 border-t border-[#EEF2EB]">
+                <p className="flex flex-wrap items-center gap-x-1.5 text-xs text-[#637265] mt-3.5 pt-3 border-t border-[#EEF2EB]">
                   <Mail className="w-3.5 h-3.5" />
                   Prefer email?
                   {request ? (
@@ -314,7 +313,7 @@ export const BookingFlow: React.FC<BookingFlowProps> = ({ initialTab = 'stay', i
             )}
           </section>
 
-          <aside className="hidden lg:block lg:col-span-4 lg:sticky lg:top-[72px]" aria-label="Your quote">
+          <aside className="hidden lg:block lg:col-span-4 lg:sticky lg:top-[64px]" aria-label="Your quote">
             {quote()}
           </aside>
         </div>

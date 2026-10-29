@@ -19,6 +19,7 @@ interface PageHeroProps {
 
 /**
  * Compact hero for inner pages - rendered inside PageHeader.
+ * Frame maintains a static size across tabs while inner content loads smoothly.
  */
 export const PageHero: React.FC<PageHeroProps> = ({
   eyebrow,
@@ -30,14 +31,14 @@ export const PageHero: React.FC<PageHeroProps> = ({
   media,
   children,
 }) => (
-  <div className="pt-4 sm:pt-6 pb-8 px-4 sm:px-8">
-    <div className={`grid grid-cols-1 ${image || media ? 'lg:grid-cols-12' : ''} gap-8 items-center`}>
-      <div className={`${image || media ? 'lg:col-span-6' : ''} space-y-5`}>
+  <div className="pt-4 sm:pt-6 pb-6 sm:pb-8 px-4 sm:px-8 lg:h-[440px] lg:min-h-[440px] flex flex-col justify-center">
+    <div className={`grid grid-cols-1 ${image || media ? 'lg:grid-cols-12' : ''} gap-8 items-center w-full`}>
+      <div className={`${image || media ? 'lg:col-span-6' : 'lg:col-span-8 lg:mx-auto'} space-y-4 sm:space-y-5 flex flex-col justify-center`}>
         <div className="surface-in" style={d(120)}>
           <Eyebrow icon={eyebrowIcon}>{eyebrow}</Eyebrow>
         </div>
         <h1
-          className="surface-in text-4xl sm:text-5xl xl:text-[56px] font-bold text-[#18261E] tracking-tight leading-[1.08]"
+          className="surface-in text-4xl sm:text-5xl xl:text-[54px] font-bold text-[#18261E] tracking-tight leading-[1.08]"
           style={d(280)}
         >
           {title}
@@ -49,15 +50,21 @@ export const PageHero: React.FC<PageHeroProps> = ({
           {subtitle}
         </p>
         {children && (
-          <div className="surface-in flex flex-wrap items-center gap-3 pt-2" style={d(580)}>
+          <div className="surface-in flex flex-wrap items-center gap-3 pt-1" style={d(580)}>
             {children}
           </div>
         )}
       </div>
-      {media && !image && <div className="lg:col-span-6">{media}</div>}
+      {media && !image && (
+        <div className="lg:col-span-6 flex items-center justify-center lg:justify-end">
+          <div className="w-full h-[260px] sm:h-[320px] lg:h-[340px] flex items-center justify-center">
+            {media}
+          </div>
+        </div>
+      )}
       {image && (
-        <div className="lg:col-span-6">
-          <div className="relative w-full h-[260px] sm:h-[340px] rounded-[28px] overflow-hidden border border-[#DFE5DC] shadow-md bg-[#EBF0E8]">
+        <div className="lg:col-span-6 flex items-center justify-center lg:justify-end">
+          <div className="relative w-full h-[260px] sm:h-[320px] lg:h-[340px] rounded-[28px] overflow-hidden border border-[#DFE5DC] shadow-md bg-[#EBF0E8]">
             <Photo
               src={image}
               alt={imageAlt}

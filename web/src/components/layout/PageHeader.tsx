@@ -12,7 +12,7 @@ interface PageHeaderProps {
 export const PageHeader: React.FC<PageHeaderProps> = ({ children }) => (
   // No overflow-hidden here: it would trap the sticky navbar inside the card.
   // Anything that bleeds to the card edge rounds its own corners instead.
-  <div className="bg-white rounded-[32px] sm:rounded-[40px] border border-[#DADB54] shadow-xs">
+  <div className="bg-white rounded-[32px] sm:rounded-[40px] border border-[#DADB54] shadow-xs flex flex-col">
     <Navbar />
     {children}
   </div>

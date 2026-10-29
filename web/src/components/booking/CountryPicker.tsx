@@ -74,7 +74,7 @@ export const CountryPicker: React.FC<CountryPickerProps> = ({ value, onChange, m
         onClick={() => setOpen((o) => !o)}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className={`w-full h-11 flex items-center gap-2 bg-[#FAFBF9] border rounded-xl px-3 text-left text-base sm:text-sm transition-colors cursor-pointer hover:border-[#B9C8B7] focus:outline-hidden focus:bg-white focus:border-[#2A4E38] focus:ring-4 focus:ring-[#2A4E38]/10 ${
+        className={`w-full h-9.5 sm:h-10 flex items-center gap-2 bg-[#FAFBF9] border rounded-xl px-3 text-left text-sm transition-colors cursor-pointer hover:border-[#B9C8B7] focus:outline-hidden focus:bg-white focus:border-[#2A4E38] focus:ring-4 focus:ring-[#2A4E38]/10 ${
           open ? 'border-[#2A4E38] bg-white' : 'border-[#DCE2D8]'
         }`}
       >
@@ -86,7 +86,7 @@ export const CountryPicker: React.FC<CountryPickerProps> = ({ value, onChange, m
         ) : (
           <span className="flex-1 min-w-0 truncate text-[#A7B3A6]">{placeholder}</span>
         )}
-        <ChevronDown className={`w-4 h-4 text-[#637265] shrink-0 transition-transform ${open ? 'rotate-180' : ''}`} />
+        <ChevronDown className={`w-3.5 h-3.5 text-[#637265] shrink-0 transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
 
       {open && (
@@ -95,7 +95,7 @@ export const CountryPicker: React.FC<CountryPickerProps> = ({ value, onChange, m
           className="step-in absolute z-30 left-0 mt-1.5 w-full min-w-[280px] scroll-mb-28 rounded-2xl border border-[#DCE2D8] bg-white shadow-[0_20px_50px_-20px_rgba(24,39,30,0.35)] overflow-hidden"
         >
           <div className="flex items-center gap-2 px-3 border-b border-[#EEF2EB]">
-            <Search className="w-4 h-4 text-[#8B9A8D] shrink-0" />
+            <Search className="w-3.5 h-3.5 text-[#8B9A8D] shrink-0" />
             <input
               ref={inputRef}
               type="text"
@@ -110,7 +110,7 @@ export const CountryPicker: React.FC<CountryPickerProps> = ({ value, onChange, m
               }}
               placeholder="Search country or code"
               aria-label="Search countries"
-              className="w-full h-10 bg-transparent text-sm text-[#18271E] placeholder:text-[#A7B3A6] focus:outline-hidden"
+              className="w-full h-9 bg-transparent text-sm text-[#18271E] placeholder:text-[#A7B3A6] focus:outline-hidden"
             />
           </div>
           <ul role="listbox" className="max-h-64 overflow-y-auto py-1">

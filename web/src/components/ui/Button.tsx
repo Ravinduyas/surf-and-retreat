@@ -9,6 +9,9 @@ interface ButtonProps {
   children: React.ReactNode;
   variant?: Variant;
   to?: string;
+  href?: string;
+  target?: string;
+  rel?: string;
   /** Renders a real link to the booking flow (new tab); pass the pre-selected category, or `true` for none. */
   book?: BookingTab | true;
   /** With `book`: pre-selects this room, package or pass in the booking flow. */
@@ -32,6 +35,9 @@ export const Button: React.FC<ButtonProps> = ({
   children,
   variant = 'primary',
   to,
+  href,
+  target,
+  rel,
   book,
   bookItem,
   onClick,
@@ -45,6 +51,13 @@ export const Button: React.FC<ButtonProps> = ({
       <a id={id} href={bookingHref(book === true ? undefined : book, bookItem)} target="_blank" rel="noopener" className={classes}>
         {children}
         <span className="sr-only"> (opens in a new tab)</span>
+      </a>
+    );
+  }
+  if (href) {
+    return (
+      <a id={id} href={href} target={target} rel={rel} onClick={onClick} className={classes}>
+        {children}
       </a>
     );
   }

@@ -55,25 +55,25 @@ const Month: React.FC<MonthProps> = ({ year, month, start, rangeEnd, end, min, o
 
   return (
     <div className={`flex-1 min-w-0 ${className}`}>
-      <div className="flex items-center justify-between pb-2 mb-1 border-b border-[#E5ECE2]">
-        <span className="w-9">{prev}</span>
-        <span className="text-sm font-bold text-[#18271E]">
+      <div className="flex items-center justify-between pb-1.5 mb-1 border-b border-[#E5ECE2]">
+        <span className="w-8">{prev}</span>
+        <span className="text-xs sm:text-sm font-bold text-[#18271E]">
           {new Date(year, month, 1).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
         </span>
-        <span className="w-9 flex justify-end">{next}</span>
+        <span className="w-8 flex justify-end">{next}</span>
       </div>
 
-      <div className="grid grid-cols-7 gap-x-1 sm:gap-x-1.5 mb-1">
+      <div className="grid grid-cols-7 gap-x-1 sm:gap-x-1.5 mb-0.5">
         {WEEKDAYS.map((d) => (
-          <span key={d} className="text-center text-[10px] font-bold uppercase tracking-wider text-[#8B9A8D] py-1">
+          <span key={d} className="text-center text-[9.5px] font-bold uppercase tracking-wider text-[#8B9A8D] py-0.5">
             {d}
           </span>
         ))}
       </div>
 
-      <div className="grid grid-cols-7 gap-x-1 sm:gap-x-1.5 gap-y-1">
+      <div className="grid grid-cols-7 gap-x-1 sm:gap-x-1.5 gap-y-0.5 sm:gap-y-1">
         {cells.map((day, i) => {
-          if (day === null) return <span key={`e${i}`} className="h-9 lg:h-8" aria-hidden="true" />;
+          if (day === null) return <span key={`e${i}`} className="h-7.5 sm:h-8 lg:h-7.5" aria-hidden="true" />;
           const key = toKey(year, month, day);
           const disabled = key < min;
           const selected = key === start || key === end;
@@ -94,9 +94,9 @@ const Month: React.FC<MonthProps> = ({ year, month, start, rangeEnd, end, min, o
                 year: 'numeric',
               })}
               aria-pressed={selected}
-              className={`relative h-9 lg:h-8 rounded-full text-[13px] font-medium transition-colors ${
+              className={`relative h-7.5 sm:h-8 lg:h-7.5 rounded-full text-xs sm:text-[13px] font-medium transition-colors ${
                 selected
-                  ? 'bg-[#2A4E38] text-white font-bold shadow-sm'
+                  ? 'bg-[#2A4E38] text-white font-bold shadow-xs'
                   : inRange
                     ? 'bg-[#E3EDD2] text-[#1E3A28] cursor-pointer'
                     : disabled
@@ -106,7 +106,7 @@ const Month: React.FC<MonthProps> = ({ year, month, start, rangeEnd, end, min, o
             >
               {day}
               {isToday && !selected && (
-                <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#7FA35B]" aria-hidden="true" />
+                <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#7FA35B]" aria-hidden="true" />
               )}
             </button>
           );
@@ -151,7 +151,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({ start, end, mi
       disabled={disabled}
       aria-label={label}
       onClick={() => setView((v) => addMonths(v.y, v.m, delta))}
-      className="w-9 h-9 rounded-full flex items-center justify-center text-[#233829] hover:bg-[#F3F6F1] disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer transition-colors"
+      className="w-8 h-8 rounded-full flex items-center justify-center text-[#233829] hover:bg-[#F3F6F1] disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer transition-colors"
     >
       {delta < 0 ? <ChevronLeft className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
     </button>

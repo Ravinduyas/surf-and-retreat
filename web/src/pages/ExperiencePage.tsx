@@ -1,18 +1,16 @@
 import React from 'react';
-import { Sparkles, Play, ArrowRight } from 'lucide-react';
+import { Sparkles, ArrowRight } from 'lucide-react';
 import { PageHeader } from '../components/layout/PageHeader';
 import { PageHero } from '../components/layout/PageHero';
 import { HighlightsSection } from '../components/home/HighlightsSection';
 import { Button } from '../components/ui/Button';
 import { QuickAnswer } from '../components/ui/QuickAnswer';
 import { usePageMeta } from '../hooks/usePageMeta';
-import { useModals } from '../context/ModalContext';
 import { COWORKING_PLANS, ROOMS, SURF_PACKAGES } from '../data';
 import { Link } from 'react-router-dom';
 
 export default function ExperiencePage() {
   usePageMeta();
-  const { openVideo } = useModals();
 
   return (
     <>
@@ -35,9 +33,8 @@ export default function ExperiencePage() {
             <span>Check Availability</span>
             <ArrowRight className="w-4 h-4" />
           </Button>
-          <Button variant="outline" onClick={openVideo}>
-            <Play className="w-4 h-4" />
-            <span>Watch the Surf</span>
+          <Button variant="outline" to="/surf-camp">
+            <span>Explore Surf</span>
           </Button>
         </PageHero>
       </PageHeader>

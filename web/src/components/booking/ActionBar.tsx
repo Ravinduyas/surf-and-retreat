@@ -35,15 +35,15 @@ export const ActionBar: React.FC<ActionBarProps> = ({ steps, current, hint, bloc
         />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 pt-2.5 pb-[max(0.625rem,env(safe-area-inset-bottom))] sm:pb-2.5 flex items-center gap-3 sm:gap-5">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] sm:pb-2 flex items-center gap-3 sm:gap-4">
         <button
           type="button"
           onClick={onBack}
           disabled={current === 0}
           aria-label="Back"
-          className="shrink-0 h-11 w-11 sm:w-auto sm:px-5 rounded-full border border-[#DCE2D8] bg-white text-[#2A4E38] text-sm font-semibold inline-flex items-center justify-center gap-2 hover:border-[#2A4E38] hover:bg-[#F7FAF5] transition-colors cursor-pointer disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:border-[#DCE2D8] disabled:hover:bg-white"
+          className="shrink-0 h-9.5 sm:h-10 w-9.5 sm:w-auto sm:px-4 rounded-full border border-[#DCE2D8] bg-white text-[#2A4E38] text-xs sm:text-sm font-semibold inline-flex items-center justify-center gap-1.5 hover:border-[#2A4E38] hover:bg-[#F7FAF5] transition-colors cursor-pointer disabled:opacity-35 disabled:cursor-not-allowed disabled:hover:border-[#DCE2D8] disabled:hover:bg-white"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           <span className="hidden sm:inline">Back</span>
         </button>
 

@@ -1,9 +1,8 @@
 import React from 'react';
-import { ArrowRight, Play } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { STATS, HERO_IMAGE } from '../../data';
 import { Photo } from '../ui/Photo';
-import { useModals } from '../../context/ModalContext';
 
 const StatTile: React.FC<{
   stat: (typeof STATS)[number];
@@ -27,8 +26,6 @@ const StatTile: React.FC<{
 );
 
 export const HomeHero: React.FC = () => {
-  const { openVideo } = useModals();
-
   return (
     <div className="pt-6 sm:pt-10 pb-8 px-4 sm:px-8 lg:pt-6 lg:pb-6 lg:relative lg:flex lg:flex-col lg:h-[clamp(490px,100vh-124px,900px)]">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center lg:flex-1">
@@ -90,24 +87,6 @@ export const HomeHero: React.FC = () => {
 
             {/* Fog fade blending the image into the white card behind the headline */}
             <div className="hidden lg:block absolute inset-y-0 left-0 w-80 bg-gradient-to-r from-white via-white/60 to-transparent pointer-events-none z-10" />
-
-            {/* "Watch the Surf" play control */}
-            <div className="absolute top-1/2 left-1/2 lg:left-[58%] -translate-x-1/2 -translate-y-1/2 z-20">
-              <button
-                id="watch-surf-btn"
-                onClick={openVideo}
-                className="group flex items-center gap-3 cursor-pointer"
-                title="Watch surfing at Weligama Bay"
-              >
-                <span className="ripple relative w-11 h-11 rounded-full bg-white shadow-lg flex items-center justify-center text-[#18271E] transition-transform duration-200 group-hover:scale-110 group-active:scale-95">
-                  <Play className="w-4 h-4 fill-current ml-0.5" />
-                </span>
-                <span className="text-[13px] font-semibold text-white tracking-tight whitespace-nowrap [text-shadow:0_1px_3px_rgba(0,0,0,0.55),0_2px_12px_rgba(0,0,0,0.65)]">
-                  Watch the Surf
-                </span>
-              </button>
-            </div>
-
           </div>
         </div>
       </div>
