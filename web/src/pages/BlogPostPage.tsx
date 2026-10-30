@@ -89,7 +89,7 @@ export default function BlogPostPage() {
               <p className="text-sm text-[#5A695D] mt-1">Beds, surf lessons and desks, five minutes from Weligama Bay.</p>
             </div>
             <Button variant="primary" book className="shrink-0 justify-center">
-              <span>Book Your Stay</span>
+              <span>Book Now</span>
               <ArrowRight className="w-4 h-4" />
             </Button>
           </div>

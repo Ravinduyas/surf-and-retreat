@@ -102,7 +102,7 @@ export const Navbar: React.FC = () => {
             id="nav-book-btn"
             className={`bg-[#D8E95E] hover:bg-[#CFE24D] active:scale-98 transition-all duration-200 text-[#193B26] font-semibold rounded-full shadow-xs cursor-pointer focus:outline-hidden ${stuck ? 'text-[13px] px-5 py-2' : 'text-[14px] px-6 py-2.5'}`}
           >
-            Book Your Stay
+            Book Now
           </BookLink>
         </div>
 
@@ -112,7 +112,7 @@ export const Navbar: React.FC = () => {
             id="nav-book-mobile-btn"
             className={`bg-[#D8E95E] hover:bg-[#CFE24D] active:scale-98 transition-all text-[#193B26] text-[13px] font-semibold rounded-full shadow-xs cursor-pointer ${stuck ? 'px-5 py-2.5' : 'px-5 py-3'}`}
           >
-            Book
+            Book Now
           </BookLink>
           <button
             id="mobile-menu-toggle-btn"
@@ -146,7 +146,7 @@ export const Navbar: React.FC = () => {
           <BookLink
             className="w-full bg-[#D8E95E] text-[#193B26] text-center font-semibold py-3 rounded-full mt-2"
           >
-            Book Your Stay
+            Book Now
           </BookLink>
         </div>
       )}

@@ -30,7 +30,7 @@ export default function GalleryPage() {
           media={<CardShuffle />}
         >
           <Button variant="primary" book>
-            <span>Book Your Stay</span>
+            <span>Book Now</span>
             <ArrowRight className="w-4 h-4" />
           </Button>
         </PageHero>

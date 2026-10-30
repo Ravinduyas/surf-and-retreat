@@ -1,7 +1,6 @@
 import React from 'react';
-import { Check, Flower2, Plus, Zap } from 'lucide-react';
-import { SKATE_OPTIONS } from '../../data';
-import { BookingFormState } from '../../types';
+import { Check, Dumbbell, Flower2, Gem, Laptop, LucideIcon, Plus, Sailboat, Waves, Zap } from 'lucide-react';
+import { BookingFormState, ExtraCategory } from '../../types';
 import { formatMoney } from '../../pms';
 import { Counter } from './Counter';
 import { EXTRAS, addonAmount } from './options';
@@ -18,10 +17,18 @@ const countLabel = (unit: string) => {
   return u.endsWith('s') ? `${u}es` : `${u}s`;
 };
 
-const isSkate = (id: string) => SKATE_OPTIONS.some((s) => s.id === id);
+const CATEGORY_ICON: Record<ExtraCategory, LucideIcon> = {
+  Surf: Waves,
+  Skate: Zap,
+  Yoga: Flower2,
+  Fitness: Dumbbell,
+  'Co-working': Laptop,
+  'Whale Watching': Sailboat,
+  'Gem Crafting': Gem,
+};
 
 /**
- * The four extras as thin rows, one under the other: icon, title and detail on the left, price and Add
+ * Each extra as a thin row, one under the other: icon, title and detail on the left, price and Add
  * on the right. Adding fills the row and swaps Add for a quantity counter with the line total.
  */
 export const ExtrasStep: React.FC<ExtrasStepProps> = ({ extras, onChange }) => (
@@ -29,7 +36,7 @@ export const ExtrasStep: React.FC<ExtrasStepProps> = ({ extras, onChange }) => (
     {EXTRAS.map((extra) => {
       const count = extras[extra.id] ?? 0;
       const added = count > 0;
-      const Icon = isSkate(extra.id) ? Zap : Flower2;
+      const Icon = CATEGORY_ICON[extra.category];
       const price = addonAmount(extra.id, extra.amount);
       const unit = extra.unit.replace(/^\s*\/\s*/, '');
       return (
@@ -60,7 +67,7 @@ export const ExtrasStep: React.FC<ExtrasStepProps> = ({ extras, onChange }) => (
               <span className="flex items-center gap-2 min-w-0">
                 <span className="text-xs sm:text-[13px] font-bold text-[#18271E] leading-snug truncate">{extra.title}</span>
                 <span className="rounded-full bg-[#F2F6F0] px-2 py-0.5 text-[9.5px] font-semibold text-[#2A4E38] shrink-0">
-                  {isSkate(extra.id) ? 'Skate' : 'Yoga'}
+                  {extra.category}
                 </span>
               </span>
               <span className="block text-[10.5px] sm:text-[11px] text-[#637265] leading-snug truncate mt-0.5">

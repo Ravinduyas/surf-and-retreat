@@ -1,4 +1,15 @@
-import { ROOMS, SURF_PACKAGES, COWORKING_PLANS, SKATE_OPTIONS, YOGA_OPTIONS } from '../../data';
+import {
+  ROOMS,
+  SURF_PACKAGES,
+  COWORKING_PLANS,
+  SURF_EXTRAS,
+  SKATE_OPTIONS,
+  YOGA_OPTIONS,
+  FITNESS_OPTIONS,
+  COWORKING_EXTRAS,
+  WHALE_OPTIONS,
+  GEM_OPTIONS,
+} from '../../data';
 import { ActivityItem, RoomItem } from '../../types';
 import { formatMoney, priceFor } from '../../pms';
 
@@ -16,11 +27,19 @@ export const unitName = (room: RoomItem, count: number) => `${isDorm(room) ? 'be
 
 export const roomNightly = (room: RoomItem) => priceFor('rooms', room.id, room.nightly);
 
-/** Live add-on price (surf, skate, yoga, coworking), else the bundled one. */
+/** Live add-on price (surf, skate, yoga, fitness, coworking, trips), else the bundled one. */
 export const addonAmount = (id: string, fallback: number) => priceFor('addons', id, fallback);
 
-/** Skate and yoga, offered on the extras step of every booking. */
-export const EXTRAS: ActivityItem[] = [...SKATE_OPTIONS, ...YOGA_OPTIONS];
+/** Every one-off add-on, offered on the extras step of every booking. On-site first, trips last. */
+export const EXTRAS: ActivityItem[] = [
+  ...SURF_EXTRAS,
+  ...SKATE_OPTIONS,
+  ...YOGA_OPTIONS,
+  ...FITNESS_OPTIONS,
+  ...COWORKING_EXTRAS,
+  ...WHALE_OPTIONS,
+  ...GEM_OPTIONS,
+];
 
 export const SURF_LEVELS = ['Beginner', 'Intermediate', 'Advanced'];
 

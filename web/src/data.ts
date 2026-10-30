@@ -279,6 +279,7 @@ export const SURF_PACKAGES: SurfPackage[] = [
 export const SKATE_OPTIONS: ActivityItem[] = [
   {
     id: 'skate-lesson',
+    category: 'Skate',
     title: 'Surfskate Lesson',
     meta: 'All levels · 1 hour',
     description: 'Train your surf turns on land with a coach at the local skate park.',
@@ -288,6 +289,7 @@ export const SKATE_OPTIONS: ActivityItem[] = [
   },
   {
     id: 'skate-rental',
+    category: 'Skate',
     title: 'Surfskate Rental',
     meta: 'Board & helmet',
     description: 'Take a surfskate out on the flat days.',
@@ -300,19 +302,75 @@ export const SKATE_OPTIONS: ActivityItem[] = [
 export const YOGA_OPTIONS: ActivityItem[] = [
   {
     id: 'yoga-class',
+    category: 'Yoga',
     title: 'Sunrise Yoga Class',
     meta: 'Drop-in · mats provided',
     description: 'A rooftop class that stretches out surf-tight shoulders.',
     amount: 8,
     unit: ' / class',
   },
+];
+
+// One-off activity add-ons, offered alongside skate and yoga on the extras step. The surf and
+// coworking entries are single sessions on purpose: the week-long packages and desk plans keep
+// their own steps. Prices are placeholders until the PMS supplies real ones.
+export const SURF_EXTRAS: ActivityItem[] = [
   {
-    id: 'yoga-pack',
-    title: '5-Class Yoga Pack',
-    meta: 'Use any morning of your stay',
-    description: 'Five sunrise classes for the price of four and a bit.',
+    id: 'surf-single-lesson',
+    category: 'Surf',
+    title: 'Single Surf Lesson',
+    meta: '90 min · board & rash vest',
+    description: 'One morning lesson on Weligama Bay’s sandy-bottom break, no package needed.',
     amount: 35,
-    unit: ' / 5 classes',
+    unit: ' / lesson',
+  },
+];
+
+export const FITNESS_OPTIONS: ActivityItem[] = [
+  {
+    id: 'fitness-day-pass',
+    category: 'Fitness',
+    title: 'Gym Day Pass',
+    meta: 'Free weights & cardio · 6 AM – 9 PM',
+    description: 'The open-air gym beside the skate ramp, yours for the day.',
+    amount: 4,
+    unit: ' / day',
+  },
+];
+
+export const COWORKING_EXTRAS: ActivityItem[] = [
+  {
+    id: 'desk-day-pass',
+    category: 'Co-working',
+    title: 'Coworking Day Pass',
+    meta: 'Hot desk · 8 AM – 10 PM',
+    description: 'A desk on 300 Mbps fiber for a single day, without taking a plan.',
+    amount: 8,
+    unit: ' / day',
+  },
+];
+
+export const WHALE_OPTIONS: ActivityItem[] = [
+  {
+    id: 'whale-trip',
+    category: 'Whale Watching',
+    title: 'Whale Watching Trip',
+    meta: 'Mirissa · 6 AM start · Nov–Apr',
+    description: 'Early boat out of nearby Mirissa to spot blue whales and dolphins.',
+    amount: 45,
+    unit: ' / seat',
+  },
+];
+
+export const GEM_OPTIONS: ActivityItem[] = [
+  {
+    id: 'gem-workshop',
+    category: 'Gem Crafting',
+    title: 'Gem Crafting Workshop',
+    meta: 'Half day · all materials included',
+    description: 'Cut and polish a Sri Lankan stone with a local gem cutter.',
+    amount: 30,
+    unit: ' / workshop',
   },
 ];
 

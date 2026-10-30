@@ -96,7 +96,7 @@ export const Footer: React.FC = () => {
                   id="footer-book-btn"
                   className="bg-[#D8E95E] hover:bg-[#CFE24D] active:scale-98 transition-all duration-200 text-[#193B26] text-[14px] font-semibold px-7 py-3 rounded-full shadow-xs cursor-pointer inline-flex items-center gap-2"
                 >
-                  <span>Book Your Stay</span>
+                  <span>Book Now</span>
                   <ArrowRight className="w-4 h-4" />
                 </BookLink>
                 <Link

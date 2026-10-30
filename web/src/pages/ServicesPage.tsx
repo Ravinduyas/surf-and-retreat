@@ -30,7 +30,7 @@ export default function ServicesPage() {
           imageAlt="The hostel dog keeping watch out front"
         >
           <Button variant="primary" book>
-            <span>Book Your Stay</span>
+            <span>Book Now</span>
             <ArrowRight className="w-4 h-4" />
           </Button>
           <Button variant="outline" to="/contact">

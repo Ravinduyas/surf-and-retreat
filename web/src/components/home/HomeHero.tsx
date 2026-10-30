@@ -56,7 +56,7 @@ export const HomeHero: React.FC = () => {
 
             <div className="surface-in flex flex-wrap items-center gap-3 pt-1" style={{ '--d': '300ms' } as React.CSSProperties}>
               <Button variant="primary" book>
-                <span>Book Your Stay</span>
+                <span>Book Now</span>
                 <ArrowRight className="w-4 h-4" />
               </Button>
               <Button variant="outline" to="/rooms">

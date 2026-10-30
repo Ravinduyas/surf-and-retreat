@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, Check, Compass } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Compass } from 'lucide-react';
 import { EXPLORE_CARDS } from '../../data';
 import { Eyebrow } from '../ui/Eyebrow';
 import { Photo } from '../ui/Photo';
 
 export const ExploreSection: React.FC = () => {
   const [startIndex, setStartIndex] = useState(0);
-  const [newsletterEmail, setNewsletterEmail] = useState('');
-  const [subscribed, setSubscribed] = useState(false);
 
   const visibleCount = 3;
   const maxStart = Math.max(0, EXPLORE_CARDS.length - visibleCount);
@@ -22,16 +20,6 @@ export const ExploreSection: React.FC = () => {
   };
 
   const displayedCards = EXPLORE_CARDS.slice(startIndex, startIndex + visibleCount);
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newsletterEmail || !newsletterEmail.includes('@')) return;
-    setSubscribed(true);
-    setTimeout(() => {
-      setNewsletterEmail('');
-      setSubscribed(false);
-    }, 4000);
-  };
 
   return (
     <section className="mt-8 sm:mt-12">
@@ -141,45 +129,7 @@ export const ExploreSection: React.FC = () => {
                 happening at the hostel.
               </p>
 
-              {/* Newsletter Form */}
-              <form onSubmit={handleSubscribe} className="mt-5 space-y-2.5">
-                <div className="flex items-center bg-white/95 rounded-full p-1 pl-4 shadow-xs focus-within:ring-2 focus-within:ring-[#1E3E2A]/30">
-                  <input
-                    id="newsletter-email-input"
-                    type="email"
-                    value={newsletterEmail}
-                    onChange={(e) => setNewsletterEmail(e.target.value)}
-                    placeholder="Enter your email"
-                    disabled={subscribed}
-                    className="w-full bg-transparent py-2.5 text-xs text-[#193623] placeholder-[#798C7E] focus:outline-hidden pr-2"
-                    required
-                  />
-                  <button
-                    id="newsletter-subscribe-btn"
-                    type="submit"
-                    disabled={subscribed}
-                    className={`shrink-0 flex items-center gap-1 text-[11px] sm:text-xs font-semibold px-4 py-3 rounded-full text-white transition-all cursor-pointer ${
-                      subscribed
-                        ? 'bg-[#183622]'
-                        : 'bg-[#234530] hover:bg-[#183422]'
-                    }`}
-                  >
-                    {subscribed ? (
-                      <>
-                        <Check className="w-3 h-3" />
-                        <span>Subscribed</span>
-                      </>
-                    ) : (
-                      <>
-                        <span>Subscribe</span>
-                        <ArrowRight className="w-3 h-3" />
-                      </>
-                    )}
-                  </button>
-                </div>
-              </form>
-
-              <div className="flex items-center gap-2.5 mt-4 pt-1">
+              <div className="flex items-center gap-2.5 mt-5">
                 <div className="flex items-center gap-1 text-[11px] text-[#243E2C] font-medium">
                   <span>🌊</span>
                   <span>Join thousands of wave chasers</span>

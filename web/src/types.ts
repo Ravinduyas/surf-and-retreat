@@ -56,12 +56,23 @@ export interface SurfPackage extends DetailItem, PriceTag {
 }
 
 /** Skate and yoga sessions, sold as optional add-ons to a stay. */
+/** Groups an extra on the booking step: it picks the row's icon and badge. */
+export type ExtraCategory =
+  | 'Surf'
+  | 'Skate'
+  | 'Yoga'
+  | 'Fitness'
+  | 'Co-working'
+  | 'Whale Watching'
+  | 'Gem Crafting';
+
 export interface ActivityItem extends PriceTag {
   id: string;
   title: string;
   meta: string;
   description: string;
   image?: string;
+  category: ExtraCategory;
 }
 
 export interface SurfSpot {

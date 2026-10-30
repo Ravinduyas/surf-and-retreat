@@ -54,7 +54,7 @@ const EXTRAS: StepDef = {
   label: 'Extras',
   icon: Sparkles,
   title: 'Anything extra?',
-  subtitle: 'Optional. Surfskate on flat days and sunrise yoga on the roof.',
+  subtitle: 'Optional. Lessons, classes, a gym or desk day, and trips out of Weligama.',
 };
 const SEND: StepDef = {
   kind: 'send',
