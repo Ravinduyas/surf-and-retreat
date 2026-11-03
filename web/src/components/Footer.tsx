@@ -78,7 +78,7 @@ export const Footer: React.FC = () => {
             Surf &amp; Retreat
           </div>
 
-          <div className="relative max-w-[1280px] mx-auto px-6 sm:px-10 lg:px-14 pt-10 sm:pt-14 pb-8">
+          <div className="relative max-w-site mx-auto px-6 sm:px-10 lg:px-14 pt-10 sm:pt-14 pb-8">
             {/* Closing CTA */}
             <div className="flex flex-wrap items-end justify-between gap-6 pb-10 sm:pb-12 border-b border-white/10">
               <div className="space-y-3 max-w-xl">
@@ -109,8 +109,8 @@ export const Footer: React.FC = () => {
             </div>
 
             {/* Link columns */}
-            <div className="grid grid-cols-2 md:grid-cols-12 gap-8 lg:gap-10 py-10 sm:py-12">
-              <div className="col-span-2 md:col-span-4 space-y-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-12 gap-8 lg:gap-10 py-10 sm:py-12">
+              <div className="col-span-2 md:col-span-3 lg:col-span-3 space-y-4">
                 <Logo light />
                 <p className="text-[13px] text-[#A8BCA9] max-w-xs leading-relaxed">
                   Surf at sunrise, work by the bay, and find your people - a coliving
@@ -136,7 +136,7 @@ export const Footer: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="col-span-1 md:col-span-2 space-y-3">
+              <div className="col-span-1 lg:col-span-2 space-y-3">
                 <h4 className="text-[12px] font-bold text-[#D8E95E] tracking-[0.14em] uppercase">
                   Explore
                 </h4>
@@ -154,7 +154,7 @@ export const Footer: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="col-span-1 md:col-span-2 space-y-3">
+              <div className="col-span-1 lg:col-span-2 space-y-3">
                 <h4 className="text-[12px] font-bold text-[#D8E95E] tracking-[0.14em] uppercase">
                   Book
                 </h4>
@@ -172,7 +172,7 @@ export const Footer: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="col-span-1 md:col-span-2 space-y-3">
+              <div className="col-span-1 lg:col-span-2 space-y-3">
                 <h4 className="text-[12px] font-bold text-[#D8E95E] tracking-[0.14em] uppercase">
                   Support
                 </h4>
@@ -190,11 +190,11 @@ export const Footer: React.FC = () => {
                 </ul>
               </div>
 
-              <div className="col-span-1 md:col-span-2 space-y-3">
+              <div className="col-span-2 md:col-span-3 lg:col-span-3 space-y-3">
                 <h4 className="text-[12px] font-bold text-[#D8E95E] tracking-[0.14em] uppercase">
                   Follow Us
                 </h4>
-                <div className="flex flex-wrap items-center gap-2 pt-0.5">
+                <div className="flex flex-nowrap items-center gap-2 pt-0.5">
                   {socialLinks.map((social) => {
                     const Icon = social.icon;
                     return (

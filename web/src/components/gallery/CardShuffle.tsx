@@ -33,8 +33,18 @@ const FLICKED: React.CSSProperties = {
  * A self-dealing stack of photo cards. The front card slides away on a timer;
  * hover or focus pauses it, and clicking deals the next card by hand.
  */
+/** Fisher-Yates shuffle so every visit starts from a different photo. */
+const shuffled = (n: number) => {
+  const a = Array.from({ length: n }, (_, i) => i);
+  for (let i = n - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+};
+
 export const CardShuffle: React.FC = () => {
-  const [order, setOrder] = useState(() => DECK.map((_, i) => i));
+  const [order, setOrder] = useState(() => shuffled(DECK.length));
   const [flicking, setFlicking] = useState(false);
   const [paused, setPaused] = useState(false);
   const [reduced] = useState(
@@ -53,10 +63,11 @@ export const CardShuffle: React.FC = () => {
     }, FLICK_MS);
   };
 
-  // One timer per card, restarted after every deal.
+  // One timer per card, restarted after every deal. Reduced-motion users still
+  // get the slideshow, just slower and as a fade instead of a flick.
   useEffect(() => {
-    if (paused || reduced) return;
-    const t = window.setTimeout(next, INTERVAL_MS);
+    if (paused) return;
+    const t = window.setTimeout(next, reduced ? INTERVAL_MS * 2 : INTERVAL_MS);
     return () => window.clearTimeout(t);
   }, [order, paused, reduced]);
 
@@ -64,7 +75,7 @@ export const CardShuffle: React.FC = () => {
 
   return (
     <div
-      className="relative"
+      className="relative w-full"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
@@ -96,7 +107,11 @@ export const CardShuffle: React.FC = () => {
                 key={img.id}
                 className="absolute left-0 bottom-0 m-0 w-[calc(100%-24px)] h-[230px] sm:h-[290px] lg:h-[305px] rounded-[28px] overflow-hidden bg-[#E9EEE5] ring-1 ring-black/5 shadow-[0_1px_2px_rgba(16,24,20,0.06),0_22px_44px_-16px_rgba(16,24,20,0.38)]"
                 style={{
-                  ...(isFront && flicking ? FLICKED : depthStyle(depth)),
+                  ...(isFront && flicking
+                    ? reduced
+                      ? { ...depthStyle(0), opacity: 0, zIndex: 11 }
+                      : FLICKED
+                    : depthStyle(depth)),
                   transformOrigin: 'center bottom',
                   transition: `transform ${FLICK_MS}ms ${EASE}, opacity ${FLICK_MS}ms ease`,
                 }}

@@ -66,7 +66,7 @@ export const Navbar: React.FC = () => {
         }`}
       >
         {/* While fixed, match the hero card's inner edges (page + card padding) */}
-        <div className={stuck ? 'max-w-[1280px] mx-auto px-7 sm:px-14 lg:px-16' : ''}>
+        <div className={stuck ? 'max-w-site mx-auto px-7 sm:px-14 lg:px-16' : ''}>
       <div className="flex items-center justify-between">
         <Logo />
 

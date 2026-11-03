@@ -44,10 +44,11 @@ const PlatformMark: React.FC<{ platform: Platform; highlight?: boolean }> = ({ p
       ) : (
         <Icon className="w-5 h-5 transition-colors group-hover/brand:text-[var(--brand)]" aria-hidden="true" />
       )}
-      <span
-        className={`text-[14px] font-semibold tracking-tight whitespace-nowrap group-hover/brand:text-[#18271E] ${highlight ? 'underline decoration-[#D8E95E] decoration-2 underline-offset-4' : ''}`}
-      >
+      <span className="relative text-[14px] font-semibold tracking-tight whitespace-nowrap group-hover/brand:text-[#18271E]">
         {platform.name}
+        {highlight && (
+          <span aria-hidden="true" className="absolute inset-x-0 -bottom-1.5 h-[3px] rounded-full bg-[#D8E95E]" />
+        )}
       </span>
     </span>
   );
@@ -78,7 +79,7 @@ export const TrustedBySection: React.FC = () => {
         </span>
 
         {/* Narrow screens: one line that drifts sideways instead of wrapping */}
-        <div className="xl:hidden marquee marquee-mask relative overflow-hidden -mx-4 sm:-mx-8">
+        <div className="xl:hidden marquee marquee-mask relative overflow-hidden -mx-4 sm:-mx-8 py-2 -my-2">
           <div className="marquee-track flex w-max pl-4 sm:pl-8">
             <Row />
             <Row hidden />

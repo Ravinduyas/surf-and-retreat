@@ -21,7 +21,7 @@ export const Layout: React.FC = () => {
       <div className="min-h-screen flex flex-col bg-[#F6F7F4] text-[#1E2721] antialiased">
         <Preloader />
         <ScrollToTop />
-        <main className="w-full max-w-[1280px] mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 flex-1">
+        <main className="w-full max-w-site mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 flex-1">
           <Outlet />
         </main>
         <Footer />

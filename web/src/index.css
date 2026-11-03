@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+/* Site content width: 1280px everywhere, widened only on very large
+   (4K-class, 1920px+) screens so the side margins don't swallow the page. */
+@utility max-w-site {
+  max-width: 1280px;
+  @media (width >= 1920px) {
+    max-width: min(2200px, 100% - 240px);
+  }
+}
+
 /* Self-hosted (was render-blocking Google Fonts CSS). Variable font: one file covers every weight. */
 @font-face {
   font-family: 'Plus Jakarta Sans';

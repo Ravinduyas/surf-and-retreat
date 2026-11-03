@@ -35,7 +35,7 @@ export const ActionBar: React.FC<ActionBarProps> = ({ steps, current, hint, bloc
         />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] sm:pb-2 flex items-center gap-3 sm:gap-4">
+      <div className="max-w-site mx-auto px-4 sm:px-8 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] sm:pb-2 flex items-center gap-3 sm:gap-4">
         <button
           type="button"
           onClick={onBack}
