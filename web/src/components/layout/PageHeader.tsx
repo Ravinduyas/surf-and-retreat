@@ -12,8 +12,14 @@ interface PageHeaderProps {
 export const PageHeader: React.FC<PageHeaderProps> = ({ children }) => (
   // No overflow-hidden here: it would trap the sticky navbar inside the card.
   // Anything that bleeds to the card edge rounds its own corners instead.
-  <div className="bg-white rounded-[32px] sm:rounded-[40px] border border-[#E4EAE0] shadow-xs flex flex-col">
+  <div className="relative bg-white rounded-[32px] sm:rounded-[40px] border border-transparent shadow-xs flex flex-col">
     <Navbar />
     {children}
+    {/* Yellow outline drawn above the content, so hero photos that bleed to the
+        card edge don't cover it - one unbroken line all the way round. */}
+    <span
+      aria-hidden="true"
+      className="pointer-events-none absolute -inset-px z-30 rounded-[inherit] border border-[#DADB54]"
+    />
   </div>
 );
